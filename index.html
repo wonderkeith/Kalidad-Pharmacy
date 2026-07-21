@@ -827,7 +827,7 @@
             <nav class="header-nav" id="headerNav" aria-label="Main navigation">
                 <a href="#services">Services</a>
                 <a href="#contact">Visit Us</a>
-                <a href="https://wa.me/[PHONE_NUMBER]" target="_blank" rel="noopener">Order Refill</a>
+                <a href="https://wa.me/+256764201229" target="_blank" rel="noopener">Order Refill</a>
                 <span class="status-pill status-pill-desktop" aria-live="polite">
                     <span class="status-dot" aria-hidden="true"></span> Open Now
                 </span>
@@ -955,15 +955,15 @@
         <div class="container">
             <div class="trust-stats">
                 <div class="trust-stat">
-                    <div class="trust-stat-value">[YEARS]+</div>
+                    <div class="trust-stat-value">10+</div>
                     <div class="trust-stat-label">Years serving the community</div>
                 </div>
                 <div class="trust-stat">
-                    <div class="trust-stat-value">⭐ [RATING]</div>
+                    <div class="trust-stat-value">⭐ 4.8</div>
                     <div class="trust-stat-label">Average rating from our neighbors</div>
                 </div>
                 <div class="trust-stat">
-                    <div class="trust-stat-value">[RX_COUNT]+</div>
+                    <div class="trust-stat-value">500+</div>
                     <div class="trust-stat-label">Prescriptions filled monthly</div>
                 </div>
             </div>
@@ -987,41 +987,29 @@
                         <div class="contact-icon">📍</div>
                         <div>
                             <div class="contact-item-label">Address</div>
-                            <div class="contact-item-value">[STREET ADDRESS], [CITY / DISTRICT]</div>
+                            <div class="contact-item-value">Kisenyi next to Rosefoam Mattress Depot, FortPortal, Kabarole District</div>
                         </div>
                     </div>
                     <div class="contact-item">
                         <div class="contact-icon">📞</div>
                         <div>
                             <div class="contact-item-label">Phone</div>
-                            <div class="contact-item-value">[PHONE NUMBER]</div>
+                            <div class="contact-item-value">+256 764 201 229</div>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <div class="contact-icon">✉️</div>
+                        <div class="contact-icon">💬</div>
                         <div>
-                            <div class="contact-item-label">Email</div>
-                            <div class="contact-item-value">[EMAIL ADDRESS]</div>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">🕐</div>
-                        <div>
-                            <div class="contact-item-label">Hours</div>
-                            <div class="contact-item-value">
-                                Mon–Fri: [HOURS]<br>
-                                Saturday: [HOURS]<br>
-                                Sunday: [HOURS]
-                            </div>
+                            <div class="contact-item-label">WhatsApp</div>
+                            <div class="contact-item-value"><a href="https://wa.me/+256764201229" target="_blank" rel="noopener" style="color: var(--lemon); text-decoration: underline;">Message us on WhatsApp</a></div>
                         </div>
                     </div>
                 </div>
+
                 <div class="contact-map">
                     <div class="contact-map-placeholder">
-                        <span>🗺️</span>
-                        <p><strong>Google Map</strong></p>
-                        <p style="font-size:0.85rem;">Embed your map here — replace this with an
-                        <code>&lt;iframe&gt;</code> from Google Maps.</p>
+                        <span>📍</span>
+                        <p>FortPortal, Uganda</p>
                     </div>
                 </div>
             </div>
@@ -1031,70 +1019,45 @@
     <!-- ═══════════ FOOTER ═══════════ -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; <span>Kalidad Pharmacy</span> — All rights reserved.</p>
-            <p style="font-size:0.82rem;color:var(--gray-400);">Made with ❤️ for the [NEIGHBORHOOD] community.</p>
+            <p>&copy; 2024 <span>Kalidad Pharmacy</span>. All rights reserved.</p>
+            <p>Caring for FortPortal, one prescription at a time.</p>
         </div>
     </footer>
 
-    <!-- ═══════════ SCRIPTS ═══════════ -->
     <script>
-        (function () {
-            const header = document.getElementById('header');
-            const toggle = document.getElementById('mobileToggle');
-            const nav = document.getElementById('headerNav');
-            const navLinks = nav.querySelectorAll('a[href^="#"]');
-            const mobileStatusPill = document.querySelector('.status-pill-mobile');
-
-            // Show mobile status pill on small screens
-            const checkMobile = function () {
-                if (window.innerWidth <= 680) {
-                    if (mobileStatusPill) mobileStatusPill.style.display = 'inline-flex';
-                } else {
-                    if (mobileStatusPill) mobileStatusPill.style.display = 'none';
-                    // Close mobile nav if resizing up
-                    nav.classList.remove('open');
-                    toggle.classList.remove('active');
-                    toggle.setAttribute('aria-expanded', 'false');
-                }
-            };
-
-            checkMobile();
-            window.addEventListener('resize', checkMobile);
-
-            // Shadow on scroll
-            window.addEventListener('scroll', function () {
-                if (window.scrollY > 10) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
-
-            // Mobile menu toggle
-            toggle.addEventListener('click', function () {
-                const isOpen = nav.classList.toggle('open');
+        // Mobile menu toggle
+        const toggle = document.getElementById('mobileToggle');
+        const nav = document.getElementById('headerNav');
+        if (toggle && nav) {
+            toggle.addEventListener('click', () => {
+                nav.classList.toggle('open');
                 toggle.classList.toggle('active');
-                toggle.setAttribute('aria-expanded', isOpen);
+                toggle.setAttribute('aria-expanded', toggle.classList.contains('active'));
             });
+        }
 
-            // Close mobile nav on link click
-            navLinks.forEach(function (link) {
-                link.addEventListener('click', function () {
-                    nav.classList.remove('open');
-                    toggle.classList.remove('active');
-                    toggle.setAttribute('aria-expanded', 'false');
-                });
-            });
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header?.classList.add('scrolled');
+            } else {
+                header?.classList.remove('scrolled');
+            }
+        });
 
-            // Close mobile nav when clicking outside
-            document.addEventListener('click', function (e) {
-                if (!nav.contains(e.target) && !toggle.contains(e.target) && nav.classList.contains('open')) {
-                    nav.classList.remove('open');
-                    toggle.classList.remove('active');
-                    toggle.setAttribute('aria-expanded', 'false');
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    nav?.classList.remove('open');
+                    toggle?.classList.remove('active');
                 }
             });
-        })();
+        });
     </script>
+
 </body>
 </html>
