@@ -816,6 +816,173 @@ footer ul{list-style:none;padding:0;margin:0}
     .careers-page .hero-reframed .hero-copy h1 { font-size: clamp(42px, 12vw, 64px); }
     .careers-page .hero-reframed .hero-cta { width: 100%; }
 }
+
+/* ==========================================================
+   CAREERS HERO — reference layout: single dark career hero
+   ========================================================== */
+.careers-page .hero-reframed.career-hero {
+    min-height: clamp(440px, 56vh, 560px);
+    background: #12301f;
+    color: #fff;
+}
+
+.careers-page .hero-reframed .hero-background,
+.careers-page .hero-reframed .hero-visual,
+.careers-page .hero-reframed .career-static-visual {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.careers-page .hero-reframed .hero-background {
+    background:
+        radial-gradient(circle at 83% 48%, rgba(140,198,63,.08), transparent 23%),
+        linear-gradient(115deg, #0e2d20 0%, #123b29 54%, #102f20 100%);
+}
+
+.careers-page .hero-reframed .career-static-visual {
+    overflow: hidden;
+    background: transparent;
+}
+
+.careers-page .hero-reframed .career-slide {
+    inset: 0;
+    padding: 0;
+    background: transparent;
+    color: #fff;
+}
+
+.careers-page .hero-reframed .career-slide::after {
+    display: none;
+}
+
+/* The visual carries only the decorative circles and icon. */
+.careers-page .hero-reframed .career-slide > .slide-tag,
+.careers-page .hero-reframed .career-slide > h2,
+.careers-page .hero-reframed .career-slide > p {
+    display: none;
+}
+
+.careers-page .hero-reframed .career-slide-decor {
+    inset: 0;
+    z-index: 1 !important;
+}
+
+.careers-page .hero-reframed .career-orbit {
+    border-color: rgba(140,198,63,.22);
+}
+
+.careers-page .hero-reframed .orbit-1 {
+    width: 390px;
+    height: 390px;
+    right: -65px;
+    top: 4%;
+}
+
+.careers-page .hero-reframed .orbit-2 {
+    width: 280px;
+    height: 280px;
+    right: 14%;
+    top: 23%;
+}
+
+.careers-page .hero-reframed .orbit-3 {
+    width: 145px;
+    height: 145px;
+    right: 25%;
+    top: 37%;
+    background: rgba(140,198,63,.045);
+}
+
+.careers-page .hero-reframed .career-slide .slide-icon {
+    right: clamp(32px, 4.5vw, 68px);
+    top: auto;
+    bottom: clamp(44px, 8vh, 70px);
+    width: 76px;
+    height: 76px;
+    border-radius: 22px;
+    color: #8cc63f;
+    background: rgba(140,198,63,.14);
+    z-index: 3;
+}
+
+.careers-page .hero-reframed .hero-content {
+    min-height: inherit;
+    align-items: center;
+    z-index: 8;
+}
+
+.careers-page .hero-reframed .hero-copy {
+    width: min(620px, 52vw);
+    max-width: 620px;
+    padding: 42px 0;
+}
+
+.careers-page .hero-reframed .hero-copy .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 22px;
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: rgba(140,198,63,.15);
+    color: #9bd24b;
+}
+
+.careers-page .hero-reframed .hero-copy h1 {
+    margin: 0 0 22px;
+    color: #fff;
+    font-size: clamp(48px, 5.8vw, 78px);
+    line-height: .98;
+    letter-spacing: -.04em;
+    max-width: 680px;
+}
+
+.careers-page .hero-reframed .hero-copy h1 .accent {
+    color: #fff;
+}
+
+.careers-page .hero-reframed .hero-copy .lede {
+    max-width: 610px;
+    margin: 0;
+    color: #e3eee8;
+    font-size: clamp(16px, 1.25vw, 19px);
+    line-height: 1.65;
+}
+
+.careers-page .hero-reframed .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 26px;
+    background: #0a2418;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.04);
+}
+
+.careers-page .hero-reframed .hero-cta:hover {
+    background: #071d14;
+}
+
+@media (max-width: 900px) {
+    .careers-page .hero-reframed.career-hero { min-height: 500px; }
+    .careers-page .hero-reframed .hero-copy { width: min(580px, 62vw); }
+    .careers-page .hero-reframed .career-slide .slide-icon { right: 30px; bottom: 34px; }
+}
+
+@media (max-width: 760px) {
+    .careers-page .hero-reframed.career-hero { min-height: 560px; }
+    .careers-page .hero-reframed .hero-content { align-items: flex-start; }
+    .careers-page .hero-reframed .hero-copy { width: 100%; max-width: 560px; padding: 58px 0 80px; }
+    .careers-page .hero-reframed .hero-copy h1 { font-size: clamp(44px, 12vw, 64px); }
+    .careers-page .hero-reframed .hero-copy .lede { max-width: 520px; }
+    .careers-page .hero-reframed .hero-cta { width: auto; }
+    .careers-page .hero-reframed .orbit-1 { width: 280px; height: 280px; right: -110px; top: 47%; }
+    .careers-page .hero-reframed .orbit-2 { width: 190px; height: 190px; right: 8%; top: 58%; }
+    .careers-page .hero-reframed .orbit-3 { width: 100px; height: 100px; right: 31%; top: 65%; }
+    .careers-page .hero-reframed .career-slide .slide-icon { width: 62px; height: 62px; right: 22px; bottom: 24px; }
+}
 </style>
 
 </head>
@@ -862,8 +1029,8 @@ footer ul{list-style:none;padding:0;margin:0}
     <div class="container hero-content">
         <div class="hero-copy">
             <span class="eyebrow"><span class="pulse-dot"></span>Careers at Kalidad Pharmacy</span>
-            <h1>Build a career where <span class="accent">care comes first.</span></h1>
-            <p class="lede">We welcome passionate, dependable people who want to make a meaningful difference in their community. At Kalidad Pharmacy, your skills, empathy and commitment can help families access better health every day.</p>
+            <h1>Join a team that <span class="accent">cares.</span></h1>
+            <p class="lede">Bring your professionalism, warmth and ambition. Tell us about yourself and the kind of opportunity you would like to grow into.</p>
             <a class="btn btn-primary hero-cta" href="#application">Apply now <span aria-hidden="true">→</span></a>
         </div>
     </div>
