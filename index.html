@@ -1959,6 +1959,217 @@ footer .footer-bottom .container {
 }
 
 
+/* ==========================================================
+   HERO — reference screenshot layout
+   ========================================================== */
+.hero-reference {
+    position: relative;
+    min-height: clamp(620px, calc(100vh - 88px), 860px);
+    overflow: hidden;
+    isolation: isolate;
+    display: flex;
+    align-items: stretch;
+    background: #f7f8f5;
+}
+
+.hero-reference-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(90deg, #2f624f 0%, #5f8374 25%, #b7c6bf 48%, #edf0ed 70%, #ffffff 100%);
+}
+
+.hero-reference-content {
+    position: relative;
+    z-index: 2;
+    width: min(100% - 180px, 1240px);
+    margin: 0 auto;
+    min-height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.hero-reference-copy {
+    position: relative;
+    width: min(640px, 50vw);
+    min-height: 430px;
+    display: grid;
+    align-items: center;
+}
+
+.hero-reference-slide {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition: opacity .6s ease, transform .6s ease, visibility .6s ease;
+    pointer-events: none;
+}
+
+.hero-reference-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.hero-reference-slide .eyebrow {
+    margin-bottom: 34px;
+}
+
+.hero-reference-slide h1 {
+    max-width: 700px;
+    margin: 0 0 42px;
+    font-size: clamp(54px, 5.6vw, 92px);
+    line-height: .98;
+    letter-spacing: -.045em;
+    color: #0d2b20;
+}
+
+.hero-reference-slide .lede {
+    max-width: 650px;
+    margin: 0;
+    color: #49635a;
+    font-size: clamp(18px, 1.35vw, 22px);
+    line-height: 1.65;
+}
+
+.hero-reference-icon {
+    position: absolute;
+    top: clamp(58px, 7vw, 74px);
+    right: clamp(44px, 5vw, 64px);
+    z-index: 3;
+    width: 94px;
+    height: 94px;
+    border-radius: 28px;
+    display: grid;
+    place-items: center;
+    color: #163f2f;
+    background: rgba(221, 226, 222, .92);
+    box-shadow: 0 10px 28px rgba(20, 55, 42, .08);
+}
+
+.hero-reference-nav {
+    position: absolute;
+    z-index: 4;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 88px;
+    border: 0;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    background: rgba(53, 83, 70, .24);
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+    transition: background .2s ease, transform .2s ease;
+}
+
+.hero-reference-nav:hover {
+    background: rgba(53, 83, 70, .38);
+}
+
+.hero-reference-nav:active {
+    transform: translateY(-50%) scale(.98);
+}
+
+.hero-reference-prev { left: 16px; }
+.hero-reference-next { right: 16px; }
+
+.hero-reference-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 36px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.hero-reference-dots button {
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.78);
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+
+.hero-reference-dots button.active {
+    background: #91c92c;
+    transform: scale(1.12);
+}
+
+@media (max-width: 1000px) {
+    .hero-reference-content {
+        width: min(100% - 120px, 900px);
+    }
+    .hero-reference-copy {
+        width: min(620px, 58vw);
+    }
+    .hero-reference-icon {
+        width: 76px;
+        height: 76px;
+        border-radius: 22px;
+        top: 42px;
+        right: 34px;
+    }
+}
+
+@media (max-width: 700px) {
+    .hero-reference {
+        min-height: 720px;
+    }
+    .hero-reference-bg {
+        background: linear-gradient(180deg, #3c6d5b 0%, #9db1a8 45%, #ffffff 100%);
+    }
+    .hero-reference-content {
+        width: min(100% - 88px, 620px);
+        justify-content: center;
+        align-items: center;
+    }
+    .hero-reference-copy {
+        width: 100%;
+        min-height: 0;
+    }
+    .hero-reference-slide h1 {
+        font-size: clamp(48px, 12vw, 68px);
+        margin-bottom: 28px;
+    }
+    .hero-reference-slide .lede {
+        font-size: 17px;
+    }
+    .hero-reference-icon {
+        top: 26px;
+        right: 22px;
+        width: 62px;
+        height: 62px;
+        border-radius: 18px;
+    }
+    .hero-reference-icon svg {
+        width: 32px;
+        height: 32px;
+    }
+    .hero-reference-nav {
+        width: 42px;
+        height: 64px;
+    }
+    .hero-reference-prev { left: 8px; }
+    .hero-reference-next { right: 8px; }
+    .hero-reference-dots {
+        bottom: 24px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-reference-slide { transition: none; }
+}
+
 /* Features section — reference-inspired three-column presentation */
 .features-reference {
     background: #fff;
@@ -2078,52 +2289,36 @@ footer .footer-bottom .container {
 
     <main>
         <!-- ========== HERO ========== -->
-        <section class="hero hero-reframed">
-            <div class="hero-background" aria-hidden="true">
-                <div class="hero-visual">
-                    <div class="slider" id="slider" aria-roledescription="carousel" aria-label="Kalidad Pharmacy services">
-                        <div class="slide slide-bg-1 active" data-slide="0">
-                            <span class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5-8-8a5 5 0 1 1 7-7l1 1 1-1a5 5 0 1 1 7 7l-8 8z"/></svg></span>
-                            <span class="slide-tag">Our services</span>
-                            <h2>Prescription filling</h2>
-                            <p>Accurate, double-checked dispensing by licensed pharmacists.</p>
-                        </div>
-                        <div class="slide slide-bg-2" data-slide="1">
-                            <span class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8"/><path d="M9 2v7.5a3.5 3.5 0 0 1-.8 2.2L6 14.6A5 5 0 0 0 5 17.8V20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2.2a5 5 0 0 0-1-3.2l-2.2-2.9A3.5 3.5 0 0 1 15 9.5V2"/></svg></span>
-                            <span class="slide-tag">Our services</span>
-                            <h2>Health supplements</h2>
-                            <p>Trusted vitamins, remedies and daily health essentials.</p>
-                        </div>
-                        <div class="slide slide-bg-3" data-slide="2">
-                            <span class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></span>
-                            <span class="slide-tag">Our services</span>
-                            <h2>Free health checks</h2>
-                            <p>Blood pressure, glucose and cholesterol screening.</p>
-                        </div>
-                        <div class="slide slide-bg-4" data-slide="3">
-                            <span class="slide-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></span>
-                            <span class="slide-tag">Our services</span>
-                            <h2>Same-day delivery</h2>
-                            <p>Order on WhatsApp — we deliver across Fort Portal.</p>
-                        </div>
+        <section class="hero hero-reference" aria-label="Kalidad Pharmacy introduction">
+            <div class="hero-reference-bg" aria-hidden="true"></div>
 
-                        <div class="slider-dots" id="sliderDots"></div>
-                        <button class="slider-nav prev" id="prevBtn" aria-label="Previous slide">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                        </button>
-                        <button class="slider-nav next" id="nextBtn" aria-label="Next slide">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <button class="hero-reference-nav hero-reference-prev" id="heroReferencePrev" aria-label="Previous hero message">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="hero-reference-nav hero-reference-next" id="heroReferenceNext" aria-label="Next hero message">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
 
-            <div class="container hero-content">
-                <div class="hero-copy">
-                    <span class="eyebrow"><span class="pulse-dot"></span>Your health, your wealth</span>
-                    <h1>Caring for <span class="accent">you</span>, one prescription at a time</h1>
-                    <p class="lede">Kalidad Pharmacy is your trusted partner for health and wellness — expert care, personal attention, and the convenience your family deserves.</p>
+            <div class="container hero-reference-content">
+                <div class="hero-reference-copy" id="heroReferenceSlider" aria-roledescription="carousel" aria-label="Kalidad Pharmacy messages">
+                    <article class="hero-reference-slide is-active" data-reference-slide="0">
+                        <span class="eyebrow"><span class="pulse-dot"></span>Trusted pharmacy care</span>
+                        <h1>Better care for <span class="accent">every</span> day</h1>
+                        <p class="lede">From prescriptions to everyday wellness, we make quality pharmacy care personal, reliable and convenient.</p>
+                    </article>
+                    <article class="hero-reference-slide" data-reference-slide="1">
+                        <span class="eyebrow"><span class="pulse-dot"></span>Your health, your wealth</span>
+                        <h1>Caring for <span class="accent">you</span>, one prescription at a time</h1>
+                        <p class="lede">Kalidad Pharmacy is your trusted partner for health and wellness — expert care, personal attention, and the convenience your family deserves.</p>
+                    </article>
+                    <article class="hero-reference-slide" data-reference-slide="2">
+                        <span class="eyebrow"><span class="pulse-dot"></span>Here for your family</span>
+                        <h1>Health support you can <span class="accent">count on</span></h1>
+                        <p class="lede">Professional guidance, thoughtful service and trusted health essentials — all in one place.</p>
+                    </article>
                 </div>
+
+                <div class="hero-reference-dots" id="heroReferenceDots" aria-label="Hero message navigation"></div>
             </div>
         </section>
         <!-- ========== END HERO ========== -->
@@ -2438,6 +2633,47 @@ footer .footer-bottom .container {
                 if (prevBtn) prevBtn.addEventListener('click', function() { prev();
                     resetTimer(); });
                 resetTimer();
+            }
+
+            /* Reference hero message slider */
+            var referenceSlides = Array.prototype.slice.call(document.querySelectorAll('.hero-reference-slide'));
+            var referenceDots = document.getElementById('heroReferenceDots');
+            if (referenceSlides.length && referenceDots) {
+                var referenceCurrent = 0;
+                var referenceTimer;
+
+                referenceSlides.forEach(function(_, i) {
+                    var dot = document.createElement('button');
+                    dot.type = 'button';
+                    dot.setAttribute('aria-label', 'Go to hero message ' + (i + 1));
+                    if (i === 0) dot.classList.add('active');
+                    dot.addEventListener('click', function() {
+                        referenceGoTo(i);
+                        referenceResetTimer();
+                    });
+                    referenceDots.appendChild(dot);
+                });
+
+                var referenceDotButtons = Array.prototype.slice.call(referenceDots.children);
+
+                function referenceGoTo(index) {
+                    referenceSlides[referenceCurrent].classList.remove('is-active');
+                    referenceDotButtons[referenceCurrent].classList.remove('active');
+                    referenceCurrent = (index + referenceSlides.length) % referenceSlides.length;
+                    referenceSlides[referenceCurrent].classList.add('is-active');
+                    referenceDotButtons[referenceCurrent].classList.add('active');
+                }
+
+                function referenceResetTimer() {
+                    clearInterval(referenceTimer);
+                    referenceTimer = setInterval(function() { referenceGoTo(referenceCurrent + 1); }, 6500);
+                }
+
+                var referenceNext = document.getElementById('heroReferenceNext');
+                var referencePrev = document.getElementById('heroReferencePrev');
+                if (referenceNext) referenceNext.addEventListener('click', function() { referenceGoTo(referenceCurrent + 1); referenceResetTimer(); });
+                if (referencePrev) referencePrev.addEventListener('click', function() { referenceGoTo(referenceCurrent - 1); referenceResetTimer(); });
+                referenceResetTimer();
             }
 
             /* services vertical slide-up navigation */
