@@ -613,6 +613,75 @@ footer ul{list-style:none;padding:0;margin:0}
     }
 }
 
+
+/* ===== Careers hero redesigned to match the reference image ===== */
+.reference-career-hero{
+  position:relative;
+  min-height:645px;
+  overflow:hidden;
+  background:linear-gradient(108deg,#376c59 0%,#6e9183 34%,#d9e3dc 62%,#ffffff 82%,#ffffff 100%);
+  color:var(--forest);
+}
+.reference-career-hero::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 28% 42%,rgba(255,255,255,.10),transparent 32%);
+}
+.reference-career-inner{
+  position:relative;z-index:2;
+  width:min(1180px,calc(100% - 48px));
+  min-height:645px;margin:0 auto;
+  display:grid;grid-template-columns:44% 56%;align-items:center;
+}
+.reference-career-copy{grid-column:2;}
+.reference-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 16px;border-radius:999px;
+  background:#e7f2d9;color:#42652f;
+  font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+}
+.reference-kicker span{width:8px;height:8px;border-radius:50%;background:#7ba68e;}
+.reference-career-copy h1{
+  margin:38px 0 0;max-width:680px;
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(3.4rem,6.2vw,5.6rem);
+  font-weight:800;line-height:.94;letter-spacing:-.045em;color:#0d2c22;
+}
+.reference-career-copy h1 span{color:#8fbd1d;}
+.reference-career-copy p{
+  margin-top:28px;max-width:560px;color:#718077;font-family:'Playfair Display',Georgia,serif;
+  font-size:1.02rem;line-height:1.7;
+}
+.reference-career-hero .hero-arrow{
+  position:absolute;z-index:4;top:50%;transform:translateY(-50%);
+  width:56px;height:88px;border:0;border-radius:8px;
+  background:rgba(18,41,31,.10);color:#fff;font-size:34px;line-height:1;cursor:default;
+}
+.reference-career-hero .hero-arrow.prev{left:16px}
+.reference-career-hero .hero-arrow.next{right:16px;background:rgba(18,41,31,.16)}
+.reference-career-hero .hero-dots{
+  position:absolute;z-index:4;left:50%;bottom:105px;transform:translateX(-50%);
+  display:flex;gap:12px;align-items:center;
+}
+.reference-career-hero .hero-dots span{width:14px;height:14px;border-radius:50%;background:#fff;opacity:.9}
+.reference-career-hero .hero-dots span.active{background:#8fbd1d;opacity:1}
+@media(max-width:900px){
+  .reference-career-hero{min-height:600px;background:linear-gradient(120deg,#3a705d 0%,#7f9f92 38%,#dfe8e2 68%,#fff 100%)}
+  .reference-career-inner{min-height:600px;width:100%;padding:70px 28px 110px;grid-template-columns:1fr}
+  .reference-career-copy{grid-column:1}
+  .reference-career-copy h1{font-size:clamp(3rem,11vw,4.6rem)}
+  .reference-career-hero .hero-dots{bottom:42px}
+}
+@media(max-width:560px){
+  .reference-career-hero{min-height:560px}
+  .reference-career-inner{min-height:560px;padding:58px 24px 100px}
+  .reference-career-copy h1{font-size:clamp(2.75rem,14vw,4rem);margin-top:28px}
+  .reference-career-copy p{font-size:.94rem;margin-top:22px}
+  .reference-career-hero .hero-arrow{width:40px;height:64px;font-size:28px}
+  .reference-career-hero .hero-arrow.prev{left:8px}.reference-career-hero .hero-arrow.next{right:8px}
+  .reference-career-hero .hero-dots{bottom:32px;gap:9px}
+  .reference-career-hero .hero-dots span{width:11px;height:11px}
+}
+
 </style>
 
 <style>
@@ -1001,39 +1070,17 @@ footer ul{list-style:none;padding:0;margin:0}
 </header>
 
 <main>
-<section class="hero hero-reframed career-hero">
-    <div class="hero-background" aria-hidden="true">
-        <div class="hero-visual">
-            <div class="slider career-static-visual" aria-label="Career opportunity">
-                <div class="slide career-slide active">
-                    <div class="career-slide-decor" aria-hidden="true">
-                        <span class="career-orbit orbit-1"></span>
-                        <span class="career-orbit orbit-2"></span>
-                        <span class="career-orbit orbit-3"></span>
-                    </div>
-                    <span class="slide-icon career-visual-mark">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                    </span>
-                    <span class="slide-tag">Careers at Kalidad Pharmacy</span>
-                    <h2>Join a team that cares.</h2>
-                    <p>Bring your professionalism, warmth and ambition. Tell us about yourself and the kind of opportunity you would like to grow into.</p>
-                </div>
-            </div>
+<section class="reference-career-hero" aria-label="Careers at Kalidad Pharmacy">
+    <button class="hero-arrow prev" aria-hidden="true">‹</button>
+    <button class="hero-arrow next" aria-hidden="true">›</button>
+    <div class="reference-career-inner">
+        <div class="reference-career-copy">
+            <span class="reference-kicker"><span></span>Careers at Kalidad Pharmacy</span>
+            <h1>Join a team that <span>cares.</span></h1>
+            <p>Bring your professionalism, warmth and ambition. Tell us about yourself and the kind of opportunity you would like to grow into.</p>
         </div>
     </div>
-
-    <div class="container hero-content">
-        <div class="hero-copy">
-            <span class="eyebrow"><span class="pulse-dot"></span>Careers at Kalidad Pharmacy</span>
-            <h1>Join a team that <span class="accent">cares.</span></h1>
-            <p class="lede">Bring your professionalism, warmth and ambition. Tell us about yourself and the kind of opportunity you would like to grow into.</p>
-            <a class="btn btn-primary hero-cta" href="#application">Apply now <span aria-hidden="true">→</span></a>
-        </div>
-    </div>
+    <div class="hero-dots" aria-hidden="true"><span></span><span class="active"></span><span></span></div>
 </section>
 
 <section class="section" id="application">
