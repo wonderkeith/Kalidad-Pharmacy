@@ -2254,6 +2254,159 @@ footer .footer-bottom .container {
     }
 }
 
+
+/* ==========================================================
+   CUSTOMER VOICES — testimonial section inspired by reference
+   ========================================================== */
+.customer-voices {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(155deg, var(--cream) 0%, #eef1e9 48%, var(--accent-bg) 100%);
+    color: var(--forest-deep);
+    padding: clamp(72px, 8vw, 112px) 0 clamp(78px, 9vw, 118px);
+}
+.customer-voices::before,
+.customer-voices::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.customer-voices::before {
+    width: 420px;
+    height: 420px;
+    left: -230px;
+    top: -240px;
+    background: rgba(199,239,62,.12);
+}
+.customer-voices::after {
+    width: 360px;
+    height: 360px;
+    right: -190px;
+    bottom: -220px;
+    background: rgba(30,79,59,.06);
+}
+.customer-voices-head {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto 54px;
+    text-align: center;
+}
+.customer-voices-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--forest);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+.customer-voices-kicker::after {
+    content: "";
+    width: 48px;
+    height: 1px;
+    margin-left: 8px;
+    background: var(--lime-deep);
+}
+.customer-voices h2 {
+    margin: 18px 0 12px;
+    font-family: "Nunito", sans-serif;
+    font-size: clamp(42px, 6vw, 68px);
+    line-height: .98;
+    font-weight: 400;
+    letter-spacing: -.045em;
+    color: var(--lime-deep);
+}
+.customer-voices h2 strong {
+    color: var(--lime-deep);
+    font-weight: 900;
+}
+.customer-voices-head p {
+    max-width: 640px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.65;
+}
+.customer-voices-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+}
+.customer-voice-card {
+    min-width: 0;
+    text-align: center;
+    padding: 0 14px;
+}
+.customer-voice-avatar {
+    position: relative;
+    width: 118px;
+    height: 118px;
+    margin: 0 auto 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffffff, var(--accent-bg));
+    border: 5px solid rgba(255,255,255,.96);
+    box-shadow: 0 12px 30px rgba(21,54,31,.12);
+    color: var(--forest);
+    font-family: "Nunito", sans-serif;
+    font-size: 34px;
+    font-weight: 900;
+}
+.customer-voice-avatar::after {
+    content: "“";
+    position: absolute;
+    right: -6px;
+    bottom: -20px;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--forest);
+    color: #fff;
+    font-family: Georgia, serif;
+    font-size: 28px;
+    line-height: 1;
+    box-shadow: 0 6px 14px rgba(0,0,0,.14);
+}
+.customer-voice-card blockquote {
+    margin: 0;
+    min-height: 92px;
+    padding: 0 4px 24px;
+    border-bottom: 1px solid var(--line);
+    color: var(--forest-deep);
+    font-size: 14px;
+    line-height: 1.65;
+}
+.customer-voice-card cite {
+    display: block;
+    margin-top: 17px;
+    color: var(--forest);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 900;
+}
+.customer-voice-card .voice-source {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+}
+@media (max-width: 980px) {
+    .customer-voices-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 52px; }
+}
+@media (max-width: 600px) {
+    .customer-voices { padding-left: 18px; padding-right: 18px; }
+    .customer-voices-grid { grid-template-columns: 1fr; gap: 52px; }
+    .customer-voice-card blockquote { min-height: auto; }
+}
 </style>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23163427'/%3E%3Cpath d='M50 22c15 0 28 12 28 28S65 78 50 78 22 66 22 50 35 22 50 22z' fill='%23C6F135'/%3E%3C/svg%3E">
 </head>
@@ -2541,6 +2694,47 @@ footer .footer-bottom .container {
                         <h3>Same-day delivery</h3>
                         <span class="features-reference-line"></span>
                         <p>Order by WhatsApp and we deliver across Fort Portal the same day.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CUSTOMER VOICES -->
+        <section class="customer-voices" aria-labelledby="customerVoicesTitle">
+            <div class="container">
+                <div class="customer-voices-head reveal">
+                    <span class="customer-voices-kicker">A good word means a lot</span>
+                    <h2 id="customerVoicesTitle">Customer <strong>voices</strong></h2>
+                    <p>Thoughtful service is best measured by the people we care for. Here are a few of the everyday experiences we aim to create at Kalidad Pharmacy.</p>
+                </div>
+
+                <div class="customer-voices-grid">
+                    <article class="customer-voice-card reveal">
+                        <div class="customer-voice-avatar" aria-hidden="true">A</div>
+                        <blockquote>“The team is welcoming, patient and careful. I always leave feeling that my questions have been properly answered.”</blockquote>
+                        <cite>Local customer</cite>
+                        <span class="voice-source">Customer feedback</span>
+                    </article>
+
+                    <article class="customer-voice-card reveal">
+                        <div class="customer-voice-avatar" aria-hidden="true">M</div>
+                        <blockquote>“Quick service without feeling rushed. The staff take the time to explain what I need and how to use it.”</blockquote>
+                        <cite>Regular customer</cite>
+                        <span class="voice-source">Customer feedback</span>
+                    </article>
+
+                    <article class="customer-voice-card reveal">
+                        <div class="customer-voice-avatar" aria-hidden="true">S</div>
+                        <blockquote>“It is reassuring to have a pharmacy that is easy to reach and treats every request with genuine care.”</blockquote>
+                        <cite>Neighbouring customer</cite>
+                        <span class="voice-source">Customer feedback</span>
+                    </article>
+
+                    <article class="customer-voice-card reveal">
+                        <div class="customer-voice-avatar" aria-hidden="true">J</div>
+                        <blockquote>“From everyday essentials to prescriptions, the service feels personal, dependable and straightforward.”</blockquote>
+                        <cite>Community customer</cite>
+                        <span class="voice-source">Customer feedback</span>
                     </article>
                 </div>
             </div>
