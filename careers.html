@@ -11,7 +11,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&display=swap');
 :root {
   --forest:#163427; --green:#006837; --lime:#8CC63F; --lime-soft:#e8f4d8;
-  --cream:#f6f4ec; --white:#fff; --ink:#173127; --muted:#63746d; --line:#dfe5df;
+  --cream:#f6f4ec; --white:#fff; --ink:#173127; --muted:#63746d; --line:#dfe5df; --forest-deep:#0d281d;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -46,7 +46,7 @@ h1 span{color:var(--lime)}
 .section-title .kicker{margin-bottom:14px}
 .section-title h2{font-size:clamp(2.3rem,5vw,4rem);margin:0 0 14px;line-height:1.05}
 .section-title p{color:var(--muted);line-height:1.75;margin:0}
-.career-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.career-grid{display:grid;grid-template-columns:1fr;gap:28px;align-items:start}
 .card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:32px;box-shadow:0 10px 35px rgba(22,52,39,.05)}
 .card h3{margin:0 0 8px;font-size:1.45rem}
 .card .sub{margin:0 0 24px;color:var(--muted);font-size:.9rem;line-height:1.6}
@@ -67,11 +67,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--lime);box-shadow:0 0 
 .btn-lime{background:var(--lime);color:var(--forest)}
 .btn-lime:hover{transform:translateY(-1px)}
 .form-actions{display:flex;justify-content:flex-end;margin-top:22px}
-.admin-card{background:var(--forest);color:#fff;border-radius:24px;padding:32px}
-.admin-card h3{margin:0 0 8px;font-size:1.6rem}
-.admin-card p{color:#d9e5df;line-height:1.7;font-size:.9rem;margin:0 0 24px}
-.admin-card .field label{color:#e8f0ec}
-.admin-card input,.admin-card textarea,.admin-card select{background:rgba(255,255,255,.97);border-color:transparent}
 footer{background:var(--forest);color:#fff;padding:52px 0 24px}
 .footer-inner{display:grid;grid-template-columns:1.3fr .7fr .9fr;gap:40px;text-align:center}
 footer h3{margin:0 0 10px;font-size:1.15rem}
@@ -80,7 +75,7 @@ footer ul{list-style:none;padding:0;margin:0}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:35px;padding-top:18px;text-align:center;color:#c9d6d0;font-size:.76rem}
 .notice{display:none;margin-top:18px;padding:12px 14px;border-radius:12px;background:var(--lime-soft);color:var(--green);font-size:.82rem}
 @media(max-width:850px){.hero-inner,.career-grid{grid-template-columns:1fr}.hero-inner{gap:35px}.hero-card{max-width:600px}nav{display:none}.menu{display:block}.footer-inner{grid-template-columns:1fr}}
-@media(max-width:560px){.container{width:min(100% - 28px,1120px)}.header-inner{height:74px}.logo img{width:145px;height:62px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card,.admin-card{padding:24px}.hero{padding-top:60px}}
+@media(max-width:560px){.container{width:min(100% - 28px,1120px)}.header-inner{height:74px}.logo img{width:145px;height:62px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card{padding:24px}.hero{padding-top:60px}}
 
 .careers-email-contact {
     margin: 24px auto 0;
@@ -292,7 +287,537 @@ footer ul{list-style:none;padding:0;margin:0}
     }
 }
 
+
+/* ==========================================================
+   CAREERS PAGE POLISH — aligned with index.html interaction language
+   ========================================================== */
+
+.careers-page {
+    overflow-x: hidden;
+}
+
+/* Hero: same full-height, editorial white/green composition as index */
+.careers-page .hero.career-hero {
+    min-height: clamp(560px, calc(100vh - 84px), 760px);
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+    background:
+        linear-gradient(90deg,
+            #fff 0%,
+            #fff 30%,
+            rgba(246,244,236,.98) 42%,
+            var(--forest) 72%,
+            var(--forest-deep) 100%);
+    position: relative;
+    isolation: isolate;
+}
+
+.careers-page .career-hero::after {
+    content: "";
+    position: absolute;
+    width: 430px;
+    height: 430px;
+    right: -120px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: var(--lime);
+    opacity: .11;
+    filter: blur(70px);
+    pointer-events: none;
+    animation: none;
+}
+
+.careers-page .career-hero-glow {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    left: 43%;
+    bottom: -190px;
+    border-radius: 50%;
+    background: var(--lime);
+    opacity: .06;
+    filter: blur(55px);
+    pointer-events: none;
+}
+
+.careers-page .hero-inner {
+    width: min(100% - 48px, 1180px);
+    margin: 0 auto;
+    padding: 58px 0 68px;
+    grid-template-columns: minmax(320px, .92fr) minmax(360px, 1.08fr);
+    gap: clamp(40px, 7vw, 92px);
+    align-items: center;
+    z-index: 2;
+}
+
+.careers-page .hero-copy {
+    max-width: 580px;
+}
+
+.careers-page .hero .kicker {
+    color: var(--lime-deep);
+    background: var(--accent-bg, #e6f3d9);
+}
+
+.careers-page .hero h1 {
+    color: var(--forest-deep);
+    font-size: clamp(2.55rem, 5.3vw, 4.8rem);
+    line-height: 1.02;
+    margin-top: 18px;
+}
+
+.careers-page .hero h1 span {
+    color: var(--forest);
+}
+
+.careers-page .hero p {
+    color: var(--muted);
+    max-width: 560px;
+    font-size: 1.05rem;
+}
+
+.careers-page .hero-badge {
+    color: var(--forest);
+    background: rgba(230,243,217,.68);
+    padding: 8px 13px;
+    border-radius: 999px;
+}
+
+.careers-page .hero-cta {
+    margin-top: 28px;
+}
+
+.careers-page .hero-card {
+    width: min(100%, 530px);
+    margin-left: auto;
+    padding: clamp(30px, 4vw, 44px);
+    border-radius: 32px;
+    background: linear-gradient(145deg, var(--forest-mid, #2c6b4f), var(--forest-deep, #12291f));
+    box-shadow: 0 28px 65px -24px rgba(18,41,31,.52);
+    position: relative;
+    overflow: hidden;
+}
+
+.careers-page .hero-card::before {
+    content: "";
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    right: -90px;
+    top: -100px;
+    border-radius: 50%;
+    background: var(--lime);
+    opacity: .12;
+    filter: blur(24px);
+    pointer-events: none;
+}
+
+.careers-page .hero-card .icon {
+    position: relative;
+    z-index: 1;
+    transition: transform .3s ease, background .3s ease;
+}
+
+.careers-page .hero-card:hover .icon {
+    transform: translateY(-3px);
+    background: rgba(199,239,62,.24);
+}
+
+.careers-page .hero-card h2,
+.careers-page .hero-card p {
+    position: relative;
+    z-index: 1;
+}
+
+/* Page-load hero reveal */
+.careers-page .hero-reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: careersHeroIn .7s cubic-bezier(.22,.61,.36,1) forwards;
+}
+.careers-page .hero-reveal-1 { animation-delay: .05s; }
+.careers-page .hero-reveal-2 { animation-delay: .13s; }
+.careers-page .hero-reveal-3 { animation-delay: .22s; }
+.careers-page .hero-reveal-4 { animation-delay: .31s; }
+.careers-page .hero-reveal-5 { animation-delay: .39s; }
+.careers-page .hero-reveal-6 { animation-delay: .18s; }
+
+@keyframes careersHeroIn {
+    to { opacity: 1; transform: none; }
+}
+
+/* Scroll reveal — one shared system, not an animation per element */
+.careers-page .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .7s cubic-bezier(.22,.61,.36,1),
+                transform .7s cubic-bezier(.22,.61,.36,1);
+}
+.careers-page .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+.careers-page .career-grid .reveal-card-2 {
+    transition-delay: .10s;
+}
+.careers-page .career-grid .reveal-card-1 {
+    transition-delay: 0s;
+}
+
+/* Cards: soft elevation rather than perpetual glow */
+.careers-page .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 24px 52px -22px rgba(18,41,31,.34);
+}
+
+/* Form interaction polish */
+.careers-page input,
+.careers-page select,
+.careers-page textarea {
+    transition: border-color .25s ease,
+                box-shadow .25s ease,
+                background .25s ease,
+                transform .25s ease;
+}
+.careers-page input:hover,
+.careers-page select:hover,
+.careers-page textarea:hover {
+    border-color: #bfcfc6;
+}
+.careers-page input:focus,
+.careers-page select:focus,
+.careers-page textarea:focus {
+    transform: translateY(-1px);
+    border-color: var(--forest);
+    box-shadow: 0 0 0 4px rgba(44,107,79,.10);
+    background: #fff;
+}
+
+.careers-page .cv-box {
+    transition: border-color .25s ease,
+                background .25s ease,
+                transform .25s ease;
+}
+.careers-page .cv-box:hover {
+    border-color: var(--forest-mid, #2c6b4f);
+    background: #fbfdf9;
+    transform: translateY(-1px);
+}
+
+/* Buttons: preserve existing button behavior, make the motion smoother */
+.careers-page .btn {
+    transition: transform .25s ease,
+                box-shadow .25s ease,
+                background .25s ease;
+}
+.careers-page .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -12px rgba(18,41,31,.45);
+}
+.careers-page .btn:active {
+    transform: translateY(0);
+}
+
+/* Email/contact link */
+.careers-page .careers-email-contact a {
+    transition: color .25s ease, opacity .25s ease;
+}
+.careers-page .careers-email-contact a:hover {
+    opacity: .78;
+}
+
+/* Remove the older infinite/glow/shimmer animation language so it does
+   not compete with the index.html interaction system. */
+.careers-page .hero::after,
+.careers-page .career-hero::after,
+.careers-page .floating,
+.careers-page .decorative,
+.careers-page .card:hover,
+.careers-page .career-card:hover,
+.careers-page .form-card:hover,
+.careers-page .application-card:hover {
+    animation: none;
+}
+
+@media (max-width: 940px) {
+    .careers-page .hero.career-hero {
+        min-height: auto;
+        background: linear-gradient(90deg,
+            #fff 0%,
+            #fff 35%,
+            rgba(246,244,236,.98) 55%,
+            var(--forest) 100%);
+    }
+
+    .careers-page .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 34px;
+        padding: 54px 0 64px;
+    }
+
+    .careers-page .hero-card {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+@media (max-width: 760px) {
+    .careers-page .hero.career-hero {
+        background: linear-gradient(90deg,
+            #fff 0%,
+            #fff 40%,
+            var(--forest) 100%);
+    }
+
+    .careers-page .hero-inner {
+        width: min(100% - 40px, 560px);
+        padding: 44px 0 50px;
+    }
+
+    .careers-page .hero h1 {
+        font-size: clamp(2.2rem, 10vw, 3.25rem);
+    }
+
+    .careers-page .hero-cta {
+        width: 100%;
+    }
+
+    .careers-page .career-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .careers-page .hero-reveal {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+
+    .careers-page .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none !important;
+    }
+
+    .careers-page .card,
+    .careers-page .btn,
+    .careers-page input,
+    .careers-page select,
+    .careers-page textarea,
+    .careers-page .cv-box,
+    .careers-page .hero-card .icon {
+        transition: none !important;
+    }
+}
+
 </style>
+
+<style>
+/* ==========================================================
+   CAREERS HERO — same composition as the homepage hero,
+   with one career visual only (no services carousel).
+   ========================================================== */
+.careers-page .hero-reframed.career-hero {
+    position: relative;
+    min-height: clamp(560px, calc(100vh - 84px), 760px);
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    background: var(--forest);
+    isolation: isolate;
+}
+
+.careers-page .hero-reframed .hero-background,
+.careers-page .hero-reframed .hero-visual,
+.careers-page .hero-reframed .career-static-visual {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.careers-page .hero-reframed .hero-background {
+    z-index: 1;
+    background: var(--forest);
+}
+
+.careers-page .hero-reframed .career-static-visual {
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.careers-page .hero-reframed .career-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: clamp(32px, 5vw, 68px);
+    padding-left: 56%;
+    color: #fff;
+    background:
+        radial-gradient(circle at 79% 36%, rgba(140,198,63,.22), transparent 25%),
+        linear-gradient(135deg, #2c6b4f 0%, var(--forest) 55%, var(--forest-deep) 100%);
+}
+
+.careers-page .hero-reframed .career-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255,255,255,.98) 0%,
+        rgba(255,255,255,.92) 28%,
+        rgba(255,255,255,.48) 46%,
+        rgba(18,41,31,.08) 63%,
+        rgba(18,41,31,.18) 100%
+    );
+    pointer-events: none;
+}
+
+.careers-page .hero-reframed .career-slide > *:not(.career-slide-decor) {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+}
+
+.careers-page .hero-reframed .career-slide .slide-icon {
+    top: auto;
+    right: clamp(28px, 4vw, 52px);
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    border-radius: 22px;
+    display: grid;
+    place-items: center;
+    color: var(--lime);
+    background: rgba(199,239,62,.14);
+    margin: 0;
+}
+
+.careers-page .hero-reframed .career-slide .slide-icon svg {
+    width: 36px;
+    height: 36px;
+}
+
+.careers-page .hero-reframed .career-slide .slide-tag {
+    align-self: flex-start;
+    margin: 0;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: rgba(199,239,62,.14);
+    color: var(--lime);
+}
+
+.careers-page .hero-reframed .career-slide h2 {
+    font-size: clamp(32px, 4vw, 62px);
+    line-height: 1.02;
+    margin: 10px 0 14px;
+}
+
+.careers-page .hero-reframed .career-slide p {
+    font-size: clamp(15px, 1.3vw, 18px);
+    line-height: 1.65;
+    margin: 0;
+    color: #dce7e1;
+}
+
+.careers-page .career-slide-decor {
+    position: absolute !important;
+    inset: 0;
+    max-width: none !important;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1 !important;
+}
+
+.careers-page .career-orbit {
+    position: absolute;
+    border: 1px solid rgba(199,239,62,.16);
+    border-radius: 50%;
+}
+
+.careers-page .orbit-1 { width: 420px; height: 420px; right: -120px; top: 7%; }
+.careers-page .orbit-2 { width: 280px; height: 280px; right: 10%; top: 22%; }
+.careers-page .orbit-3 { width: 130px; height: 130px; right: 25%; top: 39%; background: rgba(199,239,62,.05); }
+
+.careers-page .hero-reframed .hero-content {
+    position: relative;
+    z-index: 8;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.careers-page .hero-reframed .hero-copy {
+    width: min(520px, 44vw);
+    max-width: 520px;
+    pointer-events: auto;
+    padding: 20px 0;
+}
+
+.careers-page .hero-reframed .hero-copy .eyebrow {
+    margin-bottom: 22px;
+}
+
+.careers-page .hero-reframed .hero-copy h1 {
+    color: var(--forest-deep);
+    font-size: clamp(48px, 6vw, 82px);
+    line-height: .98;
+    letter-spacing: -.035em;
+    margin-bottom: 24px;
+}
+
+.careers-page .hero-reframed .hero-copy h1 .accent { color: var(--forest); }
+
+.careers-page .hero-reframed .hero-copy .lede {
+    max-width: 490px;
+    color: var(--muted);
+    font-size: clamp(16px, 1.35vw, 19px);
+    line-height: 1.7;
+}
+
+.careers-page .hero-reframed .hero-cta { margin-top: 28px; }
+
+@media (max-width: 900px) {
+    .careers-page .hero-reframed.career-hero { min-height: 650px; }
+    .careers-page .hero-reframed .career-slide { padding-left: 48%; }
+    .careers-page .hero-reframed .hero-copy { width: min(500px, 50vw); }
+}
+
+@media (max-width: 760px) {
+    .careers-page .hero-reframed.career-hero { min-height: auto; background: var(--forest); }
+    .careers-page .hero-reframed .hero-background {
+        background: linear-gradient(180deg, #fff 0%, #fff 49%, var(--forest) 74%, var(--forest-deep) 100%);
+    }
+    .careers-page .hero-reframed .career-slide {
+        position: relative;
+        min-height: 390px;
+        padding: 34px 20px 46px;
+    }
+    .careers-page .hero-reframed .career-slide::after {
+        background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.72) 24%, rgba(18,41,31,.14) 48%, rgba(18,41,31,.86) 100%);
+    }
+    .careers-page .hero-reframed .career-slide .slide-icon { right: 20px; top: 28px; }
+    .careers-page .hero-reframed .hero-content { align-items: flex-start; }
+    .careers-page .hero-reframed .hero-copy {
+        width: 100%;
+        max-width: 560px;
+        padding: 52px 0 36px;
+    }
+    .careers-page .hero-reframed .hero-copy h1 { font-size: clamp(42px, 12vw, 64px); }
+    .careers-page .hero-reframed .hero-cta { width: 100%; }
+}
+</style>
+
 </head>
 <body class="careers-page">
 <header>
@@ -309,26 +834,46 @@ footer ul{list-style:none;padding:0;margin:0}
 </header>
 
 <main>
-<section class="hero">
- <div class="container hero-inner">
-  <div>
-   <span class="kicker">Careers at Kalidad Pharmacy</span>
-   <h1>Build a career where <span>care comes first.</span></h1>
-   <p>We welcome passionate, dependable people who want to make a meaningful difference in their community. At Kalidad Pharmacy, your skills, empathy and commitment can help families access better health every day.</p>
-   <span class="hero-badge"><span class="dot"></span> We are always interested in exceptional people.</span>
-  </div>
-  <div class="hero-card">
-   <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-   <h2>Join a team that cares.</h2><p>Bring your professionalism, warmth and ambition. Tell us about yourself and the kind of opportunity you would like to grow into.</p>
-  </div>
- </div>
+<section class="hero hero-reframed career-hero">
+    <div class="hero-background" aria-hidden="true">
+        <div class="hero-visual">
+            <div class="slider career-static-visual" aria-label="Career opportunity">
+                <div class="slide career-slide active">
+                    <div class="career-slide-decor" aria-hidden="true">
+                        <span class="career-orbit orbit-1"></span>
+                        <span class="career-orbit orbit-2"></span>
+                        <span class="career-orbit orbit-3"></span>
+                    </div>
+                    <span class="slide-icon career-visual-mark">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </span>
+                    <span class="slide-tag">Careers at Kalidad Pharmacy</span>
+                    <h2>Join a team that cares.</h2>
+                    <p>Bring your professionalism, warmth and ambition. Tell us about yourself and the kind of opportunity you would like to grow into.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container hero-content">
+        <div class="hero-copy">
+            <span class="eyebrow"><span class="pulse-dot"></span>Careers at Kalidad Pharmacy</span>
+            <h1>Build a career where <span class="accent">care comes first.</span></h1>
+            <p class="lede">We welcome passionate, dependable people who want to make a meaningful difference in their community. At Kalidad Pharmacy, your skills, empathy and commitment can help families access better health every day.</p>
+            <a class="btn btn-primary hero-cta" href="#application">Apply now <span aria-hidden="true">→</span></a>
+        </div>
+    </div>
 </section>
 
 <section class="section" id="application">
  <div class="container">
   <div class="section-title"><span class="kicker">Candidate application</span><h2>Tell us about <span style="color:var(--lime)">you.</span></h2><p>Complete the form below and attach your CV. Your information helps our team understand your experience and where you could make the greatest contribution.</p></div>
   <div class="career-grid">
-   <form class="card" id="careerForm" enctype="multipart/form-data">
+   <form class="card reveal reveal-card-1" id="careerForm" enctype="multipart/form-data">
     <h3>Personal &amp; professional details</h3><p class="sub">Fields marked <span class="required">*</span> are required.</p>
     <div class="form-grid">
      <div class="field"><label for="surname">Surname <span class="required">*</span></label><input id="surname" name="surname" required></div>
@@ -351,17 +896,6 @@ footer ul{list-style:none;padding:0;margin:0}
 </div>
 </form>
 
-   <div class="admin-card"><p>Use this section to enter or update the administrator's contact details for recruitment enquiries. These fields are intentionally separate from the candidate application.</p>
-    <div class="form-grid">
-     <div class="field"><label for="adminName">Admin name</label><input id="adminName" placeholder="Enter admin name"></div>
-     <div class="field"><label for="adminRole">Department / role</label><input id="adminRole" placeholder="e.g. Recruitment Admin"></div>
-     <div class="field"><label for="adminEmail">Admin email</label><input id="adminEmail" type="email" placeholder="admin@example.com"></div>
-     <div class="field"><label for="adminPhone">Admin phone</label><input id="adminPhone" type="tel" placeholder="+256 ..."></div>
-     <div class="field full"><label for="adminNote">Recruitment enquiry message</label><textarea id="adminNote" placeholder="Enter any recruitment enquiry or message for the admin."></textarea></div>
-    </div>
-    <div class="form-actions"><button class="btn btn-lime" type="button" id="adminBtn">Contact admin</button></div>
-    <div class="notice" id="adminNotice"></div>
-   </div>
   </div>
  </div>
 </section>
@@ -378,12 +912,57 @@ footer ul{list-style:none;padding:0;margin:0}
  </div>
 </footer>
 <script>
-const menu=document.getElementById('menu'), mobile=document.getElementById('mobileNav');
-menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));mobile.style.display=open?'none':'block';});
-const cv=document.getElementById('cv'), fileName=document.getElementById('fileName');
-cv.addEventListener('change',()=>{fileName.textContent=cv.files.length?cv.files[0].name:'PDF, DOC or DOCX — preferably 2–5 MB.';});
-document.getElementById('careerForm').addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('applicationNotice');n.style.display='block';n.textContent='Your application form is ready. A backend/email service is required to actually transmit the CV and application to Kalidad Pharmacy.';});
-document.getElementById('adminBtn').addEventListener('click',()=>{const email=document.getElementById('adminEmail').value.trim();const phone=document.getElementById('adminPhone').value.trim();const msg=document.getElementById('adminNote').value.trim()||'Hello, I would like to make a recruitment enquiry.';const n=document.getElementById('adminNotice');if(email){window.location.href='mailto:'+encodeURIComponent(email)+'?subject='+encodeURIComponent('Careers enquiry — Kalidad Pharmacy')+'&body='+encodeURIComponent(msg);}else if(phone){window.open('https://wa.me/'+phone.replace(/[^0-9]/g,'' )+'?text='+encodeURIComponent(msg),'_blank');}else{n.style.display='block';n.textContent='Enter an admin email or phone number first.';}});
+(function(){
+  /* Mobile navigation — preserve existing behavior */
+  const menu=document.getElementById('menu');
+  const mobile=document.getElementById('mobileNav');
+  if(menu && mobile){
+    menu.addEventListener('click',()=>{
+      const open=menu.getAttribute('aria-expanded')==='true';
+      menu.setAttribute('aria-expanded',String(!open));
+      mobile.style.display=open?'none':'block';
+    });
+  }
+
+  /* Scroll reveals — shared, lightweight interaction pattern */
+  const revealEls=document.querySelectorAll('.careers-page .reveal');
+  if('IntersectionObserver' in window){
+    const observer=new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.12,rootMargin:'0px 0px -50px 0px'});
+    revealEls.forEach(el=>observer.observe(el));
+  }else{
+    revealEls.forEach(el=>el.classList.add('is-visible'));
+  }
+
+  /* CV filename — preserve existing functionality */
+  const cv=document.getElementById('cv');
+  const fileName=document.getElementById('fileName');
+  if(cv && fileName){
+    cv.addEventListener('change',()=>{
+      fileName.textContent=cv.files.length
+        ? cv.files[0].name
+        : 'PDF, DOC or DOCX — preferably 2–5 MB.';
+    });
+  }
+
+  /* Candidate application — preserve existing submission behavior */
+  const careerForm=document.getElementById('careerForm');
+  if(careerForm){
+    careerForm.addEventListener('submit',e=>{
+      e.preventDefault();
+      const n=document.getElementById('applicationNotice');
+      n.style.display='block';
+      n.textContent='Your application form is ready. A backend/email service is required to actually transmit the CV and application to Kalidad Pharmacy.';
+    });
+  }
+
+})();
 </script>
 </body>
 </html>
