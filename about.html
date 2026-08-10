@@ -462,7 +462,32 @@ button, input, textarea, select {
 }
 
 </style>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23163427'/%3E%3Cpath d='M50 22c15 0 28 12 28 28S65 78 50 78 22 66 22 50 35 22 50 22z' fill='%23C6F135'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" href="kalidad-icon.png">
+
+<style id="kalidad-footer-favicon-overrides">
+/* Kalidad Pharmacy shared footer/logo + favicon refinements */
+footer .footer-brand,
+footer .footer-brand-logo{display:block;}
+footer .footer-brand{text-align:center;}
+footer .footer-brand-logo{
+  width:280px;
+  max-width:100%;
+  height:auto;
+  margin:0 auto;
+  object-fit:contain;
+}
+footer,
+footer .footer-grid,
+footer .footer-inner{text-align:center;}
+footer .footer-grid > div,
+footer .footer-inner > div,
+footer .footer-col{text-align:center;}
+footer .footer-col ul{justify-items:center;}
+footer .footer-contact li{justify-content:center;text-align:center;}
+footer .footer-bottom .container{justify-content:center;text-align:center;}
+@media(max-width:760px){footer .footer-brand-logo{width:250px;}}
+</style>
+
 </head>
 <body>
 
@@ -483,8 +508,8 @@ button, input, textarea, select {
       <a href="index.html" class="nav-link">Home</a>
       <a href="services.html" class="nav-link">Services</a>
       <a href="contact.html" class="nav-link">Contact Us</a>
-      <a href="careers.html" class="nav-link">Careers</a>
-      <a href="about.html" class="nav-link active">About</a>
+      <a href="careers.html" class="nav-link">Careers</a><a href="news.html" class="nav-link">News</a>
+      <a href="about.html" class="nav-link active">About Us</a>
       <span class="open-badge"><span class="pulse-dot"></span>Open 24/7</span>
       <a href="https://wa.me/256764201229" target="_blank" rel="noopener" class="btn btn-primary nav-cta">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg>
@@ -500,8 +525,8 @@ button, input, textarea, select {
     <a href="index.html">Home</a>
     <a href="services.html">Services</a>
     <a href="contact.html">Contact Us</a>
-    <a href="careers.html">Careers</a>
-    <a href="about.html" class="active">About</a>
+    <a href="careers.html">Careers</a><a href="news.html">News</a>
+    <a href="about.html" class="active">About Us</a>
     <a href="https://wa.me/256764201229" target="_blank" rel="noopener" class="btn btn-primary" style="justify-content:center;margin-top:8px;">Order on WhatsApp</a>
   </div>
 </header>
@@ -601,18 +626,14 @@ button, input, textarea, select {
 
 <footer>
   <div class="container footer-grid">
-    <div>
-      <h4>Kalidad Pharmacy</h4>
-      <p class="desc">Your health, your wealth. Caring for you, one prescription at a time — in the heart of Fort Portal.</p>
-    </div>
+    <div class="footer-brand"><img class="footer-brand-logo" src="kalidad-logo.png" alt="Kalidad Pharmacy — Your health, your wealth"></div>
     <div class="footer-col">
-      <p class="head">Explore</p>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+      <p class="head">Explore</p><ul><li><a href="index.html">Home</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="contact.html">Contact Us</a></li>
+<li><a href="careers.html">Careers</a></li>
+<li><a href="news.html">News</a></li>
+<li><a href="about.html">About Us</a></li></ul>
     </div>
     <div class="footer-col">
       <p class="head">Visit us</p>
