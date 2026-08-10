@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact Us | Kalidad Pharmacy</title>
+<title>Contact | Kalidad Pharmacy</title>
 <meta name="description" content="Contact Kalidad Pharmacy in Fort Portal, Uganda. Open 24/7. Call, WhatsApp, or send a message.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -794,6 +794,64 @@ footer .footer-col ul{justify-items:center;}
 footer .footer-contact li{justify-content:center;text-align:center;}
 footer .footer-bottom .container{justify-content:center;text-align:center;}
 @media(max-width:760px){footer .footer-brand-logo{width:250px;}}
+
+/* ==========================================================
+   Shared button interaction — matched to the Careers page
+   ========================================================== */
+button:not(.menu-toggle),
+.btn,
+a.button,
+a.btn {
+    position: relative;
+    overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+
+button:not(.menu-toggle)::after,
+.btn::after,
+a.button::after,
+a.btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -70%;
+    width: 45%;
+    background: rgba(255,255,255,.20);
+    transform: skewX(-20deg);
+    transition: left .55s ease;
+    pointer-events: none;
+}
+
+button:not(.menu-toggle):hover,
+.btn:hover,
+a.button:hover,
+a.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(22, 91, 69, .16);
+}
+
+button:not(.menu-toggle):hover::after,
+.btn:hover::after,
+a.button:hover::after,
+a.btn:hover::after {
+    left: 125%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    button:not(.menu-toggle),
+    button:not(.menu-toggle)::after,
+    .btn,
+    .btn::after,
+    a.button,
+    a.button::after,
+    a.btn,
+    a.btn::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+
 </style>
 
 </head>
@@ -854,18 +912,18 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
       <div class="contact-wrap reveal">
         <div class="contact-info">
           <h3>Visit or call anytime</h3>
-          <p class="sub">We are always open 24 hours a day, every day of the week.</p>
+          <p class="sub">Kalidad Pharmacy is open 24 hours a day, every day of the week.</p>
           <div class="info-row">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span>
-            <div><p class="label">Address</p><p class="value">MT-Bwamba rd junction,Kisenyi,FortPortal,Uganda</p></div>
+            <div><p class="label">Address</p><p class="value">Kisenyi, next to Rosefoam Mattress Depot, Fort Portal, Kabarole District</p></div>
           </div>
           <div class="info-row">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></span>
-            <div><p class="label">Phone</p><p class="value">+256 759 845 260 or +256 772 292 177</p></div>
+            <div><p class="label">Phone</p><p class="value">+256 764 201 229</p></div>
           </div>
           <div class="info-row">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
-            <div><p class="label">Hours</p><p class="value">Open 24/7, Every day</p></div>
+            <div><p class="label">Hours</p><p class="value">Open 24/7, Monday to Sunday</p></div>
           </div>
           <a href="https://wa.me/256764201229" target="_blank" rel="noopener" class="btn" style="background:var(--lime);color:var(--forest-deep);margin-top:26px;">
             <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
@@ -880,14 +938,14 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
           <div>
             <label for="topic">What's this about?</label>
             <select id="topic" name="topic">
-              <option>Prescription filling</option>
+              <option>Prescription refill</option>
               <option>Health check booking</option>
               <option>Delivery question</option>
               <option>General question</option>
             </select>
           </div>
           <div><label for="message">Message</label><textarea id="message" name="message" rows="4" placeholder="Tell us what you need..." required></textarea></div>
-          <p class="form-note">We'll get back to you within a few minutes.</p>
+          <p class="form-note">We'll get back to you within a few hours, every day of the week.</p>
           <button type="submit" class="btn btn-primary" style="justify-content:center;">Send message</button>
         </form>
       </div>
@@ -925,8 +983,8 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
     <div class="container">
       <div class="section-head reveal">
         <span class="kicker">Our locations</span>
-        <h2 id="branches-title">Visit Us</h2>
-        <p>You are welcome to visit us at any of our branches below.</p>
+        <h2 id="branches-title">Visit our Branches</h2>
+        <p>Find the Kalidad Pharmacy branch that is most convenient for you. Each location is ready to welcome you with the same care and attention.</p>
         <div class="leaf-rule"></div>
       </div>
 
@@ -953,9 +1011,9 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
             <div class="branch-slider-dots" aria-label="Kisenyi Branch image navigation"></div>
           </div>
           <div class="branch-copy">
-            <span class="kicker"> Main branch</span>
+            <span class="kicker">Fort Portal • Main branch</span>
             <h3>Kisenyi Branch</h3>
-            <p>Located next to Rosefoam Mattress Depot at the MT-Bwamba road junction . We are always open 24/7 to fill your health, wellness,cosmetic and baby needs in the heart of the city.</p>
+            <p>Our Kisenyi Branch is located next to Rosefoam Mattress Depot in Fort Portal. It is a convenient point for prescriptions, everyday pharmacy needs, health guidance and direct assistance from the Kalidad Pharmacy team.</p>
             <span class="branch-note"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Kisenyi, Fort Portal, Uganda</span>
           </div>
         </article>
@@ -982,10 +1040,10 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
             <div class="branch-slider-dots" aria-label="Kahungabunyonyi Branch image navigation"></div>
           </div>
           <div class="branch-copy">
-            <span class="kicker">Our second Branch</span>
+            <span class="kicker">Our second location</span>
             <h3>Kahungabunyonyi Branch</h3>
-            <p>Located along Kahungabunyonyi road on the City Inn building ground floor. We are always open 24/7 to fill your health, wellness,cosmetic and baby needs.</p>
-            <span class="branch-note"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Kahungabunyonyi,FortPortal,Uganda</span>
+            <p>Our Kahungabunyonyi Branch gives the surrounding community another convenient place to access Kalidad Pharmacy services, medicines, health products and friendly pharmacy support.</p>
+            <span class="branch-note"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Kahungabunyonyi, Uganda</span>
           </div>
         </article>
       </div>
@@ -996,10 +1054,11 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
     <div class="container">
       <div class="location-head reveal">
         <span class="kicker">Find us</span>
-        <p>Use the map below to locate our brances in Fort Portal.</p>
+        <h2 id="location-title">Locate us</h2>
+        <p>Use the map below to find the Kalidad Pharmacy location in Kisenyi, Fort Portal.</p>
       </div>
       <div class="map-frame reveal">
-        <a class="map-open" href="https://maps.app.goo.gl/Eaxz7fNvanTzsc7B7" target="_blank" rel="noopener">
+        <a class="map-open" href="https://maps.app.goo.gl/928VPjNejnPPEkPJ8" target="_blank" rel="noopener">
           <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Open in Google Maps
         </a>
         <iframe
@@ -1028,9 +1087,9 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
     <div class="footer-col">
       <p class="head">Visit us</p>
       <ul class="footer-contact">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg> Kisenyi, FortPortal, Uganda</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg><a href="tel:+256759845260">+256759845260</a> or <a href="tel:+256772292177">+256772292177</a></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Open 24/7, Every day</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg> Kisenyi, next to Rosefoam Mattress Depot, Fort Portal, Kabarole District</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg><a href="tel:+256764201229">+256 764 201 229</a></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Open 24/7, Monday to Sunday</li>
       </ul>
     </div>
   </div>
