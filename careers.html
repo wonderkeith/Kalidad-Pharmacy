@@ -1192,19 +1192,7 @@ body * {
 </style>
 
 
-<style id="application-thank-you-styles">.application-thank-you{min-height:calc(100vh - 88px);display:none;align-items:center;justify-content:center;padding:60px 24px;background:#fff}.application-thank-you.show{display:flex;animation:thankYouFadeIn .5s ease both}.thank-you-card{width:min(720px,100%);text-align:center;padding:30px 24px 50px}.thank-you-card h1{margin:0 auto 14px;color:var(--forest-deep,#073b2e);font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;font-weight:700}.thank-you-card p{margin:0 auto 32px;max-width:600px;color:var(--muted,#718078);font-size:clamp(1rem,2vw,1.15rem);line-height:1.7}.success-icon{width:108px;height:108px;margin:0 auto;filter:drop-shadow(0 0 18px rgba(57,168,82,.45))}.success-icon svg{width:100%;height:100%;overflow:visible}.success-ring{fill:#f0faef;stroke:#39a852;stroke-width:5;filter:drop-shadow(0 0 10px rgba(57,168,82,.65))}.success-check{fill:none;stroke:#24943e;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(57,168,82,.55))}@keyframes thankYouFadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@media(max-width:560px){.application-thank-you{padding:50px 18px}.thank-you-card{padding:24px 14px 40px}.success-icon{width:92px;height:92px}}</style>
 
-<style id="careers-email-and-plain-thank-you">
-.cv-email-box{border:1px solid var(--line);border-radius:18px;background:#f8faf6;padding:20px 22px;display:flex;flex-direction:column;gap:7px;line-height:1.6}
-.cv-email-box strong{font-size:1rem;color:var(--forest)}
-.cv-email-box span{color:var(--muted);font-size:.9rem}
-.cv-email-box a{color:var(--green);font-weight:700;text-decoration:underline}
-.application-thank-you{min-height:calc(100vh - 88px);display:none;align-items:center;justify-content:center;padding:60px 24px;background:var(--cream)}
-.application-thank-you.show{display:flex;animation:thankYouFadeIn .5s ease both}
-.thank-you-message{width:min(760px,100%);text-align:center}
-.thank-you-message h1{margin:0 0 16px;color:var(--forest-deep);font-size:clamp(2rem,5vw,3.8rem);line-height:1.1}
-.thank-you-message p{margin:0;color:var(--muted);font-size:clamp(1rem,2vw,1.15rem);line-height:1.7}
-</style>
 
 </head>
 <body class="careers-page">
@@ -1262,9 +1250,6 @@ body * {
  </div>
 </section>
 
-<section class="application-thank-you" id="applicationThankYou" aria-live="polite">
-<div class="thank-you-card"><h1>Thank you for submitting your application.</h1><p>We shall review it and get back to you as soon as possible.</p><div class="success-icon" aria-hidden="true"><svg viewBox="0 0 120 120"><circle class="success-ring" cx="60" cy="60" r="48"></circle><path class="success-check" d="M35 61 L52 78 L86 42"></path></svg></div></div>
-</section>
 
 </main>
 
@@ -1337,73 +1322,6 @@ body * {
 })();
 </script>
 
-<script id="application-thank-you-controller">
-(function(){
-    const form = document.getElementById('careerForm');
-    const applicationSection = document.getElementById('application');
-    const thankYouSection = document.getElementById('applicationThankYou');
-    const notice = document.getElementById('applicationNotice');
-
-    if(!form || !applicationSection || !thankYouSection) return;
-
-    form.addEventListener('submit', async function(e){
-        e.preventDefault();
-
-        if(!form.checkValidity()){
-            form.reportValidity();
-            return;
-        }
-
-        const submitButton = form.querySelector('button[type="submit"]');
-        const originalText = submitButton ? submitButton.textContent : '';
-
-        if(submitButton){
-            submitButton.disabled = true;
-            submitButton.textContent = 'Submitting...';
-        }
-
-        if(notice){
-            notice.style.display = 'none';
-            notice.textContent = '';
-        }
-
-        try{
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            });
-
-            const result = await response.json().catch(() => ({}));
-
-            if(!response.ok){
-                const message = result.errors && result.errors.length
-                    ? result.errors.map(error => error.message).join(' ')
-                    : (result.error || 'Unable to submit your application. Please try again.');
-                throw new Error(message);
-            }
-
-            applicationSection.style.display = 'none';
-            thankYouSection.classList.add('show');
-            document.title = 'Application Submitted | Kalidad Pharmacy';
-            window.scrollTo({top:0, behavior:'smooth'});
-        }catch(error){
-            if(notice){
-                notice.textContent = error.message || 'Unable to submit your application. Please try again.';
-                notice.style.display = 'block';
-                notice.scrollIntoView({behavior:'smooth', block:'center'});
-            }else{
-                alert(error.message || 'Unable to submit your application. Please try again.');
-            }
-        }finally{
-            if(submitButton){
-                submitButton.disabled = false;
-                submitButton.textContent = originalText;
-            }
-        }
-    });
-})();
-</script>
 
 </body>
 </html>
