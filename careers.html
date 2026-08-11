@@ -1222,24 +1222,6 @@ body * {
 @media(prefers-reduced-motion:reduce){.application-thank-you.show,.success-icon,.success-ring,.success-check{animation:none}.success-ring,.success-check{stroke-dashoffset:0}}
 </style>
 
-
-<style id="netlify-submission-error">
-.submission-error{
-    margin-top:18px;
-    padding:13px 16px;
-    border-radius:12px;
-    background:#fff1f1;
-    color:#a52b2b;
-    font-size:.9rem;
-    line-height:1.5;
-    text-align:center;
-}
-#careerForm button[disabled]{
-    opacity:.7;
-    cursor:wait;
-}
-</style>
-
 </head>
 <body class="careers-page">
 <header>
@@ -1269,23 +1251,12 @@ body * {
  <div class="container">
   <div class="section-title"><span class="kicker">Candidate application</span><h2>Tell us about <span style="color:var(--lime)">you.</span></h2><p>Complete the form below and attach your CV. Your information helps our team understand your experience and where you could make the greatest contribution.</p></div>
   <div class="career-grid">
-   <form id="careerForm" name="career-application" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" enctype="multipart/form-data">
-    <input type="hidden" name="form-name" value="career-application">
-    <input type="hidden" name="subject" data-remove-prefix value="New Career Application — Kalidad Pharmacy">
-    <p class="bot-field" style="display:none;">
-        <label>Don't fill this out if you're human: <input name="bot-field"></label>
-    </p>
-
+   <form class="card reveal reveal-card-1" id="careerForm" enctype="multipart/form-data" method="post" action="/api/applications">
     <h3>Personal &amp; professional details</h3><p class="sub">Fields marked <span class="required">*</span> are required.</p>
     <div class="form-grid">
      <div class="field"><label for="surname">Surname <span class="required">*</span></label><input id="surname" name="surname" required></div>
      <div class="field"><label for="firstname">First name <span class="required">*</span></label><input id="firstname" name="firstname" required></div>
      <div class="field"><label for="othernames">Other name(s)</label><input id="othernames" name="othernames"></div>
-                <div class="field">
-                    <label for="applicantEmail">Email Address <span>*</span></label>
-                    <input id="applicantEmail" name="email" type="email" autocomplete="email" required>
-                </div>
-
      <div class="field"><label for="gender">Gender <span class="required">*</span></label><select id="gender" name="gender" required><option value="">Select</option><option>Female</option><option>Male</option><option>Prefer not to say</option></select></div>
      <div class="field"><label for="dob">Date of birth</label><input id="dob" name="dob" type="date"></div>
      <div class="field"><label for="nationality">Nationality</label><input id="nationality" name="nationality"></div>
@@ -1403,12 +1374,12 @@ body * {
 })();
 </script>
 
-
 <script id="application-thank-you-controller">
 (function(){
     const form = document.getElementById('careerForm');
     const applicationSection = document.getElementById('application');
     const thankYouSection = document.getElementById('applicationThankYou');
+    const notice = document.getElementById('applicationNotice');
 
     if(!form || !applicationSection || !thankYouSection) return;
 
@@ -1420,63 +1391,51 @@ body * {
             return;
         }
 
-        const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+        const submitButton = form.querySelector('button[type="submit"]');
         const originalText = submitButton ? submitButton.textContent : '';
 
         if(submitButton){
             submitButton.disabled = true;
-            submitButton.textContent = 'Submitting…';
+            submitButton.textContent = 'Submitting...';
         }
 
-        try {
-            /*
-             * Netlify Forms receives multipart/form-data automatically when
-             * FormData is submitted this way. Do not manually set Content-Type:
-             * the browser supplies the correct boundary for the CV upload.
-             */
-            const response = await fetch('/', {
+        if(notice){
+            notice.style.display = 'none';
+            notice.textContent = '';
+        }
+
+        try{
+            const response = await fetch('/api/applications', {
                 method: 'POST',
-                body: new FormData(form),
-                headers: {
-                    'Accept': 'application/json'
-                }
+                body: new FormData(form)
             });
 
+            const result = await response.json().catch(() => ({}));
+
             if(!response.ok){
-                throw new Error('Submission failed');
+                throw new Error(result.error || 'Unable to submit your application. Please try again.');
             }
 
             applicationSection.style.display = 'none';
             thankYouSection.classList.add('show');
             document.title = 'Application Submitted | Kalidad Pharmacy';
-
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        } catch(error) {
-            console.error('Application submission error:', error);
-
-            const existingError = form.querySelector('.submission-error');
-            if(existingError) existingError.remove();
-
-            const errorMessage = document.createElement('p');
-            errorMessage.className = 'submission-error';
-            errorMessage.setAttribute('role', 'alert');
-            errorMessage.textContent =
-                'We could not submit your application right now. Please check your connection and try again.';
-
-            form.appendChild(errorMessage);
-
+            window.scrollTo({top:0, behavior:'smooth'});
+        }catch(error){
+            if(notice){
+                notice.textContent = error.message || 'Unable to submit your application. Please try again.';
+                notice.style.display = 'block';
+            }else{
+                alert(error.message || 'Unable to submit your application. Please try again.');
+            }
+        }finally{
             if(submitButton){
                 submitButton.disabled = false;
-                submitButton.textContent = originalText || 'Submit Application';
+                submitButton.textContent = originalText;
             }
         }
     });
 })();
 </script>
-
 
 </body>
 </html>
