@@ -1308,14 +1308,65 @@ body * {
   }else{
     revealEls.forEach(el=>el.classList.add('is-visible'));
   }
-  /* Candidate application — preserve existing submission behavior */
-  const careerForm=document.getElementById('careerForm');
+  /* Formspree submission — redirect only after a confirmed successful response */
+  const careerForm = document.getElementById('careerForm');
+
   if(careerForm){
-    careerForm.addEventListener('submit',e=>{
+    careerForm.addEventListener('submit', async function(e){
       e.preventDefault();
-      const n=document.getElementById('applicationNotice');
-      n.style.display='block';
-      n.textContent='Your application form is ready. A backend/email service is required to actually transmit the CV and application to Kalidad Pharmacy.';
+
+      if(!careerForm.checkValidity()){
+        careerForm.reportValidity();
+        return;
+      }
+
+      const submitButton = careerForm.querySelector('button[type="submit"]');
+      const notice = document.getElementById('applicationNotice');
+      const originalText = submitButton ? submitButton.textContent : '';
+
+      if(submitButton){
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
+      }
+
+      if(notice){
+        notice.style.display = 'none';
+        notice.textContent = '';
+      }
+
+      try{
+        const response = await fetch(careerForm.action, {
+          method: 'POST',
+          body: new FormData(careerForm),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if(!response.ok){
+          const message = result.errors && result.errors.length
+            ? result.errors.map(error => error.message).join(' ')
+            : (result.error || 'Unable to submit your application. Please try again.');
+          throw new Error(message);
+        }
+
+        // Formspree accepted the submission. Only now leave the form page.
+        window.location.href = 'thankyou(3).html';
+
+      }catch(error){
+        if(notice){
+          notice.textContent = error.message || 'Unable to submit your application. Please try again.';
+          notice.style.display = 'block';
+          notice.scrollIntoView({behavior:'smooth', block:'center'});
+        }else{
+          alert(error.message || 'Unable to submit your application. Please try again.');
+        }
+      }finally{
+        if(submitButton){
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        }
+      }
     });
   }
 
