@@ -58,9 +58,6 @@ input,select,textarea{font:inherit;font-size:.9rem;border:1px solid #d6dfd9;back
 textarea{min-height:120px;resize:vertical}
 input:focus,select:focus,textarea:focus{border-color:var(--lime);box-shadow:0 0 0 3px rgba(140,198,63,.15)}
 .required{color:var(--green)}
-.cv-box{border:1px dashed #b8c8be;border-radius:18px;background:#f8faf6;padding:22px;margin-top:6px}
-.cv-box input[type=file]{width:100%;padding:10px;background:#fff}
-.file-name{font-size:.76rem;color:var(--muted);margin-top:8px;min-height:18px}
 .btn{border:0;border-radius:999px;padding:13px 21px;font:inherit;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:.2s}
 .btn-primary{background:var(--forest);color:#fff}
 .btn-primary:hover{transform:translateY(-1px);background:var(--green)}
@@ -316,15 +313,6 @@ footer {
 .careers-page a.button:hover::after,
 .careers-page a.btn:hover::after {
     left: 125%;
-}
-
-/* CV upload area */
-.careers-page input[type="file"] {
-    cursor: pointer;
-}
-
-.careers-page input[type="file"]:hover {
-    border-color: var(--forest, #165b45);
 }
 
 /* Email link */
@@ -1222,6 +1210,18 @@ body * {
 @media(prefers-reduced-motion:reduce){.application-thank-you.show,.success-icon,.success-ring,.success-check{animation:none}.success-ring,.success-check{stroke-dashoffset:0}}
 </style>
 
+<style id="careers-email-and-plain-thank-you">
+.cv-email-box{border:1px solid var(--line);border-radius:18px;background:#f8faf6;padding:20px 22px;display:flex;flex-direction:column;gap:7px;line-height:1.6}
+.cv-email-box strong{font-size:1rem;color:var(--forest)}
+.cv-email-box span{color:var(--muted);font-size:.9rem}
+.cv-email-box a{color:var(--green);font-weight:700;text-decoration:underline}
+.application-thank-you{min-height:calc(100vh - 88px);display:none;align-items:center;justify-content:center;padding:60px 24px;background:var(--cream)}
+.application-thank-you.show{display:flex;animation:thankYouFadeIn .5s ease both}
+.thank-you-message{width:min(760px,100%);text-align:center}
+.thank-you-message h1{margin:0 0 16px;color:var(--forest-deep);font-size:clamp(2rem,5vw,3.8rem);line-height:1.1}
+.thank-you-message p{margin:0;color:var(--muted);font-size:clamp(1rem,2vw,1.15rem);line-height:1.7}
+</style>
+
 </head>
 <body class="careers-page">
 <header>
@@ -1249,7 +1249,7 @@ body * {
 
 <section class="section" id="application">
  <div class="container">
-  <div class="section-title"><span class="kicker">Candidate application</span><h2>Tell us about <span style="color:var(--lime)">you.</span></h2><p>Complete the form below. You may attach your CV if available. Your information helps our team understand your experience and where you could make the greatest contribution.</p></div>
+  <div class="section-title"><span class="kicker">Candidate application</span><h2>Tell us about <span style="color:var(--lime)">you.</span></h2><p>Complete the form below and attach your CV. Your information helps our team understand your experience and where you could make the greatest contribution.</p></div>
   <div class="career-grid">
    <form class="card reveal reveal-card-1" id="careerForm" action="https://formspree.io/f/xwleoppz" method="POST" enctype="multipart/form-data">
     <h3>Personal &amp; professional details</h3><p class="sub">Fields marked <span class="required">*</span> are required.</p>
@@ -1264,7 +1264,7 @@ body * {
      <div class="field"><label for="experience">Years of experience</label><select id="experience" name="experience"><option value="">Select</option><option>Less than 1 year</option><option>1–2 years</option><option>3–5 years</option><option>6–10 years</option><option>10+ years</option></select></div>
      <div class="field full"><label for="qualification">Highest qualification / professional registration</label><input id="qualification" name="qualification" placeholder="Qualification, institution or registration number where relevant"></div>
      <div class="field full"><label for="message">Why would you like to join Kalidad Pharmacy?</label><textarea id="message" name="message" placeholder="Tell us briefly about your strengths, experience and what you hope to contribute."></textarea></div>
-     <div class="field full"><label for="cv">Upload your CV <span style="color:var(--muted);font-weight:400;">(optional)</span></label><div class="cv-box"><input id="cv" name="cv" type="file" accept=".pdf,.doc,.docx"><div class="file-name" id="fileName">PDF, DOC or DOCX — preferably 2–5 MB. You can submit without a CV.</div></div></div>
+     <div class="field full"><div class="cv-email-box"><strong>Submit your CV</strong><span>Please email your CV directly to <a href="mailto:kalidadpharmacy@gmail.com">kalidadpharmacy@gmail.com</a>.</span></div></div>
     </div>
     <div class="form-actions"><button class="btn btn-lime" type="submit">Submit application</button></div>
     <div class="notice" id="applicationNotice"></div>
@@ -1279,13 +1279,7 @@ body * {
 </section>
 
 <section class="application-thank-you" id="applicationThankYou" aria-live="polite">
-    <div class="thank-you-card">
-        <div class="success-icon" aria-hidden="true">
-            <svg viewBox="0 0 120 120">
-                <circle class="success-ring" cx="60" cy="60" r="48"></circle>
-                <path class="success-check" d="M35 61 L52 78 L86 42"></path>
-            </svg>
-        </div>
+    <div class="thank-you-message">
         <h1>Thank you for submitting your application.</h1>
         <p>We shall review it and get back to you as soon as possible.</p>
     </div>
@@ -1348,18 +1342,6 @@ body * {
   }else{
     revealEls.forEach(el=>el.classList.add('is-visible'));
   }
-
-  /* CV filename — preserve existing functionality */
-  const cv=document.getElementById('cv');
-  const fileName=document.getElementById('fileName');
-  if(cv && fileName){
-    cv.addEventListener('change',()=>{
-      fileName.textContent=cv.files.length
-        ? cv.files[0].name
-        : 'PDF, DOC or DOCX — preferably 2–5 MB.';
-    });
-  }
-
   /* Candidate application — preserve existing submission behavior */
   const careerForm=document.getElementById('careerForm');
   if(careerForm){
