@@ -1222,12 +1222,6 @@ body * {
 @media(prefers-reduced-motion:reduce){.application-thank-you.show,.success-icon,.success-ring,.success-check{animation:none}.success-ring,.success-check{stroke-dashoffset:0}}
 </style>
 
-<!-- Vercel Web Analytics -->
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-
 </head>
 <body class="careers-page">
 <header>
@@ -1257,23 +1251,23 @@ body * {
  <div class="container">
   <div class="section-title"><span class="kicker">Candidate application</span><h2>Tell us about <span style="color:var(--lime)">you.</span></h2><p>Complete the form below and attach your CV. Your information helps our team understand your experience and where you could make the greatest contribution.</p></div>
   <div class="career-grid">
-   <form class="card reveal reveal-card-1" id="careerForm" enctype="multipart/form-data" method="post" action="/api/applications">
+   <form class="card reveal reveal-card-1" id="careerForm" action="https://formspree.io/f/xwleoppz" method="POST" enctype="multipart/form-data">
     <h3>Personal &amp; professional details</h3><p class="sub">Fields marked <span class="required">*</span> are required.</p>
     <div class="form-grid">
-     <div class="field"><label for="surname">Surname <span class="required">*</span></label><input id="surname" name="surname" required></div>
-     <div class="field"><label for="firstname">First name <span class="required">*</span></label><input id="firstname" name="firstname" required></div>
-     <div class="field"><label for="othernames">Other name(s)</label><input id="othernames" name="othernames"></div>
-     <div class="field"><label for="gender">Gender <span class="required">*</span></label><select id="gender" name="gender" required><option value="">Select</option><option>Female</option><option>Male</option><option>Prefer not to say</option></select></div>
-     <div class="field"><label for="dob">Date of birth</label><input id="dob" name="dob" type="date"></div>
-     <div class="field"><label for="nationality">Nationality</label><input id="nationality" name="nationality"></div>
-     <div class="field"><label for="position">Position / area of interest <span class="required">*</span></label><input id="position" name="position" placeholder="e.g. Pharmacy assistant" required></div>
-     <div class="field"><label for="experience">Years of experience</label><select id="experience" name="experience"><option value="">Select</option><option>Less than 1 year</option><option>1–2 years</option><option>3–5 years</option><option>6–10 years</option><option>10+ years</option></select></div>
-     <div class="field full"><label for="qualification">Highest qualification / professional registration</label><input id="qualification" name="qualification" placeholder="Qualification, institution or registration number where relevant"></div>
-     <div class="field full"><label for="message">Why would you like to join Kalidad Pharmacy?</label><textarea id="message" name="message" placeholder="Tell us briefly about your strengths, experience and what you hope to contribute."></textarea></div>
-     <div class="field full"><label for="cv">Upload your CV <span class="required">*</span></label><div class="cv-box"><input id="cv" name="cv" type="file" accept=".pdf,.doc,.docx" required><div class="file-name" id="fileName">PDF, DOC or DOCX — preferably 2–5 MB.</div></div></div>
+     <div class="field"><label for="surname">Surname <span class="required">*</span></label><input id="surname" name="surname" required data-fs-field></div>
+     <div class="field"><label for="firstname">First name <span class="required">*</span></label><input id="firstname" name="firstname" required data-fs-field></div>
+     <div class="field"><label for="othernames">Other name(s)</label><input id="othernames" name="othernames" data-fs-field></div>
+     <div class="field"><label for="gender">Gender <span class="required">*</span></label><select id="gender" name="gender" required data-fs-field><option value="">Select</option><option>Female</option><option>Male</option><option>Prefer not to say</option></select></div>
+     <div class="field"><label for="dob">Date of birth</label><input id="dob" name="dob" type="date" data-fs-field></div>
+     <div class="field"><label for="nationality">Nationality</label><input id="nationality" name="nationality" data-fs-field></div>
+     <div class="field"><label for="position">Position / area of interest <span class="required">*</span></label><input id="position" name="position" placeholder="e.g. Pharmacy assistant" required data-fs-field></div>
+     <div class="field"><label for="experience">Years of experience</label><select id="experience" name="experience" data-fs-field><option value="">Select</option><option>Less than 1 year</option><option>1–2 years</option><option>3–5 years</option><option>6–10 years</option><option>10+ years</option></select></div>
+     <div class="field full"><label for="qualification">Highest qualification / professional registration</label><input id="qualification" name="qualification" placeholder="Qualification, institution or registration number where relevant" data-fs-field></div>
+     <div class="field full"><label for="message">Why would you like to join Kalidad Pharmacy?</label><textarea id="message" name="message" placeholder="Tell us briefly about your strengths, experience and what you hope to contribute." data-fs-field></textarea></div>
+     <div class="field full"><label for="cv">Upload your CV <span class="required">*</span></label><div class="cv-box"><input id="cv" name="cv" type="file" accept=".pdf,.doc,.docx" required data-fs-field><div class="file-name" id="fileName">PDF, DOC or DOCX — preferably 2–5 MB.</div></div></div>
     </div>
-    <div class="form-actions"><button class="btn btn-lime" type="submit">Submit application</button></div>
-    <div class="notice" id="applicationNotice"></div>
+    <div class="form-actions"><button class="btn btn-lime" type="submit" data-fs-submit-btn>Submit application</button></div>
+    <div class="notice" id="applicationNotice" data-fs-error></div>
    
 <div class="careers-email-contact">
     Or Reach Us via Email : <a href="mailto:Kalidadpharmacy@gmail.com">Kalidadpharmacy@gmail.com</a>
@@ -1366,82 +1360,58 @@ body * {
     });
   }
 
-  /* Candidate application — preserve existing submission behavior */
-  const careerForm=document.getElementById('careerForm');
-  if(careerForm){
-    careerForm.addEventListener('submit',e=>{
-      e.preventDefault();
-      const n=document.getElementById('applicationNotice');
-      n.style.display='block';
-      n.textContent='Your application form is ready. A backend/email service is required to actually transmit the CV and application to Kalidad Pharmacy.';
-    });
-  }
-
 })();
 </script>
 
-<script id="application-thank-you-controller">
-(function(){
-    const form = document.getElementById('careerForm');
-    const applicationSection = document.getElementById('application');
-    const thankYouSection = document.getElementById('applicationThankYou');
-    const notice = document.getElementById('applicationNotice');
 
-    if(!form || !applicationSection || !thankYouSection) return;
 
-    form.addEventListener('submit', async function(e){
-        e.preventDefault();
+<script>
+  window.formspree = window.formspree || function () {
+    (formspree.q = formspree.q || []).push(arguments);
+  };
 
-        if(!form.checkValidity()){
-            form.reportValidity();
-            return;
-        }
+  formspree('initForm', {
+    formElement: '#careerForm',
+    formId: 'xwleoppz',
 
-        const submitButton = form.querySelector('button[type="submit"]');
-        const originalText = submitButton ? submitButton.textContent : '';
+    disable: ({ form }) => {
+      form.classList.add('submitting');
+    },
 
-        if(submitButton){
-            submitButton.disabled = true;
-            submitButton.textContent = 'Submitting...';
-        }
+    enable: ({ form }) => {
+      form.classList.remove('submitting');
+    },
 
-        if(notice){
-            notice.style.display = 'none';
-            notice.textContent = '';
-        }
+    renderFieldErrors: ({ form }, error) => {
+      const message = error?.message || 'Please check the highlighted fields and try again.';
+      const notice = form.querySelector('#applicationNotice');
+      if (notice) {
+        notice.textContent = message;
+        notice.style.display = 'block';
+      }
+    },
 
-        try{
-            const response = await fetch('/api/applications', {
-                method: 'POST',
-                body: new FormData(form)
-            });
+    renderFormError: ({ form }, message) => {
+      const notice = form.querySelector('#applicationNotice');
+      if (notice) {
+        notice.textContent = message || 'We could not submit your application. Please try again.';
+        notice.style.display = 'block';
+      }
+    },
 
-            const result = await response.json().catch(() => ({}));
+    renderSuccess: ({ form }) => {
+      const applicationSection = document.getElementById('application');
+      const thankYouSection = document.getElementById('applicationThankYou');
 
-            if(!response.ok){
-                throw new Error(result.error || 'Unable to submit your application. Please try again.');
-            }
+      if (applicationSection) applicationSection.style.display = 'none';
+      if (thankYouSection) thankYouSection.classList.add('show');
 
-            applicationSection.style.display = 'none';
-            thankYouSection.classList.add('show');
-            document.title = 'Application Submitted | Kalidad Pharmacy';
-            window.scrollTo({top:0, behavior:'smooth'});
-        }catch(error){
-            if(notice){
-                notice.textContent = error.message || 'Unable to submit your application. Please try again.';
-                notice.style.display = 'block';
-            }else{
-                alert(error.message || 'Unable to submit your application. Please try again.');
-            }
-        }finally{
-            if(submitButton){
-                submitButton.disabled = false;
-                submitButton.textContent = originalText;
-            }
-        }
-    });
-})();
+      document.title = 'Application Submitted | Kalidad Pharmacy';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
 </script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 
 </body>
 </html>
