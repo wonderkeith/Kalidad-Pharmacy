@@ -77,11 +77,6 @@ nav.main-nav a.nav-link{
   transition:background .2s ease,color .2s ease;
 }
 nav.main-nav a.nav-link:hover,nav.main-nav a.nav-link.active{background:var(--accent-bg);color:var(--accent-fg);}
-.open-badge{
-  display:inline-flex;align-items:center;gap:6px;background:var(--accent-bg);color:var(--accent-fg);
-  font-size:.68rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
-  padding:7px 12px;border-radius:999px;margin-left:6px;
-}
 .pulse-dot{width:7px;height:7px;border-radius:50%;background:var(--forest);animation:pulse 1.8s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.45;transform:scale(1.3);}}
 .btn{
@@ -95,7 +90,6 @@ nav.main-nav a.nav-link:hover,nav.main-nav a.nav-link.active{background:var(--ac
 .btn-outline{border-color:var(--forest);color:var(--forest);background:transparent;}
 .btn-outline:hover{background:var(--accent-bg);}
 .btn svg{width:18px;height:18px;flex-shrink:0;}
-.nav-cta{margin-left:8px;}
 
 .menu-toggle{
   display:none;width:46px;height:46px;border-radius:12px;border:1.5px solid var(--forest);
@@ -318,15 +312,6 @@ footer{background:linear-gradient(155deg,var(--forest) 0%,var(--forest-deep) 100
 .footer-bottom{border-top:1px solid rgba(255,255,255,.15);}
 .footer-bottom .container{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding:20px 24px;font-size:.78rem;opacity:.8;}
 
-/* whatsapp floating button (mobile convenience) */
-.wa-float{
-  position:fixed;bottom:22px;right:22px;z-index:60;background:var(--forest);color:#fff;
-  width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 14px 30px -10px rgba(18,41,31,.55);
-}
-.wa-float svg{width:26px;height:26px;}
-@media(min-width:900px){.wa-float{display:none;}}
-
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
   html{scroll-behavior:auto;}
@@ -415,50 +400,17 @@ button, input, textarea, select {
   background:transparent;
   pointer-events:none;
 }
-.hero-arrow{
-  position:absolute;
-  z-index:4;
-  top:50%;
-  transform:translateY(-50%);
-  width:56px;height:88px;
-  border:0;
-  border-radius:8px;
-  background:rgba(18,41,31,.10);
-  color:#fff;
-  display:grid;place-items:center;
-  font-size:34px;
-  line-height:1;
-  cursor:default;
-}
-.hero-arrow.prev{left:16px;}
-.hero-arrow.next{right:16px;background:rgba(18,41,31,.16);}
-.hero-dots{
-  position:absolute;
-  z-index:4;
-  left:50%;
-  bottom:105px;
-  transform:translateX(-50%);
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
-.hero-dots span{width:14px;height:14px;border-radius:50%;background:#fff;opacity:.9;}
-.hero-dots span.active{background:#8fbd1d;opacity:1;}
 @media(max-width:900px){
   .page-banner{min-height:600px;background:linear-gradient(120deg,#3a705d 0%,#7f9f92 38%,#dfe8e2 68%,#fff 100%);}
   .page-banner .container{grid-template-columns:1fr;padding:70px 28px 110px;}
   .page-banner h1{font-size:clamp(3rem,11vw,4.6rem);max-width:760px;}
   .page-banner p{max-width:620px;}
-  .hero-dots{bottom:42px;}
 }
 @media(max-width:560px){
   .page-banner{min-height:560px;}
   .page-banner .container{padding:58px 24px 100px;}
   .page-banner h1{font-size:clamp(2.75rem,14vw,4rem);margin-top:28px;}
   .page-banner p{font-size:.94rem;margin-top:22px;}
-  .hero-arrow{width:40px;height:64px;font-size:28px;}
-  .hero-arrow.prev{left:8px}.hero-arrow.next{right:8px}
-  .hero-dots{bottom:32px;gap:9px}.hero-dots span{width:11px;height:11px}
 }
 
 </style>
@@ -546,12 +498,6 @@ a.btn:hover::after {
 
 </style>
 
-<!-- Vercel Web Analytics -->
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-
 </head>
 <body>
 
@@ -574,11 +520,6 @@ a.btn:hover::after {
       <a href="contact.html" class="nav-link">Contact Us</a>
       <a href="careers.html" class="nav-link">Careers</a><a href="news.html" class="nav-link">News</a>
       <a href="about.html" class="nav-link active">About Us</a>
-      <span class="open-badge"><span class="pulse-dot"></span>Open 24/7</span>
-      <a href="https://wa.me/256764201229" target="_blank" rel="noopener" class="btn btn-primary nav-cta">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg>
-        Order refill
-      </a>
     </nav>
 
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -597,16 +538,12 @@ a.btn:hover::after {
 
 <main>
   <section class="page-banner" aria-label="About us">
-    <button class="hero-arrow prev" aria-hidden="true">‹</button>
-    <button class="hero-arrow next" aria-hidden="true">›</button>
     <div class="container">
       <div class="hero-copy">
-        <span class="kicker">About us</span>
         <h1>A neighbourhood pharmacy, <span class="accent">run like family</span></h1>
         <p>Five years of careful dispensing and honest conversations, in the heart of Fort Portal.</p>
       </div>
     </div>
-    <div class="hero-dots" aria-hidden="true"><span></span><span></span><span class="active"></span></div>
   </section>
 
   <section class="section">
@@ -715,10 +652,6 @@ a.btn:hover::after {
     </div>
   </div>
 </footer>
-
-<a href="https://wa.me/256764201229" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg>
-</a>
 
 <script>
 (function(){
