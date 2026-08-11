@@ -67,12 +67,79 @@ input:focus,select:focus,textarea:focus{border-color:var(--lime);box-shadow:0 0 
 .btn-lime{background:var(--lime);color:var(--forest)}
 .btn-lime:hover{transform:translateY(-1px)}
 .form-actions{display:flex;justify-content:flex-end;margin-top:22px}
-footer{background:var(--forest);color:#fff;padding:52px 0 24px}
-.footer-inner{display:grid;grid-template-columns:1.3fr .7fr .9fr;gap:40px;text-align:center}
-footer h3{margin:0 0 10px;font-size:1.15rem}
-footer p,footer li{color:#d5e1dc;font-size:.82rem;line-height:1.7}
-footer ul{list-style:none;padding:0;margin:0}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:35px;padding-top:18px;text-align:center;color:#c9d6d0;font-size:.76rem}
+/* Footer matched to index.html */
+footer {
+    background: linear-gradient(155deg, var(--forest) 0%, var(--forest-deep) 100%);
+    color: #fff;
+    margin-top: 0;
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    padding: 64px 0 50px;
+}
+.footer-grid h4 {
+    color: #fff;
+    font-size: 1.5rem;
+}
+.footer-grid p.desc {
+    margin-top: 10px;
+    opacity: .85;
+    max-width: 22rem;
+    font-size: .92rem;
+}
+.footer-col p.head {
+    font-size: .7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    opacity: .65;
+}
+.footer-col ul {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+    font-size: .9rem;
+}
+.footer-col ul a { opacity: .88; }
+.footer-col ul a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+.footer-contact li {
+    display: flex;
+    gap: 8px;
+    font-size: .88rem;
+    opacity: .88;
+    align-items: flex-start;
+}
+.footer-contact svg {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.15);
+}
+.footer-bottom .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 20px 24px;
+    font-size: .78rem;
+    opacity: .8;
+}
+@media(max-width:760px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}
 .notice{display:none;margin-top:18px;padding:12px 14px;border-radius:12px;background:var(--lime-soft);color:var(--green);font-size:.82rem}
 @media(max-width:850px){.hero-inner,.career-grid{grid-template-columns:1fr}.hero-inner{gap:35px}.hero-card{max-width:600px}nav{display:none}.menu{display:block}.footer-inner{grid-template-columns:1fr}}
 @media(max-width:560px){.container{width:min(100% - 28px,1120px)}.header-inner{height:74px}.logo img{width:145px;height:62px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card{padding:24px}.hero{padding-top:60px}}
@@ -641,7 +708,7 @@ footer ul{list-style:none;padding:0;margin:0}
 }
 .reference-kicker span{width:8px;height:8px;border-radius:50%;background:#7ba68e;}
 .reference-career-copy h1{
-  margin:38px 0 0;max-width:680px;
+  margin:0;max-width:680px;
   font-family:'Playfair Display',Georgia,serif;
   font-size:clamp(3.4rem,6.2vw,5.6rem);
   font-weight:800;line-height:.94;letter-spacing:-.045em;color:#0d2c22;
@@ -1080,6 +1147,99 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
 @media(max-width:760px){footer .footer-brand-logo{width:250px;}}
 </style>
 
+
+<style id="index-footer-match">
+/* Exact index.html footer alignment language */
+footer .footer-grid {
+    width: min(100% - 64px, 1040px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+    align-items: start;
+}
+footer .footer-grid > div,
+footer .footer-col {
+    text-align: center;
+}
+footer .footer-col ul {
+    justify-items: center;
+}
+footer .footer-contact li {
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+}
+footer .footer-bottom .container {
+    width: min(100% - 64px, 1040px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+    text-align: center;
+    gap: 18px 40px;
+}
+@media (max-width: 760px) {
+    footer .footer-grid {
+        width: min(100% - 40px, 520px);
+        padding-left: 0;
+        padding-right: 0;
+    }
+    footer .footer-bottom .container {
+        width: min(100% - 40px, 520px);
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+</style>
+
+
+<style id="global-playfair-display">
+html, body,
+body * {
+    font-family: 'Playfair Display', serif !important;
+}
+</style>
+
+
+<style id="application-thank-you-styles">
+.application-thank-you{min-height:calc(100vh - 88px);display:none;align-items:center;justify-content:center;padding:80px 24px;background:radial-gradient(circle at 50% 42%,rgba(150,190,20,.10),transparent 34%),linear-gradient(145deg,#f7f9f3 0%,#fff 55%,#f2f7f1 100%)}
+.application-thank-you.show{display:flex;animation:thankYouFadeIn .7s ease both}
+.thank-you-card{width:min(720px,100%);text-align:center;padding:64px 34px 70px}
+.success-icon{width:132px;height:132px;margin:0 auto 30px;filter:drop-shadow(0 12px 24px rgba(103,157,22,.22));animation:successFloat 3s ease-in-out infinite}
+.success-icon svg{width:100%;height:100%;overflow:visible}
+.success-ring{fill:#f4faed;stroke:var(--lime,#8fbd18);stroke-width:4;stroke-dasharray:302;stroke-dashoffset:302;animation:drawRing .9s .15s cubic-bezier(.65,0,.35,1) forwards}
+.success-check{fill:none;stroke:#4e9a25;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:85;stroke-dashoffset:85;animation:drawCheck .65s .8s cubic-bezier(.65,0,.35,1) forwards}
+.thank-you-card h1{margin:0 auto 18px;max-width:700px;color:var(--forest-deep,#073b2e);font-size:clamp(2rem,5vw,4rem);line-height:1.08;font-weight:700}
+.thank-you-card p{margin:0 auto;max-width:600px;color:var(--muted,#718078);font-size:clamp(1rem,2vw,1.2rem);line-height:1.7}
+@keyframes drawRing{to{stroke-dashoffset:0}}
+@keyframes drawCheck{to{stroke-dashoffset:0}}
+@keyframes successFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes thankYouFadeIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:560px){.application-thank-you{padding:60px 18px}.thank-you-card{padding:40px 16px 50px}.success-icon{width:108px;height:108px;margin-bottom:24px}}
+@media(prefers-reduced-motion:reduce){.application-thank-you.show,.success-icon,.success-ring,.success-check{animation:none}.success-ring,.success-check{stroke-dashoffset:0}}
+</style>
+
+
+<style id="netlify-submission-error">
+.submission-error{
+    margin-top:18px;
+    padding:13px 16px;
+    border-radius:12px;
+    background:#fff1f1;
+    color:#a52b2b;
+    font-size:.9rem;
+    line-height:1.5;
+    text-align:center;
+}
+#careerForm button[disabled]{
+    opacity:.7;
+    cursor:wait;
+}
+</style>
+
 </head>
 <body class="careers-page">
 <header>
@@ -1097,28 +1257,35 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
 
 <main>
 <section class="reference-career-hero" aria-label="Careers at Kalidad Pharmacy">
-    <button class="hero-arrow prev" aria-hidden="true">‹</button>
-    <button class="hero-arrow next" aria-hidden="true">›</button>
     <div class="reference-career-inner">
         <div class="reference-career-copy">
-            <span class="reference-kicker"><span></span>Careers at Kalidad Pharmacy</span>
             <h1>Join a team that <span>cares.</span></h1>
             <p>Bring your professionalism, warmth and ambition. Tell us about yourself and the kind of opportunity you would like to grow into.</p>
         </div>
     </div>
-    <div class="hero-dots" aria-hidden="true"><span></span><span class="active"></span><span></span></div>
 </section>
 
 <section class="section" id="application">
  <div class="container">
   <div class="section-title"><span class="kicker">Candidate application</span><h2>Tell us about <span style="color:var(--lime)">you.</span></h2><p>Complete the form below and attach your CV. Your information helps our team understand your experience and where you could make the greatest contribution.</p></div>
   <div class="career-grid">
-   <form class="card reveal reveal-card-1" id="careerForm" enctype="multipart/form-data">
+   <form id="careerForm" name="career-application" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" enctype="multipart/form-data">
+    <input type="hidden" name="form-name" value="career-application">
+    <input type="hidden" name="subject" data-remove-prefix value="New Career Application — Kalidad Pharmacy">
+    <p class="bot-field" style="display:none;">
+        <label>Don't fill this out if you're human: <input name="bot-field"></label>
+    </p>
+
     <h3>Personal &amp; professional details</h3><p class="sub">Fields marked <span class="required">*</span> are required.</p>
     <div class="form-grid">
      <div class="field"><label for="surname">Surname <span class="required">*</span></label><input id="surname" name="surname" required></div>
      <div class="field"><label for="firstname">First name <span class="required">*</span></label><input id="firstname" name="firstname" required></div>
      <div class="field"><label for="othernames">Other name(s)</label><input id="othernames" name="othernames"></div>
+                <div class="field">
+                    <label for="applicantEmail">Email Address <span>*</span></label>
+                    <input id="applicantEmail" name="email" type="email" autocomplete="email" required>
+                </div>
+
      <div class="field"><label for="gender">Gender <span class="required">*</span></label><select id="gender" name="gender" required><option value="">Select</option><option>Female</option><option>Male</option><option>Prefer not to say</option></select></div>
      <div class="field"><label for="dob">Date of birth</label><input id="dob" name="dob" type="date"></div>
      <div class="field"><label for="nationality">Nationality</label><input id="nationality" name="nationality"></div>
@@ -1139,19 +1306,34 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
   </div>
  </div>
 </section>
+
+<section class="application-thank-you" id="applicationThankYou" aria-live="polite">
+    <div class="thank-you-card">
+        <div class="success-icon" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+                <circle class="success-ring" cx="60" cy="60" r="48"></circle>
+                <path class="success-check" d="M35 61 L52 78 L86 42"></path>
+            </svg>
+        </div>
+        <h1>Thank you for submitting your application.</h1>
+        <p>We shall review it and get back to you as soon as possible.</p>
+    </div>
+</section>
+
 </main>
 
 <footer>
- <div class="container">
-  <div class="footer-inner">
-   <div class="footer-brand"><img class="footer-brand-logo" src="kalidad-logo.png" alt="Kalidad Pharmacy — Your health, your wealth"></div>
-   <div><h3>Explore</h3><ul><li><a href="index.html">Home</a></li>
+        <div class="container footer-grid">
+            <div class="footer-brand"><img class="footer-brand-logo" src="kalidad-logo.png" alt="Kalidad Pharmacy — Your health, your wealth"></div>
+            <div class="footer-col">
+                <p class="head">Explore</p><ul><li><a href="index.html">Home</a></li>
 <li><a href="services.html">Services</a></li>
 <li><a href="contact.html">Contact Us</a></li>
 <li><a href="careers.html">Careers</a></li>
 <li><a href="news.html">News</a></li>
-<li><a href="about.html">About Us</a></li></ul></div>
-   <div class="footer-col">
+<li><a href="about.html">About Us</a></li></ul>
+            </div>
+            <div class="footer-col">
                 <p class="head">Visit us</p>
                 <ul class="footer-contact">
                     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg> Kisenyi, FortPortal, Uganda</li>
@@ -1159,10 +1341,14 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
                     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Open 24/7, Everyday</li>
                 </ul>
             </div>
-  </div>
-  <div class="footer-bottom">© 2026 Kalidad Pharmacy. All rights reserved.</div>
- </div>
-</footer>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>© 2026 Kalidad Pharmacy. All rights reserved.</p>
+                <p>Your health, your wealth.</p>
+            </div>
+        </div>
+    </footer>
 <script>
 (function(){
   /* Mobile navigation — preserve existing behavior */
@@ -1216,5 +1402,81 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
 
 })();
 </script>
+
+
+<script id="application-thank-you-controller">
+(function(){
+    const form = document.getElementById('careerForm');
+    const applicationSection = document.getElementById('application');
+    const thankYouSection = document.getElementById('applicationThankYou');
+
+    if(!form || !applicationSection || !thankYouSection) return;
+
+    form.addEventListener('submit', async function(e){
+        e.preventDefault();
+
+        if(!form.checkValidity()){
+            form.reportValidity();
+            return;
+        }
+
+        const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+        const originalText = submitButton ? submitButton.textContent : '';
+
+        if(submitButton){
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting…';
+        }
+
+        try {
+            /*
+             * Netlify Forms receives multipart/form-data automatically when
+             * FormData is submitted this way. Do not manually set Content-Type:
+             * the browser supplies the correct boundary for the CV upload.
+             */
+            const response = await fetch('/', {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if(!response.ok){
+                throw new Error('Submission failed');
+            }
+
+            applicationSection.style.display = 'none';
+            thankYouSection.classList.add('show');
+            document.title = 'Application Submitted | Kalidad Pharmacy';
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        } catch(error) {
+            console.error('Application submission error:', error);
+
+            const existingError = form.querySelector('.submission-error');
+            if(existingError) existingError.remove();
+
+            const errorMessage = document.createElement('p');
+            errorMessage.className = 'submission-error';
+            errorMessage.setAttribute('role', 'alert');
+            errorMessage.textContent =
+                'We could not submit your application right now. Please check your connection and try again.';
+
+            form.appendChild(errorMessage);
+
+            if(submitButton){
+                submitButton.disabled = false;
+                submitButton.textContent = originalText || 'Submit Application';
+            }
+        }
+    });
+})();
+</script>
+
+
 </body>
 </html>
