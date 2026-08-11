@@ -1192,23 +1192,7 @@ body * {
 </style>
 
 
-<style id="application-thank-you-styles">
-.application-thank-you{min-height:calc(100vh - 88px);display:none;align-items:center;justify-content:center;padding:80px 24px;background:radial-gradient(circle at 50% 42%,rgba(150,190,20,.10),transparent 34%),linear-gradient(145deg,#f7f9f3 0%,#fff 55%,#f2f7f1 100%)}
-.application-thank-you.show{display:flex;animation:thankYouFadeIn .7s ease both}
-.thank-you-card{width:min(720px,100%);text-align:center;padding:64px 34px 70px}
-.success-icon{width:132px;height:132px;margin:0 auto 30px;filter:drop-shadow(0 12px 24px rgba(103,157,22,.22));animation:successFloat 3s ease-in-out infinite}
-.success-icon svg{width:100%;height:100%;overflow:visible}
-.success-ring{fill:#f4faed;stroke:var(--lime,#8fbd18);stroke-width:4;stroke-dasharray:302;stroke-dashoffset:302;animation:drawRing .9s .15s cubic-bezier(.65,0,.35,1) forwards}
-.success-check{fill:none;stroke:#4e9a25;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:85;stroke-dashoffset:85;animation:drawCheck .65s .8s cubic-bezier(.65,0,.35,1) forwards}
-.thank-you-card h1{margin:0 auto 18px;max-width:700px;color:var(--forest-deep,#073b2e);font-size:clamp(2rem,5vw,4rem);line-height:1.08;font-weight:700}
-.thank-you-card p{margin:0 auto;max-width:600px;color:var(--muted,#718078);font-size:clamp(1rem,2vw,1.2rem);line-height:1.7}
-@keyframes drawRing{to{stroke-dashoffset:0}}
-@keyframes drawCheck{to{stroke-dashoffset:0}}
-@keyframes successFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-@keyframes thankYouFadeIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:560px){.application-thank-you{padding:60px 18px}.thank-you-card{padding:40px 16px 50px}.success-icon{width:108px;height:108px;margin-bottom:24px}}
-@media(prefers-reduced-motion:reduce){.application-thank-you.show,.success-icon,.success-ring,.success-check{animation:none}.success-ring,.success-check{stroke-dashoffset:0}}
-</style>
+<style id="application-thank-you-styles">.application-thank-you{min-height:calc(100vh - 88px);display:none;align-items:center;justify-content:center;padding:60px 24px;background:#fff}.application-thank-you.show{display:flex;animation:thankYouFadeIn .5s ease both}.thank-you-card{width:min(720px,100%);text-align:center;padding:30px 24px 50px}.thank-you-card h1{margin:0 auto 14px;color:var(--forest-deep,#073b2e);font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;font-weight:700}.thank-you-card p{margin:0 auto 32px;max-width:600px;color:var(--muted,#718078);font-size:clamp(1rem,2vw,1.15rem);line-height:1.7}.success-icon{width:108px;height:108px;margin:0 auto;filter:drop-shadow(0 0 18px rgba(57,168,82,.45))}.success-icon svg{width:100%;height:100%;overflow:visible}.success-ring{fill:#f0faef;stroke:#39a852;stroke-width:5;filter:drop-shadow(0 0 10px rgba(57,168,82,.65))}.success-check{fill:none;stroke:#24943e;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(57,168,82,.55))}@keyframes thankYouFadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@media(max-width:560px){.application-thank-you{padding:50px 18px}.thank-you-card{padding:24px 14px 40px}.success-icon{width:92px;height:92px}}</style>
 
 <style id="careers-email-and-plain-thank-you">
 .cv-email-box{border:1px solid var(--line);border-radius:18px;background:#f8faf6;padding:20px 22px;display:flex;flex-direction:column;gap:7px;line-height:1.6}
@@ -1279,10 +1263,7 @@ body * {
 </section>
 
 <section class="application-thank-you" id="applicationThankYou" aria-live="polite">
-    <div class="thank-you-message">
-        <h1>Thank you for submitting your application.</h1>
-        <p>We shall review it and get back to you as soon as possible.</p>
-    </div>
+<div class="thank-you-card"><h1>Thank you for submitting your application.</h1><p>We shall review it and get back to you as soon as possible.</p><div class="success-icon" aria-hidden="true"><svg viewBox="0 0 120 120"><circle class="success-ring" cx="60" cy="60" r="48"></circle><path class="success-check" d="M35 61 L52 78 L86 42"></path></svg></div></div>
 </section>
 
 </main>
