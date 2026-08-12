@@ -2966,6 +2966,51 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
     }
 }
 
+
+
+/* ==========================================================
+   MOBILE SERVICES IMAGE SLIDER
+   - Center slide text vertically
+   - Remove the shaded/empty space beneath the slider
+   Desktop/PC remains unchanged.
+   ========================================================== */
+@media (max-width: 620px) {
+    #services .services-stage {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    #services .service-slides {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    #services .service-slide {
+        justify-content: center !important;
+        align-items: flex-start !important;
+        padding: 20px 20px !important;
+    }
+
+    #services .service-slide-copy {
+        position: static !important;
+        top: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        margin: 0 !important;
+        width: min(100%, 560px) !important;
+        max-width: 100% !important;
+    }
+
+    #services .service-display {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    #services .service-nav-wrap {
+        margin-top: 0 !important;
+    }
+}
+
 </style>
 
 </head>
