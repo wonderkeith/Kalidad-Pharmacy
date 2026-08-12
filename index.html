@@ -2939,6 +2939,32 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
     }
 }
 
+
+
+/* ==========================================================
+   FINAL MOBILE SERVICES TEXT POSITION
+   Vertically centered at 50% of the slider.
+   Desktop/PC remains completely unchanged.
+   ========================================================== */
+@media (max-width: 620px) {
+    #services .service-slide {
+        position: absolute !important;
+        inset: 0 !important;
+        padding: 0 20px !important;
+    }
+
+    #services .service-slide-copy {
+        position: absolute !important;
+        top: 50% !important;
+        left: 20px !important;
+        right: 20px !important;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
+        transform: translateY(-50%) !important;
+    }
+}
+
 </style>
 
 </head>
