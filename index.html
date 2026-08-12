@@ -3012,6 +3012,98 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
         padding: 0 20px 18px !important;
     }
 }
+
+
+/* iPHONE / iOS SAFARI MENU FIX */
+@media (max-width: 900px) {
+    header .header-inner .menu-toggle {
+        display: flex !important;
+        flex: 0 0 46px !important;
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        min-height: 46px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        position: relative !important;
+        z-index: 1001 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        box-sizing: border-box !important;
+        color: var(--forest) !important;
+        background: transparent !important;
+        border: 1.5px solid var(--forest) !important;
+    }
+
+    header .header-inner .menu-toggle svg {
+        display: block !important;
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        flex: 0 0 28px !important;
+        stroke: currentColor !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+/* Touch/mobile browsers, including iPhone Safari desktop-site mode */
+@media (hover: none) and (pointer: coarse) {
+    header .header-inner .menu-toggle {
+        display: flex !important;
+        flex: 0 0 46px !important;
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        min-height: 46px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 1001 !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+    }
+
+    header .header-inner .menu-toggle svg {
+        display: block !important;
+        width: 28px !important;
+        height: 28px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    header .main-nav {
+        display: none !important;
+    }
+}
+
+/* iOS WebKit fallback */
+@supports (-webkit-touch-callout: none) {
+    header .header-inner .menu-toggle {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        -webkit-appearance: none !important;
+        position: relative !important;
+        z-index: 1001 !important;
+    }
+
+    header .header-inner .menu-toggle svg {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    @media (max-width: 900px) {
+        header .main-nav {
+            display: none !important;
+        }
+    }
+}
+
 </style>
 
 </head>
