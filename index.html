@@ -2787,6 +2787,60 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
     }
 }
 
+
+/* ==========================================================
+   MOBILE HERO — SHOW THE FULL PHOTOGRAPH
+   Prevents people/subjects at the sides of the source image
+   from being cropped on narrow phone screens.
+   ========================================================== */
+@media (max-width: 700px) {
+    .hero-reference {
+        min-height: 660px;
+        height: min(660px, 100svh);
+        max-height: 760px;
+    }
+
+    .hero-reference-bg,
+    .hero-reference-bg.hero-reference-image-1,
+    .hero-reference-bg.hero-reference-image-2,
+    .hero-reference-bg.hero-reference-image-3 {
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    /* Preserve the existing fade while fitting the complete image. */
+    .hero-reference-bg.hero-reference-image-1 {
+        background-size: contain;
+        background-position: center center;
+    }
+
+    .hero-reference-bg.hero-reference-image-2 {
+        background-size: contain;
+        background-position: center center;
+    }
+
+    .hero-reference-bg.hero-reference-image-3 {
+        background-size: contain;
+        background-position: center center;
+    }
+}
+
+@media (max-width: 420px) {
+    .hero-reference {
+        min-height: 620px;
+        height: min(620px, 100svh);
+    }
+
+    .hero-reference-bg,
+    .hero-reference-bg.hero-reference-image-1,
+    .hero-reference-bg.hero-reference-image-2,
+    .hero-reference-bg.hero-reference-image-3 {
+        background-size: contain;
+        background-position: center center;
+    }
+}
+
 </style>
 
 </head>
