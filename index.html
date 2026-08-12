@@ -1981,13 +1981,13 @@ footer .footer-bottom .container {
 
 /* Uploaded image for hero slide 1 */
 .hero-reference-bg.hero-reference-image-1 {
-    background-image: url("hero-01-desktop-16x10.webp"), linear-gradient(90deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.88) 32%, rgba(255,255,255,.12) 62%, rgba(255,255,255,0) 100%);
+    background-image: url("image-07-caa3270325.webp"), linear-gradient(90deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.88) 32%, rgba(255,255,255,.12) 62%, rgba(255,255,255,0) 100%);
     background-position: center center;
 }
 
 /* Uploaded image for hero slide 2 — pharmacist reviewing prescription */
 .hero-reference-bg.hero-reference-image-2 {
-    background-image: url("hero-02-desktop-16x10.webp");
+    background-image: url("image-08-99b804a9ad.webp");
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1995,7 +1995,7 @@ footer .footer-bottom .container {
 
 /* Uploaded image for hero slide 3 — pharmacist advising customer */
 .hero-reference-bg.hero-reference-image-3 {
-    background-image: url("hero-03-desktop-16x10.webp");
+    background-image: url("image-09-b2d22f9d65.webp");
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -2149,7 +2149,7 @@ footer .footer-bottom .container {
          background-position: center center;
      }
      .hero-reference-bg.hero-reference-image-1 {
-         background-image: url("hero-01-desktop-16x10.webp"), linear-gradient(180deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.48) 62%, rgba(255,255,255,.94) 100%);
+         background-image: url("image-07-caa3270325.webp"), linear-gradient(180deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.48) 62%, rgba(255,255,255,.94) 100%);
          background-position: 66% center;
      }
     .hero-reference-content {
@@ -2789,46 +2789,84 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
 
 
 /* ==========================================================
-   FINAL RESPONSIVE HERO IMAGE SET
-   Desktop: optimized 16:10 assets
-   Mobile: optimized 4:3 assets
+   MOBILE HERO — SHOW THE FULL PHOTOGRAPH
+   Prevents people/subjects at the sides of the source image
+   from being cropped on narrow phone screens.
    ========================================================== */
 @media (max-width: 700px) {
-    .hero-reference-bg.hero-reference-image-1 {
-        background-image:
-            url("hero-01-mobile-4x3.webp"),
-            linear-gradient(90deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.88) 32%, rgba(255,255,255,.12) 62%, rgba(255,255,255,0) 100%);
-        background-size: cover;
-        background-position: center center;
+    .hero-reference {
+        min-height: 660px;
+        height: min(660px, 100svh);
+        max-height: 760px;
+    }
+
+    .hero-reference-bg,
+    .hero-reference-bg.hero-reference-image-1,
+    .hero-reference-bg.hero-reference-image-2,
+    .hero-reference-bg.hero-reference-image-3 {
+        background-size: contain;
         background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    /* Preserve the existing fade while fitting the complete image. */
+    .hero-reference-bg.hero-reference-image-1 {
+        background-size: contain;
+        background-position: center center;
     }
 
     .hero-reference-bg.hero-reference-image-2 {
-        background-image: url("hero-02-mobile-4x3.webp");
-        background-size: cover;
+        background-size: contain;
         background-position: center center;
-        background-repeat: no-repeat;
     }
 
     .hero-reference-bg.hero-reference-image-3 {
-        background-image: url("hero-03-mobile-4x3.webp");
-        background-size: cover;
+        background-size: contain;
         background-position: center center;
-        background-repeat: no-repeat;
     }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 420px) {
+    .hero-reference {
+        min-height: 620px;
+        height: min(620px, 100svh);
+    }
+
+    .hero-reference-bg,
+    .hero-reference-bg.hero-reference-image-1,
+    .hero-reference-bg.hero-reference-image-2,
+    .hero-reference-bg.hero-reference-image-3 {
+        background-size: contain;
+        background-position: center center;
+    }
+}
+
+
+
+/* ==========================================================
+   MOBILE HERO IMAGES — uploaded phone-specific photography
+   Desktop/PC hero images above remain completely unchanged.
+   ========================================================== */
+@media (max-width: 700px) {
     .hero-reference-bg.hero-reference-image-1 {
-        background-position: 58% center;
+        background-image: url("mobile-hero-1.webp");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
     }
 
     .hero-reference-bg.hero-reference-image-2 {
-        background-position: 58% center;
+        background-image: url("mobile-hero-2.webp");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
     }
 
     .hero-reference-bg.hero-reference-image-3 {
-        background-position: 58% center;
+        background-image: url("mobile-hero-3.webp");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
     }
 }
 
