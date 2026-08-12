@@ -947,21 +947,24 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
         <article class="branch-card reveal">
           <div class="branch-slider" data-branch-slider="kisenyi">
             <div class="branch-slide active">
-              <div class="branch-placeholder"><i class="fa-regular fa-image" aria-hidden="true"></i><span>Kisenyi Branch — Image 1 • upload later</span></div>
+              <img class="branch-photo" src="20260724_151100(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch exterior front view">
             </div>
             <div class="branch-slide">
-              <div class="branch-placeholder"><i class="fa-regular fa-image" aria-hidden="true"></i><span>Kisenyi Branch — Image 2 • upload later</span></div>
+              <img class="branch-photo" src="20260724_151800_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch medicine display interior">
             </div>
             <div class="branch-slide">
-              <div class="branch-placeholder"><i class="fa-regular fa-image" aria-hidden="true"></i><span>Kisenyi Branch — Image 3 • upload later</span></div>
+              <img class="branch-photo" src="20260724_152030(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch interior aisle">
             </div>
             <div class="branch-slide">
-              <div class="branch-placeholder"><i class="fa-regular fa-image" aria-hidden="true"></i><span>Kisenyi Branch — Image 4 • upload later</span></div>
+              <img class="branch-photo" src="20260724_152439(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch counter and shelves">
             </div>
             <div class="branch-slide">
-              <div class="branch-placeholder"><i class="fa-regular fa-image" aria-hidden="true"></i><span>Kisenyi Branch — Image 5 • upload later</span></div>
+              <img class="branch-photo" src="20260724_155052(1)(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch exterior angle view">
             </div>
-            <button class="branch-slider-nav prev" type="button" aria-label="Previous Kisenyi Branch image"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+            <div class="branch-slide">
+              <img class="branch-photo" src="file_000000007d308243b53f0aa6fcf37cd3_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch exterior at night">
+            </div>
+<button class="branch-slider-nav prev" type="button" aria-label="Previous Kisenyi Branch image"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
             <button class="branch-slider-nav next" type="button" aria-label="Next Kisenyi Branch image"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
             <div class="branch-slider-dots" aria-label="Kisenyi Branch image navigation"></div>
           </div>
@@ -1103,7 +1106,7 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
     resetTimer();
   }
 
-  /* branch image sliders — five ready-to-fill image slots per branch */
+  /* branch image sliders — image slides for each branch */
   document.querySelectorAll('[data-branch-slider]').forEach(function(slider){
     var slides = Array.prototype.slice.call(slider.querySelectorAll('.branch-slide'));
     var dotsWrap = slider.querySelector('.branch-slider-dots');
