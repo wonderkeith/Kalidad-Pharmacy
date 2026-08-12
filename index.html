@@ -2870,6 +2870,75 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
     }
 }
 
+
+
+/* ==========================================================
+   MOBILE HERO TEXT — compact bottom-left layout
+   Only affects phone/mobile view; desktop remains unchanged.
+   ========================================================== */
+@media (max-width: 700px) {
+    .hero-reference-content {
+        align-items: flex-end;
+        justify-content: flex-start;
+        padding: 0 18px 58px 34px;
+    }
+
+    .hero-reference-copy {
+        width: min(58%, 360px);
+        max-width: 360px;
+        margin: 0;
+        transform: scale(.75);
+        transform-origin: left bottom;
+    }
+
+    .hero-reference-slide h1 {
+        font-size: clamp(31px, 9vw, 43px);
+        line-height: 1.02;
+        margin-bottom: 14px;
+    }
+
+    .hero-reference-slide .lede {
+        font-size: 13.5px;
+        line-height: 1.45;
+    }
+
+    /* Move the mobile slider dots down and left so they sit on the
+       same visual baseline as the final line of the hero copy. */
+    .hero-reference-dots {
+        left: 34px;
+        right: auto;
+        bottom: 62px;
+        transform: none;
+        gap: 9px;
+    }
+
+    .hero-reference-dots button {
+        width: 10px;
+        height: 10px;
+    }
+
+    .hero-reference-dots button.active {
+        transform: scale(1.1);
+    }
+}
+
+@media (max-width: 420px) {
+    .hero-reference-content {
+        padding-left: 30px;
+        padding-right: 14px;
+        padding-bottom: 52px;
+    }
+
+    .hero-reference-copy {
+        width: 57%;
+    }
+
+    .hero-reference-dots {
+        left: 30px;
+        bottom: 56px;
+    }
+}
+
 </style>
 
 </head>
