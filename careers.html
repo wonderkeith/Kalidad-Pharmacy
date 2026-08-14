@@ -1688,11 +1688,9 @@ header.logo-hidden .logo {
   <nav aria-label="Main navigation">
    <a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact Us</a><a href="careers.html" class="active">Careers</a><a href="news.html" class="nav-link">News</a><a href="about.html">About Us</a>
   </nav>
-  <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  <button class="menu menu-toggle" id="menu" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
  </div>
- <div id="mobileNav" style="display:none;padding:10px 20px 18px;border-top:1px solid var(--line);background:var(--cream)">
-  <div style="display:grid;gap:4px"><a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact Us</a><a href="careers.html" class="active">Careers</a><a href="news.html">News</a><a href="about.html">About Us</a></div>
- </div>
+ <div id="mobileNav" class="mobile-menu"><a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact Us</a><a href="careers.html" class="active">Careers</a><a href="news.html">News</a><a href="about.html">About Us</a></div>
 </header>
 
 <main>
@@ -1774,7 +1772,7 @@ header.logo-hidden .logo {
     menu.addEventListener('click',()=>{
       const open=menu.getAttribute('aria-expanded')==='true';
       menu.setAttribute('aria-expanded',String(!open));
-      mobile.style.display=open?'none':'block';
+      mobile.classList.toggle('open',!open);
     });
   }
 
