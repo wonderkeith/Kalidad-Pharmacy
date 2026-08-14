@@ -869,6 +869,199 @@ header.logo-hidden .logo {
 
 
 </style>
+
+<style id="contact-reference-header-interactions">
+/* Match the refined header interaction language used on the reference pages */
+header {
+    transition:
+        background .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease,
+        top .35s ease,
+        width .35s ease !important;
+}
+
+/* Small light-green glowing dot beneath hovered/active menu items */
+nav.main-nav a.nav-link {
+    position: relative !important;
+    overflow: visible !important;
+    transition:
+        transform .28s cubic-bezier(.2,.8,.2,1),
+        background .28s ease,
+        color .28s ease,
+        box-shadow .28s ease !important;
+}
+
+nav.main-nav a.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #B7E86A;
+    box-shadow: 0 0 8px rgba(183,232,106,.72);
+    opacity: 0;
+    transform: translateX(-50%) scale(.35);
+    transition:
+        opacity .25s ease,
+        transform .28s cubic-bezier(.2,.8,.2,1);
+    pointer-events: none;
+}
+
+nav.main-nav a.nav-link:hover,
+nav.main-nav a.nav-link:focus-visible,
+nav.main-nav a.nav-link.active {
+    transform: translateY(-4px) scale(1.035) !important;
+    background: rgba(230,243,217,.92) !important;
+    color: var(--accent-fg) !important;
+    box-shadow: 0 8px 20px rgba(18,41,31,.10);
+}
+
+nav.main-nav a.nav-link:hover::after,
+nav.main-nav a.nav-link:focus-visible::after,
+nav.main-nav a.nav-link.active::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+/* Main CTAs: stronger floating interaction */
+.btn-primary {
+    will-change: transform, box-shadow;
+    transition:
+        transform .28s cubic-bezier(.2,.8,.2,1),
+        box-shadow .28s ease,
+        background .28s ease !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+    transform: translateY(-6px) scale(1.045) !important;
+    box-shadow:
+        0 18px 34px rgba(22,52,39,.22),
+        0 0 0 5px rgba(183,232,106,.10) !important;
+}
+
+.btn-primary:active {
+    transform: translateY(-1px) scale(1.01) !important;
+}
+
+/* Logo disappears after the hero/banner, then navigation centers */
+header .logo {
+    max-width: 210px;
+    width: auto;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transform-origin: left center;
+    transition:
+        opacity .35s ease,
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        max-width .45s cubic-bezier(.2,.8,.2,1),
+        width .45s cubic-bezier(.2,.8,.2,1),
+        margin .45s cubic-bezier(.2,.8,.2,1) !important;
+}
+
+header.logo-hidden .logo {
+    max-width: 0 !important;
+    width: 0 !important;
+    margin-right: -8px !important;
+    opacity: 0 !important;
+    transform: translateY(-8px) scale(.72) !important;
+    pointer-events: none !important;
+}
+
+header.logo-hidden .header-inner {
+    justify-content: center !important;
+}
+
+header.logo-hidden nav.main-nav {
+    margin-left: 0 !important;
+}
+
+/* Mobile menu receives the same light-green dot treatment */
+.mobile-menu a {
+    position: relative;
+    transition:
+        background .22s ease,
+        transform .22s ease,
+        color .22s ease !important;
+}
+
+.mobile-menu a:hover,
+.mobile-menu a:focus-visible,
+.mobile-menu a.active {
+    background: var(--accent-bg);
+    color: var(--forest);
+    transform: translateX(2px);
+}
+
+.mobile-menu a::after {
+    content: "";
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 5px;
+    height: 2px;
+    border-radius: 999px;
+    background: #B7E86A;
+    box-shadow: 0 0 7px rgba(183,232,106,.65);
+    opacity: 0;
+    transform: scaleX(.15);
+    transform-origin: center;
+    transition: opacity .2s ease, transform .22s ease;
+}
+
+.mobile-menu a:hover::after,
+.mobile-menu a:focus-visible::after,
+.mobile-menu a.active::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+@media (max-width: 900px) {
+    header.logo-hidden .header-inner {
+        justify-content: flex-end !important;
+    }
+
+    header.logo-hidden .logo {
+        max-width: 0 !important;
+        width: 0 !important;
+    }
+
+    .mobile-menu a::after {
+        left: 12px;
+        right: 12px;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    header,
+    header .logo,
+    header nav a,
+    nav.main-nav a.nav-link::after,
+    .mobile-menu a,
+    .mobile-menu a::after,
+    .btn-primary {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    nav.main-nav a.nav-link:hover,
+    nav.main-nav a.nav-link:focus-visible,
+    nav.main-nav a.nav-link.active,
+    .btn-primary:hover,
+    .btn-primary:focus-visible,
+    .btn-primary:active,
+    .mobile-menu a:hover,
+    .mobile-menu a:focus-visible,
+    .mobile-menu a.active {
+        transform: none !important;
+    }
+}
+</style>
+
 </head>
 <body>
 
@@ -1245,7 +1438,7 @@ header.logo-hidden .logo {
 
 (function(){
     const header = document.querySelector('header');
-    const hero = document.querySelector('.hero, .hero-reframed, .career-hero, .page-banner');
+    const hero = document.querySelector('.page-banner, .hero, .hero-reframed, .career-hero');
     if(!header) return;
     function update(){
         const y = window.scrollY || window.pageYOffset;
@@ -1267,5 +1460,34 @@ header.logo-hidden .logo {
 })();
 
 </script>
+
+<script id="contact-hero-logo-scroll">
+(function () {
+    const header = document.querySelector('header');
+    const hero = document.querySelector('.page-banner');
+    if (!header || !hero) return;
+
+    const updateHeader = () => {
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        header.classList.toggle('is-scrolled', window.scrollY > 24);
+        header.classList.toggle('logo-hidden', heroBottom <= 90);
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(() => {
+            updateHeader();
+            ticking = false;
+        });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateHeader, { passive: true });
+    updateHeader();
+})();
+</script>
+
 </body>
 </html>

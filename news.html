@@ -2643,6 +2643,171 @@ header.logo-hidden .logo {
 
 
 </style>
+
+<style id="news-reference-header-interactions">
+/* Refined navigation interaction — matched to Careers/Contact */
+header {
+    transition: background .35s ease, box-shadow .35s ease, border-color .35s ease, width .35s ease !important;
+}
+
+/* Light-green glowing dot under hovered/active menu items */
+header nav a,
+header nav .nav-link {
+    position: relative !important;
+    overflow: visible !important;
+    transition: transform .28s cubic-bezier(.2,.8,.2,1), background .28s ease, color .28s ease, box-shadow .28s ease !important;
+}
+header nav a::after,
+header nav .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #B7E86A;
+    box-shadow: 0 0 8px rgba(183,232,106,.72);
+    opacity: 0;
+    transform: translateX(-50%) scale(.35);
+    transition: opacity .25s ease, transform .28s cubic-bezier(.2,.8,.2,1);
+    pointer-events: none;
+}
+header nav a:hover,
+header nav a:focus-visible,
+header nav a.active,
+header nav .nav-link:hover,
+header nav .nav-link:focus-visible,
+header nav .nav-link.active {
+    transform: translateY(-4px) scale(1.035) !important;
+    background: rgba(230,243,217,.92) !important;
+    box-shadow: 0 8px 20px rgba(18,41,31,.10);
+}
+header nav a:hover::after,
+header nav a:focus-visible::after,
+header nav a.active::after,
+header nav .nav-link:hover::after,
+header nav .nav-link:focus-visible::after,
+header nav .nav-link.active::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+/* Hide logo after the hero AND shrink the header boarder like Careers */
+header {
+    width: min(1180px, calc(100% - 28px)) !important;
+    transition:
+        width .45s cubic-bezier(.2,.8,.2,1),
+        background .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease !important;
+}
+
+header .logo {
+    max-width: 210px;
+    width: auto;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transform-origin: left center;
+    transition:
+        opacity .35s ease,
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        max-width .45s cubic-bezier(.2,.8,.2,1),
+        width .45s cubic-bezier(.2,.8,.2,1),
+        margin .45s cubic-bezier(.2,.8,.2,1) !important;
+}
+
+header.logo-hidden {
+    width: min(900px, calc(100% - 28px)) !important;
+}
+
+header.logo-hidden .logo {
+    max-width: 0 !important;
+    width: 0 !important;
+    margin-right: -8px !important;
+    opacity: 0 !important;
+    transform: translateY(-8px) scale(.72) !important;
+    pointer-events: none !important;
+}
+
+header.logo-hidden .header-inner {
+    justify-content: center !important;
+}
+
+header.logo-hidden nav {
+    margin-left: 0 !important;
+}
+
+/* Stronger floating CTA/button interaction */
+button:not(.menu-toggle),
+.btn,
+a.button,
+a.btn {
+    transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s ease, background .28s ease !important;
+}
+button:not(.menu-toggle):hover,
+button:not(.menu-toggle):focus-visible,
+.btn:hover,
+.btn:focus-visible,
+a.button:hover,
+a.button:focus-visible,
+a.btn:hover,
+a.btn:focus-visible {
+    transform: translateY(-6px) scale(1.04) !important;
+    box-shadow: 0 18px 34px rgba(22,52,39,.22), 0 0 0 5px rgba(183,232,106,.10) !important;
+}
+
+/* Mobile navigation stays responsive */
+@media (max-width: 900px) {
+    header.logo-hidden .header-inner {
+        justify-content: flex-end !important;
+    }
+    header.logo-hidden .logo {
+        max-width: 0 !important;
+        width: 0 !important;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    header, header .logo, header nav a, header nav .nav-link,
+    header nav a::after, header nav .nav-link::after,
+    button:not(.menu-toggle), .btn, a.button, a.btn {
+        transition: none !important;
+        animation: none !important;
+    }
+    header nav a:hover, header nav a:focus-visible, header nav a.active,
+    header nav .nav-link:hover, header nav .nav-link:focus-visible, header nav .nav-link.active,
+    button:not(.menu-toggle):hover, button:not(.menu-toggle):focus-visible,
+    .btn:hover, .btn:focus-visible, a.button:hover, a.button:focus-visible,
+    a.btn:hover, a.btn:focus-visible {
+        transform: none !important;
+    }
+}
+</style>
+
+
+<style id="news-header-mobile-shrink">
+@media (max-width: 900px) {
+    header {
+        width: calc(100% - 28px) !important;
+    }
+
+    header.logo-hidden {
+        width: min(900px, calc(100% - 28px)) !important;
+    }
+
+    header.logo-hidden .header-inner {
+        justify-content: flex-end !important;
+    }
+
+    header.logo-hidden .logo {
+        max-width: 0 !important;
+        width: 0 !important;
+    }
+}
+</style>
+
 </head>
 <body>
 <header>
@@ -3129,5 +3294,33 @@ header.logo-hidden .logo {
 })();
 
 </script>
+
+<script id="news-hero-logo-scroll">
+(function () {
+    const header = document.querySelector('header');
+    const hero = document.querySelector('.page-banner, .hero, .hero-reframed, .news-hero');
+    if (!header || !hero) return;
+
+    const update = () => {
+        const pastHero = hero.getBoundingClientRect().bottom <= 90;
+        header.classList.toggle('logo-hidden', pastHero);
+        header.classList.toggle('is-scrolled', window.scrollY > 24);
+    };
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+            update();
+            ticking = false;
+        });
+    }, { passive: true });
+
+    window.addEventListener('resize', update, { passive: true });
+    update();
+})();
+</script>
+
 </body>
 </html>

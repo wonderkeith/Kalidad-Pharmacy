@@ -557,6 +557,196 @@ header.logo-hidden .logo {
 
 
 </style>
+
+<style id="about-reference-header-interactions">
+/* ==========================================================
+   Shared header interactions — matched to Careers/News
+   ========================================================== */
+
+/* Smooth outer header resizing */
+header {
+    width: min(1180px, calc(100% - 28px)) !important;
+    transition:
+        width .45s cubic-bezier(.2,.8,.2,1),
+        background .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease !important;
+}
+
+/* Light-green glowing dot under hovered/active menu items */
+nav.main-nav a.nav-link {
+    position: relative !important;
+    overflow: visible !important;
+    transition:
+        transform .28s cubic-bezier(.2,.8,.2,1),
+        background .28s ease,
+        color .28s ease,
+        box-shadow .28s ease !important;
+}
+
+nav.main-nav a.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #B7E86A;
+    box-shadow: 0 0 8px rgba(183,232,106,.72);
+    opacity: 0;
+    transform: translateX(-50%) scale(.35);
+    transition:
+        opacity .25s ease,
+        transform .28s cubic-bezier(.2,.8,.2,1);
+    pointer-events: none;
+}
+
+nav.main-nav a.nav-link:hover,
+nav.main-nav a.nav-link:focus-visible,
+nav.main-nav a.nav-link.active {
+    transform: translateY(-4px) scale(1.035) !important;
+    background: rgba(230,243,217,.92) !important;
+    color: var(--accent-fg) !important;
+    box-shadow: 0 8px 20px rgba(18,41,31,.10);
+}
+
+nav.main-nav a.nav-link:hover::after,
+nav.main-nav a.nav-link:focus-visible::after,
+nav.main-nav a.nav-link.active::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+/* Logo disappears after the hero, while the entire header shrinks */
+header .logo {
+    max-width: 210px;
+    width: auto;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transform-origin: left center;
+    transition:
+        opacity .35s ease,
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        max-width .45s cubic-bezier(.2,.8,.2,1),
+        width .45s cubic-bezier(.2,.8,.2,1),
+        margin .45s cubic-bezier(.2,.8,.2,1) !important;
+}
+
+header.logo-hidden {
+    width: min(900px, calc(100% - 28px)) !important;
+}
+
+header.logo-hidden .logo {
+    max-width: 0 !important;
+    width: 0 !important;
+    margin-right: -8px !important;
+    opacity: 0 !important;
+    transform: translateY(-8px) scale(.72) !important;
+    pointer-events: none !important;
+}
+
+header.logo-hidden .header-inner {
+    justify-content: center !important;
+}
+
+header.logo-hidden nav.main-nav {
+    margin-left: 0 !important;
+}
+
+/* Stronger floating interaction for the main CTA/buttons */
+button:not(.menu-toggle),
+.btn,
+a.button,
+a.btn {
+    will-change: transform, box-shadow;
+    transition:
+        transform .28s cubic-bezier(.2,.8,.2,1),
+        box-shadow .28s ease,
+        background .28s ease !important;
+}
+
+button:not(.menu-toggle):hover,
+button:not(.menu-toggle):focus-visible,
+.btn:hover,
+.btn:focus-visible,
+a.button:hover,
+a.button:focus-visible,
+a.btn:hover,
+a.btn:focus-visible {
+    transform: translateY(-6px) scale(1.045) !important;
+    box-shadow:
+        0 18px 34px rgba(22,52,39,.22),
+        0 0 0 5px rgba(183,232,106,.10) !important;
+}
+
+button:not(.menu-toggle):active,
+.btn:active,
+a.button:active,
+a.btn:active {
+    transform: translateY(-1px) scale(1.01) !important;
+}
+
+/* Responsive mobile behavior */
+@media (max-width: 900px) {
+    header {
+        top: 9px !important;
+        width: calc(100% - 18px) !important;
+        border-radius: 18px !important;
+    }
+
+    .header-inner {
+        height: 64px !important;
+    }
+
+    header.logo-hidden {
+        width: calc(100% - 18px) !important;
+    }
+
+    header.logo-hidden .header-inner {
+        justify-content: space-between !important;
+    }
+
+    header .logo {
+        max-width: 150px;
+    }
+
+    nav.main-nav a.nav-link:hover,
+    nav.main-nav a.nav-link:focus-visible {
+        transform: translateY(-2px) scale(1.03) !important;
+    }
+}
+
+/* Respect reduced-motion accessibility settings */
+@media (prefers-reduced-motion: reduce) {
+    header,
+    header .logo,
+    nav.main-nav a.nav-link,
+    nav.main-nav a.nav-link::after,
+    button:not(.menu-toggle),
+    .btn,
+    a.button,
+    a.btn {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    nav.main-nav a.nav-link:hover,
+    nav.main-nav a.nav-link:focus-visible,
+    nav.main-nav a.nav-link.active,
+    button:not(.menu-toggle):hover,
+    button:not(.menu-toggle):focus-visible,
+    .btn:hover,
+    .btn:focus-visible,
+    a.button:hover,
+    a.button:focus-visible,
+    a.btn:hover,
+    a.btn:focus-visible {
+        transform: none !important;
+    }
+}
+</style>
+
 </head>
 <body>
 
@@ -792,30 +982,35 @@ header.logo-hidden .logo {
 </script>
 
 <script id="kalidad-shared-header-behavior">
-
 (function(){
     const header = document.querySelector('header');
     const hero = document.querySelector('.hero, .hero-reframed, .career-hero, .page-banner');
     if(!header) return;
+
     function update(){
         const y = window.scrollY || window.pageYOffset;
         header.classList.toggle('is-scrolled', y > 24);
+
         if(hero){
             const bottom = hero.getBoundingClientRect().bottom;
             header.classList.toggle('logo-hidden', bottom <= 90);
         }
     }
+
     let ticking = false;
     window.addEventListener('scroll', function(){
         if(!ticking){
-            requestAnimationFrame(function(){ update(); ticking=false; });
-            ticking=true;
+            requestAnimationFrame(function(){
+                update();
+                ticking = false;
+            });
+            ticking = true;
         }
     }, {passive:true});
+
     window.addEventListener('resize', update, {passive:true});
     update();
 })();
-
 </script>
 <script id="kalidad-shared-stat-counters">
 
