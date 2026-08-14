@@ -2531,6 +2531,115 @@ footer .footer-bottom .container {
     }
 }
 
+
+/* ==========================================================
+   KALIDAD MOTION SYSTEM — immersive modern micro-interactions
+   Service-slider text is intentionally excluded from all new
+   animation rules.
+   ========================================================== */
+:root{
+  --motion-ease:cubic-bezier(.22,.61,.36,1);
+  --motion-spring:cubic-bezier(.16,1,.3,1);
+}
+@keyframes kpPageIn{from{opacity:0}to{opacity:1}}
+@keyframes kpFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-8px,0)}}
+@keyframes kpGlow{0%,100%{box-shadow:0 0 0 0 rgba(199,239,62,0)}50%{box-shadow:0 0 0 10px rgba(199,239,62,.08)}}
+@keyframes kpShimmer{from{transform:translateX(-120%)}to{transform:translateX(220%)}}
+@keyframes kpRise{from{opacity:0;transform:translateY(34px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes kpLine{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
+
+body{animation:kpPageIn .7s ease both;overflow-x:hidden}
+header{transition:background .45s ease,box-shadow .45s ease,transform .45s var(--motion-spring)}
+header.is-scrolled{background:rgba(246,244,236,.82);box-shadow:0 14px 40px rgba(18,41,31,.12)}
+.logo-mark{will-change:transform}
+nav.main-nav a.nav-link{position:relative;overflow:hidden;transition:transform .3s var(--motion-spring),background .3s ease,color .3s ease}
+nav.main-nav a.nav-link::after{content:"";position:absolute;left:16px;right:16px;bottom:5px;height:2px;background:var(--lime-deep);transform:scaleX(0);transition:transform .35s var(--motion-spring)}
+nav.main-nav a.nav-link:hover::after,nav.main-nav a.nav-link.active::after{transform:scaleX(1)}
+.nav-cta{position:relative;overflow:hidden}
+.btn{position:relative;overflow:hidden;transition:transform .35s var(--motion-spring),box-shadow .35s ease,background .35s ease}
+.btn::before{content:"";position:absolute;inset:0;transform:translateX(-120%) skewX(-18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);transition:none;pointer-events:none}
+.btn:hover::before{animation:kpShimmer .75s ease}
+.btn:hover{transform:translateY(-4px) scale(1.025)}
+.btn:active{transform:translateY(-1px) scale(.985)}
+.menu-toggle{transition:transform .35s var(--motion-spring),background .3s ease,box-shadow .3s ease}
+.menu-toggle:hover{transform:rotate(3deg) scale(1.06);box-shadow:var(--shadow-soft)}
+
+.hero-reframed,.hero{isolation:isolate}
+.hero-reframed::after,.hero::after{content:"";position:absolute;inset:-20%;pointer-events:none;background:radial-gradient(circle at 15% 20%,rgba(199,239,62,.12),transparent 24%),radial-gradient(circle at 85% 70%,rgba(255,255,255,.10),transparent 25%);animation:kpFloat 8s ease-in-out infinite;z-index:0}
+.hero-grid,.hero-reframed .hero-content{z-index:2}
+.hero-copy{animation:kpRise .9s .12s var(--motion-spring) both}
+.hero-visual{animation:kpRise 1s .22s var(--motion-spring) both}
+.hero .eyebrow{animation:kpGlow 2.8s ease-in-out infinite}
+.hero h1 .accent::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:4px;border-radius:99px;background:var(--lime);transform:scaleX(.18);transform-origin:left;animation:kpLine 1.1s .65s var(--motion-spring) forwards}
+.slider-nav{transition:opacity .25s ease,transform .35s var(--motion-spring),background .25s ease}
+.slider-nav.prev:hover{transform:translate(-3px,-50%) scale(1.1)}
+.slider-nav.next:hover{transform:translate(3px,-50%) scale(1.1)}
+.slider-dots button{transition:width .45s var(--motion-spring),transform .3s ease,background .3s ease}
+.slider-dots button:hover{transform:scaleY(1.5)}
+
+.section-head,.section > .container > .section-head{will-change:transform}
+.reveal{transition:opacity .8s var(--motion-spring),transform .8s var(--motion-spring);transform:translateY(42px) scale(.985)}
+.reveal.in{transform:none}
+.reveal:nth-child(2){transition-delay:.06s}.reveal:nth-child(3){transition-delay:.12s}
+.reveal:nth-child(4){transition-delay:.18s}.reveal:nth-child(5){transition-delay:.24s}
+.leaf-rule{transform-origin:center;transition:transform .7s var(--motion-spring)}
+.reveal.in .leaf-rule{transform:scaleX(1.35)}
+
+.feature-card,.value-card,.faq-item,.contact-wrap,.map-card,.about-visual,.services-showcase{transition:transform .55s var(--motion-spring),box-shadow .55s ease,border-color .35s ease}
+.feature-card:hover{transform:translateY(-10px) rotateX(1deg);box-shadow:0 30px 70px -24px rgba(18,41,31,.38)}
+.feature-icon{transition:transform .5s var(--motion-spring),background .35s ease}
+.feature-card:hover .feature-icon,.value-card:hover .feature-icon{transform:translateY(-5px) rotate(-6deg) scale(1.08);background:var(--lime)}
+.value-card:hover{transform:translateY(-8px)}
+.about-visual{transform-style:preserve-3d}
+.about-visual:hover{transform:perspective(900px) rotateY(-3deg) rotateX(2deg) scale(1.015);box-shadow:0 35px 75px -25px rgba(18,41,31,.42)}
+.about-visual svg{animation:kpFloat 5s ease-in-out infinite}
+.timeline-item::before{transition:transform .4s var(--motion-spring),box-shadow .4s ease}
+.timeline-item:hover::before{transform:scale(1.45);box-shadow:0 0 0 7px rgba(199,239,62,.12)}
+.timeline-item{transition:transform .4s var(--motion-spring)}
+.timeline-item:hover{transform:translateX(7px)}
+
+.stats-band{position:relative;overflow:hidden}
+.stats-band::before{content:"";position:absolute;width:380px;height:380px;right:-120px;top:-220px;border-radius:50%;background:rgba(199,239,62,.12);filter:blur(2px);animation:kpFloat 7s ease-in-out infinite}
+.stat-num{display:inline-block;transition:transform .5s var(--motion-spring),text-shadow .4s ease}
+.stat-num:hover{transform:scale(1.08);text-shadow:0 0 24px rgba(199,239,62,.28)}
+
+.service-control{transition:transform .35s var(--motion-spring),background .25s ease,color .25s ease,box-shadow .35s ease}
+.service-control:hover{transform:translateY(-3px) scale(1.08);box-shadow:0 12px 25px rgba(18,41,31,.18)}
+.service-nav-item{transition:transform .35s var(--motion-spring),color .25s ease,border-color .25s ease,background .25s ease}
+.service-nav-item:hover{transform:translateY(-3px)}
+/* IMPORTANT: no animation/transform/opacity transition is applied to service slider text. */
+
+.contact-wrap{overflow:hidden}
+.contact-info{position:relative}
+.contact-info::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;right:-100px;bottom:-110px;background:rgba(199,239,62,.10);animation:kpFloat 6s ease-in-out infinite}
+.contact-form input,.contact-form textarea,.contact-form select{transition:border-color .3s ease,box-shadow .35s ease,transform .3s var(--motion-spring)}
+.contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{transform:translateY(-2px);box-shadow:0 12px 25px rgba(18,41,31,.08)}
+.map-card:hover{transform:translateY(-7px);box-shadow:0 28px 60px -22px rgba(18,41,31,.34)}
+.map-pin svg{animation:kpFloat 3.5s ease-in-out infinite}
+
+.faq-item{transition:transform .4s var(--motion-spring),box-shadow .4s ease,border-color .3s ease}
+.faq-item:hover{transform:translateX(5px);box-shadow:var(--shadow-soft)}
+.faq-item[open]{box-shadow:0 18px 40px -20px rgba(18,41,31,.25);border-color:rgba(44,107,79,.35)}
+.faq-item summary .chev{transition:transform .45s var(--motion-spring)}
+
+footer{position:relative;overflow:hidden}
+footer::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 20%,rgba(199,239,62,.06) 50%,transparent 80%);transform:translateX(-100%);animation:kpShimmer 8s ease-in-out infinite}
+footer .footer-col ul a{display:inline-block;transition:transform .3s var(--motion-spring),opacity .25s ease}
+footer .footer-col ul a:hover{transform:translateX(5px)}
+.wa-float{animation:kpGlow 2.6s ease-in-out infinite, kpFloat 4s ease-in-out infinite;transition:transform .35s var(--motion-spring)}
+.wa-float:hover{transform:scale(1.12) translateY(-5px);animation:none}
+
+@media (max-width:900px){
+  .hero-copy,.hero-visual{animation-duration:.75s}
+  .feature-card:hover{transform:translateY(-6px)}
+  .about-visual:hover{transform:scale(1.01)}
+}
+@media (prefers-reduced-motion:reduce){
+  body,.hero-copy,.hero-visual,.hero .eyebrow,.hero h1 .accent::after,.hero-reframed::after,.hero::after,
+  .about-visual svg,.stats-band::before,.contact-info::after,.map-pin svg,footer::before,.wa-float{animation:none!important}
+  .reveal,.feature-card,.value-card,.about-visual,.timeline-item,.faq-item,.btn,.menu-toggle{transition:none!important}
+}
+
 </style>
     <link rel="icon" type="image/png" href="kalidad-icon.png">
 
@@ -3725,5 +3834,69 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
             }
         })();
     </script>
+
+<script>
+/* Kalidad modern motion controller */
+(function(){
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Header depth on scroll */
+  var header = document.querySelector('header');
+  function syncHeader(){
+    if(header) header.classList.toggle('is-scrolled', window.scrollY > 18);
+  }
+  syncHeader();
+  window.addEventListener('scroll', syncHeader, {passive:true});
+
+  if(reduce) return;
+
+  /* Gentle pointer depth for major visual surfaces — never service text */
+  var tiltTargets = document.querySelectorAll('.feature-card, .about-visual, .contact-wrap, .map-card');
+  tiltTargets.forEach(function(el){
+    el.addEventListener('pointermove', function(e){
+      var r = el.getBoundingClientRect();
+      var x = (e.clientX-r.left)/r.width-.5;
+      var y = (e.clientY-r.top)/r.height-.5;
+      el.style.transform = 'perspective(900px) rotateX(' + (-y*2.2).toFixed(2) + 'deg) rotateY(' + (x*2.2).toFixed(2) + 'deg) translateY(-4px)';
+    });
+    el.addEventListener('pointerleave', function(){
+      el.style.transform = '';
+    });
+  });
+
+  /* Animate visible stat values when they enter the viewport */
+  var stats = document.querySelectorAll('.stat-num');
+  if('IntersectionObserver' in window && stats.length){
+    var statIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting || entry.target.dataset.motionDone) return;
+        entry.target.dataset.motionDone='1';
+        entry.target.animate(
+          [{transform:'translateY(16px) scale(.82)',opacity:.25},
+           {transform:'translateY(-3px) scale(1.08)',opacity:1,offset:.72},
+           {transform:'none',opacity:1}],
+          {duration:850,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'}
+        );
+        statIO.unobserve(entry.target);
+      });
+    },{threshold:.5});
+    stats.forEach(function(el){statIO.observe(el);});
+  }
+
+  /* Subtle mouse-follow glow on hero, kept strictly visual */
+  var hero = document.querySelector('.hero, .hero-reframed');
+  if(hero){
+    hero.addEventListener('pointermove',function(e){
+      var r=hero.getBoundingClientRect();
+      hero.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
+      hero.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
+    },{passive:true});
+    hero.style.setProperty('--mx','50%');
+    hero.style.setProperty('--my','50%');
+  }
+})();
+</script>
+
 </body>
 </html>
