@@ -1195,66 +1195,157 @@ body * {
 
 
 
-<style id="kalidad-shared-modern-header">
+<style id="kalidad-ios-mobile-navigation-fix">
+/* ==========================================================
+   KALIDAD MOBILE NAVIGATION — iOS / SAFARI SAFE
+   ========================================================== */
+@media (max-width: 900px) {
+    html, body {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
 
-/* Shared Kalidad modern floating header */
-header {
-    position: fixed !important;
-    top: 14px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: min(1180px, calc(100% - 28px)) !important;
-    border: 1px solid rgba(255,255,255,.30) !important;
-    border-radius: 22px !important;
-    background: rgba(246,244,236,.20) !important;
-    backdrop-filter: blur(18px) saturate(145%) !important;
-    -webkit-backdrop-filter: blur(18px) saturate(145%) !important;
-    box-shadow: 0 12px 40px rgba(18,41,31,.10), inset 0 1px 0 rgba(255,255,255,.35) !important;
-    transition: background .35s ease, box-shadow .35s ease, border-color .35s ease, top .35s ease, width .35s ease !important;
-    z-index: 1000 !important;
-}
-header.is-scrolled {
-    background: rgba(246,244,236,.72) !important;
-    border-color: rgba(255,255,255,.55) !important;
-    box-shadow: 0 14px 38px rgba(18,41,31,.18), inset 0 1px 0 rgba(255,255,255,.55) !important;
-}
-nav.main-nav a.nav-link, header nav a {
-    position: relative !important;
-    transition: transform .28s cubic-bezier(.2,.8,.2,1), background .28s ease,
-                color .28s ease, box-shadow .28s ease !important;
-}
-nav.main-nav a.nav-link:hover, nav.main-nav a.nav-link:focus-visible,
-header nav a:hover, header nav a:focus-visible {
-    transform: translateY(-5px) scale(1.08) !important;
-    background: rgba(230,243,217,.92) !important;
-    box-shadow: 0 10px 24px rgba(18,41,31,.16) !important;
-}
-header .logo {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    transition: opacity .35s ease, transform .45s cubic-bezier(.2,.8,.2,1),
-                max-width .45s ease, width .45s ease, margin .45s ease !important;
-}
-header.logo-hidden .logo {
-    max-width: 0 !important;
-    width: 0 !important;
-    margin-right: -8px !important;
-    opacity: 0 !important;
-    transform: translateY(-8px) scale(.72) !important;
-    pointer-events: none !important;
-}
-@media(max-width:900px){
-    header { top:9px !important; width:calc(100% - 18px) !important; border-radius:18px !important; }
-    header nav a:hover, header nav a:focus-visible { transform:translateY(-2px) scale(1.03) !important; }
-}
-@media(prefers-reduced-motion:reduce){
-    header, header .logo, header nav a { transition:none !important; }
+    header .header-inner {
+        min-height: 64px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+    }
+
+    /* Prevent Safari from collapsing or replacing the hamburger button. */
+    header .menu-toggle {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex: 0 0 46px !important;
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        min-height: 46px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 1.5px solid currentColor !important;
+        border-radius: 12px !important;
+        background: rgba(255,255,255,.72) !important;
+        color: var(--forest, #12291f) !important;
+        line-height: 0 !important;
+        font-size: 0 !important;
+        -webkit-tap-highlight-color: transparent !important;
+        touch-action: manipulation !important;
+        cursor: pointer !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        position: relative !important;
+        z-index: 1002 !important;
+    }
+
+    header .menu-toggle svg,
+    header .menu-toggle .icon,
+    header .menu-toggle i {
+        display: block !important;
+        width: 27px !important;
+        height: 27px !important;
+        min-width: 27px !important;
+        min-height: 27px !important;
+        flex: 0 0 27px !important;
+        color: inherit !important;
+        stroke: currentColor !important;
+        fill: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    /* Hide desktop navigation cleanly on touch widths. */
+    header .main-nav {
+        display: none !important;
+    }
+
+    /* Make either common mobile-menu implementation safe. */
+    header .mobile-menu,
+    header #mobileMenu,
+    header #mobileNav {
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        position: absolute !important;
+        z-index: 1001 !important;
+        max-width: calc(100vw - 24px) !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Careers uses a different menu naming/markup than the other pages. */
+    .careers-page .menu-toggle {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        padding: 0 !important;
+        border-radius: 12px !important;
+        line-height: 0 !important;
+    }
+
+    /* Careers content/action buttons match the site's common mobile sizing. */
+    .careers-page .btn,
+    .careers-page button:not(.menu-toggle),
+    .careers-page a.button,
+    .careers-page .content-btn,
+    .careers-page .hero-actions a {
+        min-height: 48px !important;
+        min-width: 44px !important;
+        padding: 13px 20px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+        touch-action: manipulation !important;
+    }
+
+    .careers-page .hero-actions {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+        align-items: center !important;
+    }
 }
 
+@media (max-width: 600px) {
+    header .header-inner {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
 
-/* Shared page animation polish */
+    header .logo {
+        max-width: 150px !important;
+        width: 150px !important;
+    }
 
+    .careers-page .hero-actions a,
+    .careers-page .btn,
+    .careers-page .content-btn {
+        width: 100% !important;
+    }
+}
+
+@supports (-webkit-touch-callout: none) {
+    /* Safari-specific rendering stabilization */
+    header .menu-toggle {
+        transform: translateZ(0) !important;
+        -webkit-transform: translateZ(0) !important;
+        backface-visibility: hidden !important;
+        -webkit-backface-visibility: hidden !important;
+    }
+}
 </style>
+
 </head>
 <body class="careers-page">
 <header>
@@ -1435,31 +1526,51 @@ header.logo-hidden .logo {
 
 
 
-<script id="kalidad-shared-header-behavior">
+<script id="kalidad-ios-menu-fix">
+(function () {
+    function initMobileMenu() {
+        const menu = document.getElementById('menuToggle') ||
+                     document.getElementById('menu');
+        const mobile = document.getElementById('mobileMenu') ||
+                       document.getElementById('mobileNav');
 
-(function(){
-    const header = document.querySelector('header');
-    const hero = document.querySelector('.hero, .hero-reframed, .career-hero, .page-banner');
-    if(!header) return;
-    function update(){
-        const y = window.scrollY || window.pageYOffset;
-        header.classList.toggle('is-scrolled', y > 24);
-        if(hero){
-            const bottom = hero.getBoundingClientRect().bottom;
-            header.classList.toggle('logo-hidden', bottom <= 90);
+        if (!menu || !mobile || menu.dataset.iosMenuReady === 'true') return;
+        menu.dataset.iosMenuReady = 'true';
+
+        function setOpen(open) {
+            menu.setAttribute('aria-expanded', String(open));
+            mobile.classList.toggle('is-open', open);
+
+            if (mobile.id === 'mobileMenu') {
+                mobile.style.display = open ? 'block' : 'none';
+            } else {
+                mobile.style.display = open ? 'block' : 'none';
+            }
+
+            document.documentElement.classList.toggle('mobile-nav-open', open);
         }
+
+        menu.addEventListener('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const open = menu.getAttribute('aria-expanded') === 'true';
+            setOpen(!open);
+        }, { passive: false });
+
+        mobile.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                setOpen(false);
+            });
+        });
     }
-    let ticking = false;
-    window.addEventListener('scroll', function(){
-        if(!ticking){
-            requestAnimationFrame(function(){ update(); ticking=false; });
-            ticking=true;
-        }
-    }, {passive:true});
-    window.addEventListener('resize', update, {passive:true});
-    update();
-})();
 
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMobileMenu);
+    } else {
+        initMobileMenu();
+    }
+})();
 </script>
+
 </body>
 </html>
