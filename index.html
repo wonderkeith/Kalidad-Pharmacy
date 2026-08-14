@@ -3371,6 +3371,54 @@ header.logo-hidden {
 }
 </style>
 
+
+<style id="kalidad-reviews-horizontal-scroll">
+.customer-voices-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    width: max-content !important;
+    gap: 24px !important;
+    animation: calidadReviewsMarquee 42s linear infinite !important;
+    will-change: transform;
+}
+.customer-voices-grid > .customer-voice-card {
+    flex: 0 0 clamp(280px, 30vw, 390px) !important;
+    width: clamp(280px, 30vw, 390px) !important;
+}
+.customer-voices-grid:hover {
+    animation-play-state: paused !important;
+}
+@keyframes calidadReviewsMarquee {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+}
+.customer-voices {
+    overflow: hidden !important;
+}
+@media (max-width: 700px) {
+    .customer-voices-grid {
+        gap: 16px !important;
+        animation-duration: 36s !important;
+    }
+    .customer-voices-grid > .customer-voice-card {
+        flex-basis: min(82vw, 340px) !important;
+        width: min(82vw, 340px) !important;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .customer-voices-grid {
+        animation: none !important;
+        transform: none !important;
+        flex-wrap: wrap !important;
+        width: 100% !important;
+    }
+    .customer-voices-grid > .customer-voice-card {
+        flex-basis: min(100%, 390px) !important;
+        width: auto !important;
+    }
+}
+</style>
+
 </head>
 <body>
 
@@ -4153,6 +4201,28 @@ header.logo-hidden {
     } else {
         counters.forEach(animateCounter);
     }
+})();
+</script>
+
+
+<script id="kalidad-reviews-marquee">
+(function () {
+    const track = document.querySelector('.customer-voices-grid');
+    if (!track || track.dataset.marqueeReady === 'true') return;
+
+    // Duplicate the review cards once so the marquee can loop seamlessly.
+    const cards = Array.from(track.children);
+    if (!cards.length) return;
+
+    const fragment = document.createDocumentFragment();
+    cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.classList.remove('reveal');
+        fragment.appendChild(clone);
+    });
+    track.appendChild(fragment);
+    track.dataset.marqueeReady = 'true';
 })();
 </script>
 
