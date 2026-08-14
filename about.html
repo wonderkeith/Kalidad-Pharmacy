@@ -498,6 +498,65 @@ a.btn:hover::after {
 
 </style>
 
+
+<style id="kalidad-shared-modern-header">
+
+/* Shared Kalidad modern floating header */
+header {
+    position: fixed !important;
+    top: 14px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: min(1180px, calc(100% - 28px)) !important;
+    border: 1px solid rgba(255,255,255,.30) !important;
+    border-radius: 22px !important;
+    background: rgba(246,244,236,.20) !important;
+    backdrop-filter: blur(18px) saturate(145%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(145%) !important;
+    box-shadow: 0 12px 40px rgba(18,41,31,.10), inset 0 1px 0 rgba(255,255,255,.35) !important;
+    transition: background .35s ease, box-shadow .35s ease, border-color .35s ease, top .35s ease, width .35s ease !important;
+    z-index: 1000 !important;
+}
+header.is-scrolled {
+    background: rgba(246,244,236,.72) !important;
+    border-color: rgba(255,255,255,.55) !important;
+    box-shadow: 0 14px 38px rgba(18,41,31,.18), inset 0 1px 0 rgba(255,255,255,.55) !important;
+}
+nav.main-nav a.nav-link, header nav a {
+    position: relative !important;
+    transition: transform .28s cubic-bezier(.2,.8,.2,1), background .28s ease,
+                color .28s ease, box-shadow .28s ease !important;
+}
+nav.main-nav a.nav-link:hover, nav.main-nav a.nav-link:focus-visible,
+header nav a:hover, header nav a:focus-visible {
+    transform: translateY(-5px) scale(1.08) !important;
+    background: rgba(230,243,217,.92) !important;
+    box-shadow: 0 10px 24px rgba(18,41,31,.16) !important;
+}
+header .logo {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: opacity .35s ease, transform .45s cubic-bezier(.2,.8,.2,1),
+                max-width .45s ease, width .45s ease, margin .45s ease !important;
+}
+header.logo-hidden .logo {
+    max-width: 0 !important;
+    width: 0 !important;
+    margin-right: -8px !important;
+    opacity: 0 !important;
+    transform: translateY(-8px) scale(.72) !important;
+    pointer-events: none !important;
+}
+@media(max-width:900px){
+    header { top:9px !important; width:calc(100% - 18px) !important; border-radius:18px !important; }
+    header nav a:hover, header nav a:focus-visible { transform:translateY(-2px) scale(1.03) !important; }
+}
+@media(prefers-reduced-motion:reduce){
+    header, header .logo, header nav a { transition:none !important; }
+}
+
+
+</style>
 </head>
 <body>
 
@@ -728,6 +787,63 @@ a.btn:hover::after {
       }, 500);
     });
   }
+})();
+
+</script>
+
+<script id="kalidad-shared-header-behavior">
+
+(function(){
+    const header = document.querySelector('header');
+    const hero = document.querySelector('.hero, .hero-reframed, .career-hero, .page-banner');
+    if(!header) return;
+    function update(){
+        const y = window.scrollY || window.pageYOffset;
+        header.classList.toggle('is-scrolled', y > 24);
+        if(hero){
+            const bottom = hero.getBoundingClientRect().bottom;
+            header.classList.toggle('logo-hidden', bottom <= 90);
+        }
+    }
+    let ticking = false;
+    window.addEventListener('scroll', function(){
+        if(!ticking){
+            requestAnimationFrame(function(){ update(); ticking=false; });
+            ticking=true;
+        }
+    }, {passive:true});
+    window.addEventListener('resize', update, {passive:true});
+    update();
+})();
+
+</script>
+<script id="kalidad-shared-stat-counters">
+
+(function(){
+    const counters = document.querySelectorAll('.stat-counter');
+    if(!counters.length) return;
+    const fmt=(v,d)=>Number(v).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
+    function run(el){
+        if(el.dataset.counted==='true') return;
+        el.dataset.counted='true';
+        const target=parseFloat(el.dataset.count), d=parseInt(el.dataset.decimals||'0',10), suffix=el.dataset.suffix||'';
+        if(matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=fmt(target,d)+suffix;return;}
+        const duration=target>=500?1450:1050, start=performance.now();
+        const ease=t=>1-Math.pow(1-t,3);
+        function tick(now){
+            const p=Math.min((now-start)/duration,1);
+            el.textContent=fmt(target*ease(p),d)+suffix;
+            if(p<1) requestAnimationFrame(tick); else el.textContent=fmt(target,d)+suffix;
+        }
+        requestAnimationFrame(tick);
+    }
+    const band=document.querySelector('.stats-band');
+    if('IntersectionObserver' in window && band){
+        const o=new IntersectionObserver(es=>{
+            if(es.some(e=>e.isIntersecting)){counters.forEach(run);o.disconnect();}
+        },{threshold:.35});
+        o.observe(band);
+    } else counters.forEach(run);
 })();
 
 </script>
