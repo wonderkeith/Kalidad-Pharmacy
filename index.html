@@ -3215,6 +3215,162 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
 
 </style>
 
+
+<style id="kalidad-floating-glass-header">
+/* Floating glass header */
+header {
+    position: fixed !important;
+    top: 14px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: min(1180px, calc(100% - 28px)) !important;
+    border: 1px solid rgba(255,255,255,.30) !important;
+    border-radius: 22px !important;
+    background: rgba(246,244,236,.20) !important;
+    backdrop-filter: blur(18px) saturate(145%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(145%) !important;
+    box-shadow: 0 12px 40px rgba(18,41,31,.10),
+                inset 0 1px 0 rgba(255,255,255,.35) !important;
+    transition: background .35s ease, box-shadow .35s ease,
+                border-color .35s ease, top .35s ease,
+                width .35s ease !important;
+    z-index: 100 !important;
+}
+header.is-scrolled {
+    background: rgba(246,244,236,.72) !important;
+    border-color: rgba(255,255,255,.55) !important;
+    box-shadow: 0 14px 38px rgba(18,41,31,.18),
+                inset 0 1px 0 rgba(255,255,255,.55) !important;
+}
+.header-inner {
+    height: 72px !important;
+}
+
+/* Floating menu buttons */
+nav.main-nav a.nav-link {
+    position: relative !important;
+    overflow: visible !important;
+    padding: 10px 16px !important;
+    border: 1px solid transparent !important;
+    transition: transform .28s cubic-bezier(.2,.8,.2,1),
+                background .28s ease, color .28s ease,
+                box-shadow .28s ease, border-color .28s ease !important;
+    will-change: transform;
+}
+nav.main-nav a.nav-link:hover,
+nav.main-nav a.nav-link:focus-visible,
+nav.main-nav a.nav-link.active {
+    transform: translateY(-5px) scale(1.08) !important;
+    background: rgba(230,243,217,.92) !important;
+    border-color: rgba(143,184,36,.22) !important;
+    box-shadow: 0 10px 24px rgba(18,41,31,.16) !important;
+}
+nav.main-nav a.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--lime);
+    opacity: 0;
+    transform: translateX(-50%) scale(.3);
+    transition: opacity .25s ease, transform .25s cubic-bezier(.2,.8,.2,1);
+}
+nav.main-nav a.nav-link:hover::after,
+nav.main-nav a.nav-link:focus-visible::after,
+nav.main-nav a.nav-link.active::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+/* CTA gets a stronger pop */
+.nav-cta {
+    transition: transform .3s cubic-bezier(.2,.8,.2,1) !important;
+}
+.nav-cta:hover {
+    transform: translateY(-4px) scale(1.05) !important;
+}
+.nav-cta .btn {
+    transition: transform .3s cubic-bezier(.2,.8,.2,1),
+                box-shadow .3s ease !important;
+}
+.nav-cta:hover .btn {
+    transform: scale(1.02) !important;
+    box-shadow: 0 14px 30px rgba(18,41,31,.24) !important;
+}
+
+/* Logo disappears after leaving the hero */
+header .logo {
+    max-width: 180px;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transform-origin: left center;
+    transition: opacity .35s ease, transform .45s cubic-bezier(.2,.8,.2,1),
+                max-width .45s ease, margin .45s ease !important;
+}
+header.logo-hidden .logo {
+    max-width: 0 !important;
+    width: 0 !important;
+    margin-right: -8px !important;
+    opacity: 0 !important;
+    transform: translateY(-8px) scale(.72) !important;
+    pointer-events: none !important;
+}
+header.logo-hidden .header-inner {
+    justify-content: center !important;
+}
+header.logo-hidden .main-nav {
+    margin-left: 0 !important;
+}
+header.logo-hidden {
+    width: min(900px, calc(100% - 28px)) !important;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+    header {
+        top: 9px !important;
+        width: calc(100% - 18px) !important;
+        border-radius: 18px !important;
+    }
+    .header-inner {
+        height: 64px !important;
+    }
+    header.logo-hidden .header-inner {
+        justify-content: space-between !important;
+    }
+    header .logo {
+        max-width: 150px;
+    }
+    nav.main-nav a.nav-link:hover,
+    nav.main-nav a.nav-link:focus-visible {
+        transform: translateY(-2px) scale(1.03) !important;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    header, header .logo, nav.main-nav a.nav-link,
+    nav.main-nav a.nav-link::after {
+        transition: none !important;
+    }
+}
+</style>
+
+
+<style id="kalidad-stat-counter-polish">
+.stat-counter {
+    font-variant-numeric: tabular-nums;
+    display: inline-block;
+    min-width: 3ch;
+}
+@media (prefers-reduced-motion: reduce) {
+    .stat-counter { transition: none !important; }
+}
+</style>
+
 </head>
 <body>
 
@@ -3414,9 +3570,9 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
         <!-- STATS -->
         <section class="stats-band">
             <div class="container stats-grid">
-                <div class="reveal"><p class="stat-num">5+</p><p class="stat-label">Years serving the community</p></div>
-                <div class="reveal"><p class="stat-num">4.8★</p><p class="stat-label">Average rating from our neighbours</p></div>
-                <div class="reveal"><p class="stat-num">500+</p><p class="stat-label">Prescriptions filled monthly</p></div>
+                <div class="reveal"><p class="stat-num stat-counter" data-count="5" data-decimals="0" data-suffix="+">0+</p><p class="stat-label">Years serving the community</p></div>
+                <div class="reveal"><p class="stat-num stat-counter" data-count="4.8" data-decimals="1" data-suffix="★">0.0★</p><p class="stat-label">Average rating from our neighbours</p></div>
+                <div class="reveal"><p class="stat-num stat-counter" data-count="500" data-decimals="0" data-suffix="+">0+</p><p class="stat-label">Prescriptions filled monthly</p></div>
             </div>
         </section>
 
@@ -3895,6 +4051,108 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
     hero.style.setProperty('--mx','50%');
     hero.style.setProperty('--my','50%');
   }
+})();
+</script>
+
+
+<script id="kalidad-floating-header-behavior">
+(function () {
+    const header = document.querySelector('header');
+    const hero = document.querySelector('.hero-reframed, .hero');
+    if (!header) return;
+
+    function updateHeader() {
+        const y = window.scrollY || window.pageYOffset;
+        header.classList.toggle('is-scrolled', y > 24);
+
+        if (hero) {
+            const heroBottom = hero.getBoundingClientRect().bottom;
+            header.classList.toggle('logo-hidden', heroBottom <= 90);
+        }
+    }
+
+    let ticking = false;
+    function onScroll() {
+        if (!ticking) {
+            window.requestAnimationFrame(function () {
+                updateHeader();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateHeader, { passive: true });
+    updateHeader();
+})();
+</script>
+
+
+<script id="kalidad-stat-counters">
+(function () {
+    const counters = document.querySelectorAll('.stat-counter');
+    if (!counters.length) return;
+
+    const formatNumber = (value, decimals) => {
+        return Number(value).toLocaleString(undefined, {
+            minimumFractionDigits: decimals,
+            maximumFractionDigits: decimals
+        });
+    };
+
+    const animateCounter = (el) => {
+        if (el.dataset.counted === 'true') return;
+        el.dataset.counted = 'true';
+
+        const target = parseFloat(el.dataset.count);
+        const decimals = parseInt(el.dataset.decimals || '0', 10);
+        const suffix = el.dataset.suffix || '';
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (reduceMotion) {
+            el.textContent = formatNumber(target, decimals) + suffix;
+            return;
+        }
+
+        const duration = target >= 500 ? 1450 : 1050;
+        const start = performance.now();
+
+        // Fast, smooth ease-out: starts quickly, then settles naturally.
+        const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+        function tick(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const current = target * easeOut(progress);
+            el.textContent = formatNumber(current, decimals) + suffix;
+
+            if (progress < 1) {
+                requestAnimationFrame(tick);
+            } else {
+                el.textContent = formatNumber(target, decimals) + suffix;
+            }
+        }
+
+        requestAnimationFrame(tick);
+    };
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Start all three together for a stronger visual impact.
+                    counters.forEach(animateCounter);
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.35 });
+
+        const statsBand = document.querySelector('.stats-band');
+        if (statsBand) observer.observe(statsBand);
+        else counters.forEach(animateCounter);
+    } else {
+        counters.forEach(animateCounter);
+    }
 })();
 </script>
 
