@@ -1273,29 +1273,5 @@ header.logo-hidden {
 })();
 </script>
 
-<script id="kalidad-services-ios-menu">
-(function(){
-    const menu = document.getElementById('menuToggle');
-    const mobile = document.getElementById('mobileMenu');
-    if(!menu || !mobile) return;
-    function setOpen(open){
-        menu.setAttribute('aria-expanded', String(open));
-        mobile.classList.toggle('is-open', open);
-        mobile.style.display = open ? 'block' : 'none';
-    }
-    if(menu.dataset.latestMenuReady !== 'true'){
-        menu.dataset.latestMenuReady = 'true';
-        menu.addEventListener('click', function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            setOpen(menu.getAttribute('aria-expanded') !== 'true');
-        }, {passive:false});
-        mobile.querySelectorAll('a').forEach(function(a){
-            a.addEventListener('click', function(){ setOpen(false); });
-        });
-    }
-})();
-</script>
-
 </body>
 </html>
