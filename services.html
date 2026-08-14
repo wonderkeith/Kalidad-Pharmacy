@@ -814,11 +814,7 @@ header.logo-hidden {
         gap: 10px !important;
     }
     header .menu-toggle {
-        -webkit-appearance: none !important;
-        appearance: none !important;
         display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
         flex: 0 0 46px !important;
         width: 46px !important;
         height: 46px !important;
@@ -826,37 +822,73 @@ header.logo-hidden {
         min-height: 46px !important;
         padding: 0 !important;
         margin: 0 !important;
-        border: 1.5px solid var(--forest, #12291f) !important;
-        border-radius: 12px !important;
-        background: rgba(255,255,255,.72) !important;
-        color: var(--forest, #12291f) !important;
-        line-height: 0 !important;
-        font-size: 0 !important;
-        -webkit-tap-highlight-color: transparent !important;
-        touch-action: manipulation !important;
-        opacity: 1 !important;
-        visibility: visible !important;
         position: relative !important;
-        z-index: 1002 !important;
+        z-index: 1001 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        box-sizing: border-box !important;
+        color: var(--forest) !important;
+        background: transparent !important;
+        border: 1.5px solid var(--forest) !important;
     }
     header .menu-toggle svg {
         display: block !important;
-        width: 27px !important;
-        height: 27px !important;
-        flex: 0 0 27px !important;
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        flex: 0 0 28px !important;
         stroke: currentColor !important;
-        fill: none !important;
-        opacity: 1 !important;
         visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+/* Touch/mobile browsers, including iPhone Safari desktop-site mode */
+@media (hover: none) and (pointer: coarse) {
+    header .menu-toggle {
+        display: flex !important;
+        flex: 0 0 46px !important;
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        min-height: 46px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 1001 !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+    }
+    header .menu-toggle svg {
+        display: block !important;
+        width: 28px !important;
+        height: 28px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     header .main-nav { display: none !important; }
 }
+
+/* iOS WebKit fallback */
 @supports (-webkit-touch-callout: none) {
     header .menu-toggle {
-        transform: translateZ(0) !important;
-        -webkit-transform: translateZ(0) !important;
-        backface-visibility: hidden !important;
-        -webkit-backface-visibility: hidden !important;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        -webkit-appearance: none !important;
+        position: relative !important;
+        z-index: 1001 !important;
+    }
+    header .menu-toggle svg {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    @media (max-width: 900px) {
+        header .main-nav { display: none !important; }
     }
 }
 </style>
