@@ -2493,6 +2493,66 @@ footer .footer-bottom .container {
   .news-card{opacity:1;transform:none;transition:none}
   .news-card.is-past,.news-card.is-future{opacity:1;transform:none}
 }
+
+/* Article jump navigation */
+.article-jump-strip{
+  position:relative;
+  z-index:4;
+  padding:18px 0;
+  background:rgba(255,255,255,.94);
+  border-bottom:1px solid #e4e1d6;
+  box-shadow:0 10px 28px -24px rgba(18,41,31,.45);
+}
+.article-jump-inner{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.article-jump-inner::-webkit-scrollbar{display:none}
+.article-jump-label{
+  flex:0 0 auto;
+  font-size:.72rem;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:#33581f;
+}
+.article-jump-buttons{
+  display:flex;
+  gap:10px;
+  min-width:max-content;
+}
+.article-jump-btn{
+  display:inline-flex;
+  align-items:center;
+  min-height:42px;
+  padding:9px 16px;
+  border:1px solid #d9dfd6;
+  border-radius:999px;
+  background:#fff;
+  color:#1e4f3b;
+  font-size:.82rem;
+  font-weight:800;
+  transition:transform .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.article-jump-btn:hover{
+  transform:translateY(-1px);
+  background:#c7ef3e;
+  border-color:#c7ef3e;
+  box-shadow:0 10px 24px -18px rgba(18,41,31,.55);
+}
+.news-card[id], .news-feature[id]{
+  scroll-margin-top:120px;
+}
+@media(max-width:760px){
+  .article-jump-strip{padding:12px 0}
+  .article-jump-inner{gap:12px}
+  .article-jump-label{display:none}
+  .article-jump-btn{font-size:.76rem;padding:8px 13px}
+}
+
 </style>
     <link rel="icon" type="image/png" href="kalidad-icon.png">
 
@@ -2845,6 +2905,21 @@ a.btn:focus-visible {
     <p>Practical health advice, pharmacy updates, wellness ideas and stories from the Kalidad Pharmacy team — written to help you make informed choices for yourself and your family.</p>
   </div>
 </section>
+
+<section class="article-jump-strip" aria-label="Explore articles">
+  <div class="container article-jump-inner">
+    <span class="article-jump-label">Explore articles</span>
+    <div class="article-jump-buttons">
+      <a class="article-jump-btn" href="#article-1">Simple habits that make everyday health easier to manage</a>
+      <a class="article-jump-btn" href="#article-2">Understanding your prescription and using it safely</a>
+      <a class="article-jump-btn" href="#article-3">Everyday wellness habits for a healthier routine</a>
+      <a class="article-jump-btn" href="#article-4">Why routine health checks matter</a>
+      <a class="article-jump-btn" href="#article-5">Making your medicine routine easier to remember</a>
+      <a class="article-jump-btn" href="#article-6">Kalidad Pharmacy in the community</a>
+      <a class="article-jump-btn" href="#article-7">Building healthier meals one choice at a time</a>
+    </div>
+  </div>
+</section>
 <section class="news-toolbar" aria-label="News categories">
   <div class="container news-toolbar-inner">
     <div class="news-categories">
@@ -2862,7 +2937,7 @@ a.btn:focus-visible {
 </section>
 <section class="news-section">
   <div class="container">
-    <article class="news-feature" data-category="health">
+    <article id="article-1" class="news-feature" data-category="health">
       <div class="news-feature-media" role="img" aria-label="Pharmacy care and health advice"></div>
       <div class="news-feature-copy">
         <div class="article-meta"><span class="category">Health</span><span>•</span><span>Featured story</span></div>
@@ -2878,22 +2953,22 @@ a.btn:focus-visible {
     </div>
 
     <div class="news-grid" id="newsGrid">
-      <article class="news-card" data-category="pharmacy" data-title="Understanding your prescription and how to use it safely">
+      <article id="article-2" class="news-card" data-category="pharmacy" data-title="Understanding your prescription and how to use it safely">
         <div class="news-card-image"></div><div class="news-card-body"><div class="article-meta"><span class="category">Pharmacy</span><span>•</span><span>4 min read</span></div><h3>Understanding your prescription and using it safely</h3><p>Helpful reminders for reading labels, following directions and asking your pharmacist the right questions.</p><a class="read-more" href="#article-2">Read more <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a></div>
       </article>
-      <article class="news-card" data-category="wellness" data-title="Everyday wellness habits for a healthier routine">
+      <article id="article-3" class="news-card" data-category="wellness" data-title="Everyday wellness habits for a healthier routine">
         <div class="news-card-image"></div><div class="news-card-body"><div class="article-meta"><span class="category">Wellness</span><span>•</span><span>5 min read</span></div><h3>Everyday wellness habits for a healthier routine</h3><p>Small, realistic choices around sleep, movement, hydration and nutrition can add up to better wellbeing.</p><a class="read-more" href="#article-3">Read more <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a></div>
       </article>
-      <article class="news-card" data-category="health" data-title="Why routine health checks matter">
+      <article id="article-4" class="news-card" data-category="health" data-title="Why routine health checks matter">
         <div class="news-card-image"></div><div class="news-card-body"><div class="article-meta"><span class="category">Health</span><span>•</span><span>4 min read</span></div><h3>Why routine health checks matter</h3><p>Regular checks can help you understand important health markers and know when to seek professional advice.</p><a class="read-more" href="#article-4">Read more <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a></div>
       </article>
-      <article class="news-card" data-category="pharmacy" data-title="Making your medicine routine easier to remember">
+      <article id="article-5" class="news-card" data-category="pharmacy" data-title="Making your medicine routine easier to remember">
         <div class="news-card-image"></div><div class="news-card-body"><div class="article-meta"><span class="category">Pharmacy</span><span>•</span><span>3 min read</span></div><h3>Making your medicine routine easier to remember</h3><p>Simple organisation ideas that can make regular medicines easier to manage day after day.</p><a class="read-more" href="#article-5">Read more <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a></div>
       </article>
-      <article class="news-card" data-category="community" data-title="Kalidad Pharmacy in the community">
+      <article id="article-6" class="news-card" data-category="community" data-title="Kalidad Pharmacy in the community">
         <div class="news-card-image"></div><div class="news-card-body"><div class="article-meta"><span class="category">Community</span><span>•</span><span>3 min read</span></div><h3>Kalidad Pharmacy in the community</h3><p>Updates, community initiatives and the people behind our commitment to accessible pharmacy care.</p><a class="read-more" href="#article-6">Read more <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a></div>
       </article>
-      <article class="news-card" data-category="wellness" data-title="Building healthier meals one choice at a time">
+      <article id="article-7" class="news-card" data-category="wellness" data-title="Building healthier meals one choice at a time">
         <div class="news-card-image"></div><div class="news-card-body"><div class="article-meta"><span class="category">Wellness</span><span>•</span><span>5 min read</span></div><h3>Building healthier meals one choice at a time</h3><p>Practical ideas for making balanced food choices part of a routine that works for your household.</p><a class="read-more" href="#article-7">Read more <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a></div>
       </article>
     </div>
@@ -3319,6 +3394,22 @@ a.btn:focus-visible {
 
     window.addEventListener('resize', update, { passive: true });
     update();
+})();
+</script>
+
+
+<script id="article-jump-scroll">
+(function(){
+  document.addEventListener('click', function(e){
+    const link = e.target.closest('.article-jump-btn');
+    if(!link) return;
+    const target = document.querySelector(link.getAttribute('href'));
+    if(target){
+      e.preventDefault();
+      target.scrollIntoView({behavior:'smooth', block:'start'});
+      history.replaceState(null,'',link.getAttribute('href'));
+    }
+  });
 })();
 </script>
 
