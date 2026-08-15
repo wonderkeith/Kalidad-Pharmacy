@@ -2,15 +2,12 @@ name: Digital Care checks
 on:
   pull_request:
     branches: [main]
-    paths:
-      - 'digital-care/**'
-      - '.github/workflows/digital-care.yml'
+    paths: ['digital-care/**','.github/workflows/digital-care.yml']
   push:
     branches: [digital-care-platform]
-    paths:
-      - 'digital-care/**'
+    paths: ['digital-care/**']
 jobs:
-  syntax:
+  test:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -25,4 +22,7 @@ jobs:
       - run: npm install --ignore-scripts
       - run: node --check server.js
       - run: node --check auth.js
-      - run: node --check services/care-assistant.js
+      - run: node --check extensions.js
+      - run: node --check services/safety.js
+      - run: node --check services/catalogue.js
+      - run: npm test
