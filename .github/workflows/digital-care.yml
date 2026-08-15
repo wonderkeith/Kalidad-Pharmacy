@@ -25,4 +25,5 @@ jobs:
       - run: node --check extensions.js
       - run: node --check services/safety.js
       - run: node --check services/catalogue.js
+      - run: node --check services/approved-faq.js
       - run: npm test
