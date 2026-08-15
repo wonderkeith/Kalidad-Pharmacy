@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Services | Kalidad Pharmacy</title>
-<meta name="description" content="Explore Kalidad Pharmacy's services: prescription filling, OTC & wellness, free health checks, same-day delivery, pharmacist consultations and refill reminders.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prescription Filling | Kalidad Pharmacy</title>
+<meta name="description" content="Fast, accurate dispensing with double-check verification. We handle your prescriptions with the care, privacy, and attention they deserve.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -601,14 +599,7 @@ button, input, textarea, select {
 /* Hero controls removed to keep the hero clean and match the reference design. */
 .hero-arrow,.hero-dots{display:none !important;}
 
-/* Service exploration controls */
-.service-actions{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px;}
-.service-actions .btn{font-size:.88rem;padding:12px 20px;}
-@media(max-width:800px){.service-actions{margin-top:26px;}}
-</style>
-    <link rel="icon" type="image/png" href="kalidad-icon.png">
 
-<style id="kalidad-footer-favicon-overrides">
 /* Kalidad Pharmacy shared footer/logo + favicon refinements */
 footer .footer-brand,
 footer .footer-brand-logo{display:block;}
@@ -630,16 +621,8 @@ footer .footer-col ul{justify-items:center;}
 footer .footer-contact li{justify-content:center;text-align:center;}
 footer .footer-bottom .container{justify-content:center;text-align:center;}
 @media(max-width:760px){footer .footer-brand-logo{width:250px;}}
-</style>
-
-<!-- Vercel Web Analytics -->
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
 
 
-<style id="kalidad-shared-modern-header">
 
 /* Shared Kalidad modern floating header */
 header {
@@ -696,9 +679,8 @@ header.logo-hidden .logo {
 }
 
 
-</style>
 
-<style id="kalidad-latest-index-header">
+
 header {
     position: fixed !important;
     top: 14px !important;
@@ -806,9 +788,8 @@ header.logo-hidden {
         transition: none !important;
     }
 }
-</style>
 
-<style id="kalidad-services-ios-header-fix">
+
 @media (max-width: 900px) {
     html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
     header .header-inner {
@@ -896,12 +877,47 @@ header.logo-hidden {
         header .main-nav { display: none !important; }
     }
 }
-</style>
 
+/* Service exploration controls */
+.service-actions{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px;}
+.service-actions .btn{font-size:.88rem;padding:12px 20px;}
+@media(max-width:800px){.service-actions{margin-top:26px;}}
+
+/* Service detail page */
+.service-detail-hero{min-height:650px;display:grid;grid-template-columns:1.05fr .95fr;align-items:stretch;background:linear-gradient(108deg,#376c59 0%,#6e9183 34%,#d9e3dc 62%,#fff 82%,#fff 100%);overflow:hidden;}
+.service-detail-copy{padding:130px 7vw 90px;display:flex;flex-direction:column;justify-content:center;}
+.service-detail-copy .kicker{display:inline-flex;width:max-content;padding:8px 16px;border-radius:999px;background:#e7f2d9;color:#42652f;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;}
+.service-detail-copy h1{margin-top:28px;font-family:'Playfair Display',Georgia,serif;font-size:clamp(3.2rem,6vw,6rem);line-height:.94;letter-spacing:-.045em;color:#0d2c22;}
+.service-detail-copy .lead{margin-top:24px;max-width:620px;color:#536159;font-size:1.12rem;line-height:1.75;}
+.service-detail-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;}
+.service-detail-image{min-height:650px;position:relative;overflow:hidden;}
+.service-detail-image img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease;}
+.service-detail-hero:hover .service-detail-image img{transform:scale(1.035);}
+.detail-section{padding:100px 0;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start;}
+.detail-copy h2,.detail-process h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(2.5rem,4.5vw,4.4rem);line-height:.98;color:#102d22;}
+.detail-copy p{margin-top:20px;color:#536159;font-size:1rem;line-height:1.85;}
+.detail-list{margin:28px 0 0;padding:0;list-style:none;display:grid;gap:15px;}
+.detail-list li{position:relative;padding:18px 20px 18px 48px;background:#fff;border:1px solid var(--line);border-radius:16px;color:#25372f;box-shadow:var(--shadow-soft);}
+.detail-list li::before{content:"✓";position:absolute;left:18px;top:17px;width:22px;height:22px;border-radius:50%;background:#e5f1d8;color:#42652f;display:grid;place-items:center;font-weight:900;}
+.how-card{margin-top:30px;background:linear-gradient(155deg,var(--forest) 0%,var(--forest-deep) 100%);color:#fff;border-radius:28px;padding:34px;box-shadow:var(--shadow-card);}
+.how-card h3{color:#fff;font-family:'Playfair Display',serif;font-size:1.7rem;}
+.how-card ol{margin:20px 0 0;padding-left:22px;display:grid;gap:12px;color:rgba(255,255,255,.9);}
+.order-band{padding:90px 24px;background:linear-gradient(155deg,#eef5e7 0%,#fff 65%);text-align:center;}
+.order-band h2{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);}
+.order-band p{margin:14px auto 0;max-width:620px;color:#536159;line-height:1.7;}
+.order-band .btn{margin-top:28px;}
+@media(max-width:850px){
+ .service-detail-hero{grid-template-columns:1fr;min-height:auto;}
+ .service-detail-copy{padding:115px 28px 60px;}
+ .service-detail-image{min-height:48vh;height:48vh;}
+ .detail-section{padding:72px 0;}
+ .detail-grid{grid-template-columns:1fr;gap:45px;}
+}
+</style>
+<link rel="icon" type="image/png" href="kalidad-icon.png">
 </head>
 <body>
-
-
 <header>
     <div class="container header-inner">
         <a href="index.html" class="logo">
@@ -936,160 +952,44 @@ header.logo-hidden {
         <a href="about.html">About Us</a>
     </div>
 </header>
-
-
 <main>
-  <section class="page-banner" aria-label="What we offer">
-    <div class="container">
-      <div class="hero-copy">
-        <h1>Pharmacy services <span class="accent">built around you</span></h1>
-        <p>From quick refills to personal consultations, every service is delivered with the same care and attention — day or night.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="services-scroll" id="all-services" aria-label="Our pharmacy services">
-    <div class="services-scroll-intro container">
-      <span class="kicker">Every service, explained</span>
-      <h2>Care that goes <span>further</span></h2>
-      <p>Scroll through each service to see how Kalidad Pharmacy supports you, your family, and your everyday health.</p>
-    </div>
-
-    <div class="service-panels">
-      <article class="service-panel panel-1 reveal-service">
-        <div class="service-image"><img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1400&q=85" alt="Medicines prepared for prescription dispensing" loading="lazy"></div>
-        <div class="service-content">
-          <span class="service-tag">Core service</span>
-          <h3>Prescription Filling</h3>
-          <p class="service-lead">Fast, accurate dispensing with double-check verification. We handle your prescriptions with the care, privacy, and attention they deserve.</p>
-          <p>Whether you are collecting a new prescription or continuing a long-term treatment, our pharmacy team takes time to confirm the medication, strength, instructions, and quantity before it reaches you. We aim to make every refill straightforward while keeping safety at the centre of the process.</p>
-          <ul><li>Every order is double-checked by a licensed pharmacist.</li><li>Clear guidance on how and when to take your medicines.</li><li>Available 24 hours a day, every day.</li></ul>
-          <div class="service-actions">
-            <a href="['Every order is double-checked by a licensed pharmacist.', 'Clear guidance on how and when to take your medicines.', 'Available 24 hours a day, every day.']" class="btn btn-primary">Explore this service <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="service-panel panel-2 reveal-service">
-        <div class="service-image"><img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1400&q=85" alt="Wellness products and supplements" loading="lazy"></div>
-        <div class="service-content">
-          <span class="service-tag">Wellness</span>
-          <h3>OTC &amp; Wellness</h3>
-          <p class="service-lead">Curated over-the-counter remedies, vitamins, supplements, and daily health essentials — with trusted guidance when you need it.</p>
-          <p>Choosing an over-the-counter product can be confusing when there are many options on the shelf. Our team can help you understand the choices and select products that fit your needs, while keeping quality, responsible use, and value in mind.</p>
-          <ul><li>Vitamins, supplements, personal care, and everyday essentials.</li><li>Friendly guidance on the right product for your situation.</li><li>Quality products selected for dependable everyday use.</li></ul>
-          <div class="service-actions">
-            <a href="['Vitamins, supplements, personal care, and everyday essentials.', 'Friendly guidance on the right product for your situation.', 'Quality products selected for dependable everyday use.']" class="btn btn-primary">Explore this service <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="service-panel panel-3 reveal-service">
-        <div class="service-image"><img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1400&q=85" alt="Health professional performing a health check" loading="lazy"></div>
-        <div class="service-content">
-          <span class="service-tag">Check-up</span>
-          <h3>Health Checks</h3>
-          <p class="service-lead">Blood pressure, glucose, and cholesterol screening — quick, confidential, and easy to understand.</p>
-          <p>Regular checks can help you keep track of important health indicators and know when it is time to seek further medical advice. Our team performs simple screenings and explains the results in plain language, without unnecessary medical jargon.</p>
-          <ul><li>Blood pressure, glucose, and cholesterol screening.</li><li>Results explained clearly on the spot.</li><li>Walk-ins welcome; free for regular customers.</li></ul>
-          <div class="service-actions">
-            <a href="['Blood pressure, glucose, and cholesterol screening.', 'Results explained clearly on the spot.', 'Walk-ins welcome; free for regular customers.']" class="btn btn-primary">Explore this service <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="service-panel panel-4 reveal-service">
-        <div class="service-image"><img src="https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&w=1400&q=85" alt="Pharmacy delivery package ready for dispatch" loading="lazy"></div>
-        <div class="service-content">
-          <span class="service-tag">Convenience</span>
-          <h3>Same-day Delivery</h3>
-          <p class="service-lead">Get prescriptions and everyday health essentials delivered to your door across Fort Portal.</p>
-          <p>When visiting the pharmacy is not convenient, we bring your order to you. Send your request through WhatsApp, confirm the details with our team, and we will prepare your items for local delivery so you can spend less time travelling and more time looking after yourself.</p>
-          <ul><li>Same-day local delivery across Fort Portal.</li><li>Order and coordinate delivery through WhatsApp.</li><li>Convenient support for prescriptions and health essentials.</li></ul>
-          <div class="service-actions">
-            <a href="['Same-day local delivery across Fort Portal.', 'Order and coordinate delivery through WhatsApp.', 'Convenient support for prescriptions and health essentials.']" class="btn btn-primary">Explore this service <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="service-panel panel-5 reveal-service">
-        <div class="service-image"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1400&q=85" alt="Pharmacist providing a private consultation" loading="lazy"></div>
-        <div class="service-content">
-          <span class="service-tag">Expert care</span>
-          <h3>Pharmacist Consultation</h3>
-          <p class="service-lead">Sit down with a licensed pharmacist for medication reviews, practical advice, and answers to your health questions.</p>
-          <p>A consultation gives you space to ask questions you may not have had time to discuss elsewhere. We can review how your medicines fit together, explain instructions, discuss common concerns, and help you understand when a doctor or other healthcare professional should be involved.</p>
-          <ul><li>Private, one-on-one medication reviews.</li><li>Clear explanations about medicines and their use.</li><li>No appointment needed for routine consultations.</li></ul>
-          <div class="service-actions">
-            <a href="['Private, one-on-one medication reviews.', 'Clear explanations about medicines and their use.', 'No appointment needed for routine consultations.']" class="btn btn-primary">Explore this service <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="service-panel panel-6 reveal-service">
-        <div class="service-image"><img src="https://images.unsplash.com/photo-1516841273335-e39b37888115?auto=format&fit=crop&w=1400&q=85" alt="Phone reminder and medication schedule" loading="lazy"></div>
-        <div class="service-content">
-          <span class="service-tag">Reminder</span>
-          <h3>Refill Reminders</h3>
-          <p class="service-lead">Never lose track of a refill. Set up free SMS or WhatsApp reminders when it is time to replenish your regular medication.</p>
-          <p>For long-term medicines, remembering when the next refill is due can be one more thing to worry about. Our reminder service gives you a simple prompt at the right time, helping you plan ahead and avoid unnecessary gaps in your regular supply.</p>
-          <ul><li>Free SMS or WhatsApp refill reminders.</li><li>Set the service up once and manage it whenever you need.</li><li>A simple extra layer of support for regular medicines.</li></ul>
-          <div class="service-actions">
-            <a href="['Free SMS or WhatsApp refill reminders.', 'Set the service up once and manage it whenever you need.', 'A simple extra layer of support for regular medicines.']" class="btn btn-primary">Explore this service <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="stats-band">
-    <div class="container stats-grid">
-      <div class="reveal"><p class="stat-num">5+</p><p class="stat-label">Years serving the community</p></div>
-      <div class="reveal"><p class="stat-num">4.8★</p><p class="stat-label">Average rating from our neighbours</p></div>
-      <div class="reveal"><p class="stat-num">500+</p><p class="stat-label">Prescriptions filled monthly</p></div>
-    </div>
-  </section>
-
-  <section class="section tight">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="kicker">Common questions</span>
-        <h2>Frequently asked</h2>
-        <div class="leaf-rule"></div>
-      </div>
-      <div class="faq reveal">
-        <details class="faq-item">
-          <summary>Do I need to book ahead for a health check?<span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
-          <p>No — walk-ins are welcome for blood pressure, glucose, and cholesterol screening, and it's free for regular customers.</p>
-        </details>
-        <details class="faq-item">
-          <summary>How fast is delivery?<span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
-          <p>Orders placed on WhatsApp are delivered the same day anywhere in Fort Portal.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Can I set up refill reminders?<span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
-          <p>Yes — message us on WhatsApp with your prescription and we'll set up free SMS or WhatsApp reminders for you.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Can I speak with a pharmacist about my medicines?<span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
-          <p>Yes — our pharmacist consultation service can help you understand your medicines, how to take them, and answer questions about your treatment.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Can I order my prescription medicines through WhatsApp?<span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
-          <p>Yes — send us your prescription and order details on WhatsApp, and our team will help you arrange your medicines and delivery.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <section class="section tight">
-    <div class="container explore-wrap reveal">
-      <h2 style="margin-bottom:16px;">Need something today?</h2>
-      <a href="https://wa.me/256764201229" target="_blank" rel="noopener" class="btn btn-primary">Place your order</a>
-    </div>
-  </section>
+<section class="service-detail-hero">
+ <div class="service-detail-copy reveal">
+  <span class="kicker">Core service</span>
+  <h1>Prescription Filling</h1>
+  <p class="lead">Fast, accurate dispensing with double-check verification. We handle your prescriptions with the care, privacy, and attention they deserve.</p>
+  <div class="service-detail-actions">
+   <a class="btn btn-primary" href="https://wa.me/256764201229?text=Hello Kalidad Pharmacy, I would like to order Prescription Filling. " target="_blank" rel="noopener">Place your order <span aria-hidden="true">→</span></a>
+   <a class="btn btn-outline" href="services.html">Back to services</a>
+  </div>
+ </div>
+ <div class="service-detail-image"><img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1600&q=90" alt="Medicines prepared for prescription dispensing"></div>
+</section>
+<section class="detail-section">
+ <div class="container detail-grid">
+  <div class="detail-copy reveal">
+   <span class="service-tag">Core service</span>
+   <h2>How this service works for you</h2>
+   <p>Whether you are collecting a new prescription or continuing a long-term treatment, our pharmacy team takes time to confirm the medication, strength, instructions, and quantity before it reaches you. We aim to make every refill straightforward while keeping safety at the centre of the process.</p>
+   <ul class="detail-list">
+    <li>Every order is double-checked by a licensed pharmacist.</li><li>Clear guidance on how and when to take your medicines.</li><li>Available 24 hours a day, every day.</li>
+   </ul>
+  </div>
+  <div class="detail-process reveal">
+   <h2>How to access it</h2>
+   <div class="how-card">
+    <h3>Simple steps from request to care</h3>
+    <ol><li>Send us a message on WhatsApp and tell us what you need.</li><li>Share the relevant prescription, product details, or preferred service information.</li><li>Our team confirms the details, availability, timing, and any next steps with you.</li><li>Complete your order or visit the pharmacy as arranged.</li></ol>
+   </div>
+  </div>
+ </div>
+</section>
+<section class="order-band reveal">
+ <h2>Ready to get started?</h2>
+ <p>Speak with the Kalidad Pharmacy team and arrange prescription filling in the way that works best for you.</p>
+ <a class="btn btn-primary" href="https://wa.me/256764201229?text=Hello Kalidad Pharmacy, I would like to order Prescription Filling. " target="_blank" rel="noopener">Place your order</a>
+</section>
 </main>
-
 <footer>
   <div class="container footer-grid">
     <div class="footer-brand"><img class="footer-brand-logo" src="kalidad-logo.png" alt="Kalidad Pharmacy — Your health, your wealth"></div>
@@ -1117,184 +1017,15 @@ header.logo-hidden {
     </div>
   </div>
 </footer>
-
-<a href="https://wa.me/256764201229" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg>
-</a>
-
+<a href="https://wa.me/256764201229" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a10 10 0 1 0-4.777-4.719"/></svg></a>
 <script>
 (function(){
-  /* mobile menu */
-  var toggle = document.getElementById('menuToggle');
-  var menu = document.getElementById('mobileMenu');
-  if(toggle && menu){
-    toggle.addEventListener('click', function(){
-      var open = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  }
-
-  /* hero slider (home page only) */
-  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
-  var dotsWrap = document.getElementById('sliderDots');
-  if(slides.length && dotsWrap){
-    var current = 0, timer;
-    slides.forEach(function(_, i){
-      var b = document.createElement('button');
-      b.setAttribute('aria-label', 'Go to slide ' + (i+1));
-      if(i===0) b.classList.add('active');
-      b.addEventListener('click', function(){ goTo(i); resetTimer(); });
-      dotsWrap.appendChild(b);
-    });
-    var dots = Array.prototype.slice.call(dotsWrap.children);
-
-    function goTo(i){
-      slides[current].classList.remove('active');
-      dots[current].classList.remove('active');
-      current = (i + slides.length) % slides.length;
-      slides[current].classList.add('active');
-      dots[current].classList.add('active');
-    }
-    function next(){ goTo(current+1); }
-    function prev(){ goTo(current-1); }
-    function resetTimer(){ clearInterval(timer); timer = setInterval(next, 5000); }
-
-    var nextBtn = document.getElementById('nextBtn');
-    var prevBtn = document.getElementById('prevBtn');
-    if(nextBtn) nextBtn.addEventListener('click', function(){ next(); resetTimer(); });
-    if(prevBtn) prevBtn.addEventListener('click', function(){ prev(); resetTimer(); });
-    resetTimer();
-  }
-
-  /* scroll reveal */
-  var revealEls = document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); }
-      });
-    }, {threshold:.15});
-    revealEls.forEach(function(el){ io.observe(el); });
-  } else {
-    revealEls.forEach(function(el){ el.classList.add('in'); });
-  }
-
-  /* full-page service reveal: each section rises into view as the user scrolls */
-  var servicePanels = document.querySelectorAll('.reveal-service');
-  if('IntersectionObserver' in window){
-    var serviceObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){ entry.target.classList.add('in-view'); }
-        else if(entry.boundingClientRect.top > 0){ entry.target.classList.remove('in-view'); }
-      });
-    }, {threshold:.28, rootMargin:'0px 0px -8% 0px'});
-    servicePanels.forEach(function(panel){ serviceObserver.observe(panel); });
-  } else {
-    servicePanels.forEach(function(panel){ panel.classList.add('in-view'); });
-  }
-
-  /* contact form (no backend — hands off to WhatsApp) */
-  var form = document.getElementById('contactForm');
-  if(form){
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      var btn = form.querySelector('button[type="submit"]');
-      var original = btn.textContent;
-      btn.textContent = 'Message ready — opening WhatsApp…';
-      var name = document.getElementById('name').value;
-      var message = document.getElementById('message').value;
-      var text = encodeURIComponent('Hello Kalidad Pharmacy, my name is ' + name + '. ' + message);
-      setTimeout(function(){
-        window.open('https://wa.me/256764201229?text=' + text, '_blank');
-        btn.textContent = original;
-        form.reset();
-      }, 500);
-    });
-  }
-})();
-
-</script>
-
-<script id="kalidad-shared-header-behavior">
-
-(function(){
-    const header = document.querySelector('header');
-    const hero = document.querySelector('.hero, .hero-reframed, .career-hero, .page-banner');
-    if(!header) return;
-    function update(){
-        const y = window.scrollY || window.pageYOffset;
-        header.classList.toggle('is-scrolled', y > 24);
-        if(hero){
-            const bottom = hero.getBoundingClientRect().bottom;
-            header.classList.toggle('logo-hidden', bottom <= 90);
-        }
-    }
-    let ticking = false;
-    window.addEventListener('scroll', function(){
-        if(!ticking){
-            requestAnimationFrame(function(){ update(); ticking=false; });
-            ticking=true;
-        }
-    }, {passive:true});
-    window.addEventListener('resize', update, {passive:true});
-    update();
-})();
-
-</script>
-<script id="kalidad-shared-stat-counters">
-
-(function(){
-    const counters = document.querySelectorAll('.stat-counter');
-    if(!counters.length) return;
-    const fmt=(v,d)=>Number(v).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
-    function run(el){
-        if(el.dataset.counted==='true') return;
-        el.dataset.counted='true';
-        const target=parseFloat(el.dataset.count), d=parseInt(el.dataset.decimals||'0',10), suffix=el.dataset.suffix||'';
-        if(matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=fmt(target,d)+suffix;return;}
-        const duration=target>=500?1450:1050, start=performance.now();
-        const ease=t=>1-Math.pow(1-t,3);
-        function tick(now){
-            const p=Math.min((now-start)/duration,1);
-            el.textContent=fmt(target*ease(p),d)+suffix;
-            if(p<1) requestAnimationFrame(tick); else el.textContent=fmt(target,d)+suffix;
-        }
-        requestAnimationFrame(tick);
-    }
-    const band=document.querySelector('.stats-band');
-    if('IntersectionObserver' in window && band){
-        const o=new IntersectionObserver(es=>{
-            if(es.some(e=>e.isIntersecting)){counters.forEach(run);o.disconnect();}
-        },{threshold:.35});
-        o.observe(band);
-    } else counters.forEach(run);
-})();
-
-</script>
-
-<script id="kalidad-latest-header-behavior">
-(function(){
-    const header = document.querySelector('header');
-    const hero = document.querySelector('.hero, .hero-reframed, .career-hero, .page-banner');
-    if(!header) return;
-    function update(){
-        const y = window.scrollY || window.pageYOffset;
-        header.classList.toggle('is-scrolled', y > 24);
-        if(hero){
-            header.classList.toggle('logo-hidden', hero.getBoundingClientRect().bottom <= 90);
-        }
-    }
-    let ticking = false;
-    window.addEventListener('scroll', function(){
-        if(!ticking){
-            requestAnimationFrame(function(){ update(); ticking=false; });
-            ticking=true;
-        }
-    }, {passive:true});
-    window.addEventListener('resize', update, {passive:true});
-    update();
+ const toggle=document.getElementById('menuToggle'), menu=document.getElementById('mobileMenu');
+ if(toggle&&menu) toggle.addEventListener('click',()=>{const open=menu.classList.toggle('open');toggle.setAttribute('aria-expanded',open?'true':'false');});
+ const reveals=document.querySelectorAll('.reveal,.reveal-service');
+ if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in','in-view');}),{threshold:.12});reveals.forEach(e=>io.observe(e));}else reveals.forEach(e=>e.classList.add('in','in-view'));
+ const header=document.querySelector('header'); const hero=document.querySelector('.service-detail-hero');
+ if(header){const update=()=>{header.classList.toggle('is-scrolled',scrollY>24);if(hero)header.classList.toggle('logo-hidden',hero.getBoundingClientRect().bottom<=90)};addEventListener('scroll',update,{passive:true});addEventListener('resize',update,{passive:true});update();}
 })();
 </script>
-
-</body>
-</html>
+</body></html>
