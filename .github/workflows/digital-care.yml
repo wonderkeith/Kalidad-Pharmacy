@@ -4,8 +4,8 @@ on:
     branches: [main]
     paths: ['digital-care/**','.github/workflows/digital-care.yml']
   push:
-    branches: [digital-care-platform]
-    paths: ['digital-care/**']
+    branches: [digital-care-platform, digital-care-production]
+    paths: ['digital-care/**','.github/workflows/digital-care.yml']
 jobs:
   test:
     runs-on: ubuntu-latest
