@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: kalidad-digital-care-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: kalidad
+      POSTGRES_USER: calidad
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-kalidad_local_change_me}
+    ports:
+      - "5432:5432"
+    volumes:
+      - calidad_postgres_data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U calidad -d kalidad"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    container_name: calidad-digital-care-app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 8787
+      DATABASE_URL: postgresql://calidad:${POSTGRES_PASSWORD:-kalidad_local_change_me}@postgres:5432/kalidad
+      SESSION_SECRET: ${SESSION_SECRET:-local-development-secret-change-before-production}
+      ALLOWED_ORIGIN: ${ALLOWED_ORIGIN:-http://localhost:8787}
+      UPLOAD_DIR: /app/storage/prescriptions
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-10}
+    ports:
+      - "8787:8787"
+    volumes:
+      - calidad_prescriptions:/app/storage/prescriptions
+
+volumes:
+  calidad_postgres_data:
+  calidad_prescriptions:
