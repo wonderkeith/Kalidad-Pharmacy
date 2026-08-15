@@ -1,0 +1,28 @@
+name: Digital Care checks
+on:
+  pull_request:
+    branches: [main]
+    paths: ['digital-care/**','.github/workflows/digital-care.yml']
+  push:
+    branches: [digital-care-platform]
+    paths: ['digital-care/**']
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: digital-care
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: digital-care/package.json
+      - run: npm install --ignore-scripts
+      - run: node --check server.js
+      - run: node --check auth.js
+      - run: node --check extensions.js
+      - run: node --check services/safety.js
+      - run: node --check services/catalogue.js
+      - run: npm test
