@@ -4,8 +4,8 @@ on:
     branches: [main]
     paths: ['digital-care/**','.github/workflows/digital-care.yml']
   push:
-    branches: [digital-care-platform]
-    paths: ['digital-care/**']
+    branches: [digital-care-platform, digital-care-production]
+    paths: ['digital-care/**','.github/workflows/digital-care.yml']
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -25,4 +25,5 @@ jobs:
       - run: node --check extensions.js
       - run: node --check services/safety.js
       - run: node --check services/catalogue.js
+      - run: node --check services/approved-faq.js
       - run: npm test

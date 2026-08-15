@@ -14,3 +14,7 @@
 The careers.html form posts to `/api/applications`.
 The Vercel Function emails the application details and attaches the uploaded CV.
 After a successful response, the thank-you page is displayed.
+
+## Digital Care V1
+
+The public navigation now includes **Digital Care**, which opens the no-login chat at `digital-care/public/chat.html`. Its server-side companion is in `digital-care/`; see [digital-care/README.md](digital-care/README.md) for database migration, staff queue, privacy, safety, deployment, and pharmacy-approved FAQ requirements. The chat does not collect online payments or payment credentials.

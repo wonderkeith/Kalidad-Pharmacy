@@ -78,8 +78,10 @@ CREATE TABLE IF NOT EXISTS prescriptions (
 CREATE TABLE IF NOT EXISTS conversations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(), user_id UUID REFERENCES users(id), channel TEXT NOT NULL DEFAULT 'web' CHECK (channel IN ('web','whatsapp','phone','staff')),
   status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open','waiting','assigned','resolved')), assigned_to UUID REFERENCES users(id),
+  visitor_token_hash TEXT UNIQUE, consented_at TIMESTAMPTZ, handoff_reason TEXT, last_customer_message_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(), updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+CREATE INDEX IF NOT EXISTS conversations_anonymous_queue_idx ON conversations(status,updated_at DESC) WHERE user_id IS NULL;
 CREATE TABLE IF NOT EXISTS messages (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(), conversation_id UUID NOT NULL REFERENCES conversations(id) ON DELETE CASCADE,
   sender_id UUID REFERENCES users(id), sender_type TEXT NOT NULL CHECK (sender_type IN ('customer','assistant','staff','system')), body TEXT NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT now()

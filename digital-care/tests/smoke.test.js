@@ -1,9 +1,13 @@
 const assert=require('assert');
 const {classify,safeResponse}=require('../services/safety');
 const {normalizeProduct}=require('../services/catalogue');
+const {findAnswer,FALLBACK}=require('../services/approved-faq');
 assert.equal(classify('What is this product used for?'),'general');
 assert.equal(classify('Can I change my dosage?'),'pharmacist');
 assert.equal(classify('I have chest pain'),'emergency');
 assert.equal(safeResponse('I have chest pain').type,'emergency');
 assert.equal(normalizeProduct({name:'Vitamin C',sku:'VIT-C',category:'Supplements',priceUgx:15000,stockQuantity:4}).slug,'vitamin-c');
+assert.equal(findAnswer('How do I pay?').id,'payment');
+assert.equal(findAnswer('What are your hours?').handoff,true);
+assert.ok(FALLBACK.includes('cannot safely answer'));
 console.log('Kalidad Digital Care smoke tests passed');
