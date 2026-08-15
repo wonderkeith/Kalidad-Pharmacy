@@ -1,0 +1,16 @@
+{
+  "name": "kalidad-digital-care",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Customer care and ordering application foundation for Kalidad Pharmacy",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "formidable": "^3.5.2",
+    "helmet": "^8.1.0",
+    "pg": "^8.16.3"
+  }
+}
