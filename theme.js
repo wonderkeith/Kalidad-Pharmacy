@@ -29,19 +29,43 @@
     '  --shadow-card:0 22px 50px -20px rgba(0,0,0,.65);',
     '  color-scheme: dark;',
     '}',
-    /* Headings on this site use var(--forest-deep) for color — on dark
-       backgrounds that needs to stay light, not near-black. Re-fix the
-       common heading/selector patterns explicitly. */
+    /* Headings and any text that was previously forced to plain white in
+       dark mode now use the brand lime-green as the accent/readable color
+       instead, per updated design direction. */
     'html[data-theme="dark"] h1,',
     'html[data-theme="dark"] h2,',
     'html[data-theme="dark"] h3,',
-    'html[data-theme="dark"] .font-display{ color:#ffffff; }',
+    'html[data-theme="dark"] .font-display{ color:#c7ef3e; }',
     /* Any element whose inline style sets forest-green as the text color
-       (color:var(--forest-deep)/--forest-mid/--forest) becomes white —
-       lime-green text and text already set to white are left untouched. */
+       (color:var(--forest-deep)/--forest-mid/--forest) becomes lime green —
+       this is the fix for FAQ questions, labels, timeline text, etc. that
+       were showing as near-invisible dark-green-on-dark-green. */
     'html[data-theme="dark"] [style*="color:var(--forest-deep)"],',
     'html[data-theme="dark"] [style*="color:var(--forest-mid)"],',
-    'html[data-theme="dark"] [style*="color:var(--forest)"]{ color:#ffffff!important; }',
+    'html[data-theme="dark"] [style*="color:var(--forest)"],',
+    'html[data-theme="dark"] [style*="color: var(--forest-deep)"],',
+    'html[data-theme="dark"] [style*="color: var(--forest-mid)"],',
+    'html[data-theme="dark"] [style*="color: var(--forest)"],',
+    'html[data-theme="dark"] [style*="color:#fff"],',
+    'html[data-theme="dark"] [style*="color: #fff"],',
+    'html[data-theme="dark"] [style*="color:white"]{ color:#c7ef3e!important; }',
+    /* Same fix for the equivalent rules defined in each page\'s own
+       stylesheet (class-based, not inline) — FAQ accordions, timeline
+       items, section kickers, form labels, outline buttons, icon badges. */
+    'html[data-theme="dark"] .faq-item summary,',
+    'html[data-theme="dark"] .info-row .value,',
+    'html[data-theme="dark"] .section-head .kicker,',
+    'html[data-theme="dark"] .about-copy .kicker,',
+    'html[data-theme="dark"] .about-list svg,',
+    'html[data-theme="dark"] .timeline-item .year,',
+    'html[data-theme="dark"] .timeline-item h4,',
+    'html[data-theme="dark"] .contact-form label,',
+    'html[data-theme="dark"] .menu,',
+    'html[data-theme="dark"] .accent{ color:#c7ef3e!important; }',
+    'html[data-theme="dark"] .btn-outline{ border-color:#c7ef3e!important; color:#c7ef3e!important; }',
+    'html[data-theme="dark"] .detailed .service-icon,',
+    'html[data-theme="dark"] .feature-icon{ color:#c7ef3e!important; }',
+    'html[data-theme="dark"] .faq-item p{ color:var(--muted)!important; }',
     'html[data-theme="dark"] body{ background:var(--cream); color:var(--ink); }',
     'html[data-theme="dark"] header{ background:rgba(11,26,20,.9)!important; }',
     'html[data-theme="dark"] header.is-scrolled{ background:rgba(11,26,20,.92)!important; box-shadow:0 14px 40px rgba(0,0,0,.45)!important; }',
@@ -62,7 +86,6 @@
     'html[data-theme="dark"] .kc-quick button,',
     'html[data-theme="dark"] .kc-form input{ background:var(--card)!important; color:var(--ink)!important; border-color:var(--line)!important; }',
     'html[data-theme="dark"] img{ filter:brightness(.92) contrast(1.03); }',
-    'html[data-theme="dark"] .btn-outline{ border-color:var(--line)!important; color:var(--ink)!important; }',
     /* Elements that explicitly set background:#fff / color:#000 inline or
        via utility classes commonly used on this site. */
     'html[data-theme="dark"] [style*="background:#fff"],',
