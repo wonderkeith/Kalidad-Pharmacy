@@ -74,6 +74,25 @@
     'html[data-theme="dark"] nav.main-nav a.nav-link:hover,',
     'html[data-theme="dark"] nav.main-nav a.nav-link.active,',
     'html[data-theme="dark"] nav.main-nav a.nav-link:focus-visible{ color:#12291F!important; }',
+    /* Hero section text (headline, eyebrow, lede paragraph) reads as forest
+       green in dark mode rather than lime/white — this overrides the
+       general heading-to-lime rule specifically inside hero sections. */
+    'html[data-theme="dark"] .hero h1,',
+    'html[data-theme="dark"] .hero-reference-copy h1,',
+    'html[data-theme="dark"] .hero-copy h1,',
+    'html[data-theme="dark"] .hero p,',
+    'html[data-theme="dark"] .hero-reference-copy p,',
+    'html[data-theme="dark"] .hero-copy p,',
+    'html[data-theme="dark"] .eyebrow{ color:#12291F!important; }',
+    /* Services page "Explore this service" buttons — lime pill with dark
+       text, matching the reference button style, instead of the default
+       solid-forest/white-text look. */
+    'html[data-theme="dark"] .service-actions .btn.btn-primary{ background:#c7ef3e!important; color:#12291F!important; box-shadow:none!important; }',
+    /* Home page "Customer voices" section keeps a light background band
+       even in dark mode (by design), so its text needs to stay white
+       rather than following the usual dark-mode text colors. */
+    'html[data-theme="dark"] .customer-voices-head p,',
+    'html[data-theme="dark"] .customer-voice-card blockquote{ color:#ffffff!important; }',
     'html[data-theme="dark"] body{ background:var(--cream); color:var(--ink); }',
     'html[data-theme="dark"] header{ background:rgba(11,26,20,.9)!important; }',
     'html[data-theme="dark"] header.is-scrolled{ background:rgba(11,26,20,.92)!important; box-shadow:0 14px 40px rgba(0,0,0,.45)!important; }',
