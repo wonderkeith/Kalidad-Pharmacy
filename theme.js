@@ -100,6 +100,14 @@
     'html[data-theme="dark"] .features-reference-card h3,',
     'html[data-theme="dark"] .service-panel .service-content h3,',
     'html[data-theme="dark"] .service-panel .service-lead{ color:#12291F!important; }',
+    /* ...except Prescription Filling, Health Checks and Pharmacist
+       Consultation, which stay white as requested. */
+    'html[data-theme="dark"] .panel-1 .service-content h3,',
+    'html[data-theme="dark"] .panel-3 .service-content h3,',
+    'html[data-theme="dark"] .panel-5 .service-content h3,',
+    'html[data-theme="dark"] .panel-1 .service-lead,',
+    'html[data-theme="dark"] .panel-3 .service-lead,',
+    'html[data-theme="dark"] .panel-5 .service-lead{ color:#ffffff!important; }',
     /* Home page "Customer voices" section keeps a light background band
        even in dark mode (by design), so its text needs to stay white
        rather than following the usual dark-mode text colors. */
