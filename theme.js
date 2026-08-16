@@ -20,8 +20,8 @@
     '  --lime-deep:#8fb824;',
     '  --cream:#11201a;',
     '  --card:#182b23;',
-    '  --accent-bg:#1c3327;',
-    '  --accent-fg:#bfe8a0;',
+    '  --accent-bg:#000000;',
+    '  --accent-fg:#ffffff;',
     '  --ink:#eef3ee;',
     '  --muted:#9db3a8;',
     '  --line:#28402f;',
@@ -35,7 +35,13 @@
     'html[data-theme="dark"] h1,',
     'html[data-theme="dark"] h2,',
     'html[data-theme="dark"] h3,',
-    'html[data-theme="dark"] .font-display{ color:#f2f7f3; }',
+    'html[data-theme="dark"] .font-display{ color:#ffffff; }',
+    /* Any element whose inline style sets forest-green as the text color
+       (color:var(--forest-deep)/--forest-mid/--forest) becomes white —
+       lime-green text and text already set to white are left untouched. */
+    'html[data-theme="dark"] [style*="color:var(--forest-deep)"],',
+    'html[data-theme="dark"] [style*="color:var(--forest-mid)"],',
+    'html[data-theme="dark"] [style*="color:var(--forest)"]{ color:#ffffff!important; }',
     'html[data-theme="dark"] body{ background:var(--cream); color:var(--ink); }',
     'html[data-theme="dark"] header{ background:rgba(11,26,20,.9)!important; }',
     'html[data-theme="dark"] header.is-scrolled{ background:rgba(11,26,20,.92)!important; box-shadow:0 14px 40px rgba(0,0,0,.45)!important; }',
@@ -78,7 +84,13 @@
     + 'background:var(--card);color:var(--ink);cursor:pointer;margin-left:10px;'
     + 'font-size:18px;line-height:1;transition:background .2s ease,transform .2s ease;flex:none;}'
     + '.kt-toggle:hover{transform:translateY(-1px);}'
-    + '@media(max-width:600px){.kt-toggle{width:36px;height:36px;font-size:16px;}}';
+    + '@media(max-width:900px){.kt-toggle-desktop{display:none!important;}}'
+    + '.kt-toggle-mobile{display:flex;align-items:center;gap:10px;width:100%;'
+    + 'padding:12px 8px;border-radius:10px;font-weight:600;border:none;background:none;'
+    + 'color:var(--ink);cursor:pointer;font:inherit;text-align:left;font-size:16px;}'
+    + '.kt-toggle-mobile:hover{background:var(--accent-bg);}'
+    + '@media(min-width:901px){.kt-toggle-mobile{display:none!important;}}'
+    + '.kt-toggle-mobile .kt-icon{font-size:18px;}';
   var btnStyle = document.createElement('style');
   btnStyle.textContent = btnCSS;
   document.head.appendChild(btnStyle);
@@ -90,10 +102,19 @@
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEY, theme);
-    var btn = document.getElementById('ktToggleBtn');
-    if (btn) {
-      btn.textContent = theme === 'dark' ? '☀️' : '🌙';
-      btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+
+    var desktopBtn = document.getElementById('ktToggleBtn');
+    if (desktopBtn) {
+      desktopBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+      desktopBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+
+    var mobileBtn = document.getElementById('ktToggleBtnMobile');
+    if (mobileBtn) {
+      var icon = mobileBtn.querySelector('.kt-icon');
+      var label = mobileBtn.querySelector('.kt-label');
+      if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+      if (label) label.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
     }
   }
 
@@ -106,30 +127,49 @@
   applyTheme(initialTheme());
 
   function insertButton() {
-    if (document.getElementById('ktToggleBtn')) return;
-    var btn = document.createElement('button');
-    btn.id = 'ktToggleBtn';
-    btn.type = 'button';
-    btn.className = 'kt-toggle';
-    btn.textContent = currentTheme() === 'dark' ? '☀️' : '🌙';
-    btn.setAttribute('aria-label', currentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-    btn.addEventListener('click', function () {
-      applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
-    });
+    // Desktop / header toggle — hidden below 900px via CSS, since that's
+    // where this site swaps the nav for the hamburger menu.
+    if (!document.getElementById('ktToggleBtn')) {
+      var btn = document.createElement('button');
+      btn.id = 'ktToggleBtn';
+      btn.type = 'button';
+      btn.className = 'kt-toggle kt-toggle-desktop';
+      btn.textContent = currentTheme() === 'dark' ? '☀️' : '🌙';
+      btn.setAttribute('aria-label', currentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      btn.addEventListener('click', function () {
+        applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+      });
 
-    var host =
-      document.querySelector('.header-inner') ||
-      document.querySelector('nav.main-nav') ||
-      document.querySelector('header');
+      var host =
+        document.querySelector('.header-inner') ||
+        document.querySelector('nav.main-nav') ||
+        document.querySelector('header');
 
-    if (host) {
-      host.appendChild(btn);
-    } else {
-      btn.style.position = 'fixed';
-      btn.style.top = '16px';
-      btn.style.right = '16px';
-      btn.style.zIndex = '1001';
-      document.body.appendChild(btn);
+      if (host) {
+        host.appendChild(btn);
+      } else {
+        btn.style.position = 'fixed';
+        btn.style.top = '16px';
+        btn.style.right = '16px';
+        btn.style.zIndex = '1001';
+        document.body.appendChild(btn);
+      }
+    }
+
+    // Mobile toggle — lives inside the hamburger dropdown itself, as a row
+    // alongside the nav links, so it doesn't compete for space in the header.
+    var mobileMenu = document.getElementById('mobileMenu') || document.querySelector('.mobile-menu');
+    if (mobileMenu && !document.getElementById('ktToggleBtnMobile')) {
+      var mbtn = document.createElement('button');
+      mbtn.id = 'ktToggleBtnMobile';
+      mbtn.type = 'button';
+      mbtn.className = 'kt-toggle-mobile';
+      mbtn.innerHTML = '<span class="kt-icon">' + (currentTheme() === 'dark' ? '☀️' : '🌙') + '</span>' +
+        '<span class="kt-label">' + (currentTheme() === 'dark' ? 'Light mode' : 'Dark mode') + '</span>';
+      mbtn.addEventListener('click', function () {
+        applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+      });
+      mobileMenu.appendChild(mbtn);
     }
   }
 
