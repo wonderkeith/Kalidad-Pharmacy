@@ -66,6 +66,14 @@
     'html[data-theme="dark"] .detailed .service-icon,',
     'html[data-theme="dark"] .feature-icon{ color:#c7ef3e!important; }',
     'html[data-theme="dark"] .faq-item p{ color:var(--muted)!important; }',
+    /* The active/hovered header nav pill (e.g. "Careers" when selected) has
+       a hardcoded light cream background regardless of theme — so its text
+       must stay forest-green here, not lime/white, to stay readable. This
+       selector is identical on every page, so one rule covers the header
+       everywhere. */
+    'html[data-theme="dark"] nav.main-nav a.nav-link:hover,',
+    'html[data-theme="dark"] nav.main-nav a.nav-link.active,',
+    'html[data-theme="dark"] nav.main-nav a.nav-link:focus-visible{ color:#12291F!important; }',
     'html[data-theme="dark"] body{ background:var(--cream); color:var(--ink); }',
     'html[data-theme="dark"] header{ background:rgba(11,26,20,.9)!important; }',
     'html[data-theme="dark"] header.is-scrolled{ background:rgba(11,26,20,.92)!important; box-shadow:0 14px 40px rgba(0,0,0,.45)!important; }',
