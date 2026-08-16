@@ -97,17 +97,28 @@
        Same-day delivery) and the services page panel titles + lead
        explainer text (OTC & Wellness, etc.) use forest green instead of
        lime in dark mode. */
-    'html[data-theme="dark"] .features-reference-card h3,',
+    'html[data-theme="dark"] .features-reference-card h3{ color:#12291F!important; }',
+    /* All six service panels (Prescription Filling, OTC & Wellness, Health
+       Checks, Same-day Delivery, Pharmacist Consultation, Refill Reminders)
+       read white text in dark mode. */
     'html[data-theme="dark"] .service-panel .service-content h3,',
-    'html[data-theme="dark"] .service-panel .service-lead{ color:#12291F!important; }',
-    /* ...except Prescription Filling, Health Checks and Pharmacist
-       Consultation, which stay white as requested. */
-    'html[data-theme="dark"] .panel-1 .service-content h3,',
-    'html[data-theme="dark"] .panel-3 .service-content h3,',
-    'html[data-theme="dark"] .panel-5 .service-content h3,',
-    'html[data-theme="dark"] .panel-1 .service-lead,',
-    'html[data-theme="dark"] .panel-3 .service-lead,',
-    'html[data-theme="dark"] .panel-5 .service-lead{ color:#ffffff!important; }',
+    'html[data-theme="dark"] .service-panel .service-lead{ color:#ffffff!important; }',
+    /* Even-numbered panels (OTC & Wellness, Same-day Delivery, Refill
+       Reminders) also have a hardcoded light background — switch it dark
+       to match the others and keep the white text above readable. */
+    'html[data-theme="dark"] .service-panel:nth-child(even){ background:#182b23!important; }',
+    /* News page: featured story card and the article cards below it have
+       hardcoded white backgrounds and dark text regardless of theme —
+       switch both to a dark card with white text in dark mode. */
+    'html[data-theme="dark"] .news-feature,',
+    'html[data-theme="dark"] .news-card{ background:#182b23!important; border-color:#28402f!important; }',
+    'html[data-theme="dark"] .news-feature h2,',
+    'html[data-theme="dark"] .news-feature p,',
+    'html[data-theme="dark"] .article-meta,',
+    'html[data-theme="dark"] .article-meta .category,',
+    'html[data-theme="dark"] .read-more,',
+    'html[data-theme="dark"] .news-card h3,',
+    'html[data-theme="dark"] .news-card p{ color:#ffffff!important; }',
     /* Home page "Customer voices" section keeps a light background band
        even in dark mode (by design), so its text needs to stay white
        rather than following the usual dark-mode text colors. */
