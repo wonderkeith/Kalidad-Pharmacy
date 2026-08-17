@@ -97,7 +97,6 @@
        Same-day delivery) and the services page panel titles + lead
        explainer text (OTC & Wellness, etc.) use forest green instead of
        lime in dark mode. */
-    'html[data-theme="dark"] .features-reference-card h3{ color:#12291F!important; }',
     /* All six service panels (Prescription Filling, OTC & Wellness, Health
        Checks, Same-day Delivery, Pharmacist Consultation, Refill Reminders)
        read white text in dark mode. */
@@ -107,6 +106,49 @@
        Reminders) also have a hardcoded light background — switch it dark
        to match the others and keep the white text above readable. */
     'html[data-theme="dark"] .service-panel:nth-child(even){ background:#182b23!important; }',
+    /* Service explanation body paragraph + bullet list text (all six
+       panels) reads white in dark mode; lime bullet dots are untouched. */
+    'html[data-theme="dark"] .service-content > p:not(.service-lead),',
+    'html[data-theme="dark"] .service-content li{ color:#ffffff!important; }',
+    /* Home page "explore our services" tab/nav buttons stay lime green in
+       every state (default, hover, focus, active/selected). */
+    'html[data-theme="dark"] .service-nav-item,',
+    'html[data-theme="dark"] .service-nav-item:hover,',
+    'html[data-theme="dark"] .service-nav-item:focus-visible,',
+    'html[data-theme="dark"] .service-nav-item.is-active{ color:#c7ef3e!important; }',
+    /* Home page stats band ("5+ years", "4.8★", "500+ prescriptions") also
+       builds its background from --forest/--forest-deep, so it needs the
+       same hardcoded-gradient fix as the services page version. Numbers
+       are already lime and labels already inherit white, untouched. */
+    'html[data-theme="dark"] .stats-band{ background:linear-gradient(155deg,#1E4F3B 0%,#12291F 100%)!important; }',
+    /* Home page "Licensed & verified / Free health checks / Same-day
+       delivery" section has a permanently white background (independent
+       of theme) — switch it forest green in dark mode, with lime icons
+       and white heading/description text. */
+    'html[data-theme="dark"] .features-reference{ background:#1E4F3B!important; }',
+    'html[data-theme="dark"] .features-reference-card{ border-color:rgba(255,255,255,.14)!important; }',
+    'html[data-theme="dark"] .features-reference-icon{ color:#c7ef3e!important; }',
+    'html[data-theme="dark"] .features-reference-card h3,',
+    'html[data-theme="dark"] .features-reference-card p{ color:#ffffff!important; }',
+    /* Customer voices section: forest-green background instead of the
+       light/black blended gradient; customer name in lime, muted source
+       line in white; review cards get a subtle glass effect so they read
+       as cards against the new dark-green backdrop. */
+    'html[data-theme="dark"] .customer-voices{ background:linear-gradient(155deg,#1E4F3B 0%,#12291F 100%)!important; }',
+    'html[data-theme="dark"] .customer-voice-card cite{ color:#c7ef3e!important; }',
+    'html[data-theme="dark"] .customer-voice-card .voice-source{ color:#ffffff!important; }',
+    'html[data-theme="dark"] .customer-voice-card{',
+    '  background:rgba(255,255,255,.07);',
+    '  border:1px solid rgba(255,255,255,.16);',
+    '  border-radius:20px;',
+    '  padding:24px 18px 20px;',
+    '  -webkit-backdrop-filter:blur(10px);',
+    '  backdrop-filter:blur(10px);',
+    '}',
+    /* Contact page header "Chat with us" button — forest-green background,
+       white text (it was inheriting the same washed-out --forest issue as
+       other buttons above). */
+    'html[data-theme="dark"] .nav-chat{ background:#1E4F3B!important; color:#ffffff!important; }',
     /* News page: featured story card and the article cards below it have
        hardcoded white backgrounds and dark text regardless of theme —
        switch both to a dark card with white text in dark mode. */
