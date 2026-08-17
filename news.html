@@ -2312,7 +2312,12 @@ footer .footer-bottom .container {
   min-height:82px; display:flex; align-items:center;
   justify-content:space-between; gap:20px;
 }
-.news-categories{display:flex;gap:8px;flex-wrap:wrap}
+.news-categories{
+  display:flex;gap:8px;flex-wrap:wrap;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.news-categories::-webkit-scrollbar{display:none}
 .news-filter{
   border:1px solid #d9ddd2; background:#fff; color:#33581f;
   padding:9px 15px; border-radius:999px;
@@ -2466,6 +2471,8 @@ footer .footer-bottom .container {
   .news-feature{grid-template-columns:1fr}
   .news-feature-media{min-height:330px}
   .news-toolbar-inner{align-items:flex-start;flex-direction:column;padding-top:18px;padding-bottom:18px}
+  .news-categories{flex-wrap:nowrap;width:100%}
+  .news-filter{flex:0 0 auto}
   .news-search{width:100%}
   .news-card{grid-template-columns:1fr;min-height:calc(100vh - 120px)}
   .news-card:nth-child(even){grid-template-columns:1fr}
@@ -2495,62 +2502,8 @@ footer .footer-bottom .container {
 }
 
 /* Article jump navigation */
-.article-jump-strip{
-  position:relative;
-  z-index:4;
-  padding:18px 0;
-  background:rgba(255,255,255,.94);
-  border-bottom:1px solid #e4e1d6;
-  box-shadow:0 10px 28px -24px rgba(18,41,31,.45);
-}
-.article-jump-inner{
-  display:flex;
-  align-items:center;
-  gap:18px;
-  overflow-x:auto;
-  scrollbar-width:none;
-}
-.article-jump-inner::-webkit-scrollbar{display:none}
-.article-jump-label{
-  flex:0 0 auto;
-  font-size:.72rem;
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:.12em;
-  color:#33581f;
-}
-.article-jump-buttons{
-  display:flex;
-  gap:10px;
-  min-width:max-content;
-}
-.article-jump-btn{
-  display:inline-flex;
-  align-items:center;
-  min-height:42px;
-  padding:9px 16px;
-  border:1px solid #d9dfd6;
-  border-radius:999px;
-  background:#fff;
-  color:#1e4f3b;
-  font-size:.82rem;
-  font-weight:800;
-  transition:transform .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease;
-}
-.article-jump-btn:hover{
-  transform:translateY(-1px);
-  background:#c7ef3e;
-  border-color:#c7ef3e;
-  box-shadow:0 10px 24px -18px rgba(18,41,31,.55);
-}
 .news-card[id], .news-feature[id]{
   scroll-margin-top:120px;
-}
-@media(max-width:760px){
-  .article-jump-strip{padding:12px 0}
-  .article-jump-inner{gap:12px}
-  .article-jump-label{display:none}
-  .article-jump-btn{font-size:.76rem;padding:8px 13px}
 }
 
 </style>
@@ -2906,20 +2859,6 @@ a.btn:focus-visible {
   </div>
 </section>
 
-<section class="article-jump-strip" aria-label="Explore articles">
-  <div class="container article-jump-inner">
-    <span class="article-jump-label">Explore articles</span>
-    <div class="article-jump-buttons">
-      <a class="article-jump-btn" href="#article-1">Simple habits that make everyday health easier to manage</a>
-      <a class="article-jump-btn" href="#article-2">Understanding your prescription and using it safely</a>
-      <a class="article-jump-btn" href="#article-3">Everyday wellness habits for a healthier routine</a>
-      <a class="article-jump-btn" href="#article-4">Why routine health checks matter</a>
-      <a class="article-jump-btn" href="#article-5">Making your medicine routine easier to remember</a>
-      <a class="article-jump-btn" href="#article-6">Kalidad Pharmacy in the community</a>
-      <a class="article-jump-btn" href="#article-7">Building healthier meals one choice at a time</a>
-    </div>
-  </div>
-</section>
 <section class="news-toolbar" aria-label="News categories">
   <div class="container news-toolbar-inner">
     <div class="news-categories">
@@ -3394,22 +3333,6 @@ a.btn:focus-visible {
 
     window.addEventListener('resize', update, { passive: true });
     update();
-})();
-</script>
-
-
-<script id="article-jump-scroll">
-(function(){
-  document.addEventListener('click', function(e){
-    const link = e.target.closest('.article-jump-btn');
-    if(!link) return;
-    const target = document.querySelector(link.getAttribute('href'));
-    if(target){
-      e.preventDefault();
-      target.scrollIntoView({behavior:'smooth', block:'start'});
-      history.replaceState(null,'',link.getAttribute('href'));
-    }
-  });
 })();
 </script>
 

@@ -119,6 +119,23 @@
     'html[data-theme="dark"] .read-more,',
     'html[data-theme="dark"] .news-card h3,',
     'html[data-theme="dark"] .news-card p{ color:#ffffff!important; }',
+    /* Contact page: left info panel and the two branch cards use a gradient
+       built from --forest/--forest-deep for their background — those
+       variables are intentionally remapped to light values elsewhere for
+       heading text, which washes the panel out in dark mode. Force the
+       true brand forest-green gradient here instead, and keep/restore the
+       lime and white text that belongs on it. */
+    'html[data-theme="dark"] .contact-info,',
+    'html[data-theme="dark"] .branch-copy{ background:linear-gradient(155deg,#1E4F3B 0%,#12291F 100%)!important; }',
+    'html[data-theme="dark"] .branch-copy p,',
+    'html[data-theme="dark"] .branch-copy .branch-note{ color:#ffffff!important; }',
+    'html[data-theme="dark"] .branch-copy .kicker{ color:#c7ef3e!important; }',
+    /* "Message us" button sits on a lime background — it was being swept
+       up by the general forest-deep-text-to-lime rule, making the text
+       invisible on the lime button itself. Restore forest-green text. */
+    'html[data-theme="dark"] .contact-info > a.btn{ color:#12291F!important; }',
+    /* "Send message" submit button — lime background, forest-green text. */
+    'html[data-theme="dark"] .contact-form button.btn-primary{ background:#c7ef3e!important; color:#12291F!important; }',
     /* Home page "Customer voices" section keeps a light background band
        even in dark mode (by design), so its text needs to stay white
        rather than following the usual dark-mode text colors. */
