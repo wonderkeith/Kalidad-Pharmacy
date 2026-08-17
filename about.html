@@ -935,6 +935,295 @@ header.logo-hidden .logo { max-width:0 !important; width:0 !important; height:70
   header .logo-mark .logo-image { width:175px !important; height:56px !important; }
 }
 </style>
+
+<style id="about-mobile-final-rework">
+/* =========================================================
+   FINAL ABOUT PAGE REWORK
+   Mobile header + menu, hero buttons, trust icons, team section
+   ========================================================= */
+
+/* Hero CTA buttons: forest green with white text in both themes */
+.about-hero .hero-actions .btn-primary,
+.about-hero .hero-actions .btn-outline {
+    background:#1E4F3B !important;
+    border-color:#1E4F3B !important;
+    color:#ffffff !important;
+    box-shadow:0 10px 24px rgba(18,41,31,.18) !important;
+}
+.about-hero .hero-actions .btn-primary:hover,
+.about-hero .hero-actions .btn-outline:hover,
+.about-hero .hero-actions .btn-primary:focus-visible,
+.about-hero .hero-actions .btn-outline:focus-visible {
+    background:#17372a !important;
+    border-color:#17372a !important;
+    color:#ffffff !important;
+}
+
+/* Keep the About hero as ONE visual: text left, one image right */
+.about-hero { min-height:510px !important; }
+.about-hero-inner {
+    grid-template-columns:44% 56% !important;
+    min-height:510px !important;
+    max-width:1280px !important;
+}
+.about-hero-copy { grid-column:1 !important; }
+.about-hero-visual { grid-column:2 !important; }
+.about-hero-visual img {
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+}
+
+/* Who We Are trust icons become lemon green in dark mode */
+html[data-theme="dark"] .trust-item .trust-icon,
+html[data-theme="dark"] .trust-item .trust-icon svg {
+    color:#C7EF3E !important;
+}
+
+/* Meet Our Team — forest-green section with white typography */
+.team-section {
+    background:#1E4F3B !important;
+    color:#ffffff !important;
+}
+.team-section .kicker,
+.team-section h2,
+.team-section p,
+.team-section .team-copy,
+.team-section .team-copy * {
+    color:#ffffff !important;
+}
+.team-section .kicker {
+    opacity:.95;
+}
+.team-section .team-highlights {
+    display:none !important;
+}
+.team-image-wrap {
+    background:#12291F !important;
+}
+
+/* =========================================================
+   MOBILE HEADER — matches the supplied reference
+   ========================================================= */
+@media (max-width:900px) {
+    header {
+        top:9px !important;
+        left:50% !important;
+        right:auto !important;
+        transform:translateX(-50%) !important;
+        width:calc(100% - 32px) !important;
+        height:68px !important;
+        border-radius:24px !important;
+        background:rgba(18,41,31,.94) !important;
+        border:1px solid rgba(255,255,255,.22) !important;
+        box-shadow:0 12px 30px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.10) !important;
+        overflow:visible !important;
+    }
+
+    header .header-inner {
+        height:66px !important;
+        padding:0 14px !important;
+        gap:8px !important;
+    }
+
+    header .logo {
+        width:185px !important;
+        max-width:185px !important;
+        height:58px !important;
+        opacity:1 !important;
+        transform:none !important;
+    }
+
+    header .logo-mark,
+    header .logo-mark .logo-image {
+        width:185px !important;
+        height:58px !important;
+    }
+
+    header .logo-mark .logo-image {
+        object-fit:contain !important;
+        object-position:left center !important;
+    }
+
+    /* Hide desktop navigation and theme button on the compact mobile header. */
+    nav.main-nav,
+    header .kt-toggle-desktop {
+        display:none !important;
+    }
+
+    /* Large outlined hamburger button from the reference */
+    .menu-toggle {
+        display:flex !important;
+        margin-left:auto !important;
+        width:58px !important;
+        height:58px !important;
+        min-width:58px !important;
+        border-radius:20px !important;
+        border:2px solid rgba(255,255,255,.86) !important;
+        background:rgba(18,41,31,.28) !important;
+        color:#ffffff !important;
+        box-shadow:none !important;
+    }
+
+    .menu-toggle svg {
+        width:34px !important;
+        height:34px !important;
+        stroke-width:2 !important;
+    }
+
+    .menu-toggle:hover,
+    .menu-toggle:focus-visible {
+        background:rgba(255,255,255,.08) !important;
+        color:#ffffff !important;
+        transform:none !important;
+    }
+
+    /* Closed menu */
+    .mobile-menu {
+        display:none !important;
+        position:absolute !important;
+        top:66px !important;
+        left:0 !important;
+        width:100% !important;
+        box-sizing:border-box !important;
+        padding:22px 24px 26px !important;
+        gap:4px !important;
+        border:1px solid rgba(255,255,255,.12) !important;
+        border-top:0 !important;
+        border-radius:0 0 26px 26px !important;
+        background:rgba(18,41,31,.98) !important;
+        box-shadow:0 24px 45px rgba(0,0,0,.34) !important;
+        backdrop-filter:blur(18px) !important;
+        -webkit-backdrop-filter:blur(18px) !important;
+        z-index:10 !important;
+    }
+
+    /* Open menu matches the second supplied image */
+    .mobile-menu.open {
+        display:flex !important;
+    }
+
+    header.menu-open {
+        height:auto !important;
+        min-height:68px !important;
+        background:rgba(18,41,31,.98) !important;
+        border-radius:24px !important;
+    }
+
+    .mobile-menu a {
+        display:flex !important;
+        align-items:center !important;
+        min-height:58px !important;
+        padding:12px 18px !important;
+        border-radius:18px !important;
+        color:#ffffff !important;
+        font-size:1.05rem !important;
+        font-weight:600 !important;
+        background:transparent !important;
+        transition:background .25s ease, transform .25s ease !important;
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a:focus-visible {
+        background:rgba(255,255,255,.07) !important;
+        color:#ffffff !important;
+        transform:translateX(3px) !important;
+    }
+
+    .mobile-menu a.active {
+        background:#000000 !important;
+        color:#ffffff !important;
+        box-shadow:none !important;
+    }
+
+    /* Theme.js inserts this control into the mobile menu */
+    .mobile-menu .kt-toggle-mobile {
+        display:flex !important;
+        align-items:center !important;
+        gap:14px !important;
+        min-height:58px !important;
+        margin-top:8px !important;
+        padding:12px 18px !important;
+        border-radius:18px !important;
+        color:#ffffff !important;
+        background:transparent !important;
+        font-size:1.02rem !important;
+    }
+
+    .mobile-menu .kt-toggle-mobile:hover {
+        background:rgba(255,255,255,.07) !important;
+        color:#ffffff !important;
+    }
+
+    /* On mobile, keep the hero as a single composition with the image immediately beside/below the copy. */
+    .about-hero-inner {
+        grid-template-columns:1fr 1fr !important;
+        min-height:460px !important;
+    }
+    .about-hero-copy {
+        grid-column:1 !important;
+        padding:58px 18px 48px 22px !important;
+    }
+    .about-hero-visual {
+        grid-column:2 !important;
+        min-height:460px !important;
+    }
+    .about-hero h1 {
+        font-size:clamp(1.65rem,7vw,2.35rem) !important;
+    }
+    .about-hero-copy>p {
+        font-size:.78rem !important;
+        line-height:1.55 !important;
+    }
+    .about-hero .hero-actions {
+        flex-direction:column !important;
+        align-items:stretch !important;
+        gap:8px !important;
+    }
+    .about-hero .hero-actions .btn {
+        justify-content:center !important;
+        padding:10px 12px !important;
+        font-size:.72rem !important;
+    }
+}
+
+/* Very narrow phones: preserve readability rather than squeezing the two-column hero. */
+@media (max-width:430px) {
+    header .logo,
+    header .logo-mark,
+    header .logo-mark .logo-image {
+        width:168px !important;
+    }
+
+    header .logo,
+    header .logo-mark,
+    header .logo-mark .logo-image {
+        height:54px !important;
+    }
+
+    .menu-toggle {
+        width:54px !important;
+        min-width:54px !important;
+        height:54px !important;
+    }
+
+    .about-hero-inner {
+        grid-template-columns:1fr 1fr !important;
+        min-height:430px !important;
+    }
+    .about-hero-copy {
+        padding-left:18px !important;
+        padding-right:12px !important;
+    }
+    .about-hero-visual {
+        min-height:430px !important;
+    }
+    .about-hero h1 {
+        font-size:1.55rem !important;
+    }
+}
+</style>
+
 </head>
 <body>
 
@@ -1011,9 +1300,6 @@ header.logo-hidden .logo { max-width:0 !important; width:0 !important; height:70
         <h2>People who put<br>care into every prescription</h2>
         <p>Behind every prescription, recommendation, and conversation is a team committed to doing pharmacy care properly. Our pharmacists bring professional knowledge, attention to detail, and a genuine desire to help the people we serve.</p>
         <p>From dispensing medicines to answering questions and supporting everyday wellness, our team works together to make every visit feel personal, respectful, and reassuring.</p>
-        <div class="team-highlights">
-          <span>10 Pharmacists</span><span>Patient-focused care</span><span>Professional expertise</span>
-        </div>
       </div>
       <div class="team-image-wrap reveal">
         <img src="team-pharmacists.jpg" alt="A group of ten Kalidad Pharmacy pharmacists standing together">
@@ -1074,6 +1360,8 @@ header.logo-hidden .logo { max-width:0 !important; width:0 !important; height:70
     toggle.addEventListener('click', function(){
       var open = menu.classList.toggle('open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      var header = document.querySelector('header');
+      if(header) header.classList.toggle('menu-open', open);
     });
   }
 
