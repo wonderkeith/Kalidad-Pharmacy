@@ -149,6 +149,8 @@
        white text (it was inheriting the same washed-out --forest issue as
        other buttons above). */
     'html[data-theme="dark"] .nav-chat{ background:#1E4F3B!important; color:#ffffff!important; }',
+    /* Services page header "Place your order" button — same fix. */
+    'html[data-theme="dark"] nav.main-nav > a.nav-cta{ background:#1E4F3B!important; color:#ffffff!important; }',
     /* News page: featured story card and the article cards below it have
        hardcoded white backgrounds and dark text regardless of theme —
        switch both to a dark card with white text in dark mode. */

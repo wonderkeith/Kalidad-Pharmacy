@@ -59,6 +59,41 @@
 
   var FALLBACK = 'I don\u2019t have a preset answer for that yet, but our team can help right away — reach us on WhatsApp or by phone below.';
 
+  // ---- "Place your order" service-selection flow ---------------------
+  // Names/links/explanations match the six service panels on services.html.
+  var ORDER_SERVICES = [
+    {
+      name: 'Prescription Filling',
+      link: 'prescription-filling.html',
+      reply: 'For prescription filling, send us your prescription through WhatsApp or bring it in — we\u2019re open 24 hours a day. Our pharmacist double-checks every order before it reaches you.'
+    },
+    {
+      name: 'OTC & Wellness',
+      link: 'otc-wellness.html',
+      reply: 'For OTC & wellness products (vitamins, supplements, everyday essentials), message us on WhatsApp or visit in person and our team will help you choose the right product.'
+    },
+    {
+      name: 'Health Checks',
+      link: 'health-checks.html',
+      reply: 'For health checks (blood pressure, glucose, cholesterol), walk in any time — no appointment needed, and results are explained on the spot.'
+    },
+    {
+      name: 'Same-day Delivery',
+      link: 'same-day-delivery.html',
+      reply: 'For same-day delivery across Fort Portal, send your order and location on WhatsApp and our team will confirm and coordinate delivery.'
+    },
+    {
+      name: 'Pharmacist Consultation',
+      link: 'pharmacist-consultation.html',
+      reply: 'For a pharmacist consultation, no appointment is needed for routine questions — visit us any time or message on WhatsApp to arrange a time.'
+    },
+    {
+      name: 'Refill Reminders',
+      link: 'refill-reminders.html',
+      reply: 'For refill reminders, message us on WhatsApp to set up free SMS or WhatsApp reminders for your regular medication.'
+    }
+  ];
+
   function findAnswer(text) {
     var normalized = String(text || '').toLowerCase();
     for (var i = 0; i < FAQ.length; i++) {
@@ -99,6 +134,10 @@
     + '.kc-form{display:flex;gap:8px;padding:12px;border-top:1px solid #dfe5df;background:#fff;}'
     + '.kc-form input{flex:1;border:1px solid #dfe5df;border-radius:999px;padding:10px 14px;font:inherit;}'
     + '.kc-form button{border:none;background:#163427;color:#fff;border-radius:999px;padding:0 16px;font-weight:700;cursor:pointer;}'
+    + '.kc-order-options{display:flex;flex-direction:column;gap:6px;margin:0 0 10px;}'
+    + '.kc-order-options button{border:1px solid #dfe5df;background:#fff;border-radius:12px;padding:9px 12px;font-size:13.5px;color:#163427;text-align:left;cursor:pointer;font-weight:600;}'
+    + '.kc-order-options button:hover{background:#edf5e8;}'
+    + '.kc-restart{background:none;border:none;color:#163427;font-weight:700;text-decoration:underline;cursor:pointer;padding:0;font-size:13px;}'
     + '@media(max-width:480px){.kc-panel{right:16px;bottom:86px;}.kc-bubble{right:16px;bottom:20px;}}';
 
   var style = document.createElement('style');
@@ -190,6 +229,57 @@
       }
     }, 250);
   }
+
+  function showOrderOptions() {
+    addMsg('What service would you like help with?', 'bot');
+    var optWrap = document.createElement('div');
+    optWrap.className = 'kc-order-options';
+    ORDER_SERVICES.forEach(function (svc) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = svc.name;
+      b.addEventListener('click', function () { selectOrderService(svc); });
+      optWrap.appendChild(b);
+    });
+    messages.appendChild(optWrap);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function selectOrderService(svc) {
+    addMsg(svc.name, 'user');
+    setTimeout(function () {
+      addMsg(svc.reply, 'bot');
+      var actions = document.createElement('div');
+      actions.className = 'kc-msg bot';
+      actions.innerHTML =
+        '<a href="' + svc.link + '" style="color:#163427;font-weight:700;">View ' + svc.name + ' page →</a><br>' +
+        '<a href="' + waLink('Hello Kalidad Pharmacy, I\u2019d like help with ' + svc.name) + '" target="_blank" rel="noopener" style="color:#163427;font-weight:700;">Continue on WhatsApp →</a>';
+      messages.appendChild(actions);
+      var again = document.createElement('button');
+      again.type = 'button';
+      again.className = 'kc-restart';
+      again.textContent = 'Choose another service';
+      again.addEventListener('click', showOrderOptions);
+      var againWrap = document.createElement('div');
+      againWrap.className = 'kc-msg bot';
+      againWrap.style.background = 'transparent';
+      againWrap.style.padding = '0';
+      againWrap.appendChild(again);
+      messages.appendChild(againWrap);
+      messages.scrollTop = messages.scrollHeight;
+    }, 250);
+  }
+
+  // Any element with data-kalidad-order-open opens the chat directly into
+  // the "place your order" service-selection flow.
+  document.addEventListener('click', function (e) {
+    var orderTrigger = e.target.closest && e.target.closest('[data-kalidad-order-open]');
+    if (orderTrigger) {
+      e.preventDefault();
+      openPanel();
+      showOrderOptions();
+    }
+  });
 
   // Allow any element with data-kalidad-chat-open to open the widget
   document.addEventListener('click', function (e) {
