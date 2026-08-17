@@ -747,6 +747,96 @@ a.btn:active {
 }
 </style>
 
+
+<style id="about-reference-rework">
+/* About page visual rework — preserves the existing Kalidad logo and palette. */
+body{font-family:'Inter',system-ui,sans-serif !important;background:var(--cream);}
+body *, button, input, textarea, select{font-family:'Inter',system-ui,sans-serif !important;}
+h1,h2,h3,h4,.font-display,.logo-text,.logo-text *{font-family:'Playfair Display',Georgia,serif !important;}
+header{position:sticky !important;top:0 !important;left:0 !important;transform:none !important;width:100% !important;max-width:none !important;border-radius:0 !important;background:rgba(255,255,255,.96) !important;border:0 !important;border-bottom:1px solid rgba(228,225,214,.85) !important;box-shadow:0 4px 18px rgba(18,41,31,.07) !important;backdrop-filter:blur(12px) !important;}
+header .header-inner{height:76px !important;}
+header.logo-hidden{width:100% !important;}
+header.logo-hidden .logo{max-width:210px !important;width:auto !important;margin-right:0 !important;opacity:1 !important;transform:none !important;pointer-events:auto !important;}
+header.logo-hidden .header-inner{justify-content:space-between !important;}
+nav.main-nav a.nav-link{background:transparent !important;border-radius:0 !important;padding:26px 15px !important;color:var(--forest-deep) !important;transform:none !important;box-shadow:none !important;}
+nav.main-nav a.nav-link:hover,nav.main-nav a.nav-link.active{background:transparent !important;color:var(--forest) !important;transform:none !important;box-shadow:none !important;}
+nav.main-nav a.nav-link.active::after{opacity:1 !important;transform:translateX(-50%) scale(1) !important;}
+
+.about-hero{position:relative;overflow:hidden;background:#fff;min-height:510px;}
+.about-hero-inner{display:grid;grid-template-columns:44% 56%;min-height:510px;padding:0 !important;max-width:1280px !important;}
+.about-hero-copy{padding:74px 42px 74px 24px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;background:linear-gradient(90deg,#fff 0%,#fff 74%,rgba(255,255,255,.88) 100%);}
+.hero-kicker,.kicker{display:inline-flex;width:max-content;color:#3f7a4d;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;}
+.about-hero h1{font-size:clamp(2.8rem,5vw,4.35rem);line-height:.98;letter-spacing:-.035em;color:var(--forest-deep);margin-top:18px;}
+.about-hero h1 .accent{color:var(--lime-deep);}
+.about-hero-copy>p{margin-top:22px;max-width:480px;color:#56645c;font-size:1rem;line-height:1.75;}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;}
+.hero-actions .btn{padding:13px 21px;}
+.about-hero-visual{min-height:510px;overflow:hidden;position:relative;background:var(--forest-mid);}
+.about-hero-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.30),transparent 28%,rgba(18,41,31,.04));pointer-events:none;}
+.about-hero-visual img{width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.94);}
+
+.about-intro{background:var(--cream);padding-top:76px;padding-bottom:62px;}
+.reference-about-grid{grid-template-columns:1fr 1fr;gap:52px;}
+.about-photo{min-height:360px;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-card);background:var(--forest-mid);position:relative;}
+.about-photo img{width:100%;height:100%;min-height:360px;object-fit:cover;}
+.about-copy h2,.team-copy h2{font-size:clamp(2rem,3.4vw,3rem);line-height:1.03;margin-top:12px;color:var(--forest-deep);}
+.about-copy p{color:var(--muted);margin-top:16px;font-size:.98rem;line-height:1.75;}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:54px;}
+.trust-item{text-align:center;padding:10px 24px;border-right:1px solid var(--line);}
+.trust-item:last-child{border-right:0;}
+.trust-icon{width:66px;height:66px;border-radius:50%;background:var(--accent-bg);color:var(--forest-deep);display:flex;align-items:center;justify-content:center;margin:0 auto 15px;font-family:Inter,sans-serif !important;font-size:1.8rem;border:1px solid rgba(51,88,31,.05);}
+.trust-item h3{font-size:1.15rem;color:var(--forest-deep);}
+.trust-item p{margin-top:8px;color:var(--muted);font-size:.86rem;line-height:1.55;}
+
+.team-section{background:#fff;padding-top:92px;padding-bottom:92px;scroll-margin-top:84px;}
+.team-grid{display:grid;grid-template-columns:1fr 1.12fr;gap:60px;align-items:center;}
+.team-copy>p{margin-top:17px;max-width:560px;color:var(--muted);font-size:.98rem;line-height:1.75;}
+.team-highlights{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px;}
+.team-highlights span{background:var(--accent-bg);color:var(--accent-fg);border-radius:999px;padding:8px 13px;font-size:.76rem;font-weight:700;}
+.team-image-wrap{border-radius:24px;overflow:hidden;box-shadow:var(--shadow-card);background:var(--forest-mid);min-height:420px;}
+.team-image-wrap img{width:100%;height:100%;min-height:420px;object-fit:cover;}
+
+.mission-section{background:#fff;padding:74px 0 90px;}
+.mission-inner{text-align:center;max-width:1100px;}
+.mission-inner>.kicker{justify-content:center;margin:0 auto;}
+.mission-inner h2{font-size:clamp(2rem,3.5vw,3rem);margin-top:10px;color:var(--forest-deep);}
+.mission-inner>p{max-width:700px;margin:14px auto 0;color:var(--muted);line-height:1.7;}
+.mission-stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:34px;background:linear-gradient(120deg,#f2f8eb,#f8fbf3);border-radius:18px;padding:24px 18px;border:1px solid #e7efdf;}
+.mission-stats>div{padding:6px 20px;border-right:1px solid #dbe6d2;display:flex;flex-direction:column;align-items:center;}
+.mission-stats>div:last-child{border-right:0;}
+.mission-stats strong{font-family:'Playfair Display',Georgia,serif !important;font-size:2.35rem;line-height:1;color:var(--forest-deep);}
+.mission-stats span{margin-top:10px;font-weight:800;font-size:.83rem;color:var(--forest-deep);}
+.mission-stats small{margin-top:4px;color:var(--muted);font-size:.72rem;line-height:1.4;max-width:150px;}
+
+@media(max-width:900px){
+  .about-hero-inner{grid-template-columns:1fr;min-height:auto;}
+  .about-hero-copy{padding:78px 28px 54px;background:#fff;}
+  .about-hero-visual{min-height:390px;}
+  .reference-about-grid,.team-grid{grid-template-columns:1fr;gap:34px;}
+  .trust-grid{grid-template-columns:repeat(2,1fr);row-gap:26px;}
+  .trust-item:nth-child(2){border-right:0;}
+  .trust-item:nth-child(3),.trust-item:nth-child(4){border-top:1px solid var(--line);padding-top:28px;}
+  .mission-stats{grid-template-columns:repeat(2,1fr);gap:18px;}
+  .mission-stats>div:nth-child(2){border-right:0;}
+  .mission-stats>div:nth-child(3),.mission-stats>div:nth-child(4){border-top:1px solid #dbe6d2;padding-top:20px;}
+}
+@media(max-width:560px){
+  .about-hero h1{font-size:clamp(2.55rem,13vw,3.5rem);}
+  .hero-actions{align-items:stretch;flex-direction:column;}
+  .hero-actions .btn{justify-content:center;}
+  .about-hero-visual{min-height:310px;}
+  .about-photo{min-height:280px;}
+  .trust-grid{grid-template-columns:1fr;}
+  .trust-item{border-right:0 !important;border-top:1px solid var(--line);padding-top:24px;}
+  .trust-item:first-child{border-top:0;}
+  .mission-stats{grid-template-columns:1fr;}
+  .mission-stats>div{border-right:0 !important;border-top:1px solid #dbe6d2;padding-top:18px;}
+  .mission-stats>div:first-child{border-top:0;}
+}
+html{scroll-behavior:smooth;}
+#about-pharmacy,#meet-team{scroll-margin-top:84px;}
+</style>
+
 </head>
 <body>
 
@@ -785,89 +875,72 @@ a.btn:active {
 </header>
 
 <main>
-  <section class="page-banner" aria-label="About us">
-    <div class="container">
-      <div class="hero-copy">
-        <h1>A neighbourhood pharmacy, <span class="accent">run like family</span></h1>
-        <p>Five years of careful dispensing and honest conversations, in the heart of Fort Portal.</p>
+  <section class="about-hero" aria-label="About Kalidad Pharmacy">
+    <div class="about-hero-inner container">
+      <div class="about-hero-copy reveal">
+        <span class="hero-kicker">About Us</span>
+        <h1>Caring for Our<br>Community, <span class="accent">Every Day</span></h1>
+        <p>At Kalidad Pharmacy, we are more than just a pharmacy. We are your trusted health partner, committed to providing quality medicines, professional advice, and compassionate care.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#about-pharmacy">About Us <span aria-hidden="true">→</span></a>
+          <a class="btn btn-outline" href="#meet-team">Meet Our Team <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="about-hero-visual reveal">
+        <img src="about-hero-reference.jpg" alt="Pharmacist assisting a customer at Kalidad Pharmacy">
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container about-grid">
+  <section class="section about-intro" id="about-pharmacy">
+    <div class="container about-grid reference-about-grid">
+      <div class="about-photo reveal">
+        <img src="kalidad-storefront.jpg" alt="Kalidad Pharmacy storefront">
+      </div>
       <div class="about-copy reveal">
-        <span class="kicker">Our story</span>
-        <h2>Health you can count on, any hour</h2>
-        <p>Kalidad Pharmacy has spent the last five years earning the trust of Fort Portal, one careful dispensing and one honest conversation at a time. We're open around the clock because health doesn't keep office hours — and neither do we.</p>
-        <p>What started as a small counter in Kisenyi has grown into a full-service pharmacy trusted by hundreds of families every month, without losing the personal attention that got us here.</p>
-        <ul class="about-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Licensed pharmacists on every shift, day and night</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Free wellness screening for regular customers</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Same-day delivery anywhere in Fort Portal</li>
-        </ul>
+        <span class="kicker">Who We Are</span>
+        <h2>Your Trusted<br>Neighbourhood Pharmacy</h2>
+        <p>Kalidad Pharmacy is a fully licensed pharmacy located in Fort Portal, Uganda. For over five years, we have been dedicated to improving lives by making quality healthcare accessible, affordable, and convenient for everyone.</p>
+        <p>We combine professional expertise with a personal touch to ensure every customer feels valued, understood, and cared for.</p>
       </div>
-      <div class="about-visual reveal">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5-8-8a5 5 0 1 1 7-7l1 1 1-1a5 5 0 1 1 7 7l-8 8z"/><path d="m8.5 8.5 7 7"/></svg>
+    </div>
+
+    <div class="container trust-grid">
+      <div class="trust-item reveal"><span class="trust-icon">✓</span><h3>Licensed &amp; Trusted</h3><p>Fully licensed pharmacy committed to safety and quality.</p></div>
+      <div class="trust-item reveal"><span class="trust-icon">◎</span><h3>Experienced Team</h3><p>Qualified pharmacists and staff always ready to help.</p></div>
+      <div class="trust-item reveal"><span class="trust-icon">♡</span><h3>Patient First</h3><p>Your health and well-being are at the heart of all we do.</p></div>
+      <div class="trust-item reveal"><span class="trust-icon">◷</span><h3>Always Here</h3><p>Open 24/7 to serve you whenever you need us most.</p></div>
+    </div>
+  </section>
+
+  <section class="section team-section" id="meet-team">
+    <div class="container team-grid">
+      <div class="team-copy reveal">
+        <span class="kicker">Meet Our Team</span>
+        <h2>People who put<br>care into every prescription</h2>
+        <p>Behind every prescription, recommendation, and conversation is a team committed to doing pharmacy care properly. Our pharmacists bring professional knowledge, attention to detail, and a genuine desire to help the people we serve.</p>
+        <p>From dispensing medicines to answering questions and supporting everyday wellness, our team works together to make every visit feel personal, respectful, and reassuring.</p>
+        <div class="team-highlights">
+          <span>10 Pharmacists</span><span>Patient-focused care</span><span>Professional expertise</span>
+        </div>
+      </div>
+      <div class="team-image-wrap reveal">
+        <img src="team-pharmacists.jpg" alt="A group of ten Kalidad Pharmacy pharmacists standing together">
       </div>
     </div>
   </section>
 
-  <section class="section tight">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="kicker">What we stand for</span>
-        <h2>Our values</h2>
-        <div class="leaf-rule"></div>
-      </div>
-      <div class="values-grid">
-        <div class="value-card reveal">
-          <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
-          <h3>Trust</h3>
-          <p>Every prescription is double-checked. No shortcuts, ever.</p>
-        </div>
-        <div class="value-card reveal">
-          <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></span>
-          <h3>Care</h3>
-          <p>We treat every customer like a neighbour, because most of them are.</p>
-        </div>
-        <div class="value-card reveal">
-          <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
-          <h3>Availability</h3>
-          <p>Open 24 hours a day, 7 days a week, because health can't wait.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section tight">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="kicker">Our journey</span>
-        <h2>Milestones along the way</h2>
-        <div class="leaf-rule"></div>
-      </div>
-      <div class="timeline reveal" style="max-width:640px;margin:0 auto;">
-        <div class="timeline-item">
-          <p class="year">Year 1</p>
-          <h4>Kalidad opens in Kisenyi</h4>
-          <p>A small counter with one goal: honest, reliable pharmacy care for the neighbourhood.</p>
-        </div>
-        <div class="timeline-item">
-          <p class="year">Year 2</p>
-          <h4>Free health checks introduced</h4>
-          <p>Blood pressure and glucose screening added for regular customers, at no cost.</p>
-        </div>
-        <div class="timeline-item">
-          <p class="year">Year 3</p>
-          <h4>Same-day delivery launches</h4>
-          <p>WhatsApp ordering makes it possible to deliver across Fort Portal the same day.</p>
-        </div>
-        <div class="timeline-item">
-          <p class="year">Today</p>
-          <h4>500+ prescriptions filled monthly</h4>
-          <p>Trusted by hundreds of families, with a 4.8★ average rating from our neighbours.</p>
-        </div>
+  <section class="mission-section">
+    <div class="container mission-inner reveal">
+      <span class="kicker">Our Mission</span>
+      <h2>Better Health, Brighter Lives</h2>
+      <div class="leaf-rule"></div>
+      <p>To provide accessible, affordable, and quality healthcare solutions while promoting wellness and building lasting relationships with our community.</p>
+      <div class="mission-stats">
+        <div><strong class="stat-counter" data-count="5" data-suffix="+">5+</strong><span>Years of Service</span><small>Proudly serving the Fort Portal community.</small></div>
+        <div><strong class="stat-counter" data-count="10" data-suffix="K+">10K+</strong><span>Happy Customers</span><small>Thousands of satisfied customers and counting.</small></div>
+        <div><strong class="stat-counter" data-count="5" data-suffix="K+">5K+</strong><span>Products Available</span><small>Wide range of medicines and health products.</small></div>
+        <div><strong>24/7</strong><span>Always Open</span><small>Day or night, we are here for you.</small></div>
       </div>
     </div>
   </section>
@@ -1031,7 +1104,7 @@ a.btn:active {
         }
         requestAnimationFrame(tick);
     }
-    const band=document.querySelector('.stats-band');
+    const band=document.querySelector('.stats-band') || document.querySelector('.mission-stats');
     if('IntersectionObserver' in window && band){
         const o=new IntersectionObserver(es=>{
             if(es.some(e=>e.isIntersecting)){counters.forEach(run);o.disconnect();}
