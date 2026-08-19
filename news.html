@@ -2304,21 +2304,16 @@ footer .footer-bottom .container {
 }
 .news-hero-visual{display:none;}
 @media(min-width:901px){
-  .news-hero-visual{
-    display:block;
-    position:absolute;
-    right:0;
-    bottom:0;
-    top:0;
-    width:48%;
-    z-index:1;
+  .news-hero{
+    background:url('pharmacist_green_scrubs.webp') center 20% / cover no-repeat;
   }
-  .news-hero-visual img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:top center;
-    display:block;
+  .news-hero::before{
+    background:
+      radial-gradient(circle at 73% 35%,rgba(199,239,62,.10),transparent 25%),
+      linear-gradient(90deg,rgba(18,41,31,.94) 0%,rgba(18,41,31,.82) 40%,rgba(18,41,31,.35) 62%,rgba(18,41,31,.05) 80%);
+  }
+  .news-hero .container{
+    padding-right:0;
   }
 }
 
@@ -2937,9 +2932,6 @@ a.btn:focus-visible {
     </header>
 <main>
 <section class="news-hero" aria-labelledby="news-title">
-  <div class="news-hero-visual">
-    <img src="kalidad_pharmacy_scene.webp" alt="Kalidad Pharmacy pharmacist assisting a customer">
-  </div>
   <div class="container">
     <h1>Good health starts with <span>good information.</span></h1>
     <p>Practical health advice, pharmacy updates, wellness ideas and stories from the Kalidad Pharmacy team — written to help you make informed choices for yourself and your family.</p>

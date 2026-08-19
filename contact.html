@@ -410,20 +410,17 @@ button, input, textarea, select {
 }
 .page-banner-visual{display:none;}
 @media(min-width:901px){
-  .page-banner-visual{
-    display:flex;
-    grid-column:2;
-    align-items:flex-end;
-    justify-content:center;
-    height:100%;
-    position:relative;
-    z-index:2;
+  .page-banner{
+    background:url('kalidad_pharmacy_scene.webp') center 30% / cover no-repeat;
   }
-  .page-banner-visual img{
-    max-height:600px;
-    width:auto;
-    object-fit:contain;
+  .page-banner::before{
+    background:linear-gradient(90deg,rgba(255,255,255,.97) 0%,rgba(255,255,255,.90) 30%,rgba(255,255,255,.4) 52%,rgba(255,255,255,0) 70%) !important;
+  }
+  .page-banner .container{
     display:block;
+  }
+  .page-banner .hero-copy{
+    max-width:560px;
   }
 }
 .page-banner::after{
@@ -1191,9 +1188,6 @@ header.logo-hidden nav.main-nav {
       <div class="hero-copy">
         <h1>We're always open, <span class="accent">just say hello</span></h1>
         <p>Reach us on WhatsApp for the fastest reply, or drop a message below.</p>
-      </div>
-      <div class="page-banner-visual">
-        <img src="pharmacist_green_scrubs.webp" alt="Kalidad Pharmacy pharmacist">
       </div>
     </div>
   </section>
