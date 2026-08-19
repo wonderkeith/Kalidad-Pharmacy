@@ -978,7 +978,7 @@ header.logo-hidden .logo { max-width:0 !important; width:0 !important; height:70
 @media (min-width:941px){
   .about-hero{
     min-height:620px !important;
-    background:url('about-hero-desktop.webp') center center / 100% auto no-repeat !important;
+    background:url('about-hero-desktop-adjusted.webp') center top / 100% auto no-repeat !important;
   }
   .about-hero-inner{
     min-height:620px !important;
@@ -1304,9 +1304,12 @@ html[data-theme="dark"] .trust-item .trust-icon svg {
 .about-hero-visual img {
     position:relative !important;
     z-index:1;
-    transform:scale(1.01);
+    transform:none !important;
     object-position:center center !important;
 }
+/* Final hero image zoom removal */
+.about-hero-visual img{transform:none !important;}
+
 /* Dark mode: fade naturally into the forest page background */
 html[data-theme="dark"] .about-hero-visual::before {
     background:linear-gradient(90deg,
@@ -1623,7 +1626,7 @@ html[data-theme="dark"] .about-hero-visual::before {
         </div>
       </div>
       <div class="about-hero-visual reveal">
-        <img src="about-hero-desktop.webp" alt="Pharmacist in a modern Kalidad Pharmacy">
+        <img src="about-hero-desktop-adjusted.webp" alt="Pharmacist in a modern Kalidad Pharmacy">
         <img class="about-hero-mobile-img" src="pharmacist-mobile-hero.webp" alt="Pharmacist in a modern Kalidad Pharmacy">
       </div>
     </div>
