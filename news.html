@@ -2302,6 +2302,25 @@ footer .footer-bottom .container {
   line-height:1.55;
   color:rgba(255,255,255,.92);
 }
+.news-hero-visual{display:none;}
+@media(min-width:901px){
+  .news-hero-visual{
+    display:block;
+    position:absolute;
+    right:0;
+    bottom:0;
+    top:0;
+    width:48%;
+    z-index:1;
+  }
+  .news-hero-visual img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:top center;
+    display:block;
+  }
+}
 
 .news-toolbar{
   background:#f6f4ec;
@@ -2918,6 +2937,9 @@ a.btn:focus-visible {
     </header>
 <main>
 <section class="news-hero" aria-labelledby="news-title">
+  <div class="news-hero-visual">
+    <img src="kalidad_pharmacy_scene.webp" alt="Kalidad Pharmacy pharmacist assisting a customer">
+  </div>
   <div class="container">
     <h1>Good health starts with <span>good information.</span></h1>
     <p>Practical health advice, pharmacy updates, wellness ideas and stories from the Kalidad Pharmacy team — written to help you make informed choices for yourself and your family.</p>

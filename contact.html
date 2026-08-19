@@ -408,6 +408,24 @@ button, input, textarea, select {
   font-size:1.02rem;
   line-height:1.7;
 }
+.page-banner-visual{display:none;}
+@media(min-width:901px){
+  .page-banner-visual{
+    display:flex;
+    grid-column:2;
+    align-items:flex-end;
+    justify-content:center;
+    height:100%;
+    position:relative;
+    z-index:2;
+  }
+  .page-banner-visual img{
+    max-height:600px;
+    width:auto;
+    object-fit:contain;
+    display:block;
+  }
+}
 .page-banner::after{
   content:"";
   position:absolute;
@@ -1173,6 +1191,9 @@ header.logo-hidden nav.main-nav {
       <div class="hero-copy">
         <h1>We're always open, <span class="accent">just say hello</span></h1>
         <p>Reach us on WhatsApp for the fastest reply, or drop a message below.</p>
+      </div>
+      <div class="page-banner-visual">
+        <img src="pharmacist_green_scrubs.webp" alt="Kalidad Pharmacy pharmacist">
       </div>
     </div>
   </section>
