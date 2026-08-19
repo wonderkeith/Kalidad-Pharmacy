@@ -974,6 +974,16 @@ header.logo-hidden .logo { max-width:0 !important; width:0 !important; height:70
     object-fit:cover !important;
 }
 
+/* Desktop: taller hero + reposition image so her head clears the sticky header */
+@media (min-width:941px){
+  .about-hero{ min-height:620px !important; }
+  .about-hero-inner{ min-height:620px !important; }
+  .about-hero-visual{ min-height:620px !important; }
+  .about-hero-visual img{
+    object-position:center 18% !important;
+  }
+}
+
 /* Who We Are trust icons become lemon green in dark mode */
 html[data-theme="dark"] .trust-item .trust-icon,
 html[data-theme="dark"] .trust-item .trust-icon svg {
