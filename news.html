@@ -2821,6 +2821,68 @@ a.btn:focus-visible {
 }
 </style>
 
+<style id="mobile-header-retract-to-corner">
+/* =========================================================
+   MOBILE ONLY: once scrolled past the hero, the header
+   retracts down into just the menu button and that button
+   docks in the true top-right corner of the screen (not the
+   centered pill position). It expands back to the normal
+   centered header the moment the hero is back in view.
+   Desktop/tablet (>900px) is untouched.
+   ========================================================= */
+@media (max-width:900px){
+  header.logo-hidden{
+    left:auto !important;
+    right:14px !important;
+    top:12px !important;
+    transform:none !important;
+    width:58px !important;
+    height:58px !important;
+    min-height:58px !important;
+    border-radius:20px !important;
+    background:rgba(18,41,31,.94) !important;
+    border:1px solid rgba(255,255,255,.22) !important;
+    box-shadow:0 12px 26px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.10) !important;
+    overflow:hidden !important;
+    transition:width .45s cubic-bezier(.2,.8,.2,1),height .45s cubic-bezier(.2,.8,.2,1),
+               right .45s cubic-bezier(.2,.8,.2,1),top .45s cubic-bezier(.2,.8,.2,1),
+               border-radius .45s ease !important;
+  }
+
+  header.logo-hidden .header-inner{
+    width:58px !important;
+    height:58px !important;
+    padding:0 !important;
+    gap:0 !important;
+    justify-content:center !important;
+  }
+
+  header.logo-hidden .logo{
+    display:none !important;
+    width:0 !important;
+    max-width:0 !important;
+  }
+
+  header.logo-hidden .menu-toggle{
+    margin:0 !important;
+  }
+
+  /* Smooth retract/expand as the logo-hidden state toggles */
+  header{
+    transition:width .45s cubic-bezier(.2,.8,.2,1),height .45s cubic-bezier(.2,.8,.2,1),
+               left .45s cubic-bezier(.2,.8,.2,1),right .45s cubic-bezier(.2,.8,.2,1),
+               top .45s cubic-bezier(.2,.8,.2,1),border-radius .45s ease,
+               background .35s ease,box-shadow .35s ease !important;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  header{
+    transition:none !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <header>
