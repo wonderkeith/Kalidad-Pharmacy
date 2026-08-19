@@ -974,13 +974,31 @@ header.logo-hidden .logo { max-width:0 !important; width:0 !important; height:70
     object-fit:cover !important;
 }
 
-/* Desktop: taller hero + reposition image so her head clears the sticky header */
+/* Desktop: full-width photo hero with text overlaid on the left */
 @media (min-width:941px){
-  .about-hero{ min-height:620px !important; }
-  .about-hero-inner{ min-height:620px !important; }
-  .about-hero-visual{ min-height:620px !important; }
-  .about-hero-visual img{
-    object-position:center 18% !important;
+  .about-hero{
+    min-height:620px !important;
+    background:url('about-hero-desktop-new.jpg') center 22% / cover no-repeat !important;
+  }
+  .about-hero-inner{
+    min-height:620px !important;
+    display:block !important;
+  }
+  .about-hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.88) 32%,rgba(255,255,255,.35) 55%,rgba(255,255,255,0) 72%);
+    pointer-events:none;
+  }
+  .about-hero-copy{
+    background:none !important;
+    position:relative;
+    z-index:2;
+    max-width:560px;
+  }
+  .about-hero-visual{
+    display:none !important;
   }
 }
 
