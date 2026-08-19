@@ -412,15 +412,19 @@ button, input, textarea, select {
 @media(min-width:901px){
   .page-banner{
     background:url('kalidad_pharmacy_scene.webp') center 30% / cover no-repeat;
+    align-items:center;
   }
   .page-banner::before{
-    background:linear-gradient(90deg,rgba(255,255,255,.97) 0%,rgba(255,255,255,.90) 30%,rgba(255,255,255,.4) 52%,rgba(255,255,255,0) 70%) !important;
+    display:none !important;
   }
   .page-banner .container{
     display:block;
   }
   .page-banner .hero-copy{
     max-width:560px;
+  }
+  .page-banner h1{
+    margin-top:0;
   }
 }
 .page-banner::after{
