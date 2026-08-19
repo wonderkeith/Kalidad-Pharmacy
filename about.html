@@ -1584,6 +1584,131 @@ html[data-theme="dark"] .about-hero-visual::before {
 }
 </style>
 
+
+<style id="meet-team-full-bleed-fade">
+/* Meet Our Team — full right-half image with a soft forest-green blend */
+@media (min-width: 901px) {
+  .team-section {
+    padding: 0 !important;
+    background: #1E4F3B !important;
+    overflow: hidden !important;
+  }
+
+  .team-grid {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+    min-height: 560px !important;
+  }
+
+  .team-copy {
+    min-width: 0 !important;
+    padding: 92px 7vw 92px 7vw !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    position: relative !important;
+    z-index: 3 !important;
+  }
+
+  .team-image-wrap {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 560px !important;
+    aspect-ratio: auto !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #1E4F3B !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .team-image-wrap::before {
+    content: "";
+    position: absolute !important;
+    z-index: 2 !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background: linear-gradient(90deg,
+      #1E4F3B 0%,
+      rgba(30,79,59,.96) 9%,
+      rgba(30,79,59,.76) 19%,
+      rgba(30,79,59,.42) 31%,
+      rgba(30,79,59,.12) 43%,
+      rgba(30,79,59,0) 56%
+    ) !important;
+  }
+
+  .team-image-wrap img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 560px !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .team-section {
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .team-grid {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .team-copy {
+    padding: 76px 28px 58px !important;
+    position: relative !important;
+    z-index: 3 !important;
+  }
+
+  .team-image-wrap {
+    width: 100% !important;
+    min-height: 390px !important;
+    aspect-ratio: 728 / 408 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: #1E4F3B !important;
+  }
+
+  .team-image-wrap::before {
+    content: "";
+    position: absolute !important;
+    z-index: 2 !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background: linear-gradient(180deg,
+      #1E4F3B 0%,
+      rgba(30,79,59,.78) 14%,
+      rgba(30,79,59,.28) 31%,
+      rgba(30,79,59,0) 48%
+    ) !important;
+  }
+
+  .team-image-wrap img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    transform: none !important;
+  }
+}
+</style>
 </head>
 <body>
 
