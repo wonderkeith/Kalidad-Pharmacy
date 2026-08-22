@@ -365,6 +365,28 @@ button, input, textarea, select {
 }
 .page-banner .breadcrumb{display:none;}
 .page-banner .hero-copy{grid-column:1;}
+.page-banner .hero-image{
+  grid-column:2;
+  height:100%;
+  min-height:645px;
+  position:relative;
+  overflow:hidden;
+  align-self:stretch;
+}
+.page-banner .hero-image::before{
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:0;
+  background:linear-gradient(90deg,#d9e3dc 0%,rgba(217,227,220,.72) 10%,rgba(217,227,220,.18) 34%,rgba(217,227,220,0) 58%);
+  pointer-events:none;
+}
+.page-banner .hero-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
 .page-banner .kicker{
   display:inline-flex;
   align-items:center;
@@ -441,13 +463,35 @@ button, input, textarea, select {
 .hero-dots span.active{background:#8fbd1d;opacity:1;}
 @media(max-width:900px){
   .page-banner{min-height:600px;background:linear-gradient(120deg,#3a705d 0%,#7f9f92 38%,#dfe8e2 68%,#fff 100%);display:flex;align-items:flex-end;}
-  .page-banner .container{grid-template-columns:1fr;padding:0 24px 40px;}
+  .page-banner .container{
+    grid-template-columns:1fr;
+    padding:0 24px 40px;
+  }
+  .page-banner .hero-image{
+    position:absolute;
+    inset:0;
+    min-height:600px;
+    height:100%;
+    grid-column:1;
+    z-index:0;
+  }
+  .page-banner .hero-image::before{
+    background:linear-gradient(180deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.18) 35%,rgba(246,244,236,.82) 72%,#f6f4ec 100%);
+  }
+  .page-banner .hero-copy{
+    grid-column:1;
+    position:relative;
+    z-index:2;
+    align-self:end;
+    padding-bottom:8px;
+  }
   .page-banner h1{font-size:clamp(1.9rem,7vw,2.6rem);max-width:400px;}
   .page-banner p{max-width:340px;font-size:.9rem;}
   .hero-dots{bottom:42px;}
 }
 @media(max-width:560px){
   .page-banner{min-height:500px;}
+  .page-banner .hero-image{min-height:500px;}
   .page-banner .container{padding:0 20px 32px;}
   .page-banner h1{font-size:clamp(1.6rem,8vw,2.1rem);margin-top:14px;max-width:280px;}
   .page-banner p{font-size:.84rem;margin-top:12px;max-width:280px;}
@@ -1008,6 +1052,9 @@ header.logo-hidden {
       <div class="hero-copy">
         <h1>Pharmacy services <span class="accent">built around you</span></h1>
         <p>From quick refills to personal consultations, every service is delivered with the same care and attention — day or night.</p>
+      </div>
+      <div class="hero-image">
+        <img src="services-hero.webp" alt="Pharmacist caring for a mother and child in a pharmacy">
       </div>
     </div>
   </section>
