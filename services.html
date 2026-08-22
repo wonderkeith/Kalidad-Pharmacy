@@ -668,6 +668,17 @@ button, input, textarea, select {
 .service-actions{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px;}
 .service-actions .btn{font-size:.88rem;padding:12px 20px;}
 @media(max-width:800px){.service-actions{margin-top:26px;}}
+ .page-banner .hero-image picture{
+  display:block;
+  width:100%;
+  height:100%;
+}
+ .page-banner .hero-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
 </style>
     <link rel="icon" type="image/png" href="kalidad-icon.png">
 
@@ -1078,8 +1089,11 @@ header.logo-hidden {
         <p>From quick refills to personal consultations, every service is delivered with the same care and attention — day or night.</p>
       </div>
       <div class="hero-image">
-        <img src="services-hero.webp" alt="Pharmacist caring for a mother and child in a pharmacy">
-      </div>
+        <picture>
+          <source media="(max-width: 800px)" srcset="services-hero-mobile.webp">
+          <img src="services-hero.webp" alt="Pharmacist caring for a mother and child in a pharmacy">
+        </picture>
+</div>
     </div>
   </section>
 
