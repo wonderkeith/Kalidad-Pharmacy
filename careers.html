@@ -1554,12 +1554,7 @@ html[data-theme="dark"] .careers-page .menu{
   z-index: 0;
 }
 .reference-career-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(90deg, rgba(8,36,24,.82) 0%, rgba(8,36,24,.55) 30%, rgba(8,36,24,.14) 58%, rgba(8,36,24,.08) 100%);
-  pointer-events: none;
+  display: none !important;
 }
 .reference-career-hero .reference-career-inner {
   position: relative;
@@ -1568,9 +1563,6 @@ html[data-theme="dark"] .careers-page .menu{
 @media (max-width: 760px) {
   .reference-career-hero .career-hero-image {
     object-position: 58% center;
-  }
-  .reference-career-hero::before {
-    background: linear-gradient(180deg, rgba(8,36,24,.18) 0%, rgba(8,36,24,.30) 38%, rgba(8,36,24,.82) 100%);
   }
 }
 </style>
