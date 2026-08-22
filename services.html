@@ -1034,6 +1034,38 @@ header.logo-hidden {
 }
 </style>
 
+
+<style id="mobile-hero-full-height">
+@media (max-width: 800px){
+  .page-banner{
+    min-height: 100svh !important;
+    height: 100svh !important;
+    overflow: hidden !important;
+  }
+  .page-banner .hero-image{
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: none !important;
+  }
+  .page-banner .hero-image img{
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+}
+@media (max-width: 480px){
+  .page-banner{
+    min-height: 100svh !important;
+    height: 100svh !important;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -1090,7 +1122,7 @@ header.logo-hidden {
       </div>
       <div class="hero-image">
         <picture>
-          <source media="(max-width: 800px)" srcset="services-hero-mobile.webp">
+          <source media="(max-width: 800px)" srcset="services-hero-mobile-fullheight.webp">
           <img src="services-hero.webp" alt="Pharmacist caring for a mother and child in a pharmacy">
         </picture>
 </div>
