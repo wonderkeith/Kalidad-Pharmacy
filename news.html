@@ -2900,6 +2900,176 @@ a.btn:focus-visible {
 }
 </style>
 
+
+<style id="mobile-news-hero-reference-match">
+/* Mobile hero — matched to the supplied reference composition. Desktop is untouched. */
+@media (max-width: 900px) {
+  .news-hero {
+    min-height: 100svh !important;
+    height: 100svh !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: block !important;
+    background: linear-gradient(115deg, #ffffff 0%, #ffffff 48%, #f8fce9 73%, #e8f9bd 100%) !important;
+  }
+
+  .news-hero-mobile-img {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 10.5vh !important;
+    width: 100% !important;
+    height: 110.5% !important;
+    max-width: none !important;
+    object-fit: cover !important;
+    object-position: 78% top !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+    transform: none !important;
+  }
+
+  .news-hero::before {
+    display: block !important;
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+    background: linear-gradient(90deg, rgba(255,255,255,.03) 0%, rgba(255,255,255,0) 52%, rgba(199,239,62,.06) 100%) !important;
+  }
+
+  .news-hero .container {
+    position: absolute !important;
+    z-index: 4 !important;
+    top: 28.5vh !important;
+    left: 6% !important;
+    width: 64% !important;
+    max-width: 560px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+  }
+
+  .news-hero h1 {
+    margin: 0 !important;
+    max-width: 100% !important;
+    font-family: 'Playfair Display', serif !important;
+    font-size: clamp(40px, 8.45vw, 73px) !important;
+    font-weight: 800 !important;
+    line-height: .96 !important;
+    letter-spacing: -.045em !important;
+    color: #176b4d !important;
+    text-wrap: balance !important;
+    position: relative !important;
+  }
+
+  .news-hero h1 span {
+    color: #176b4d !important;
+  }
+
+  .news-hero h1::after {
+    content: "" !important;
+    display: block !important;
+    width: 72% !important;
+    height: 12px !important;
+    margin: 13px 0 0 7% !important;
+    background: #a8df20 !important;
+    border-radius: 100% 10% 100% 10% !important;
+    transform: rotate(-5deg) skewX(-18deg) !important;
+    transform-origin: left center !important;
+    box-shadow: 0 0 7px rgba(168,223,32,.18) !important;
+  }
+
+  .news-hero p {
+    display: none !important;
+  }
+
+  /* Reference header: large white rounded glass board with enlarged logo and menu button. */
+  header {
+    top: clamp(14px, 2.4vh, 44px) !important;
+    width: calc(100% - 56px) !important;
+    height: clamp(108px, 8.5vh, 157px) !important;
+    min-height: 0 !important;
+    border-radius: clamp(22px, 3.5vw, 32px) !important;
+    background: rgba(255,255,255,.90) !important;
+    border: 1px solid rgba(255,255,255,.88) !important;
+    box-shadow: 0 14px 42px rgba(18,41,31,.08), inset 0 1px 0 rgba(255,255,255,.95) !important;
+    backdrop-filter: blur(18px) saturate(120%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(120%) !important;
+  }
+
+  header .header-inner {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 clamp(20px, 5.1vw, 44px) !important;
+    gap: 12px !important;
+  }
+
+  header .logo {
+    width: clamp(215px, 35vw, 300px) !important;
+    height: auto !important;
+    max-width: none !important;
+  }
+
+  header .logo-image {
+    width: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+
+  header .menu-toggle {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    width: clamp(62px, 11vw, 94px) !important;
+    height: clamp(62px, 11vw, 94px) !important;
+    border-radius: clamp(16px, 2.7vw, 24px) !important;
+    border: 2px solid #176b4d !important;
+    background: rgba(255,255,255,.35) !important;
+    color: #176b4d !important;
+    box-shadow: none !important;
+  }
+
+  header .menu-toggle svg {
+    width: 64% !important;
+    height: 64% !important;
+    stroke-width: 2.25 !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .news-hero .container {
+    top: 29% !important;
+    left: 6% !important;
+    width: 88% !important;
+  }
+
+  .news-hero h1 {
+    max-width: 92% !important;
+    font-size: clamp(40px, 9.6vw, 58px) !important;
+  }
+
+  .news-hero h1::after {
+    width: 68% !important;
+    height: 9px !important;
+    margin-top: 10px !important;
+  }
+
+  header {
+    width: calc(100% - 36px) !important;
+  }
+
+  header .header-inner {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  header .logo {
+    width: min(68vw, 260px) !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <header>
