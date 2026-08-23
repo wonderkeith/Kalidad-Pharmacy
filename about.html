@@ -1279,6 +1279,65 @@ html[data-theme="dark"] .trust-item .trust-icon svg {
 
 </style>
 
+<style id="mobile-hero-full-height-override">
+    /* Make the About hero fill the full screen height on mobile, with the
+       photo as a full-bleed background and copy overlaid on top — matching
+       the full-viewport hero treatment used on services.html, instead of
+       the small side-by-side 460px layout above. */
+    @media (max-width: 940px) {
+        .about-hero {
+            min-height: 100svh !important;
+            height: 100svh !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+        .about-hero-inner {
+            display: block !important;
+            min-height: 100svh !important;
+            height: 100% !important;
+            position: relative !important;
+        }
+        .about-hero-visual {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 100% !important;
+            z-index: 0 !important;
+        }
+        .about-hero-visual img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: center center !important;
+        }
+        .about-hero-visual::before {
+            background: linear-gradient(180deg,
+                rgba(18,41,31,.05) 0%,
+                rgba(18,41,31,.10) 55%,
+                rgba(18,41,31,.55) 100%) !important;
+        }
+        .about-hero-copy {
+            position: relative !important;
+            z-index: 2 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-end !important;
+            min-height: 100svh !important;
+            height: 100% !important;
+            padding: 0 20px 48px !important;
+            background: none !important;
+        }
+        .about-hero-copy > p {
+            color: #fff !important;
+        }
+        .about-hero h1 {
+            color: #fff !important;
+            text-shadow: 0 2px 18px rgba(0,0,0,.35) !important;
+        }
+    }
+</style>
+
 
 <style id="hero-image-fade-final">
 /* Hero image — smooth fade into the text side */
