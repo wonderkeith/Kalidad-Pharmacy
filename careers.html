@@ -1567,6 +1567,31 @@ html[data-theme="dark"] .careers-page .menu{
 }
 </style>
 
+<style id="mobile-hero-full-height-override">
+    /* Force the careers hero to fill the full screen height on mobile,
+       matching the full-viewport hero treatment used on services.html,
+       instead of being capped at a fixed pixel height. */
+    @media (max-width: 900px) {
+        .reference-career-hero {
+            min-height: 100svh !important;
+            height: 100svh !important;
+        }
+        .reference-career-inner {
+            min-height: 100svh !important;
+            height: 100% !important;
+        }
+    }
+    @media (max-width: 560px) {
+        .reference-career-hero {
+            min-height: 100svh !important;
+            height: 100svh !important;
+        }
+        .reference-career-inner {
+            min-height: 100svh !important;
+            height: 100% !important;
+        }
+    }
+</style>
 </head>
 <body class="careers-page">
 <header>

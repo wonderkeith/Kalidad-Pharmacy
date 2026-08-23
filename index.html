@@ -3525,6 +3525,31 @@ header.logo-hidden {
         }
     </style>
 
+    <style id="mobile-hero-full-height-override">
+        /* Force the hero to fill the full screen height on mobile, matching
+           the full-viewport hero treatment used on services.html, instead of
+           being capped at a fixed pixel height. */
+        @media (max-width: 700px) {
+            .hero-reference {
+                min-height: 100svh !important;
+                height: 100svh !important;
+                max-height: none !important;
+            }
+
+            .hero-reference-content {
+                min-height: 100svh !important;
+                height: 100% !important;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .hero-reference {
+                min-height: 100svh !important;
+                height: 100svh !important;
+            }
+        }
+    </style>
+
 </head>
 <body>
 
