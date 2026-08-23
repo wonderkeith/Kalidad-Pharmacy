@@ -465,7 +465,7 @@ button, input, textarea, select {
 .hero-dots span{width:14px;height:14px;border-radius:50%;background:#fff;opacity:.9;}
 .hero-dots span.active{background:#8fbd1d;opacity:1;}
 @media(max-width:900px){
-  .page-banner{min-height:600px;background:url('1000518437.png') center 30% / cover no-repeat;display:flex;align-items:flex-end;}
+  .page-banner{min-height:600px;background:url('1000524422.png') center 30% / cover no-repeat;display:flex;align-items:flex-end;}
   .page-banner .container{grid-template-columns:1fr;padding:0 24px 40px;}
   .page-banner h1{font-size:clamp(1.9rem,7vw,2.6rem);max-width:400px;}
   .page-banner p{max-width:340px;font-size:.9rem;}
@@ -1165,13 +1165,14 @@ header.logo-hidden nav.main-nav {
    Desktop/tablet styles remain unchanged. */
 @media (max-width: 900px){
   .page-banner{
-    height:clamp(620px, 100svh, 820px) !important;
-    min-height:620px !important;
+    height:100svh !important;
+    min-height:640px !important;
+    max-height:900px !important;
     padding:0 !important;
     display:block !important;
     align-items:initial !important;
     background-size:cover !important;
-    background-position:center center !important;
+    background-position:72% center !important;
   }
 
   .page-banner .container{
@@ -1188,13 +1189,13 @@ header.logo-hidden nav.main-nav {
   .page-banner .hero-copy{
     position:absolute !important;
     z-index:3 !important;
-    left:6.5% !important;
+    left:7.5% !important;
     right:auto !important;
     top:auto !important;
-    bottom:16.5% !important;
+    bottom:22% !important;
     transform:none !important;
-    width:43% !important;
-    max-width:360px !important;
+    width:46% !important;
+    max-width:340px !important;
     margin:0 !important;
     text-align:left !important;
   }
@@ -1202,37 +1203,77 @@ header.logo-hidden nav.main-nav {
   .page-banner h1{
     margin:0 !important;
     max-width:100% !important;
-    font-size:clamp(2rem, 7.3vw, 2.7rem) !important;
-    line-height:1.02 !important;
-    letter-spacing:-.035em !important;
+    font-size:clamp(2.1rem, 7.5vw, 2.9rem) !important;
+    line-height:1.0 !important;
+    letter-spacing:-.04em !important;
     text-align:left !important;
   }
 
+  .page-banner h1 .line-dark{
+    color:#0d2c22 !important;
+    display:block !important;
+  }
+  .page-banner h1 .line-lime{
+    color:#8fbd1d !important;
+    display:block !important;
+  }
+
+  .page-banner .hero-line{
+    display:block !important;
+    width:30px !important;
+    height:3px !important;
+    background:#8fbd1d !important;
+    margin-top:10px !important;
+    border-radius:2px !important;
+  }
+
+  .page-banner .hero-sub{
+    margin-top:14px !important;
+    font-size:0.86rem !important;
+    color:#0d2c22 !important;
+    line-height:1.55 !important;
+    font-weight:600 !important;
+    max-width:100% !important;
+    text-shadow:0 1px 2px rgba(255,255,255,.35) !important;
+  }
+
   /* The reference uses a slightly softer, editorial text block. */
-  .page-banner h1,
-  .page-banner p{
-    text-shadow:0 1px 1px rgba(255,255,255,.18);
+  .page-banner h1 .line-dark,
+  .page-banner h1 .line-lime{
+    text-shadow:0 1px 2px rgba(255,255,255,.35) !important;
   }
 }
 
 @media (max-width:560px){
   .page-banner{
-    height:clamp(560px, 100svh, 760px) !important;
-    min-height:560px !important;
-    background-position:center center !important;
+    height:100svh !important;
+    min-height:580px !important;
+    max-height:840px !important;
+    background-position:70% center !important;
   }
 
   .page-banner .hero-copy{
-    left:7% !important;
-    bottom:15.5% !important;
-    width:44% !important;
-    max-width:205px !important;
+    left:7.5% !important;
+    bottom:24% !important;
+    width:48% !important;
+    max-width:220px !important;
   }
 
   .page-banner h1{
-    font-size:clamp(1.72rem, 8.2vw, 2.15rem) !important;
-    line-height:1.03 !important;
-    letter-spacing:-.03em !important;
+    font-size:clamp(1.85rem, 8.5vw, 2.3rem) !important;
+    line-height:1.0 !important;
+    letter-spacing:-.035em !important;
+  }
+
+  .page-banner .hero-sub{
+    font-size:0.82rem !important;
+    margin-top:12px !important;
+    line-height:1.5 !important;
+  }
+
+  .page-banner .hero-line{
+    width:26px !important;
+    margin-top:8px !important;
   }
 }
 
@@ -1240,12 +1281,13 @@ header.logo-hidden nav.main-nav {
    from being pushed below the visible hero. */
 @media (max-width:560px) and (max-height:700px){
   .page-banner{
-    height:600px !important;
-    min-height:600px !important;
+    height:620px !important;
+    min-height:620px !important;
+    max-height:none !important;
   }
 
   .page-banner .hero-copy{
-    bottom:12% !important;
+    bottom:18% !important;
   }
 }
 </style>
@@ -1297,7 +1339,12 @@ header.logo-hidden nav.main-nav {
   <section class="page-banner" aria-label="Get in touch">
     <div class="container">
       <div class="hero-copy">
-        <h1>We're always open, just say hello</h1>
+        <h1>
+          <span class="line-dark">We're always open,</span>
+          <span class="line-lime">just say hello</span>
+        </h1>
+        <span class="hero-line"></span>
+        <p class="hero-sub">Get in touch with our team. We're here to help with anything you need.</p>
       </div>
     </div>
   </section>
