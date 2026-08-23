@@ -977,12 +977,13 @@ header.logo-hidden .logo { max-width:0 !important; width:0 !important; height:70
 /* Desktop: full-width photo hero with text overlaid on the left */
 @media (min-width:941px){
   .about-hero{
-    min-height:620px !important;
-    background:url('about-hero-desktop-adjusted.webp') center top / 100% auto no-repeat !important;
+    min-height:100vh !important;
+    background:url('about-hero-desktop-adjusted.webp') center top / cover no-repeat !important;
   }
   .about-hero-inner{
-    min-height:620px !important;
-    display:block !important;
+    min-height:100vh !important;
+    display:flex !important;
+    align-items:center !important;
   }
   .about-hero::before{
     content:"";
