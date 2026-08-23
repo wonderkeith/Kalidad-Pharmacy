@@ -58,10 +58,10 @@ header{
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
 }
-.header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:84px;}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:108px;}
 .logo{display:flex;align-items:center;gap:12px;}
 .logo-mark{
-  width:54px;height:54px;
+  width:340px;height:100px;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
   transition:transform .3s ease;
 }
@@ -1143,6 +1143,15 @@ header.logo-hidden nav.main-nav {
 }
 </style>
 
+
+/* Kalidad logo sizing — match the full logo proportions shown in the reference. */
+@media(max-width:900px){
+  .header-inner{height:78px;}
+  .logo-mark{width:235px;height:68px;}
+}
+@media(max-width:560px){
+  .logo-mark{width:210px;height:62px;}
+}
 </head>
 <body>
 
