@@ -1709,6 +1709,41 @@ html[data-theme="dark"] .about-hero-visual::before {
   }
 }
 </style>
+
+<style id="kalidad-team-clean-image-rework">
+/* Meet Our Team: remove the forest-green background/fade and use the new team photo cleanly. */
+.team-section {
+    background: #fff !important;
+    color: var(--forest-deep) !important;
+}
+
+.team-section .kicker,
+.team-section h2,
+.team-section p,
+.team-section .team-copy,
+.team-section .team-copy * {
+    color: var(--forest-deep) !important;
+}
+
+.team-image-wrap {
+    background: #fff !important;
+}
+
+.team-image-wrap::before {
+    display: none !important;
+    content: none !important;
+}
+
+.team-image-wrap img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    filter: none !important;
+}
+</style>
+
 </head>
 <body>
 
@@ -1784,7 +1819,7 @@ html[data-theme="dark"] .about-hero-visual::before {
         <p>From dispensing medicines to answering questions and supporting everyday wellness, our team works together to make every visit feel personal, respectful, and reassuring.</p>
       </div>
       <div class="team-image-wrap reveal">
-        <img src="team-photo.webp" alt="Kalidad Pharmacy team">
+        <img src="kalidad_pharmacy_team_hero.webp" alt="Kalidad Pharmacy team">
       </div>
     </div>
   </section>
