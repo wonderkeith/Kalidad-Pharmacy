@@ -100,10 +100,10 @@ footer {
     gap: 10px;
     font-size: .9rem;
 }
-.footer-col ul a { opacity: .88; }
+.footer-col ul a { opacity: .88; text-decoration: none; color: inherit; }
 .footer-col ul a:hover {
     opacity: 1;
-    text-decoration: underline;
+    text-decoration: none;
 }
 .footer-contact li {
     display: flex;
@@ -111,6 +111,10 @@ footer {
     font-size: .88rem;
     opacity: .88;
     align-items: flex-start;
+}
+.footer-contact a {
+    text-decoration: none;
+    color: inherit;
 }
 .footer-contact svg {
     width: 16px;
@@ -1224,6 +1228,7 @@ header.is-scrolled {
 }
 nav.main-nav a.nav-link, header nav a {
     position: relative !important;
+    text-decoration: none !important;
     transition: transform .28s cubic-bezier(.2,.8,.2,1), background .28s ease,
                 color .28s ease, box-shadow .28s ease !important;
 }
