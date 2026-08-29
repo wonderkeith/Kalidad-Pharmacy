@@ -266,9 +266,28 @@
   }
 
 
+  function safeGetStorage(key) {
+    try {
+      return window.localStorage ? window.localStorage.getItem(key) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function safeSetStorage(key, value) {
+    try {
+      if (window.localStorage) {
+        window.localStorage.setItem(key, value);
+      }
+    } catch (e) {
+      /* storage unavailable (private mode, in-app browser, etc.) — theme still applies for this page view */
+    }
+  }
+
+
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(STORAGE_KEY, theme);
+    safeSetStorage(STORAGE_KEY, theme);
 
     var desktopBtn = document.getElementById('ktToggleBtn');
 
@@ -304,16 +323,20 @@
 
 
   function initialTheme() {
-    var saved = localStorage.getItem(STORAGE_KEY);
+    var saved = safeGetStorage(STORAGE_KEY);
 
     if (saved === 'dark' || saved === 'light') {
       return saved;
     }
 
-    return window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+    try {
+      return window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light';
+    } catch (e) {
+      return 'light';
+    }
   }
 
 
