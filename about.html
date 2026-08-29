@@ -7,7 +7,7 @@
 <meta name="description" content="Meet Kalidad Pharmacy — a licensed, 24/7 neighbourhood pharmacy serving Fort Portal, Uganda for over five years.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --forest-deep:#12291F;
@@ -31,14 +31,14 @@
 html{scroll-behavior:smooth;}
 body{
   margin:0;
-  font-family:'Inter',system-ui,sans-serif;
+  font-family: 'Lora', serif;
   color:var(--ink);
   background:var(--cream);
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
 }
 h1,h2,h3,.font-display{
-  font-family:'Nunito',system-ui,sans-serif;
+  font-family: 'Lora', serif;
   font-weight:800;
   line-height:1.12;
   margin:0;
@@ -67,9 +67,9 @@ header{
 .logo:hover .logo-mark{transform:rotate(-4deg) scale(1.06);}
 .logo-mark img{width:100%;height:100%;object-fit:contain;}
 .logo-text{display:flex;flex-direction:column;line-height:1.02;}
-.logo-text .kalidad{font-family:'Playfair Display',serif;font-weight:800;font-size:1.32rem;letter-spacing:.01em;color:#006837;text-transform:uppercase;}
-.logo-text .pharmacy{font-family:'Playfair Display',serif;font-weight:800;font-size:1.18rem;color:#8CC63F;margin-top:-3px;}
-.logo-text .tag{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:.62rem;color:#006837;margin-top:3px;opacity:.9;}
+.logo-text .kalidad{font-family: 'Lora', serif;font-weight:800;font-size:1.32rem;letter-spacing:.01em;color:#006837;text-transform:uppercase;}
+.logo-text .pharmacy{font-family: 'Lora', serif;font-weight:800;font-size:1.18rem;color:#8CC63F;margin-top:-3px;}
+.logo-text .tag{font-family: 'Lora', serif;font-style:italic;font-weight:600;font-size:.62rem;color:#006837;margin-top:3px;opacity:.9;}
 
 nav.main-nav{display:flex;align-items:center;gap:4px;}
 nav.main-nav a.nav-link{
@@ -213,7 +213,7 @@ nav.main-nav a.nav-link:hover,nav.main-nav a.nav-link.active{background:var(--ac
 .stats-band{background:linear-gradient(155deg,var(--forest) 0%,var(--forest-deep) 100%);color:#fff;padding:60px 0;}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;text-align:center;}
 @media(max-width:700px){.stats-grid{grid-template-columns:1fr;gap:28px;}}
-.stat-num{font-family:'Nunito';font-weight:900;font-size:2.6rem;color:var(--lime);}
+.stat-num{font-family: 'Lora', serif;font-weight:900;font-size:2.6rem;color:var(--lime);}
 .stat-label{margin-top:8px;font-size:.9rem;opacity:.85;max-width:14rem;margin-left:auto;margin-right:auto;}
 
 /* ---------- features ---------- */
@@ -252,7 +252,7 @@ nav.main-nav a.nav-link:hover,nav.main-nav a.nav-link.active{background:var(--ac
 .timeline-item:last-child{padding-bottom:0;}
 .timeline-item::before{content:"";position:absolute;left:-7px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--lime);border:3px solid var(--forest-deep);}
 .timeline-item .year{font-size:.75rem;font-weight:800;color:var(--forest-mid);text-transform:uppercase;letter-spacing:.08em;}
-.timeline-item h4{margin-top:4px;font-size:1.05rem;color:var(--forest-deep);font-family:'Nunito';font-weight:800;}
+.timeline-item h4{margin-top:4px;font-size:1.05rem;color:var(--forest-deep);font-family: 'Lora', serif;font-weight:800;}
 .timeline-item p{margin-top:6px;font-size:.88rem;color:var(--muted);}
 
 /* ---------- contact ---------- */
@@ -268,7 +268,7 @@ nav.main-nav a.nav-link:hover,nav.main-nav a.nav-link.active{background:var(--ac
 .contact-form{padding:44px;display:grid;gap:16px;}
 .contact-form label{font-size:.8rem;font-weight:700;color:var(--forest-deep);display:block;margin-bottom:6px;}
 .contact-form input,.contact-form textarea,.contact-form select{
-  width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-family:inherit;font-size:.92rem;
+  width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-family: 'Lora', serif;font-size:.92rem;
   background:var(--cream);transition:border-color .2s ease;
 }
 .contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{outline:none;border-color:var(--forest-mid);}
@@ -321,7 +321,7 @@ footer{background:linear-gradient(155deg,var(--forest) 0%,var(--forest-deep) 100
 /* Global typography override */
 html, body, body *,
 button, input, textarea, select {
-  font-family: 'Playfair Display', serif !important;
+  font-family: 'Lora', serif !important;
 }
 
 /* ===== Reference hero redesign ===== */
@@ -378,7 +378,7 @@ button, input, textarea, select {
   max-width:680px;
   margin:38px 0 0;
   color:#0d2c22;
-  font-family:'Playfair Display',Georgia,serif;
+  font-family: 'Lora', serif;
   font-size:clamp(3.4rem,6.2vw,5.6rem);
   font-weight:800;
   line-height:.94;
@@ -750,12 +750,12 @@ a.btn:active {
 
 <style id="about-reference-rework">
 /* About page visual rework — preserves the existing Kalidad logo and palette. */
-body{font-family:'Playfair Display',Georgia,serif !important;background:var(--cream);}
-body *, button, input, textarea, select, option{font-family:'Playfair Display',Georgia,serif !important;}
-h1,h2,h3,h4,h5,h6,.font-display,.logo-text,.logo-text *{font-family:'Playfair Display',Georgia,serif !important;}
+body{font-family: 'Lora', serif !important;background:var(--cream);}
+body *, button, input, textarea, select, option{font-family: 'Lora', serif !important;}
+h1,h2,h3,h4,h5,h6,.font-display,.logo-text,.logo-text *{font-family: 'Lora', serif !important;}
 
 /* Global Playfair Display typography */
-p, a, span, li, label, small, strong, blockquote, figcaption, nav, nav a, button, .btn, a.btn, a.button, input, textarea, select, option{font-family:'Playfair Display',Georgia,serif !important;}
+p, a, span, li, label, small, strong, blockquote, figcaption, nav, nav a, button, .btn, a.btn, a.button, input, textarea, select, option{font-family: 'Lora', serif !important;}
 body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 header{position:sticky !important;top:0 !important;left:0 !important;transform:none !important;width:100% !important;max-width:none !important;border-radius:0 !important;background:rgba(255,255,255,.96) !important;border:0 !important;border-bottom:1px solid rgba(228,225,214,.85) !important;box-shadow:0 4px 18px rgba(18,41,31,.07) !important;backdrop-filter:blur(12px) !important;}
 header .header-inner{height:76px !important;}
@@ -788,7 +788,7 @@ nav.main-nav a.nav-link.active::after{opacity:1 !important;transform:translateX(
 .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:54px;}
 .trust-item{text-align:center;padding:10px 24px;border-right:1px solid var(--line);}
 .trust-item:last-child{border-right:0;}
-.trust-icon{width:66px;height:66px;border-radius:50%;background:var(--accent-bg);color:var(--forest-deep);display:flex;align-items:center;justify-content:center;margin:0 auto 15px;font-family:Inter,sans-serif !important;font-size:1.8rem;border:1px solid rgba(51,88,31,.05);}
+.trust-icon{width:66px;height:66px;border-radius:50%;background:var(--accent-bg);color:var(--forest-deep);display:flex;align-items:center;justify-content:center;margin:0 auto 15px;font-family: 'Lora', serif !important;font-size:1.8rem;border:1px solid rgba(51,88,31,.05);}
 .trust-item h3{font-size:1.15rem;color:var(--forest-deep);}
 .trust-item p{margin-top:8px;color:var(--muted);font-size:.86rem;line-height:1.55;}
 
@@ -808,7 +808,7 @@ nav.main-nav a.nav-link.active::after{opacity:1 !important;transform:translateX(
 .mission-stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:34px;background:linear-gradient(120deg,#f2f8eb,#f8fbf3);border-radius:18px;padding:24px 18px;border:1px solid #e7efdf;}
 .mission-stats>div{padding:6px 20px;border-right:1px solid #dbe6d2;display:flex;flex-direction:column;align-items:center;}
 .mission-stats>div:last-child{border-right:0;}
-.mission-stats strong{font-family:'Playfair Display',Georgia,serif !important;font-size:2.35rem;line-height:1;color:var(--forest-deep);}
+.mission-stats strong{font-family: 'Lora', serif !important;font-size:2.35rem;line-height:1;color:var(--forest-deep);}
 .mission-stats span{margin-top:10px;font-weight:800;font-size:.83rem;color:var(--forest-deep);}
 .mission-stats small{margin-top:4px;color:var(--muted);font-size:.72rem;line-height:1.4;max-width:150px;}
 

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --forest-deep:#12291F;
@@ -32,14 +32,14 @@
 html{scroll-behavior:smooth;}
 body{
   margin:0;
-  font-family:'Inter',system-ui,sans-serif;
+  font-family: 'Lora', serif;
   color:var(--ink);
   background:var(--cream);
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
 }
 h1,h2,h3,.font-display{
-  font-family:'Nunito',system-ui,sans-serif;
+  font-family: 'Lora', serif;
   font-weight:800;
   line-height:1.12;
   margin:0;
@@ -68,9 +68,9 @@ header{
 .logo:hover .logo-mark{transform:rotate(-4deg) scale(1.06);}
 .logo-mark img{width:100%;height:100%;object-fit:contain;}
 .logo-text{display:flex;flex-direction:column;line-height:1.02;}
-.logo-text .kalidad{font-family:'Playfair Display',serif;font-weight:800;font-size:1.32rem;letter-spacing:.01em;color:#006837;text-transform:uppercase;}
-.logo-text .pharmacy{font-family:'Playfair Display',serif;font-weight:800;font-size:1.18rem;color:#8CC63F;margin-top:-3px;}
-.logo-text .tag{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:.62rem;color:#006837;margin-top:3px;opacity:.9;}
+.logo-text .kalidad{font-family: 'Lora', serif;font-weight:800;font-size:1.32rem;letter-spacing:.01em;color:#006837;text-transform:uppercase;}
+.logo-text .pharmacy{font-family: 'Lora', serif;font-weight:800;font-size:1.18rem;color:#8CC63F;margin-top:-3px;}
+.logo-text .tag{font-family: 'Lora', serif;font-style:italic;font-weight:600;font-size:.62rem;color:#006837;margin-top:3px;opacity:.9;}
 
 nav.main-nav{display:flex;align-items:center;gap:4px;}
 nav.main-nav a.nav-link{
@@ -220,7 +220,7 @@ nav.main-nav a.nav-link:hover,nav.main-nav a.nav-link.active{background:var(--ac
 .stats-band{background:linear-gradient(155deg,var(--forest) 0%,var(--forest-deep) 100%);color:#fff;padding:60px 0;}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;text-align:center;}
 @media(max-width:700px){.stats-grid{grid-template-columns:1fr;gap:28px;}}
-.stat-num{font-family:'Nunito';font-weight:900;font-size:2.6rem;color:var(--lime);}
+.stat-num{font-family: 'Lora', serif;font-weight:900;font-size:2.6rem;color:var(--lime);}
 .stat-label{margin-top:8px;font-size:.9rem;opacity:.85;max-width:14rem;margin-left:auto;margin-right:auto;}
 
 /* ---------- features ---------- */
@@ -259,7 +259,7 @@ nav.main-nav a.nav-link:hover,nav.main-nav a.nav-link.active{background:var(--ac
 .timeline-item:last-child{padding-bottom:0;}
 .timeline-item::before{content:"";position:absolute;left:-7px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--lime);border:3px solid var(--forest-deep);}
 .timeline-item .year{font-size:.75rem;font-weight:800;color:var(--forest-mid);text-transform:uppercase;letter-spacing:.08em;}
-.timeline-item h4{margin-top:4px;font-size:1.05rem;color:var(--forest-deep);font-family:'Nunito';font-weight:800;}
+.timeline-item h4{margin-top:4px;font-size:1.05rem;color:var(--forest-deep);font-family: 'Lora', serif;font-weight:800;}
 .timeline-item p{margin-top:6px;font-size:.88rem;color:var(--muted);}
 
 /* ---------- contact ---------- */
@@ -275,7 +275,7 @@ nav.main-nav a.nav-link:hover,nav.main-nav a.nav-link.active{background:var(--ac
 .contact-form{padding:44px;display:grid;gap:16px;}
 .contact-form label{font-size:.8rem;font-weight:700;color:var(--forest-deep);display:block;margin-bottom:6px;}
 .contact-form input,.contact-form textarea,.contact-form select{
-  width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-family:inherit;font-size:.92rem;
+  width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-family: 'Lora', serif;font-size:.92rem;
   background:var(--cream);transition:border-color .2s ease;
 }
 .contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{outline:none;border-color:var(--forest-mid);}
@@ -337,7 +337,7 @@ footer{background:linear-gradient(155deg,var(--forest) 0%,var(--forest-deep) 100
 /* Global typography override */
 html, body, body *,
 button, input, textarea, select {
-  font-family: 'Playfair Display', serif !important;
+  font-family: 'Lora', serif !important;
 }
 
 /* ===== Reference hero redesign ===== */
@@ -394,7 +394,7 @@ button, input, textarea, select {
   max-width:680px;
   margin:38px 0 0;
   color:#0d2c22;
-  font-family:'Playfair Display',Georgia,serif;
+  font-family: 'Lora', serif;
   font-size:clamp(3.4rem,6.2vw,5.6rem);
   font-weight:800;
   line-height:.94;
