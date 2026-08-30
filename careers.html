@@ -1541,6 +1541,50 @@ html[data-theme="dark"] .careers-page .menu{
                top .45s cubic-bezier(.2,.8,.2,1),border-radius .45s ease,
                background .35s ease,box-shadow .35s ease !important;
   }
+
+  /* When the mobile menu is open, the header must expand back out of its
+     retracted corner-button state so the dropdown isn't clipped by the
+     58x58 overflow:hidden box. This lets the menu button keep working
+     anywhere on the page, even after the header has retracted on scroll. */
+  .careers-page header.logo-hidden.nav-open{
+    left:50% !important;
+    right:auto !important;
+    top:9px !important;
+    transform:translateX(-50%) !important;
+    width:calc(100% - 18px) !important;
+    height:auto !important;
+    min-height:0 !important;
+    border-radius:18px !important;
+    background:rgba(246,244,236,.96) !important;
+    border:1px solid rgba(255,255,255,.55) !important;
+    box-shadow:0 14px 38px rgba(18,41,31,.18) !important;
+    overflow:visible !important;
+  }
+
+  html[data-theme="dark"] .careers-page header.logo-hidden.nav-open{
+    background:rgba(11,26,20,.96) !important;
+  }
+
+  .careers-page header.logo-hidden.nav-open .header-inner{
+    width:100% !important;
+    height:74px !important;
+    padding:0 20px !important;
+    justify-content:space-between !important;
+  }
+
+  .careers-page header.logo-hidden.nav-open .logo{
+    display:flex !important;
+    width:145px !important;
+    max-width:145px !important;
+    opacity:1 !important;
+  }
+
+  .careers-page header.logo-hidden.nav-open .menu{
+    width:46px !important;
+    height:46px !important;
+    border-radius:12px !important;
+    box-shadow:none !important;
+  }
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -1699,11 +1743,15 @@ html[data-theme="dark"] .careers-page .menu{
   /* Mobile navigation — preserve existing behavior */
   const menu=document.getElementById('menu');
   const mobile=document.getElementById('mobileNav');
+  const header=document.querySelector('.careers-page header');
   if(menu && mobile){
     menu.addEventListener('click',()=>{
       const open=menu.getAttribute('aria-expanded')==='true';
       menu.setAttribute('aria-expanded',String(!open));
       mobile.style.display=open?'none':'block';
+      if(header){
+        header.classList.toggle('nav-open', !open);
+      }
     });
   }
 
