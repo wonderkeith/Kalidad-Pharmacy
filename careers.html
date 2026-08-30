@@ -1414,7 +1414,13 @@ header.logo-hidden .logo {
         padding: 12px 8px;
         border-radius: 10px;
         font-weight: 600;
+        text-decoration: none;
+        color: var(--forest);
         transition: background .2s ease, color .2s ease;
+    }
+
+    html[data-theme="dark"] .careers-page #mobileNav a {
+        color: #ffffff;
     }
 
     .careers-page #mobileNav a:hover,
@@ -1611,7 +1617,7 @@ html[data-theme="dark"] .careers-page .menu{
   <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
  </div>
  <div id="mobileNav" style="display:none;padding:10px 20px 18px;border-top:1px solid rgba(223,229,223,.4)">
-  <div style="display:grid;gap:4px"><a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact Us</a><a href="careers.html" class="active">Careers</a><a href="news.html">News</a><a href="about.html">About Us</a></div>
+  <div id="mobileMenu" style="display:grid;gap:4px"><a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact Us</a><a href="careers.html" class="active">Careers</a><a href="news.html">News</a><a href="about.html">About Us</a></div>
  </div>
 </header>
 
