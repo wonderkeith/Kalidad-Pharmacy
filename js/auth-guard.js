@@ -1,30 +1,3 @@
-import { watchAuth } from "./auth.js";
-import { db } from "./firebase-config.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-export function requireCustomer(redirect = "../store/login.html") {
-  return watchAuth(async (user) => {
-    if (!user) {
-      window.location.replace(redirect);
-      return;
-    }
-    return user;
-  });
-}
-
-export function requireAdmin(redirect = "./login.html") {
-  return watchAuth(async (user) => {
-    if (!user) {
-      window.location.replace(redirect);
-      return;
-    }
-
-    const snapshot = await getDoc(doc(db, "users", user.uid));
-    const profile = snapshot.exists() ? snapshot.data() : null;
-    const allowed = profile && ["admin", "superadmin", "staff"].includes(profile.role);
-
-    if (!allowed || profile.active === false) {
-      window.location.replace("../store/index.html");
-    }
-  });
-}
+import { watchAuth, getUserProfile } from "./auth.js";
+export function requireCustomer(redirect="../store/login.html"){return watchAuth(async user=>{if(!user){location.replace(redirect);return}return user;});}
+export function requireAdmin(redirect="./login.html"){return watchAuth(async user=>{if(!user){location.replace(redirect);return}const p=await getUserProfile(user.uid);const ok=p&&["admin","superadmin","staff"].includes(p.role)&&p.active!==false;if(!ok)location.replace("../store/index.html");return ok?p:null;});}
