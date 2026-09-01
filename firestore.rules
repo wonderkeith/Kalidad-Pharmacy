@@ -1,76 +1,33 @@
 rules_version = '2';
-
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    function signedIn() {
-      return request.auth != null;
-    }
-
-    function userDoc() {
-      return signedIn()
-        ? get(/databases/$(database)/documents/users/$(request.auth.uid))
-        : null;
-    }
-
-    function hasRole(role) {
-      return signedIn() && userDoc().data.role == role;
-    }
-
-    function isStaff() {
-      return signedIn() && userDoc().data.role in ['staff', 'admin', 'superadmin'];
-    }
-
-    function isAdmin() {
-      return signedIn() && userDoc().data.role in ['admin', 'superadmin'];
-    }
-
-    function isOwner(userId) {
-      return signedIn() && request.auth.uid == userId;
-    }
-
+    function signedIn(){return request.auth != null;}
+    function profile(){return get(/databases/$(database)/documents/users/$(request.auth.uid));}
+    function isStaff(){return signedIn() && profile().data.role in ['staff','admin','superadmin'] && profile().data.active != false;}
+    function isAdmin(){return signedIn() && profile().data.role in ['admin','superadmin'] && profile().data.active != false;}
     match /users/{userId} {
-      allow create: if isOwner(userId);
-      allow read: if isOwner(userId) || isStaff();
-      allow update: if isOwner(userId) || isStaff();
+      allow create: if signedIn() && request.auth.uid == userId && request.resource.data.role == 'customer' && request.resource.data.active == true;
+      allow read: if signedIn() && (request.auth.uid == userId || isStaff());
+      allow update: if isStaff() || (signedIn() && request.auth.uid == userId && request.resource.data.role == resource.data.role && request.resource.data.active == resource.data.active);
       allow delete: if isAdmin();
     }
-
     match /products/{productId} {
       allow read: if resource.data.active == true || isStaff();
       allow create, update, delete: if isStaff();
     }
-
     match /categories/{categoryId} {
       allow read: if resource.data.active == true || isStaff();
       allow create, update, delete: if isStaff();
     }
-
     match /orders/{orderId} {
-      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid && request.resource.data.orderStatus == 'pending' && request.resource.data.paymentStatus == 'pending';
       allow read: if isStaff() || (signedIn() && resource.data.userId == request.auth.uid);
       allow update: if isStaff();
       allow delete: if isAdmin();
     }
-
-    match /inventory/{productId} {
-      allow read: if isStaff();
-      allow create, update, delete: if isStaff();
-    }
-
-    match /promotions/{promotionId} {
-      allow read: if resource.data.active == true || isStaff();
-      allow create, update, delete: if isStaff();
-    }
-
-    match /website/{pageId} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
-
-    match /settings/{settingId} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
+    match /inventory/{productId} { allow read, create, update, delete: if isStaff(); }
+    match /promotions/{promotionId} { allow read: if resource.data.active == true || isStaff(); allow create, update, delete: if isStaff(); }
+    match /website/{pageId} { allow read: if true; allow create, update, delete: if isAdmin(); }
+    match /settings/{settingId} { allow read: if true; allow create, update, delete: if isAdmin(); }
   }
 }
