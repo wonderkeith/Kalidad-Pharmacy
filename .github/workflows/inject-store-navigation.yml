@@ -1,0 +1,61 @@
+name: Integrate Kalidad Store Navigation
+
+on:
+  push:
+    branches: [feature/firebase-store-final]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  inject:
+    if: ${{ !contains(github.event.head_commit.message, '[store-nav-sync]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/firebase-store-final
+          fetch-depth: 0
+
+      - name: Inject store navigation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          root = Path('.')
+          marker = 'js/site-store-access.js'
+          changed = []
+
+          for path in root.rglob('*.html'):
+              if '.git' in path.parts or 'store' in path.parts or 'admin' in path.parts:
+                  continue
+              text = path.read_text(encoding='utf-8')
+              if marker in text:
+                  continue
+              depth = len(path.parent.relative_to(root).parts)
+              prefix = '../' * depth
+              tag = f'<script type="module" src="{prefix}{marker}"></script>\n'
+              lower = text.lower()
+              pos = lower.rfind('</body>')
+              if pos == -1:
+                  continue
+              text = text[:pos] + tag + text[pos:]
+              path.write_text(text, encoding='utf-8')
+              changed.append(str(path))
+
+          print('Injected navigation into:', ', '.join(changed) if changed else 'no files needed changes')
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add '*.html' '**/*.html'
+          if git diff --cached --quiet; then
+            echo 'No navigation changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Integrate store navigation [store-nav-sync]'
+          git push origin feature/firebase-store-final
