@@ -17,17 +17,13 @@ function addStyles() {
   const style = document.createElement("style");
   style.id = "kalidad-store-access-styles";
   style.textContent = `
-    .kalidad-store-links{display:inline-flex;align-items:center;gap:6px;margin-left:8px}
     .kalidad-store-link{display:inline-flex!important;align-items:center;gap:6px;padding:9px 13px!important;border-radius:999px!important;font-weight:700!important;font-size:.82rem!important;text-decoration:none!important;white-space:nowrap}
     .kalidad-shop-link{background:#1E4F3B!important;color:#fff!important}
     .kalidad-account-link{background:#E6F3D9!important;color:#33581F!important}
     .kalidad-cart-link{background:transparent!important;color:#1E4F3B!important;border:1px solid #1E4F3B!important}
-    .kalidad-staff-link{font-size:.72rem!important;opacity:.7;text-decoration:none!important}
     .kalidad-mobile-store{border-top:1px solid rgba(228,225,214,.7);margin-top:6px;padding-top:8px}
-    @media(max-width:900px){.kalidad-store-links{display:none!important}.kalidad-mobile-store{display:flex;flex-direction:column}.kalidad-store-link{justify-content:flex-start;width:100%;padding:12px 8px!important;border-radius:10px!important}.kalidad-staff-link{padding:10px 8px!important}}
+    @media(max-width:900px){.kalidad-mobile-store{display:flex;flex-direction:column}.kalidad-store-link{justify-content:flex-start;width:100%;padding:12px 8px!important;border-radius:10px!important}}
     @media(min-width:901px){.kalidad-mobile-store{display:none!important}}
-    .kalidad-fallback-store{position:fixed;right:18px;top:92px;z-index:55;display:flex;gap:6px;filter:drop-shadow(0 8px 18px rgba(18,41,31,.18))}
-    .kalidad-fallback-store a{font:700 12px/1 Lora,serif;padding:10px 12px;border-radius:999px;background:#1E4F3B;color:#fff;text-decoration:none}
   `;
   document.head.appendChild(style);
 }
@@ -40,35 +36,69 @@ function makeLink(text, href, className) {
   return a;
 }
 
+function normalizedText(value) {
+  return (value || "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function findLink(container, labels) {
+  if (!container) return null;
+  const wanted = new Set(labels.map(normalizedText));
+  return [...container.querySelectorAll("a")].find(a => wanted.has(normalizedText(a.textContent))) || null;
+}
+
+function removeDuplicateLinks(container, labels) {
+  if (!container) return;
+  const wanted = new Set(labels.map(normalizedText));
+  const seen = new Set();
+  [...container.querySelectorAll("a")].forEach(a => {
+    const label = normalizedText(a.textContent);
+    if (!wanted.has(label)) return;
+    if (seen.has(label)) a.remove();
+    else seen.add(label);
+  });
+}
+
+function ensureLink(container, text, href, className) {
+  if (!container) return null;
+  const existing = findLink(container, [text]);
+  if (existing) {
+    existing.href = relative(href);
+    existing.classList.add("kalidad-store-link", className);
+    return existing;
+  }
+  const link = makeLink(text, href, className);
+  container.appendChild(link);
+  return link;
+}
+
 function mount() {
   addStyles();
   const nav = document.querySelector("nav.main-nav");
   const mobile = document.querySelector(".mobile-menu");
 
-  if (nav && !document.querySelector(".kalidad-store-links")) {
-    const group = document.createElement("span");
-    group.className = "kalidad-store-links";
-    group.append(makeLink("Shop Online", STORE_URL, "kalidad-shop-link"));
-    group.append(makeLink("My Account", LOGIN_URL, "kalidad-account-link"));
-    group.append(makeLink("Cart (0)", CART_URL, "kalidad-cart-link"));
-    nav.appendChild(group);
+  // The public pages already contain their normal header links. Keep one copy only.
+  // Add missing store links only where they do not already exist.
+  if (nav) {
+    removeDuplicateLinks(nav, ["Shop Online", "My Account", "Cart", "Cart (0)"]);
+    ensureLink(nav, "Shop Online", STORE_URL, "kalidad-shop-link");
+    ensureLink(nav, "My Account", LOGIN_URL, "kalidad-account-link");
+    ensureLink(nav, "Cart (0)", CART_URL, "kalidad-cart-link");
   }
 
-  if (mobile && !mobile.querySelector(".kalidad-mobile-store")) {
+  if (mobile) {
+    removeDuplicateLinks(mobile, ["Shop Online", "My Account", "Cart", "Cart (0)"]);
+    const existingShop = findLink(mobile, ["Shop Online"]);
+    const existingAccount = findLink(mobile, ["My Account"]);
+    const existingCart = findLink(mobile, ["Cart", "Cart (0)"]);
     const group = document.createElement("div");
     group.className = "kalidad-mobile-store";
-    group.append(makeLink("Shop Online", STORE_URL, "kalidad-shop-link"));
-    group.append(makeLink("My Account", LOGIN_URL, "kalidad-account-link"));
-    group.append(makeLink("Cart (0)", CART_URL, "kalidad-cart-link"));
+    if (existingShop) group.appendChild(existingShop);
+    else group.appendChild(makeLink("Shop Online", STORE_URL, "kalidad-shop-link"));
+    if (existingAccount) group.appendChild(existingAccount);
+    else group.appendChild(makeLink("My Account", LOGIN_URL, "kalidad-account-link"));
+    if (existingCart) group.appendChild(existingCart);
+    else group.appendChild(makeLink("Cart (0)", CART_URL, "kalidad-cart-link"));
     mobile.appendChild(group);
-  }
-
-  if (!nav && !mobile && !document.querySelector(".kalidad-fallback-store")) {
-    const fallback = document.createElement("div");
-    fallback.className = "kalidad-fallback-store";
-    fallback.append(makeLink("Shop Online", STORE_URL, "kalidad-shop-link"));
-    fallback.append(makeLink("My Account", LOGIN_URL, "kalidad-account-link"));
-    document.body.appendChild(fallback);
   }
 
   const footer = document.querySelector("footer");
@@ -83,9 +113,15 @@ function mount() {
 }
 
 function updateAccountState(user) {
-  document.querySelectorAll(".kalidad-account-link").forEach(a => {
-    a.href = relative(user ? ACCOUNT_URL : LOGIN_URL);
-    a.textContent = user ? "My Account" : "My Account";
+  const containers = [document.querySelector("nav.main-nav"), document.querySelector(".mobile-menu")];
+  containers.forEach(container => {
+    if (!container) return;
+    [...container.querySelectorAll("a")].forEach(a => {
+      if (normalizedText(a.textContent) === "my account") {
+        a.href = relative(user ? ACCOUNT_URL : LOGIN_URL);
+        a.textContent = "My Account";
+      }
+    });
   });
 }
 
@@ -95,7 +131,18 @@ function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem("kalidad_cart") || "[]");
     count = cart.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
   } catch (_) {}
-  document.querySelectorAll(".kalidad-cart-link").forEach(a => a.textContent = `Cart (${count})`);
+  const update = container => {
+    if (!container) return;
+    [...container.querySelectorAll("a")].forEach(a => {
+      const label = normalizedText(a.textContent);
+      if (label === "cart" || label === "cart (0)" || /^cart \(\d+\)$/.test(label)) {
+        a.textContent = `Cart (${count})`;
+        a.href = relative(CART_URL);
+      }
+    });
+  };
+  update(document.querySelector("nav.main-nav"));
+  update(document.querySelector(".mobile-menu"));
 }
 
 if (!location.pathname.includes("/store/") && !location.pathname.includes("/admin/")) {
