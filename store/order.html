@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Order Details | Kalidad Pharmacy</title><link rel="stylesheet" href="../css/store.css">
+</head>
+<body>
+<div class="store-shell">
+<nav class="store-nav"><a class="brand" href="index.html">Kalidad Pharmacy</a><div class="nav-actions"><a class="pill alt" href="orders.html">My orders</a><a class="pill" href="cart.html">Cart</a></div></nav>
+<main id="root"><p>Loading order...</p></main>
+</div>
+<script type="module">
+import { watchAuth } from '../js/auth.js';
+import { getMyOrder } from '../js/orders.js';
+import { money, escapeHtml } from '../js/products.js';
+
+const root=document.querySelector('#root');
+const id=new URLSearchParams(location.search).get('id');
+const steps=['pending','confirmed','preparing','ready','out_for_delivery','completed'];
+const labels={pending:'Order received',confirmed:'Confirmed',preparing:'Preparing',ready:'Ready',out_for_delivery:'Out for delivery',completed:'Completed',cancelled:'Cancelled'};
+function render(o){
+ const status=o.orderStatus||'pending';
+ const current=steps.indexOf(status);
+ root.innerHTML=`<section class="hero"><h1>${escapeHtml(o.orderNumber||o.id)}</h1><p>Order status: <strong>${escapeHtml(labels[status]||status)}</strong></p></section>
+ <section class="panel" style="margin-top:24px"><h2>Order progress</h2><div style="display:grid;gap:10px;margin-top:18px">${status==='cancelled'?'<div class="status">Cancelled</div>':steps.map((s,i)=>`<div style="display:flex;align-items:center;gap:10px"><span class="status" style="opacity:${i<=current?1:.45}">${i+1}. ${labels[s]}</span></div>`).join('')}</div></section>
+ <section class="panel" style="margin-top:24px"><h2>Items</h2><div class="table-wrap"><table class="data-table"><thead><tr><th>Product</th><th>Qty</th><th>Total</th></tr></thead><tbody>${(o.items||[]).map(i=>`<tr><td>${escapeHtml(i.name||'Product')}</td><td>${Number(i.quantity||0)}</td><td>${money(Number(i.price||0)*Number(i.quantity||0))}</td></tr>`).join('')}</tbody></table></div><h2 style="margin-top:18px">Total: ${money(o.total)}</h2></section>
+ <section class="panel" style="margin-top:24px"><h2>Delivery</h2><p>${escapeHtml(o.deliveryAddress?.name||'')}</p><p>${escapeHtml(o.deliveryAddress?.phone||'')}</p><p>${escapeHtml(o.deliveryAddress?.address||'')}</p><p>Payment: ${escapeHtml(o.paymentMethod||'')}</p></section>`;
+}
+watchAuth(async u=>{if(!u){location.href='login.html';return}if(!id){root.innerHTML='<div class="empty">No order selected.</div>';return}try{const o=await getMyOrder(id);if(!o){root.innerHTML='<div class="empty">Order not found.</div>';return}render(o)}catch(e){root.innerHTML=`<div class="empty">${escapeHtml(e.message)}</div>`;console.error(e)}});
+</script>
+</body></html>
