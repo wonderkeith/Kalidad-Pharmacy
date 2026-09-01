@@ -1,1 +1,70 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin Login | Kalidad Pharmacy</title><link rel="stylesheet" href="../css/store.css"></head><body><div class="store-shell" style="max-width:520px;padding-top:8vh"><main class="panel"><p class="brand">Kalidad Pharmacy</p><h1>Admin portal</h1><p>Authorized staff only.</p><form id="form" class="form"><label>Email<input id="email" type="email" required autocomplete="username"></label><label>Password<input id="password" type="password" required autocomplete="current-password"></label><button class="pill" type="submit">Sign in</button><p id="message" aria-live="polite"></p></form></main></div><script type="module">import{login,getUserProfile}from'../js/auth.js';const f=document.querySelector('#form'),m=document.querySelector('#message');f.onsubmit=async e=>{e.preventDefault();m.textContent='Signing in...';try{const u=await login(email.value,password.value),p=await getUserProfile(u.uid);if(!p||!['admin','superadmin','staff'].includes(p.role)||p.active===false)throw new Error('This account is not authorized for the admin portal.');location.href='index.html'}catch(err){m.textContent=err.message;m.className='error'}};</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Login | Kalidad Pharmacy</title>
+<link rel="stylesheet" href="../css/store.css">
+<style>
+.auth-status{margin-top:16px;padding:14px;border-radius:14px;background:#f2f7ef;border:1px solid #d8e8cf}
+.auth-status strong{display:block;color:#1e4f3b;margin-bottom:6px}
+.auth-details{display:grid;gap:4px;font-size:.92rem;color:#46554d}
+.success{color:#18794e}.error{color:#b42318}
+</style>
+</head>
+<body>
+<div class="store-shell" style="max-width:520px;padding-top:8vh">
+<main class="panel">
+<p class="brand">Kalidad Pharmacy</p>
+<h1>Admin portal</h1>
+<p>Authorized staff only. Sign in with the Firebase Authentication account assigned to the admin portal.</p>
+<form id="form" class="form">
+<label>Email<input id="email" type="email" required autocomplete="username"></label>
+<label>Password<input id="password" type="password" required autocomplete="current-password"></label>
+<button class="pill" type="submit" id="submit">Sign in</button>
+<p id="message" aria-live="polite"></p>
+</form>
+<div id="confirmation" class="auth-status" hidden></div>
+</main>
+</div>
+<script type="module">
+import { login, getUserProfile } from '../js/auth.js';
+
+const form=document.querySelector('#form');
+const email=document.querySelector('#email');
+const password=document.querySelector('#password');
+const submit=document.querySelector('#submit');
+const message=document.querySelector('#message');
+const confirmation=document.querySelector('#confirmation');
+
+form.onsubmit=async e=>{
+ e.preventDefault();
+ message.className='';
+ confirmation.hidden=true;
+ submit.disabled=true;
+ submit.textContent='Verifying...';
+ message.textContent='Checking Firebase credentials and admin profile...';
+ try{
+   const user=await login(email.value,password.value);
+   const profile=await getUserProfile(user.uid);
+   const allowed=['admin','superadmin','staff'];
+   if(!profile || !allowed.includes(profile.role) || profile.active===false){
+     throw new Error('Authentication succeeded, but this Firebase account is not authorized for the admin portal.');
+   }
+   const name=[profile.firstName,profile.lastName].filter(Boolean).join(' ') || user.displayName || 'Authorized staff';
+   confirmation.innerHTML=`<strong>Admin details confirmed</strong><div class="auth-details"><span>Name: ${name.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]))}</span><span>Email: ${String(user.email||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]))}</span><span>Role: ${profile.role}</span><span>Status: Active</span></div>`;
+   confirmation.hidden=false;
+   message.textContent='Verification successful. Opening the admin dashboard...';
+   message.className='success';
+   setTimeout(()=>location.href='index.html',700);
+ }catch(err){
+   message.textContent=err?.message || 'Unable to sign in.';
+   message.className='error';
+ }finally{
+   submit.disabled=false;
+   submit.textContent='Sign in';
+ }
+};
+</script>
+</body>
+</html>
