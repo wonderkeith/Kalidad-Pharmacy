@@ -1,0 +1,76 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc() {
+      return signedIn()
+        ? get(/databases/$(database)/documents/users/$(request.auth.uid))
+        : null;
+    }
+
+    function hasRole(role) {
+      return signedIn() && userDoc().data.role == role;
+    }
+
+    function isStaff() {
+      return signedIn() && userDoc().data.role in ['staff', 'admin', 'superadmin'];
+    }
+
+    function isAdmin() {
+      return signedIn() && userDoc().data.role in ['admin', 'superadmin'];
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    match /users/{userId} {
+      allow create: if isOwner(userId);
+      allow read: if isOwner(userId) || isStaff();
+      allow update: if isOwner(userId) || isStaff();
+      allow delete: if isAdmin();
+    }
+
+    match /products/{productId} {
+      allow read: if resource.data.active == true || isStaff();
+      allow create, update, delete: if isStaff();
+    }
+
+    match /categories/{categoryId} {
+      allow read: if resource.data.active == true || isStaff();
+      allow create, update, delete: if isStaff();
+    }
+
+    match /orders/{orderId} {
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow read: if isStaff() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow update: if isStaff();
+      allow delete: if isAdmin();
+    }
+
+    match /inventory/{productId} {
+      allow read: if isStaff();
+      allow create, update, delete: if isStaff();
+    }
+
+    match /promotions/{promotionId} {
+      allow read: if resource.data.active == true || isStaff();
+      allow create, update, delete: if isStaff();
+    }
+
+    match /website/{pageId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}
