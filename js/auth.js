@@ -6,12 +6,13 @@ import {
   onAuthStateChanged,
   sendPasswordResetEmail,
   updateProfile
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 import {
   doc,
+  getDoc,
   setDoc,
   serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 export async function registerCustomer({ firstName, lastName, phone, email, password }) {
   const credential = await createUserWithEmailAndPassword(auth, email.trim(), password);
@@ -38,6 +39,11 @@ export async function registerCustomer({ firstName, lastName, phone, email, pass
 export async function login(email, password) {
   const credential = await signInWithEmailAndPassword(auth, email.trim(), password);
   return credential.user;
+}
+
+export async function getUserProfile(uid) {
+  const snapshot = await getDoc(doc(db, "users", uid));
+  return snapshot.exists() ? { id: snapshot.id, ...snapshot.data() } : null;
 }
 
 export async function logout() {
