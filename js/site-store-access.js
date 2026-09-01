@@ -1,6 +1,10 @@
 import { auth } from "./firebase-config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
+// Resolve all store/admin links from this module's real GitHub Pages base path.
+// This prevents links on /about.html, /services.html, etc. from incorrectly
+// jumping to the domain root instead of /Kalidad-Pharmacy/.
+const SITE_BASE = new URL("../", import.meta.url);
 const STORE_URL = "store/index.html";
 const LOGIN_URL = "store/login.html";
 const ACCOUNT_URL = "store/account.html";
@@ -8,8 +12,7 @@ const CART_URL = "store/cart.html";
 const ADMIN_URL = "admin/login.html";
 
 function relative(path) {
-  const depth = Math.max(0, location.pathname.split("/").filter(Boolean).length - 1);
-  return `${"../".repeat(depth)}${path}`;
+  return new URL(path, SITE_BASE).href;
 }
 
 function addStyles() {
@@ -22,9 +25,9 @@ function addStyles() {
     .kalidad-account-link{background:#E6F3D9!important;color:#33581F!important}
     .kalidad-cart-link{background:transparent!important;color:#1E4F3B!important;border:1px solid #1E4F3B!important}
     .kalidad-mobile-store{border-top:1px solid rgba(228,225,214,.7);margin-top:6px;padding-top:8px}
-    .kalidad-staff-login{display:inline-flex!important;align-items:center!important;gap:7px!important;margin-top:18px!important;padding:8px 12px!important;border:1px solid currentColor!important;border-radius:999px!important;font-size:.75rem!important;font-weight:700!important;text-decoration:none!important;opacity:.78!important}
+    .kalidad-staff-login{display:inline-flex!important;align-items:center!important;gap:7px!important;margin-top:18px!important;padding:8px 12px!important;border:1px solid currentColor!important;border-radius:999px!important;font-size:.75rem!important;font-weight:700!important;text-decoration:none!important;opacity:.78!important;cursor:pointer!important}
     .kalidad-staff-login:hover{opacity:1!important}
-    .kalidad-staff-fallback{position:fixed!important;right:18px!important;bottom:18px!important;z-index:9999!important;background:#1E4F3B!important;color:#fff!important;padding:9px 13px!important;border-radius:999px!important;font-size:.72rem!important;font-weight:700!important;box-shadow:0 8px 24px rgba(18,41,31,.22)!important;text-decoration:none!important}
+    .kalidad-staff-fallback{position:fixed!important;right:18px!important;bottom:18px!important;z-index:9999!important;background:#1E4F3B!important;color:#fff!important;padding:9px 13px!important;border-radius:999px!important;font-size:.72rem!important;font-weight:700!important;box-shadow:0 8px 24px rgba(18,41,31,.22)!important;text-decoration:none!important;cursor:pointer!important}
     @media(max-width:900px){.kalidad-mobile-store{display:flex;flex-direction:column}.kalidad-store-link{justify-content:flex-start;width:100%;padding:12px 8px!important;border-radius:10px!important}.kalidad-staff-fallback{right:12px!important;bottom:12px!important}}
     @media(min-width:901px){.kalidad-mobile-store{display:none!important}}
   `;
@@ -74,6 +77,15 @@ function ensureLink(container, text, href, className) {
   return link;
 }
 
+function createStaffLink(className) {
+  const staff = document.createElement("a");
+  staff.className = className;
+  staff.href = relative(ADMIN_URL);
+  staff.textContent = "Staff / Admin login";
+  staff.setAttribute("aria-label", "Staff and Admin login");
+  return staff;
+}
+
 function mount() {
   addStyles();
   const nav = document.querySelector("nav.main-nav");
@@ -104,17 +116,9 @@ function mount() {
 
   const footer = document.querySelector("footer");
   if (footer && !footer.querySelector(".kalidad-staff-login")) {
-    const staff = document.createElement("a");
-    staff.className = "kalidad-staff-login";
-    staff.href = relative(ADMIN_URL);
-    staff.textContent = "Staff / Admin login";
-    footer.appendChild(staff);
+    footer.appendChild(createStaffLink("kalidad-staff-login"));
   } else if (!footer && !document.querySelector(".kalidad-staff-fallback")) {
-    const staff = document.createElement("a");
-    staff.className = "kalidad-staff-fallback";
-    staff.href = relative(ADMIN_URL);
-    staff.textContent = "Staff / Admin login";
-    document.body.appendChild(staff);
+    document.body.appendChild(createStaffLink("kalidad-staff-fallback"));
   }
 }
 
