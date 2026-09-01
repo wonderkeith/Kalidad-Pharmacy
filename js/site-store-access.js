@@ -1,19 +1,20 @@
 import { auth } from "./firebase-config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-// Resolve all store/admin links from this module's real GitHub Pages base path.
-// This prevents links on /about.html, /services.html, etc. from incorrectly
-// jumping to the domain root instead of /Kalidad-Pharmacy/.
 const SITE_BASE = new URL("../", import.meta.url);
 const STORE_URL = "store/index.html";
 const LOGIN_URL = "store/login.html";
 const ACCOUNT_URL = "store/account.html";
 const CART_URL = "store/cart.html";
 const ADMIN_URL = "admin/login.html";
+const PRESCRIPTION_HASH = "#prescription-filling";
 
-function relative(path) {
-  return new URL(path, SITE_BASE).href;
-}
+function relative(path) { return new URL(path, SITE_BASE).href; }
+function normalizedText(value) { return (value || "").replace(/\s+/g, " ").trim().toLowerCase(); }
+function pageName() { return location.pathname.split("/").pop().toLowerCase() || "index.html"; }
+function isHomePage() { return pageName() === "index.html" || pageName() === ""; }
+function isCareersOrAbout() { const n = pageName(); return n.includes("career") || n.includes("about"); }
+function isServicesPage() { return pageName() === "services.html"; }
 
 function addStyles() {
   if (document.getElementById("kalidad-store-access-styles")) return;
@@ -36,129 +37,107 @@ function addStyles() {
 
 function makeLink(text, href, className) {
   const a = document.createElement("a");
-  a.href = relative(href);
-  a.textContent = text;
+  a.href = relative(href); a.textContent = text;
   a.className = `kalidad-store-link ${className || ""}`;
   return a;
 }
-
-function normalizedText(value) {
-  return (value || "").replace(/\s+/g, " ").trim().toLowerCase();
-}
-
 function findLink(container, labels) {
   if (!container) return null;
   const wanted = new Set(labels.map(normalizedText));
   return [...container.querySelectorAll("a")].find(a => wanted.has(normalizedText(a.textContent))) || null;
 }
-
-function removeDuplicateLinks(container, labels) {
+function removeLinks(container, labels) {
   if (!container) return;
   const wanted = new Set(labels.map(normalizedText));
-  const seen = new Set();
+  [...container.querySelectorAll("a")].forEach(a => { if (wanted.has(normalizedText(a.textContent))) a.remove(); });
+}
+function removeDuplicateLinks(container, labels) {
+  if (!container) return;
+  const wanted = new Set(labels.map(normalizedText)); const seen = new Set();
   [...container.querySelectorAll("a")].forEach(a => {
-    const label = normalizedText(a.textContent);
-    if (!wanted.has(label)) return;
-    if (seen.has(label)) a.remove();
-    else seen.add(label);
+    const label = normalizedText(a.textContent); if (!wanted.has(label)) return;
+    if (seen.has(label)) a.remove(); else seen.add(label);
   });
 }
-
 function ensureLink(container, text, href, className) {
   if (!container) return null;
   const existing = findLink(container, [text]);
-  if (existing) {
-    existing.href = relative(href);
-    existing.classList.add("kalidad-store-link", className);
-    return existing;
-  }
-  const link = makeLink(text, href, className);
-  container.appendChild(link);
-  return link;
+  if (existing) { existing.href = relative(href); existing.classList.add("kalidad-store-link", className); return existing; }
+  const link = makeLink(text, href, className); container.appendChild(link); return link;
 }
-
 function createStaffLink(className) {
-  const staff = document.createElement("a");
-  staff.className = className;
-  staff.href = relative(ADMIN_URL);
-  staff.textContent = "Staff / Admin login";
-  staff.setAttribute("aria-label", "Staff and Admin login");
-  return staff;
+  const staff = document.createElement("a"); staff.className = className;
+  staff.href = relative(ADMIN_URL); staff.textContent = "Staff / Admin login";
+  staff.setAttribute("aria-label", "Staff and Admin login"); return staff;
 }
 
-function mount() {
-  addStyles();
+function mountStoreLinks() {
   const nav = document.querySelector("nav.main-nav");
   const mobile = document.querySelector(".mobile-menu");
+  const home = isHomePage();
+  const restrictedAccountPage = home || isCareersOrAbout();
+
+  [nav, mobile].forEach(container => removeDuplicateLinks(container, ["Shop Online", "My Account", "Cart", "Cart (0)"]));
+
+  if (home) {
+    removeLinks(nav, ["My Account", "Cart", "Cart (0)"]);
+    removeLinks(mobile, ["My Account", "Cart", "Cart (0)"]);
+  }
 
   if (nav) {
-    removeDuplicateLinks(nav, ["Shop Online", "My Account", "Cart", "Cart (0)"]);
-    ensureLink(nav, "Shop Online", STORE_URL, "kalidad-shop-link");
-    ensureLink(nav, "My Account", LOGIN_URL, "kalidad-account-link");
-    ensureLink(nav, "Cart (0)", CART_URL, "kalidad-cart-link");
+    ensureLink(nav, "Shop Online", home ? LOGIN_URL : STORE_URL, "kalidad-shop-link");
+    if (auth.currentUser && !restrictedAccountPage) ensureLink(nav, "My Account", ACCOUNT_URL, "kalidad-account-link");
+    else removeLinks(nav, ["My Account"]);
+    if (!home) ensureLink(nav, "Cart (0)", CART_URL, "kalidad-cart-link");
+    else removeLinks(nav, ["Cart", "Cart (0)"]);
   }
 
   if (mobile) {
-    removeDuplicateLinks(mobile, ["Shop Online", "My Account", "Cart", "Cart (0)"]);
-    const existingShop = findLink(mobile, ["Shop Online"]);
-    const existingAccount = findLink(mobile, ["My Account"]);
-    const existingCart = findLink(mobile, ["Cart", "Cart (0)"]);
-    const group = document.createElement("div");
-    group.className = "kalidad-mobile-store";
-    if (existingShop) group.appendChild(existingShop);
-    else group.appendChild(makeLink("Shop Online", STORE_URL, "kalidad-shop-link"));
-    if (existingAccount) group.appendChild(existingAccount);
-    else group.appendChild(makeLink("My Account", LOGIN_URL, "kalidad-account-link"));
-    if (existingCart) group.appendChild(existingCart);
-    else group.appendChild(makeLink("Cart (0)", CART_URL, "kalidad-cart-link"));
+    const oldShop = findLink(mobile, ["Shop Online"]);
+    removeLinks(mobile, ["My Account", "Cart", "Cart (0)"]);
+    const group = document.createElement("div"); group.className = "kalidad-mobile-store";
+    group.appendChild(oldShop || makeLink("Shop Online", home ? LOGIN_URL : STORE_URL, "kalidad-shop-link"));
+    if (auth.currentUser && !restrictedAccountPage) group.appendChild(makeLink("My Account", ACCOUNT_URL, "kalidad-account-link"));
+    if (!home) group.appendChild(makeLink("Cart (0)", CART_URL, "kalidad-cart-link"));
     mobile.appendChild(group);
-  }
-
-  const footer = document.querySelector("footer");
-  if (footer && !footer.querySelector(".kalidad-staff-login")) {
-    footer.appendChild(createStaffLink("kalidad-staff-login"));
-  } else if (!footer && !document.querySelector(".kalidad-staff-fallback")) {
-    document.body.appendChild(createStaffLink("kalidad-staff-fallback"));
   }
 }
 
-function updateAccountState(user) {
-  const containers = [document.querySelector("nav.main-nav"), document.querySelector(".mobile-menu")];
-  containers.forEach(container => {
-    if (!container) return;
-    [...container.querySelectorAll("a")].forEach(a => {
-      if (normalizedText(a.textContent) === "my account") {
-        a.href = relative(user ? ACCOUNT_URL : LOGIN_URL);
-        a.textContent = "My Account";
-      }
-    });
-  });
+function mountStaffLogin() {
+  const footer = document.querySelector("footer");
+  if (footer && !footer.querySelector(".kalidad-staff-login")) footer.appendChild(createStaffLink("kalidad-staff-login"));
+  else if (!footer && !document.querySelector(".kalidad-staff-fallback")) document.body.appendChild(createStaffLink("kalidad-staff-fallback"));
 }
 
 function updateCartCount() {
   let count = 0;
-  try {
-    const cart = JSON.parse(localStorage.getItem("kalidad_cart") || "[]");
-    count = cart.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
-  } catch (_) {}
-  const update = container => {
+  try { const cart = JSON.parse(localStorage.getItem("kalidad_cart") || "[]"); count = cart.reduce((sum, item) => sum + Number(item.quantity || 0), 0); } catch (_) {}
+  [document.querySelector("nav.main-nav"), document.querySelector(".mobile-menu")].forEach(container => {
     if (!container) return;
     [...container.querySelectorAll("a")].forEach(a => {
       const label = normalizedText(a.textContent);
-      if (label === "cart" || label === "cart (0)" || /^cart \(\d+\)$/.test(label)) {
-        a.textContent = `Cart (${count})`;
-        a.href = relative(CART_URL);
-      }
+      if (label === "cart" || label === "cart (0)" || /^cart \(\d+\)$/.test(label)) { a.textContent = `Cart (${count})`; a.href = relative(CART_URL); }
     });
-  };
-  update(document.querySelector("nav.main-nav"));
-  update(document.querySelector(".mobile-menu"));
+  });
+}
+
+function preparePrescriptionTarget() {
+  if (!isServicesPage()) return;
+  const candidates = [...document.querySelectorAll("section, .service-card, article, .service-card.detailed")];
+  const target = candidates.find(el => normalizedText(el.textContent).includes("prescription filling"));
+  if (target && !target.id) target.id = "prescription-filling";
+  if (location.hash === PRESCRIPTION_HASH) requestAnimationFrame(() => {
+    const destination = document.getElementById("prescription-filling") || target;
+    if (destination) setTimeout(() => destination.scrollIntoView({behavior:"smooth", block:"start"}), 150);
+  });
+}
+
+function mount() {
+  addStyles(); mountStoreLinks(); mountStaffLogin(); updateCartCount(); preparePrescriptionTarget();
+  window.addEventListener("storage", updateCartCount); window.addEventListener("cartchange", updateCartCount);
 }
 
 if (!location.pathname.includes("/store/") && !location.pathname.includes("/admin/")) {
   mount();
-  onAuthStateChanged(auth, updateAccountState);
-  updateCartCount();
-  window.addEventListener("storage", updateCartCount);
-  window.addEventListener("cartchange", updateCartCount);
+  onAuthStateChanged(auth, () => { mountStoreLinks(); updateCartCount(); });
 }
