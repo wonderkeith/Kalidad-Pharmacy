@@ -916,6 +916,21 @@ header.logo-hidden {
 }
 </style>
 <link rel="icon" type="image/png" href="kalidad-icon.png">
+
+<style id="kalidad-store-navigation">
+.nav-store-link,.nav-account-link{font-weight:800!important;}
+.nav-store-link{background:var(--forest)!important;color:#fff!important;box-shadow:0 8px 20px rgba(18,41,31,.14);}
+.nav-store-link:hover,.nav-store-link:focus-visible{background:var(--lime)!important;color:var(--forest-deep)!important;}
+.nav-account-link{border:1px solid var(--forest)!important;}
+.nav-account-link:hover,.nav-account-link:focus-visible{background:var(--accent-bg)!important;}
+.nav-store-mobile,.nav-account-mobile{display:block!important;font-weight:800!important;}
+.nav-store-mobile{background:var(--forest);color:#fff!important;margin-top:4px;}
+.nav-account-mobile{border:1px solid var(--forest);margin-bottom:4px;}
+@media(max-width:900px){.nav-store-mobile{color:#fff!important;}}
+html[data-theme="dark"] .nav-store-link{background:#c7ef3e!important;color:#12291F!important;}
+html[data-theme="dark"] .nav-account-link{border-color:#c7ef3e!important;color:#fff!important;}
+</style>
+
 </head>
 <body>
 <header>
@@ -937,7 +952,10 @@ header.logo-hidden {
             <a href="careers.html" class="nav-link">Careers</a>
             <a href="news.html" class="nav-link">News</a>
             <a href="about.html" class="nav-link">About Us</a>
-            <span class="open-badge"><span class="pulse-dot"></span>Open 24/7</span>
+            
+                <a href="store/index.html" class="nav-link nav-store-link" data-kalidad-store-link>Shop Online</a>
+                <a href="store/login.html" class="nav-link nav-account-link" data-kalidad-account-link>My Account</a>
+                <span class="open-badge"><span class="pulse-dot"></span>Open 24/7</span>
         </nav>
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
