@@ -3,16 +3,15 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { collection, getDocs, query, orderBy, limit, doc, getDoc, setDoc, updateDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
 
 const BASE = '/Kalidad-Pharmacy/';
-const PUBLIC_PAGES = {
-  '/services': 'services.html', '/contact': 'contact.html', '/careers': 'careers.html',
-  '/news': 'news.html', '/about': 'about.html', '/otc-wellness': 'otc-wellness.html'
-};
-const publicKey = location.pathname.replace(BASE, '/');
-if (PUBLIC_PAGES[publicKey]) location.replace(BASE + PUBLIC_PAGES[publicKey]);
 
 const esc = (value) => String(value == null ? '' : value).replace(/[&<>"']/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
 const money = (value) => 'UGX ' + Number(value || 0).toLocaleString();
-const stockValue = (p) => Number.isFinite(Number(p.stock)) ? Math.max(0, Number(p.stock)) : null;
+const stockValue = (p) => {
+  const raw = p.stockQuantity ?? p.stock;
+  if (raw === undefined || raw === null || raw === '') return null;
+  const n = Number(raw);
+  return Number.isFinite(n) ? Math.max(0, n) : null;
+};
 const stockLabel = (p) => { const s = stockValue(p); if (s === null) return ['Unmanaged','stock-unmanaged']; if (s <= 0) return ['Out of stock','stock-out']; if (s <= 5) return ['Low stock','stock-low']; return ['In stock','stock-in']; };
 
 function shell(title, body) {
@@ -28,98 +27,59 @@ function shell(title, body) {
 async function roleOk(user) {
   if (!user) return false;
   const snapshot = await getDoc(doc(db, 'users', user.uid));
-  return snapshot.exists() && ['admin','superadmin','staff'].includes(snapshot.data().role) && snapshot.data().active !== false;
-}
-
-async function products() {
-  shell('Products', '<div class="admin-toolbar"><input id="product-search" placeholder="Search products..." aria-label="Search products"><button class="primary" id="add-product">+ Add product</button></div>' +
-    '<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Product</th><th>Category</th><th>SKU</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead><tbody id="products-body"><tr><td colspan="7">Loading products...</td></tr></tbody></table></div>');
-  const snapshot = await getDocs(query(collection(db, 'products'), limit(200)));
-  const rows = snapshot.docs.map((item) => ({ id:item.id, ...item.data() }));
-  const body = document.getElementById('products-body'); if (!body) return;
-  const renderRows = (list) => { body.innerHTML = list.length ? list.map((p) => { const st = stockLabel(p); return '<tr><td><strong>' + esc(p.name) + '</strong></td><td>' + esc(p.categoryName || p.category || '—') + '</td><td>' + esc(p.sku || '—') + '</td><td>' + money(p.salePrice || p.price) + '</td><td><strong>' + (stockValue(p) === null ? '—' : stockValue(p)) + '</strong><br><span class="stock-badge ' + st[1] + '">' + st[0] + '</span></td><td><button class="status-btn" data-toggle="' + p.id + '">' + (p.active !== false ? 'Active' : 'Inactive') + '</button></td><td><button data-stock="' + p.id + '" data-delta="-1" aria-label="Decrease stock">−</button> <button data-stock="' + p.id + '" data-delta="1" aria-label="Increase stock">+</button> <button data-edit="' + p.id + '">Edit</button> <button data-delete="' + p.id + '">Delete</button></td></tr>'; }).join('') : '<tr><td colspan="7">No products found.</td></tr>'; };
-  renderRows(rows);
-  document.getElementById('product-search')?.addEventListener('input', (e) => { const term = e.target.value.toLowerCase().trim(); renderRows(rows.filter(p => [p.name,p.categoryName,p.category,p.brand,p.sku].some(v => String(v || '').toLowerCase().includes(term)))); });
-  document.getElementById('add-product')?.addEventListener('click', () => productForm());
-  body.onclick = async (event) => { const target = event.target; if (!(target instanceof HTMLElement)) return;
-    if (target.dataset.toggle) { await updateDoc(doc(db,'products',target.dataset.toggle), { active: target.textContent !== 'Active', updatedAt:serverTimestamp() }); return products(); }
-    if (target.dataset.stock) { const p = rows.find(x => x.id === target.dataset.stock); const current = stockValue(p) ?? 0; await updateDoc(doc(db,'products',p.id), { stock:Math.max(0,current + Number(target.dataset.delta)), updatedAt:serverTimestamp() }); return products(); }
-    if (target.dataset.edit) { const p = rows.find(x => x.id === target.dataset.edit); if (p) productForm(p); }
-    if (target.dataset.delete && confirm('Delete this product?')) { await deleteDoc(doc(db,'products',target.dataset.delete)); return products(); }
-  };
-}
-
-function productForm(product) {
-  const data = product || {}; const root = document.querySelector('.admin main'); if (!root) return;
-  const wrap = document.createElement('div'); wrap.className='admin-modal';
-  wrap.innerHTML = '<div class="admin-modal-card"><h2>' + (data.id ? 'Edit' : 'Add') + ' product</h2>' +
-    '<label>Product name<input id="p-name" required value="' + esc(data.name) + '"></label>' +
-    '<label>Category<input id="p-cat" value="' + esc(data.categoryName || data.category) + '"></label>' +
-    '<label>Brand<input id="p-brand" value="' + esc(data.brand) + '"></label>' +
-    '<label>SKU<input id="p-sku" value="' + esc(data.sku) + '"></label>' +
-    '<label>Regular price<input id="p-price" type="number" min="0" step="1" value="' + Number(data.price || 0) + '"></label>' +
-    '<label>Sale price<input id="p-sale" type="number" min="0" step="1" value="' + Number(data.salePrice || 0) + '"></label>' +
-    '<label>Stock quantity<input id="p-stock" type="number" min="0" step="1" value="' + (stockValue(data) ?? 0) + '"></label>' +
-    '<label>Image URL<input id="p-image" value="' + esc(data.image) + '"></label>' +
-    '<label>Short description<textarea id="p-short">' + esc(data.shortDescription) + '</textarea></label>' +
-    '<label>Description<textarea id="p-desc">' + esc(data.description) + '</textarea></label>' +
-    '<label><input id="p-featured" type="checkbox" ' + (data.featured ? 'checked' : '') + '> Featured</label>' +
-    '<label><input id="p-active" type="checkbox" ' + (data.active !== false ? 'checked' : '') + '> Active</label>' +
-    '<div class="modal-actions"><button id="p-cancel">Cancel</button><button class="primary" id="p-save">Save product</button></div></div>';
-  root.appendChild(wrap);
-  wrap.querySelector('#p-cancel').onclick=()=>wrap.remove();
-  wrap.querySelector('#p-save').onclick=async()=>{
-    const price=Number(wrap.querySelector('#p-price').value || 0), sale=Number(wrap.querySelector('#p-sale').value || 0), stock=Number(wrap.querySelector('#p-stock').value || 0);
-    if (!wrap.querySelector('#p-name').value.trim()) return alert('Product name is required.');
-    if (price < 0 || sale < 0 || stock < 0) return alert('Price and stock cannot be negative.');
-    if (sale && price && sale > price) return alert('Sale price cannot exceed the regular price.');
-    const payload={ name:wrap.querySelector('#p-name').value.trim(), categoryName:wrap.querySelector('#p-cat').value.trim(), brand:wrap.querySelector('#p-brand').value.trim(), sku:wrap.querySelector('#p-sku').value.trim(), price, salePrice:sale, stock, image:wrap.querySelector('#p-image').value.trim(), shortDescription:wrap.querySelector('#p-short').value.trim(), description:wrap.querySelector('#p-desc').value.trim(), featured:wrap.querySelector('#p-featured').checked, active:wrap.querySelector('#p-active').checked, updatedAt:serverTimestamp() };
-    if (data.id) await updateDoc(doc(db,'products',data.id),payload); else await setDoc(doc(collection(db,'products')), {...payload,createdAt:serverTimestamp()});
-    wrap.remove(); products();
-  };
-}
-
-async function orders() {
-  shell('Orders','<div class="admin-toolbar"><input id="order-search" placeholder="Search order or customer..." aria-label="Search orders"></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th><th>Update</th></tr></thead><tbody id="orders-body"><tr><td colspan="5">Loading orders...</td></tr></tbody></table></div>');
-  const snapshot=await getDocs(query(collection(db,'orders'),orderBy('createdAt','desc'),limit(200))); const rows=snapshot.docs.map(d=>({id:d.id,...d.data()})); const body=document.getElementById('orders-body'); if(!body)return;
-  const renderRows=(list)=>{body.innerHTML=list.length?list.map(o=>'<tr><td><strong>'+esc(o.orderNumber||o.id)+'</strong></td><td>'+esc(o.customer?.name||o.userId||'—')+'<br>'+esc(o.customer?.phone||o.deliveryAddress?.phone||'')+'</td><td>'+money(o.total)+'</td><td>'+esc(o.orderStatus||'pending')+'</td><td><select data-status="'+o.id+'" aria-label="Update order status"><option>pending</option><option>confirmed</option><option>processing</option><option>ready</option><option>out_for_delivery</option><option>completed</option><option>cancelled</option></select></td></tr>').join(''):'<tr><td colspan="5">No orders found.</td></tr>'; list.forEach(o=>{const s=document.querySelector('[data-status="'+o.id+'"]');if(s)s.value=o.orderStatus||'pending';});};
-  renderRows(rows);
-  document.getElementById('order-search')?.addEventListener('input',(e)=>{const term=e.target.value.toLowerCase().trim();renderRows(rows.filter(o=>[o.orderNumber,o.userId,o.customer?.name,o.customer?.phone].some(v=>String(v||'').toLowerCase().includes(term))));});
-  body.addEventListener('change',async(e)=>{const s=e.target.closest('[data-status]');if(!s)return;await updateDoc(doc(db,'orders',s.dataset.status),{orderStatus:s.value,updatedAt:serverTimestamp()});});
-}
-
-async function customers() {
-  shell('Customers','<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Active</th></tr></thead><tbody id="customers-body"><tr><td colspan="5">Loading customers...</td></tr></tbody></table></div>');
-  const snapshot=await getDocs(query(collection(db,'users'),limit(200))); const rows=snapshot.docs.map(d=>({id:d.id,...d.data()})); const body=document.getElementById('customers-body'); if(!body)return;
-  body.innerHTML=rows.map(u=>'<tr><td>'+esc(((u.firstName||'')+' '+(u.lastName||'')).trim()||'—')+'</td><td>'+esc(u.email)+'</td><td>'+esc(u.phone)+'</td><td>'+esc(u.role||'customer')+'</td><td>'+(u.active===false?'No':'Yes')+'</td></tr>').join('')||'<tr><td colspan="5">No customers found.</td></tr>';
-}
-
-function content() {
-  const pages=[['Home','/'],['Services','/services'],['About Us','/about'],['Contact Us','/contact'],['Careers','/careers'],['News','/news'],['Wellness Catalogue','/otc-wellness']];
-  const cards=pages.map(([name,path])=>'<article class="content-card"><h3>'+esc(name)+'</h3><p>Review this page as visitors see it.</p><a class="primary" href="'+BASE+(path==='/'?'':path.slice(1))+'">Open page →</a></article>').join('');
-  shell('Website Content','<p class="admin-muted">Open each public page to review its original layout and content.</p><div class="content-grid">'+cards+'</div>');
+  const data = snapshot.exists() ? snapshot.data() : {};
+  return ['staff','admin','superadmin'].includes(data.role) && data.active !== false;
 }
 
 async function dashboard() {
-  shell('Dashboard','<div class="admin-stats"><div><b id="stat-products">—</b><span>Total products</span></div><div><b id="stat-active">—</b><span>Active products</span></div><div><b id="stat-low">—</b><span>Low stock</span></div><div><b id="stat-out">—</b><span>Out of stock</span></div><div><b id="stat-orders">—</b><span>Total orders</span></div><div><b id="stat-pending">—</b><span>Pending orders</span></div><div><b id="stat-completed">—</b><span>Completed orders</span></div><div><b id="stat-customers">—</b><span>Customers</span></div></div><section class="admin-panel"><h2>Quick actions</h2><div class="quick"><a href="'+BASE+'admin/products">Add / manage products →</a><a href="'+BASE+'admin/orders">Review orders →</a><a href="'+BASE+'admin/customers">View customers →</a><a href="'+BASE+'admin/content">Website Content →</a><a href="'+BASE+'store">Open store →</a></div></section>');
-  const [ps,os,us]=await Promise.all([getDocs(query(collection(db,'products'),limit(500))),getDocs(query(collection(db,'orders'),limit(500))),getDocs(query(collection(db,'users'),limit(500)))]);
-  const productsRows=ps.docs.map(d=>d.data()), ordersRows=os.docs.map(d=>d.data());
-  document.getElementById('stat-products').textContent=ps.size;
-  document.getElementById('stat-active').textContent=productsRows.filter(p=>p.active!==false).length;
-  document.getElementById('stat-low').textContent=productsRows.filter(p=>{const s=stockValue(p);return s!==null&&s>0&&s<=5;}).length;
-  document.getElementById('stat-out').textContent=productsRows.filter(p=>stockValue(p)===0).length;
-  document.getElementById('stat-orders').textContent=os.size;
-  document.getElementById('stat-pending').textContent=ordersRows.filter(o=>(o.orderStatus||'pending')==='pending').length;
-  document.getElementById('stat-completed').textContent=ordersRows.filter(o=>o.orderStatus==='completed').length;
-  document.getElementById('stat-customers').textContent=us.size;
+  const [products, orders, users] = await Promise.all([
+    getDocs(query(collection(db,'products'), limit(500))),
+    getDocs(query(collection(db,'orders'), limit(500))),
+    getDocs(query(collection(db,'users'), limit(500)))
+  ]);
+  const ps = products.docs.map(d=>d.data()); const os = orders.docs.map(d=>d.data());
+  const active = ps.filter(p=>p.active !== false).length;
+  const low = ps.filter(p=>{const s=stockValue(p);return s!==null&&s>0&&s<=5}).length;
+  const out = ps.filter(p=>stockValue(p)===0).length;
+  const pending = os.filter(o=>String(o.orderStatus||'pending').toLowerCase()==='pending').length;
+  const completed = os.filter(o=>['completed','delivered'].includes(String(o.orderStatus||'').toLowerCase())).length;
+  shell('Dashboard', '<p class="admin-muted">Live overview of your pharmacy store and customer activity.</p><div class="admin-cards">'+[
+    ['Products',ps.length],['Active products',active],['Orders',os.length],['Customers',users.size],['Low stock',low],['Out of stock',out],['Pending orders',pending],['Completed',completed]
+  ].map(([t,v])=>'<div class="admin-card"><span>'+t+'</span><strong>'+v+'</strong></div>').join('')+'</div><div class="admin-actions"><a class="primary" href="'+BASE+'admin/products">Manage products</a><a class="secondary" href="'+BASE+'admin/orders">Review orders</a></div>');
 }
 
-async function render() {
-  if (!location.pathname.startsWith(BASE+'admin') || location.pathname.endsWith('/login')) return;
-  const user=auth.currentUser; if (!(await roleOk(user))) return;
-  let path=location.pathname.replace(BASE,''); if(path.endsWith('/'))path=path.slice(0,-1);
-  if(path==='admin/products')return products(); if(path==='admin/orders')return orders(); if(path==='admin/customers')return customers(); if(path==='admin/content')return content(); return dashboard();
+async function productsPage() {
+  const snap = await getDocs(query(collection(db,'products'), limit(500)));
+  const products = snap.docs.map(d=>({id:d.id,...d.data()}));
+  shell('Products', '<div class="admin-toolbar"><input id="product-search" placeholder="Search products, brand or SKU…"><button class="primary" id="add-product">+ Add product</button></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Product</th><th>Category</th><th>SKU</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead><tbody id="product-rows"></tbody></table></div>');
+  const render = (list) => { const rows=document.getElementById('product-rows'); rows.innerHTML=list.map(p=>{const [sl,sc]=stockLabel(p);return '<tr><td><strong>'+esc(p.name)+'</strong><br><small>'+esc(p.brand||'')+'</small></td><td>'+esc(p.categoryName||p.category||'—')+'</td><td>'+esc(p.sku||'—')+'</td><td>'+money(p.salePrice ?? p.price)+'</td><td><button data-stock="down" data-id="'+p.id+'">−</button> '+(stockValue(p)===null?'—':stockValue(p))+' <button data-stock="up" data-id="'+p.id+'">+</button></td><td><span class="stock-badge '+sc+'">'+sl+'</span></td><td><button data-edit="'+p.id+'">Edit</button> <button data-toggle="'+p.id+'">'+(p.active===false?'Activate':'Deactivate')+'</button> <button data-delete="'+p.id+'">Delete</button></td></tr>'}).join('')||'<tr><td colspan="7">No products found.</td></tr>'; };
+  render(products);
+  document.getElementById('product-search').oninput=e=>{const q=e.target.value.toLowerCase();render(products.filter(p=>`${p.name} ${p.brand||''} ${p.sku||''} ${p.categoryName||p.category||''}`.toLowerCase().includes(q)))};
+  document.getElementById('add-product').onclick=()=>productModal();
+  document.querySelector('#product-rows').onclick=async e=>{
+    const id=e.target.dataset.id;
+    if(e.target.dataset.stock){const p=products.find(x=>x.id===id);if(!p)return;const current=stockValue(p)??0;const next=Math.max(0,current+(e.target.dataset.stock==='up'?1:-1));await updateDoc(doc(db,'products',id),{stockQuantity:next,stock:next,updatedAt:serverTimestamp()});p.stockQuantity=next;p.stock=next;render(products);}
+    if(e.target.dataset.toggle){const p=products.find(x=>x.id===e.target.dataset.toggle);await updateDoc(doc(db,'products',p.id),{active:p.active===false,updatedAt:serverTimestamp()});p.active=p.active===false;render(products);}
+    if(e.target.dataset.delete){if(confirm('Delete this product?')){await deleteDoc(doc(db,'products',e.target.dataset.delete));const i=products.findIndex(x=>x.id===e.target.dataset.delete);if(i>=0)products.splice(i,1);render(products);}}
+    if(e.target.dataset.edit){productModal(products.find(x=>x.id===e.target.dataset.edit));}
+  };
 }
 
-onAuthStateChanged(auth,()=>render());
-window.addEventListener('popstate',()=>render());
+function productModal(product={}) {
+  const wrap=document.createElement('div');wrap.className='admin-modal';wrap.innerHTML='<form class="admin-modal-card"><h2>'+(product.id?'Edit product':'Add product')+'</h2>'+[
+    ['name','Product name','text',product.name||'',true],['category','Category','text',product.category||product.categoryName||'',true],['brand','Brand','text',product.brand||''],['sku','SKU','text',product.sku||''],['price','Regular price','number',product.price??'',true],['salePrice','Sale price','number',product.salePrice??''],['stockQuantity','Stock quantity','number',product.stockQuantity??product.stock??''],['image','Image URL','url',product.image||'']
+  ].map(([n,l,t,v,r])=>'<label>'+l+'<input name="'+n+'" type="'+t+'" value="'+esc(v)+'" '+(r?'required':'')+'></label>').join('')+'<label>Short description<textarea name="shortDescription">'+esc(product.shortDescription||'')+'</textarea></label><label>Description<textarea name="description">'+esc(product.description||'')+'</textarea></label><label><input name="featured" type="checkbox" '+(product.featured?'checked':'')+'> Featured</label><label><input name="active" type="checkbox" '+(product.active!==false?'checked':'')+'> Active</label><div class="modal-actions"><button type="button" id="cancel-product">Cancel</button><button class="primary">Save product</button></div></form>';
+  document.body.appendChild(wrap);wrap.querySelector('#cancel-product').onclick=()=>wrap.remove();wrap.querySelector('form').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target);const data={name:f.get('name'),category:f.get('category'),categoryName:f.get('category'),brand:f.get('brand'),sku:f.get('sku'),price:Number(f.get('price')||0),salePrice:f.get('salePrice')?Number(f.get('salePrice')):null,stockQuantity:f.get('stockQuantity')===''?null:Number(f.get('stockQuantity')),image:f.get('image'),shortDescription:f.get('shortDescription'),description:f.get('description'),featured:f.get('featured')==='on',active:f.get('active')==='on',updatedAt:serverTimestamp()};if(data.stockQuantity!==null)data.stock=data.stockQuantity;if(product.id)await updateDoc(doc(db,'products',product.id),data);else await setDoc(doc(collection(db,'products')), {...data,createdAt:serverTimestamp()});wrap.remove();productsPage();};
+}
+
+async function ordersPage(){const snap=await getDocs(query(collection(db,'orders'),limit(500)));const orders=snap.docs.map(d=>({id:d.id,...d.data()}));shell('Orders','<p class="admin-muted">Review customer orders and update their status.</p><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Payment</th><th>Status</th><th>Created</th></tr></thead><tbody>'+orders.map(o=>'<tr><td><strong>'+esc(o.orderNumber||o.id)+'</strong></td><td>'+esc(o.customerName||o.email||o.userId||'—')+'</td><td>'+money(o.total)+'</td><td>'+esc(o.paymentStatus||'pending')+'</td><td><select data-order="'+o.id+'"><option '+(o.orderStatus==='pending'?'selected':'')+'>pending</option><option '+(o.orderStatus==='processing'?'selected':'')+'>processing</option><option '+(o.orderStatus==='ready'?'selected':'')+'>ready</option><option '+(o.orderStatus==='completed'?'selected':'')+'>completed</option><option '+(o.orderStatus==='cancelled'?'selected':'')+'>cancelled</option></select></td><td>'+esc(o.createdAt?.toDate?.().toLocaleString?.()||'—')+'</td></tr>').join('')||'<tr><td colspan="6">No orders yet.</td></tr>'+'</tbody></table></div>');document.querySelectorAll('[data-order]').forEach(s=>s.onchange=async e=>updateDoc(doc(db,'orders',e.target.dataset.order),{orderStatus:e.target.value,updatedAt:serverTimestamp()}));}
+async function customersPage(){const snap=await getDocs(query(collection(db,'users'),limit(500)));const users=snap.docs.map(d=>({id:d.id,...d.data()}));shell('Customers','<p class="admin-muted">Customer accounts registered with Kalidad.</p><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Status</th></tr></thead><tbody>'+users.map(u=>'<tr><td>'+esc([u.firstName,u.lastName].filter(Boolean).join(' ')||u.displayName||'—')+'</td><td>'+esc(u.email||'—')+'</td><td>'+esc(u.phone||'—')+'</td><td>'+esc(u.role||'customer')+'</td><td>'+((u.active===false)?'Inactive':'Active')+'</td></tr>').join('')+'</tbody></table></div>');}
+function contentPage(){shell('Website Content','<p class="admin-muted">Open the live public pages to review the website experience.</p><div class="content-grid">'+[['Home',''],['Services','services'],['Contact Us','contact'],['Careers','careers'],['News','news'],['About Us','about'],['Wellness','otc-wellness']].map(([n,p])=>'<article class="content-card"><h3>'+n+'</h3><p>Review this public page.</p><a class="primary" href="'+BASE+(p||'')+'">Open page</a></article>').join('')+'</div>');}
+
+onAuthStateChanged(auth, async user=>{
+  if(!location.pathname.startsWith(BASE+'admin')) return;
+  if(location.pathname===BASE+'admin/login') return;
+  if(!(await roleOk(user).catch(()=>false))){location.href=BASE+'admin/login';return;}
+  const path=location.pathname.replace(BASE,'/').replace(/\/$/,'')||'/';
+  try{if(path==='/admin')await dashboard();else if(path==='/admin/products')await productsPage();else if(path==='/admin/orders')await ordersPage();else if(path==='/admin/customers')await customersPage();else if(path==='/admin/content')contentPage();else await dashboard();}catch(error){console.error(error);shell('Admin error','<div class="error">Unable to load this section. Please refresh and try again.</div>');}
+});
