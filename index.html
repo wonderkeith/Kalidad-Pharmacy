@@ -4344,81 +4344,134 @@ header.logo-hidden {
     <script src="chatbot.js" defer></script>
     <script src="theme.js?v=2" defer></script>
 
-<style id="kalidad-mobile-menu-anywhere-fix">
+<style id="careers-matched-mobile-header">
 @media (max-width:900px){
   header .menu-toggle{
-    position:relative !important;
-    z-index:1002 !important;
-    touch-action:manipulation !important;
-    -webkit-tap-highlight-color:transparent !important;
+    display:flex !important; align-items:center !important; justify-content:center !important;
+    flex:0 0 46px !important; width:46px !important; height:46px !important; min-width:46px !important;
+    border:1.5px solid rgba(22,52,39,.35) !important; border-radius:12px !important;
+    background:rgba(255,255,255,.55) !important; color:var(--forest) !important;
+    -webkit-backdrop-filter:blur(10px) saturate(140%) !important;
+    backdrop-filter:blur(10px) saturate(140%) !important;
+    box-shadow:none !important; touch-action:manipulation !important;
+    -webkit-tap-highlight-color:transparent !important; position:relative !important; z-index:1002 !important;
+    transition:background .35s ease,border-color .35s ease,color .35s ease,
+               transform .25s ease,box-shadow .25s ease !important;
+  }
+  header .menu-toggle svg{width:28px !important;height:28px !important;display:block !important;visibility:visible !important;opacity:1 !important;}
+  html[data-theme="dark"] header .menu-toggle{
+    background:var(--forest) !important;border-color:rgba(255,255,255,.28) !important;color:#fff !important;
+  }
+
+  header .mobile-menu{
+    color:var(--forest) !important;background:rgba(246,244,236,.96) !important;
+    border-top:1px solid rgba(223,229,223,.75) !important;
+    -webkit-backdrop-filter:blur(12px) saturate(140%) !important;
+    backdrop-filter:blur(12px) saturate(140%) !important;
+    box-shadow:0 14px 38px rgba(18,41,31,.18) !important;
+  }
+  header .mobile-menu a{
+    display:block !important;padding:12px 8px !important;border-radius:10px !important;
+    font-weight:600 !important;text-decoration:none !important;color:var(--forest) !important;
+    background:transparent !important;transition:background .2s ease,color .2s ease,transform .2s ease !important;
+  }
+  header .mobile-menu a:hover,header .mobile-menu a:focus-visible,header .mobile-menu a.active{
+    background:var(--lime-soft,#e8f4d8) !important;color:var(--green,#006837) !important;
+  }
+  html[data-theme="dark"] header .mobile-menu{
+    background:rgba(11,26,20,.96) !important;border-top-color:rgba(255,255,255,.14) !important;
+    color:#fff !important;box-shadow:0 14px 38px rgba(0,0,0,.45) !important;
+  }
+  html[data-theme="dark"] header .mobile-menu a{color:#fff !important;}
+  html[data-theme="dark"] header .mobile-menu a:hover,
+  html[data-theme="dark"] header .mobile-menu a:focus-visible,
+  html[data-theme="dark"] header .mobile-menu a.active{
+    background:rgba(232,244,216,.14) !important;color:var(--lime) !important;
+  }
+
+  header{
+    overflow:visible !important;
+    transition:width .45s cubic-bezier(.2,.8,.2,1),height .45s cubic-bezier(.2,.8,.2,1),
+               left .45s cubic-bezier(.2,.8,.2,1),right .45s cubic-bezier(.2,.8,.2,1),
+               top .45s cubic-bezier(.2,.8,.2,1),border-radius .45s ease,
+               background .35s ease,box-shadow .35s ease !important;
   }
   header.logo-hidden{
-    overflow:visible !important;
-    z-index:1000 !important;
+    left:auto !important;right:14px !important;top:12px !important;transform:none !important;
+    width:58px !important;height:58px !important;min-height:58px !important;border-radius:20px !important;
+    background:transparent !important;border:0 !important;box-shadow:none !important;overflow:hidden !important;
   }
-  header.logo-hidden .mobile-menu{
-    position:fixed !important;
-    top:78px !important;
-    right:14px !important;
-    left:auto !important;
-    width:min(320px, calc(100vw - 28px)) !important;
-    max-height:calc(100svh - 94px) !important;
-    overflow-y:auto !important;
-    padding:14px 14px 18px !important;
-    border:1px solid rgba(255,255,255,.14) !important;
-    border-radius:20px !important;
-    background:rgba(18,41,31,.98) !important;
-    box-shadow:0 24px 50px rgba(0,0,0,.34) !important;
-    -webkit-backdrop-filter:blur(18px) !important;
-    backdrop-filter:blur(18px) !important;
-    z-index:1001 !important;
+  header.logo-hidden .header-inner{
+    width:58px !important;height:58px !important;min-height:58px !important;padding:0 !important;
+    gap:0 !important;justify-content:center !important;background:transparent !important;
   }
-  header.logo-hidden .mobile-menu.open{display:flex !important;}
-  header .mobile-menu a,
-  header .mobile-menu button{
-    min-height:52px !important;
-    touch-action:manipulation !important;
+  header.logo-hidden .logo{display:none !important;width:0 !important;max-width:0 !important;opacity:0 !important;pointer-events:none !important;}
+  header.logo-hidden .menu-toggle{
+    margin:0 !important;width:58px !important;height:58px !important;min-width:58px !important;
+    border-radius:20px !important;box-shadow:0 12px 26px rgba(22,52,39,.20) !important;
   }
-  header.menu-open{overflow:visible !important;}
+
+  header.logo-hidden.nav-open{
+    left:50% !important;right:auto !important;top:9px !important;transform:translateX(-50%) !important;
+    width:calc(100% - 18px) !important;height:auto !important;min-height:0 !important;border-radius:18px !important;
+    background:rgba(246,244,236,.96) !important;border:1px solid rgba(255,255,255,.55) !important;
+    box-shadow:0 14px 38px rgba(18,41,31,.18) !important;overflow:visible !important;
+  }
+  html[data-theme="dark"] header.logo-hidden.nav-open{
+    background:rgba(11,26,20,.96) !important;border-color:rgba(255,255,255,.14) !important;
+    box-shadow:0 14px 38px rgba(0,0,0,.45) !important;
+  }
+  header.logo-hidden.nav-open .header-inner{
+    width:100% !important;height:74px !important;min-height:74px !important;padding:0 20px !important;
+    gap:16px !important;justify-content:space-between !important;background:transparent !important;
+  }
+  header.logo-hidden.nav-open .logo{
+    display:flex !important;width:145px !important;max-width:145px !important;opacity:1 !important;pointer-events:auto !important;
+  }
+  header.logo-hidden.nav-open .menu-toggle{
+    width:46px !important;height:46px !important;min-width:46px !important;border-radius:12px !important;
+    box-shadow:none !important;
+  }
+  header.logo-hidden.nav-open .mobile-menu{
+    display:flex !important;width:100% !important;max-height:calc(100svh - 84px) !important;overflow-y:auto !important;
+    padding:10px 20px 18px !important;border-top:1px solid rgba(223,229,223,.4) !important;
+    border-radius:0 0 18px 18px !important;box-shadow:none !important;
+  }
+  header.nav-open:not(.logo-hidden) .mobile-menu{display:flex !important;padding:10px 20px 18px !important;}
+}
+@media (prefers-reduced-motion:reduce){
+  header,header .menu-toggle,header .mobile-menu,header .mobile-menu a{transition:none !important;}
 }
 </style>
 
 
-<script id="kalidad-mobile-menu-final-controller">
+<script id="careers-matched-mobile-menu-controller">
 (function(){
-  function initMobileMenu(){
-    const toggle=document.getElementById('menuToggle');
-    const menu=document.getElementById('mobileMenu');
-    const header=document.querySelector('header');
-    if(!toggle||!menu||!header||toggle.dataset.menuControllerReady==='true') return;
-    toggle.dataset.menuControllerReady='true';
+  function init(){
+    var toggle=document.getElementById('menuToggle');
+    var menu=document.getElementById('mobileMenu');
+    var header=document.querySelector('header');
+    if(!toggle||!menu||!header||toggle.dataset.careersMenuReady==='true') return;
+    toggle.dataset.careersMenuReady='true';
 
-    function setMenu(open){
+    function setOpen(open){
       menu.classList.toggle('open',open);
-      header.classList.toggle('menu-open',open);
+      header.classList.toggle('nav-open',open);
       toggle.setAttribute('aria-expanded',open?'true':'false');
+      toggle.setAttribute('aria-label',open?'Close menu':'Open menu');
     }
 
     toggle.addEventListener('click',function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      setMenu(!menu.classList.contains('open'));
+      e.preventDefault();e.stopPropagation();
+      setOpen(!menu.classList.contains('open'));
     });
-
     menu.querySelectorAll('a').forEach(function(link){
-      link.addEventListener('click',function(){setMenu(false);});
+      link.addEventListener('click',function(){setOpen(false);});
     });
-
-    document.addEventListener('keydown',function(e){
-      if(e.key==='Escape') setMenu(false);
-    });
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false);});
   }
-
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',initMobileMenu);
-  }else{
-    initMobileMenu();
-  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
+  else init();
 })();
 </script>
 
