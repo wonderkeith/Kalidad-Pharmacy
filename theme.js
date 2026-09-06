@@ -6,6 +6,7 @@
 
   var STORAGE_KEY = 'kalidad-theme';
   var ABOUT_PAGE = /about\.html$/i.test(window.location.pathname);
+  var applying = false;
 
   function removeLegacyThemeState() {
     try {
@@ -18,7 +19,9 @@
     var body = document.body;
 
     if (root) {
-      root.setAttribute('data-theme', 'light');
+      if (root.getAttribute('data-theme') !== 'light') {
+        root.setAttribute('data-theme', 'light');
+      }
       root.classList.remove('dark', 'dark-mode', 'theme-dark');
       root.style.setProperty('color-scheme', 'light', 'important');
     }
@@ -68,11 +71,10 @@
   }
 
   function injectAboutLightHeader() {
-    if (!ABOUT_PAGE) return;
+    if (!ABOUT_PAGE || !document.head) return;
 
     var id = 'kalidad-about-header-light-v3';
-    var old = document.getElementById(id);
-    if (old) old.remove();
+    if (document.getElementById(id)) return;
 
     var style = document.createElement('style');
     style.id = id;
@@ -134,26 +136,52 @@
   }
 
   function apply() {
-    removeLegacyThemeState();
-    enforceLightMode();
-    removeLegacyToggleControls();
-    removeAboutConflictingStyles();
-    injectLightGuard();
-    injectAboutLightHeader();
+    if (applying) return;
+    applying = true;
+    try {
+      removeLegacyThemeState();
+      enforceLightMode();
+      removeLegacyToggleControls();
+      removeAboutConflictingStyles();
+      injectLightGuard();
+      injectAboutLightHeader();
+    } finally {
+      applying = false;
+    }
   }
 
   function start() {
     apply();
 
+    /* Only watch the root/body theme state. Do not observe the whole DOM: this
+       controller itself injects/removes nodes, and observing those mutations
+       would create a recursive mutation loop. */
     if ('MutationObserver' in window && document.documentElement) {
-      var observer = new MutationObserver(function () {
-        apply();
+      var observer = new MutationObserver(function (mutations) {
+        if (applying) return;
+
+        var shouldReapply = mutations.some(function (mutation) {
+          if (mutation.type !== 'attributes') return false;
+          if (mutation.target === document.documentElement || mutation.target === document.body) {
+            return mutation.attributeName === 'data-theme' || mutation.attributeName === 'class';
+          }
+          return false;
+        });
+
+        if (shouldReapply) apply();
       });
+
       observer.observe(document.documentElement, {
         attributes: true,
-        childList: true,
-        subtree: true
+        attributeFilter: ['data-theme', 'class']
       });
+
+      if (document.body) {
+        observer.observe(document.body, {
+          attributes: true,
+          attributeFilter: ['class']
+        });
+      }
     }
   }
 
