@@ -39,7 +39,79 @@
     style.textContent = [
       ':root{color-scheme:light!important;}',
       'html,html[data-theme="dark"]{color-scheme:light!important;}',
-      'html[data-theme="dark"] body{color-scheme:light!important;}'
+      'html[data-theme="dark"] body{color-scheme:light!important;}',
+      'html body header{color-scheme:light!important;}'
+    ].join('\n');
+    document.head.appendChild(style);
+  }
+
+  function injectAboutHeaderLightOverride() {
+    if (!/about\.html$/i.test(window.location.pathname)) return;
+    if (document.getElementById('kalidad-about-light-header-guard')) return;
+
+    var style = document.createElement('style');
+    style.id = 'kalidad-about-light-header-guard';
+    style.textContent = [
+      'html[data-theme="light"] header,',
+      'html[data-theme="dark"] header{',
+      '  background:rgba(246,244,236,.96)!important;',
+      '  color:#163427!important;',
+      '  border-color:rgba(223,229,223,.85)!important;',
+      '  box-shadow:0 10px 28px rgba(18,41,31,.12)!important;',
+      '}',
+      'html[data-theme="light"] header .header-inner,',
+      'html[data-theme="dark"] header .header-inner{',
+      '  background:transparent!important;',
+      '}',
+      'html[data-theme="light"] header .menu-toggle,',
+      'html[data-theme="dark"] header .menu-toggle{',
+      '  display:flex!important;',
+      '  align-items:center!important;',
+      '  justify-content:center!important;',
+      '  background:rgba(255,255,255,.72)!important;',
+      '  color:#163427!important;',
+      '  border:1.5px solid rgba(22,52,39,.35)!important;',
+      '  box-shadow:none!important;',
+      '}',
+      'html[data-theme="light"] header .mobile-menu,',
+      'html[data-theme="dark"] header .mobile-menu{',
+      '  background:rgba(246,244,236,.98)!important;',
+      '  color:#163427!important;',
+      '  border-top-color:rgba(223,229,223,.85)!important;',
+      '  box-shadow:0 14px 36px rgba(18,41,31,.16)!important;',
+      '}',
+      'html[data-theme="light"] header .mobile-menu a,',
+      'html[data-theme="dark"] header .mobile-menu a{',
+      '  color:#163427!important;',
+      '}',
+      'html[data-theme="light"] header .mobile-menu a:hover,',
+      'html[data-theme="light"] header .mobile-menu a:focus-visible,',
+      'html[data-theme="light"] header .mobile-menu a.active,',
+      'html[data-theme="dark"] header .mobile-menu a:hover,',
+      'html[data-theme="dark"] header .mobile-menu a:focus-visible,',
+      'html[data-theme="dark"] header .mobile-menu a.active{',
+      '  background:#e8f4d8!important;',
+      '  color:#006837!important;',
+      '}',
+      'html[data-theme="light"] header nav.main-nav a.nav-link,',
+      'html[data-theme="dark"] header nav.main-nav a.nav-link{',
+      '  color:#17372a!important;',
+      '}',
+      'html[data-theme="light"] header nav.main-nav a.nav-link:hover,',
+      'html[data-theme="dark"] header nav.main-nav a.nav-link:hover,',
+      'html[data-theme="light"] header nav.main-nav a.nav-link.active,',
+      'html[data-theme="dark"] header nav.main-nav a.nav-link.active{',
+      '  color:#17372a!important;',
+      '  background:rgba(239,247,233,.92)!important;',
+      '}',
+      '@media(max-width:900px){',
+      '  html[data-theme="light"] header,html[data-theme="dark"] header{',
+      '    background:rgba(246,244,236,.96)!important;',
+      '  }',
+      '  html[data-theme="light"] header .mobile-menu,html[data-theme="dark"] header .mobile-menu{',
+      '    background:rgba(246,244,236,.98)!important;',
+      '  }',
+      '}'
     ].join('\n');
     document.head.appendChild(style);
   }
@@ -65,6 +137,7 @@
     removeLegacyThemeState();
     enforceLightMode();
     injectLightOnlyGuard();
+    injectAboutHeaderLightOverride();
     removeLegacyToggleControls();
   }
 
