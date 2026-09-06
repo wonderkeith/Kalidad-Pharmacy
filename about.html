@@ -1839,17 +1839,6 @@ html[data-theme="dark"] .about-hero-visual::before {
 <script>
 (function(){
   /* mobile menu */
-  var toggle = document.getElementById('menuToggle');
-  var menu = document.getElementById('mobileMenu');
-  if(toggle && menu){
-    toggle.addEventListener('click', function(){
-      var open = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      var header = document.querySelector('header');
-      if(header) header.classList.toggle('menu-open', open);
-    });
-  }
-
   /* hero slider (home page only) */
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var dotsWrap = document.getElementById('sliderDots');
@@ -1970,5 +1959,84 @@ html[data-theme="dark"] .about-hero-visual::before {
 
 </script>
     <script src="theme.js?v=2" defer></script>
+
+<style id="kalidad-mobile-menu-anywhere-fix">
+@media (max-width:900px){
+  header .menu-toggle{
+    position:relative !important;
+    z-index:1002 !important;
+    touch-action:manipulation !important;
+    -webkit-tap-highlight-color:transparent !important;
+  }
+  header.logo-hidden{
+    overflow:visible !important;
+    z-index:1000 !important;
+  }
+  header.logo-hidden .mobile-menu{
+    position:fixed !important;
+    top:78px !important;
+    right:14px !important;
+    left:auto !important;
+    width:min(320px, calc(100vw - 28px)) !important;
+    max-height:calc(100svh - 94px) !important;
+    overflow-y:auto !important;
+    padding:14px 14px 18px !important;
+    border:1px solid rgba(255,255,255,.14) !important;
+    border-radius:20px !important;
+    background:rgba(18,41,31,.98) !important;
+    box-shadow:0 24px 50px rgba(0,0,0,.34) !important;
+    -webkit-backdrop-filter:blur(18px) !important;
+    backdrop-filter:blur(18px) !important;
+    z-index:1001 !important;
+  }
+  header.logo-hidden .mobile-menu.open{display:flex !important;}
+  header .mobile-menu a,
+  header .mobile-menu button{
+    min-height:52px !important;
+    touch-action:manipulation !important;
+  }
+  header.menu-open{overflow:visible !important;}
+}
+</style>
+
+
+<script id="kalidad-mobile-menu-final-controller">
+(function(){
+  function initMobileMenu(){
+    const toggle=document.getElementById('menuToggle');
+    const menu=document.getElementById('mobileMenu');
+    const header=document.querySelector('header');
+    if(!toggle||!menu||!header||toggle.dataset.menuControllerReady==='true') return;
+    toggle.dataset.menuControllerReady='true';
+
+    function setMenu(open){
+      menu.classList.toggle('open',open);
+      header.classList.toggle('menu-open',open);
+      toggle.setAttribute('aria-expanded',open?'true':'false');
+    }
+
+    toggle.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      setMenu(!menu.classList.contains('open'));
+    });
+
+    menu.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click',function(){setMenu(false);});
+    });
+
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape') setMenu(false);
+    });
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initMobileMenu);
+  }else{
+    initMobileMenu();
+  }
+})();
+</script>
+
 </body>
 </html>
