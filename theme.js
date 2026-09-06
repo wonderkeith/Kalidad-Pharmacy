@@ -1,7 +1,6 @@
 /* Kalidad Pharmacy — Light-only theme controller
    Dark mode has been permanently removed sitewide.
-   This file is intentionally kept as a compatibility layer for pages
-   that still include <script src="theme.js" defer></script>.
+   Kept as a compatibility layer for pages that still include theme.js.
 */
 
 (function () {
@@ -11,12 +10,8 @@
 
   function removeLegacyThemeState() {
     try {
-      if (window.localStorage) {
-        window.localStorage.removeItem(STORAGE_KEY);
-      }
-    } catch (e) {
-      /* Ignore storage restrictions. */
-    }
+      if (window.localStorage) window.localStorage.removeItem(STORAGE_KEY);
+    } catch (e) {}
   }
 
   function enforceLightMode() {
@@ -24,7 +19,9 @@
     var body = document.body;
 
     if (root) {
-      root.setAttribute('data-theme', 'light');
+      if (root.getAttribute('data-theme') !== 'light') {
+        root.setAttribute('data-theme', 'light');
+      }
       root.classList.remove('dark', 'dark-mode', 'theme-dark');
       root.style.colorScheme = 'light';
     }
@@ -34,7 +31,7 @@
     }
   }
 
-  function injectLightModeGuard() {
+  function injectLightOnlyGuard() {
     if (document.getElementById('kalidad-light-only-guard')) return;
 
     var style = document.createElement('style');
@@ -48,7 +45,7 @@
   }
 
   function removeLegacyToggleControls() {
-    var selectors = [
+    [
       '#ktToggleBtn',
       '#ktToggleBtnMobile',
       '.kt-toggle',
@@ -57,9 +54,7 @@
       '[data-theme-toggle]',
       '[aria-label="Switch to dark mode"]',
       '[aria-label="Switch to light mode"]'
-    ];
-
-    selectors.forEach(function (selector) {
+    ].forEach(function (selector) {
       document.querySelectorAll(selector).forEach(function (el) {
         el.remove();
       });
@@ -69,26 +64,30 @@
   function stripThemeUI() {
     removeLegacyThemeState();
     enforceLightMode();
-    injectLightModeGuard();
+    injectLightOnlyGuard();
     removeLegacyToggleControls();
   }
 
   function start() {
     stripThemeUI();
 
-    /* Protect against another legacy script re-applying a dark theme. */
     if ('MutationObserver' in window && document.documentElement) {
-      var observer = new MutationObserver(function () {
-        var root = document.documentElement;
-        if (root.getAttribute('data-theme') !== 'light') {
-          enforceLightMode();
-        }
+      var observer = new MutationObserver(function (mutations) {
+        var needsLightEnforcement = false;
+
+        mutations.forEach(function (mutation) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+            needsLightEnforcement = true;
+          }
+        });
+
+        if (needsLightEnforcement) enforceLightMode();
         removeLegacyToggleControls();
       });
 
       observer.observe(document.documentElement, {
         attributes: true,
-        attributeFilter: ['data-theme', 'class', 'style'],
+        attributeFilter: ['data-theme'],
         childList: true,
         subtree: true
       });
