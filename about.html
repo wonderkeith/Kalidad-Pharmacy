@@ -1958,7 +1958,6 @@ html[data-theme="dark"] .about-hero-visual::before {
 })();
 
 </script>
-    <script src="theme.js?v=2" defer></script>
 
 <style id="careers-matched-mobile-header">
 @media (max-width:900px){
@@ -2090,6 +2089,431 @@ html[data-theme="dark"] .about-hero-visual::before {
   else init();
 })();
 </script>
+
+
+<style id="about-header-final-light-glass">
+/* ==========================================================
+   ABOUT HEADER — FINAL LIGHT GLASS / MOBILE RETRACT
+   Matches the shared Careers-style interaction language.
+   No theme.js dependency.
+   ========================================================== */
+
+header{
+  position:fixed !important;
+  top:14px !important;
+  left:50% !important;
+  right:auto !important;
+  transform:translateX(-50%) !important;
+  width:min(1180px,calc(100% - 28px)) !important;
+  height:84px !important;
+  max-width:none !important;
+  min-height:0 !important;
+  border:1px solid rgba(255,255,255,.42) !important;
+  border-radius:22px !important;
+  background:rgba(246,244,236,.30) !important;
+  -webkit-backdrop-filter:blur(18px) saturate(145%) !important;
+  backdrop-filter:blur(18px) saturate(145%) !important;
+  box-shadow:
+    0 12px 38px rgba(18,41,31,.12),
+    inset 0 1px 0 rgba(255,255,255,.48) !important;
+  overflow:visible !important;
+  transition:
+    width .45s cubic-bezier(.2,.8,.2,1),
+    height .45s cubic-bezier(.2,.8,.2,1),
+    top .45s cubic-bezier(.2,.8,.2,1),
+    border-radius .45s ease,
+    background .35s ease,
+    border-color .35s ease,
+    box-shadow .35s ease !important;
+  z-index:1000 !important;
+}
+
+header.is-scrolled{
+  background:rgba(246,244,236,.74) !important;
+  border-color:rgba(255,255,255,.62) !important;
+  box-shadow:
+    0 14px 40px rgba(18,41,31,.18),
+    inset 0 1px 0 rgba(255,255,255,.58) !important;
+}
+
+header .header-inner{
+  width:100% !important;
+  max-width:none !important;
+  height:82px !important;
+  min-height:0 !important;
+  padding:0 20px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:18px !important;
+  transition:
+    height .45s cubic-bezier(.2,.8,.2,1),
+    padding .45s ease,
+    gap .45s ease !important;
+}
+
+header .logo{
+  display:flex !important;
+  align-items:center !important;
+  flex:0 0 auto !important;
+  width:230px !important;
+  max-width:230px !important;
+  height:70px !important;
+  margin:0 !important;
+  opacity:1 !important;
+  transform:translateY(0) scale(1) !important;
+  transform-origin:left center !important;
+  transition:
+    width .45s cubic-bezier(.2,.8,.2,1),
+    max-width .45s cubic-bezier(.2,.8,.2,1),
+    height .45s cubic-bezier(.2,.8,.2,1),
+    margin .45s cubic-bezier(.2,.8,.2,1),
+    opacity .30s ease,
+    transform .45s cubic-bezier(.2,.8,.2,1) !important;
+}
+
+header .logo-image{
+  width:230px !important;
+  height:70px !important;
+  max-width:none !important;
+  object-fit:contain !important;
+  object-position:left center !important;
+  display:block !important;
+}
+
+nav.main-nav{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:2px !important;
+  flex:1 1 auto !important;
+}
+
+nav.main-nav a.nav-link{
+  position:relative !important;
+  padding:10px 15px !important;
+  border-radius:999px !important;
+  color:#17372a !important;
+  background:transparent !important;
+  transform:none !important;
+  box-shadow:none !important;
+  transition:
+    transform .28s cubic-bezier(.2,.8,.2,1),
+    background .28s ease,
+    color .28s ease,
+    box-shadow .28s ease !important;
+}
+
+nav.main-nav a.nav-link:hover,
+nav.main-nav a.nav-link:focus-visible,
+nav.main-nav a.nav-link.active{
+  transform:translateY(-2px) !important;
+  background:rgba(230,243,217,.92) !important;
+  color:#17372a !important;
+  box-shadow:0 8px 20px rgba(18,41,31,.10) !important;
+}
+
+nav.main-nav a.nav-link::after{
+  content:"" !important;
+  position:absolute !important;
+  left:50% !important;
+  bottom:-7px !important;
+  width:7px !important;
+  height:7px !important;
+  border-radius:50% !important;
+  background:#B7E86A !important;
+  box-shadow:0 0 9px rgba(183,232,106,.78) !important;
+  opacity:0 !important;
+  transform:translateX(-50%) scale(.35) !important;
+  transition:opacity .25s ease,transform .28s cubic-bezier(.2,.8,.2,1) !important;
+  pointer-events:none !important;
+}
+
+nav.main-nav a.nav-link:hover::after,
+nav.main-nav a.nav-link:focus-visible::after,
+nav.main-nav a.nav-link.active::after{
+  opacity:1 !important;
+  transform:translateX(-50%) scale(1) !important;
+}
+
+header .menu-toggle{
+  display:none;
+  width:46px !important;
+  height:46px !important;
+  min-width:46px !important;
+  flex:0 0 46px !important;
+  align-items:center !important;
+  justify-content:center !important;
+  border:1.5px solid rgba(22,52,39,.38) !important;
+  border-radius:12px !important;
+  background:rgba(255,255,255,.58) !important;
+  color:var(--forest) !important;
+  box-shadow:none !important;
+  -webkit-backdrop-filter:blur(10px) saturate(140%) !important;
+  backdrop-filter:blur(10px) saturate(140%) !important;
+  transition:
+    background .30s ease,
+    border-color .30s ease,
+    color .30s ease,
+    transform .25s ease,
+    box-shadow .25s ease !important;
+  touch-action:manipulation !important;
+  -webkit-tap-highlight-color:transparent !important;
+  z-index:1002 !important;
+}
+
+header .menu-toggle svg{
+  width:28px !important;
+  height:28px !important;
+  display:block !important;
+  opacity:1 !important;
+}
+
+header .mobile-menu{
+  color:var(--forest) !important;
+  background:rgba(246,244,236,.96) !important;
+  border-top:1px solid rgba(223,229,223,.75) !important;
+  -webkit-backdrop-filter:blur(14px) saturate(140%) !important;
+  backdrop-filter:blur(14px) saturate(140%) !important;
+  box-shadow:0 14px 38px rgba(18,41,31,.18) !important;
+}
+
+header .mobile-menu a{
+  display:block !important;
+  padding:12px 8px !important;
+  border-radius:10px !important;
+  font-weight:600 !important;
+  color:var(--forest) !important;
+  background:transparent !important;
+  transition:background .2s ease,color .2s ease,transform .2s ease !important;
+}
+
+header .mobile-menu a:hover,
+header .mobile-menu a:focus-visible,
+header .mobile-menu a.active{
+  background:#e8f4d8 !important;
+  color:#006837 !important;
+}
+
+/* Desktop compact state: centered shrink after the hero. */
+header.is-compact{
+  width:min(900px,calc(100% - 28px)) !important;
+  height:74px !important;
+  top:10px !important;
+  border-radius:20px !important;
+  background:rgba(246,244,236,.76) !important;
+  box-shadow:
+    0 14px 36px rgba(18,41,31,.17),
+    inset 0 1px 0 rgba(255,255,255,.56) !important;
+}
+
+header.is-compact .header-inner{
+  height:72px !important;
+  padding-left:16px !important;
+  padding-right:16px !important;
+  gap:10px !important;
+}
+
+header.is-compact .logo{
+  width:0 !important;
+  max-width:0 !important;
+  height:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  opacity:0 !important;
+  transform:translateY(-8px) scale(.72) !important;
+  pointer-events:none !important;
+}
+
+header.is-compact .logo-image{
+  width:0 !important;
+  height:0 !important;
+}
+
+header.is-compact .header-inner{
+  justify-content:center !important;
+}
+
+header.is-compact nav.main-nav{
+  gap:0 !important;
+}
+
+header.is-compact nav.main-nav a.nav-link{
+  padding:9px 12px !important;
+  font-size:.84rem !important;
+}
+
+/* ==========================================================
+   Mobile: full glass bar -> retract to a floating hamburger.
+   Opening the hamburger expands the header back out.
+   ========================================================== */
+@media(max-width:900px){
+  header{
+    top:9px !important;
+    width:calc(100% - 18px) !important;
+    height:66px !important;
+    border-radius:18px !important;
+    background:rgba(246,244,236,.48) !important;
+  }
+
+  header.is-scrolled{
+    background:rgba(246,244,236,.78) !important;
+  }
+
+  header .header-inner{
+    height:64px !important;
+    padding:0 12px !important;
+  }
+
+  header .logo{
+    width:175px !important;
+    max-width:175px !important;
+    height:56px !important;
+  }
+
+  header .logo-image{
+    width:175px !important;
+    height:56px !important;
+  }
+
+  nav.main-nav{
+    display:none !important;
+  }
+
+  header .menu-toggle{
+    display:flex !important;
+  }
+
+  /* Retracted state: the whole bar contracts into the hamburger control. */
+  header.is-compact:not(.nav-open){
+    left:auto !important;
+    right:12px !important;
+    transform:none !important;
+    top:10px !important;
+    width:58px !important;
+    height:58px !important;
+    min-height:58px !important;
+    border-radius:20px !important;
+    background:rgba(246,244,236,.52) !important;
+    border-color:rgba(255,255,255,.58) !important;
+    box-shadow:0 12px 28px rgba(18,41,31,.18),inset 0 1px 0 rgba(255,255,255,.52) !important;
+    overflow:hidden !important;
+  }
+
+  header.is-compact:not(.nav-open) .header-inner{
+    width:58px !important;
+    height:58px !important;
+    min-height:58px !important;
+    padding:0 !important;
+    gap:0 !important;
+    justify-content:center !important;
+  }
+
+  header.is-compact:not(.nav-open) .logo{
+    display:none !important;
+    width:0 !important;
+    max-width:0 !important;
+    height:0 !important;
+    opacity:0 !important;
+    pointer-events:none !important;
+  }
+
+  header.is-compact:not(.nav-open) .menu-toggle{
+    display:flex !important;
+    width:58px !important;
+    height:58px !important;
+    min-width:58px !important;
+    flex:0 0 58px !important;
+    border:0 !important;
+    border-radius:20px !important;
+    background:transparent !important;
+    box-shadow:none !important;
+  }
+
+  header.is-compact:not(.nav-open) .menu-toggle:active{
+    transform:scale(.94) !important;
+  }
+
+  /* Menu open: expand the compact control back into the full glass panel. */
+  header.is-compact.nav-open{
+    left:50% !important;
+    right:auto !important;
+    transform:translateX(-50%) !important;
+    top:9px !important;
+    width:calc(100% - 18px) !important;
+    height:auto !important;
+    min-height:0 !important;
+    border-radius:18px !important;
+    background:rgba(246,244,236,.96) !important;
+    border-color:rgba(255,255,255,.58) !important;
+    box-shadow:0 14px 38px rgba(18,41,31,.18) !important;
+    overflow:visible !important;
+  }
+
+  header.is-compact.nav-open .header-inner{
+    width:100% !important;
+    height:64px !important;
+    min-height:64px !important;
+    padding:0 12px !important;
+    gap:16px !important;
+    justify-content:space-between !important;
+  }
+
+  header.is-compact.nav-open .logo{
+    display:flex !important;
+    width:150px !important;
+    max-width:150px !important;
+    height:54px !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+    transform:none !important;
+  }
+
+  header.is-compact.nav-open .logo-image{
+    width:150px !important;
+    height:54px !important;
+  }
+
+  header.is-compact.nav-open .menu-toggle{
+    display:flex !important;
+    width:46px !important;
+    height:46px !important;
+    min-width:46px !important;
+    flex:0 0 46px !important;
+    border:1.5px solid rgba(22,52,39,.38) !important;
+    border-radius:12px !important;
+    background:rgba(255,255,255,.58) !important;
+  }
+
+  header.is-compact.nav-open .mobile-menu{
+    display:flex !important;
+    width:100% !important;
+    max-height:calc(100svh - 84px) !important;
+    overflow-y:auto !important;
+    padding:10px 20px 18px !important;
+    border-top:1px solid rgba(223,229,223,.55) !important;
+    border-radius:0 0 18px 18px !important;
+    box-shadow:none !important;
+  }
+
+  header.nav-open:not(.is-compact) .mobile-menu{
+    display:flex !important;
+    padding:10px 20px 18px !important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  header,
+  header .header-inner,
+  header .logo,
+  header .logo-image,
+  header .menu-toggle,
+  header .mobile-menu,
+  header nav a{
+    transition:none !important;
+  }
+}
+</style>
 
 </body>
 </html>
