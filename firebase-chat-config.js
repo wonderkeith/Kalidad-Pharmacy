@@ -1,12 +1,13 @@
 /* Kalidad Pharmacy Firebase configuration for the live pharmacist chat.
- * Replace ONLY apiKey with the Web API key from Firebase Console > Project settings > Your apps.
- * Firebase Web API keys are client-side identifiers; access is controlled by Auth + Firestore Rules.
+ * This web app uses the existing Kalidad Pharmacy Firebase project.
+ * Access to customer/staff data is controlled by Firebase Authentication + Firestore Rules.
  */
 window.KALIDAD_FIREBASE_CONFIG = {
-  apiKey: 'PASTE_YOUR_FIREBASE_WEB_API_KEY_HERE',
-  authDomain: 'pharmacy-8c04b.firebaseapp.com',
-  projectId: 'pharmacy-8c04b',
-  storageBucket: 'pharmacy-8c04b.firebasestorage.app',
-  messagingSenderId: '105931421825',
-  appId: '1:105931421825:web:1a9e70b6d2ad852fb6d6f8'
+  apiKey: 'AIzaSyBK6nEm0kdCp8aYb_dbTPGB5JP2OK7JhRw',
+  authDomain: 'kalidad-pharmacy.firebaseapp.com',
+  projectId: 'kalidad-pharmacy',
+  storageBucket: 'kalidad-pharmacy.firebasestorage.app',
+  messagingSenderId: '108387190764',
+  appId: '1:108387190764:web:302264adc7dc73d7a0e2c9',
+  measurementId: 'G-XCHJSSPV6M'
 };
