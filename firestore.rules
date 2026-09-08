@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function staff() {
+      return signedIn() && exists(/databases/$(database)/documents/staff/$(request.auth.uid))
+        && get(/databases/$(database)/documents/staff/$(request.auth.uid)).data.role in ['pharmacist','admin'];
+    }
+    function owner(conversationId) {
+      return signedIn()
+        && get(/databases/$(database)/documents/conversations/$(conversationId)).data.customerUid == request.auth.uid;
+    }
+
+    match /staff/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid || staff();
+      allow create, update, delete: if false;
+    }
+
+    match /conversations/{conversationId} {
+      allow create: if signedIn()
+        && request.resource.data.customerUid == request.auth.uid
+        && request.resource.data.status == 'waiting'
+        && request.resource.data.privacyConsent == true;
+      allow read: if staff() || owner(conversationId);
+      allow update: if staff() || (owner(conversationId)
+        && request.resource.data.customerUid == resource.data.customerUid
+        && request.resource.data.status in ['waiting','active','resolved']);
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        allow read: if staff() || owner(conversationId);
+        allow create: if staff()
+          || (owner(conversationId)
+            && request.resource.data.senderUid == request.auth.uid
+            && request.resource.data.senderType == 'customer');
+        allow update, delete: if false;
+      }
+    }
+  }
+}
