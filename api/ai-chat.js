@@ -1,3 +1,4 @@
+// Vercel Preview trigger: keeps the AI chatbot test deployment current.
 const { answer } = require('../digital-care/services/ai-chat');
 
 const buckets = new Map();
