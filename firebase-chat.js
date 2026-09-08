@@ -4,10 +4,7 @@ import { getAuth, signInAnonymously, onAuthStateChanged, signInWithEmailAndPassw
 import { getFirestore, collection, addDoc, doc, getDoc, updateDoc, query, where, onSnapshot, serverTimestamp, limit } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 const cfg = window.KALIDAD_FIREBASE_CONFIG;
-if (!cfg || !cfg.apiKey || cfg.apiKey.indexOf('PASTE_') === 0) {
-  throw Error('Firebase web configuration is not installed.');
-}
-
+if (!cfg || !cfg.apiKey || cfg.apiKey.indexOf('PASTE_') === 0) throw Error('Firebase web configuration is not installed.');
 const app = getApps().length ? getApps()[0] : initializeApp(cfg);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -16,9 +13,7 @@ export async function ensureCustomer() {
   if (auth.currentUser && !auth.currentUser.isAnonymous) return auth.currentUser;
   await signInAnonymously(auth);
   return new Promise((resolve, reject) => {
-    const stop = onAuthStateChanged(auth, user => {
-      if (user) { stop(); resolve(user); }
-    });
+    const stop = onAuthStateChanged(auth, user => { if (user) { stop(); resolve(user); } });
     setTimeout(() => { stop(); reject(Error('Firebase authentication timed out.')); }, 10000);
   });
 }
@@ -26,14 +21,9 @@ export async function ensureCustomer() {
 export async function createHandoff({ history = [], reason = 'clinical-question' } = {}) {
   const user = await ensureCustomer();
   const ref = await addDoc(collection(db, 'conversations'), {
-    customerUid: user.uid,
-    status: 'waiting',
-    channel: 'website',
-    reason: String(reason).slice(0, 120),
-    privacyConsent: true,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-    lastMessageAt: serverTimestamp()
+    customerUid: user.uid, status: 'waiting', channel: 'website',
+    reason: String(reason).slice(0, 120), privacyConsent: true,
+    createdAt: serverTimestamp(), updatedAt: serverTimestamp(), lastMessageAt: serverTimestamp()
   });
   for (const m of (Array.isArray(history) ? history.slice(-12) : [])) {
     if (m?.role !== 'user') continue;
@@ -102,10 +92,15 @@ export function watchActiveConversations(cb) {
   ));
 }
 
-export function watchConversation(id, cb) {
-  return onSnapshot(doc(db, 'conversations', id), snapshot => cb(
-    snapshot.exists() ? { id: snapshot.id, ...snapshot.data() } : null
+export function watchResolvedConversations(cb) {
+  return onSnapshot(query(collection(db, 'conversations'), where('status', '==', 'resolved'), limit(100)), snapshot => cb(
+    snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => ((b.resolvedAt?.seconds || b.updatedAt?.seconds || 0) - (a.resolvedAt?.seconds || a.updatedAt?.seconds || 0)))
   ));
+}
+
+export function watchConversation(id, cb) {
+  return onSnapshot(doc(db, 'conversations', id), snapshot => cb(snapshot.exists() ? { id: snapshot.id, ...snapshot.data() } : null));
 }
 
 export function watchStaffMessages(id, cb) { return watchCustomerMessages(id, cb); }
@@ -130,7 +125,6 @@ export async function updateConversation(id, fields) {
   const updates = {};
   if (['waiting', 'active', 'resolved'].includes(fields.status)) updates.status = fields.status;
   if (fields.assignedStaffUid) updates.assignedStaffUid = fields.assignedStaffUid;
-
   if (fields.status === 'resolved') {
     const profile = await getDoc(doc(db, 'staff', user.uid));
     const staffData = profile.exists() ? profile.data() : {};
@@ -138,11 +132,8 @@ export async function updateConversation(id, fields) {
     updates.resolvedByName = String(staffData.displayName || user.email || 'Kalidad pharmacist').slice(0, 160);
     updates.resolvedAt = serverTimestamp();
   } else if (fields.status === 'active' || fields.status === 'waiting') {
-    updates.resolvedByUid = null;
-    updates.resolvedByName = null;
-    updates.resolvedAt = null;
+    updates.resolvedByUid = null; updates.resolvedByName = null; updates.resolvedAt = null;
   }
-
   updates.updatedAt = serverTimestamp();
   await updateDoc(doc(db, 'conversations', id), updates);
 }
