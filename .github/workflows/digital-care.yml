@@ -4,7 +4,7 @@ on:
     branches: [main]
     paths: ['digital-care/**','.github/workflows/digital-care.yml']
   push:
-    branches: [digital-care-platform, digital-care-production]
+    branches: [digital-care-platform, digital-care-production, ai-chatbot-test]
     paths: ['digital-care/**','.github/workflows/digital-care.yml']
 jobs:
   test:
@@ -26,4 +26,5 @@ jobs:
       - run: node --check services/safety.js
       - run: node --check services/catalogue.js
       - run: node --check services/approved-faq.js
+      - run: node --check services/ai-chat.js
       - run: npm test
