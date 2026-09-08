@@ -9,6 +9,66 @@ const app = getApps().length ? getApps()[0] : initializeApp(cfg);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+let notificationPermissionRequested = false;
+let audioContext = null;
+
+function isPharmacistPortal() {
+  return typeof window !== 'undefined' && window.location.pathname.endsWith('/pharmacist.html');
+}
+
+async function prepareStaffNotifications() {
+  if (!isPharmacistPortal() || notificationPermissionRequested) return;
+  notificationPermissionRequested = true;
+
+  if ('Notification' in window && Notification.permission === 'default') {
+    try { await Notification.requestPermission(); } catch (_) {}
+  }
+
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (AudioCtx) {
+      audioContext = audioContext || new AudioCtx();
+      if (audioContext.state === 'suspended') await audioContext.resume();
+    }
+  } catch (_) {}
+}
+
+function playStaffChime() {
+  if (!audioContext) return;
+  try {
+    if (audioContext.state === 'suspended') audioContext.resume();
+    const now = audioContext.currentTime;
+    const gain = audioContext.createGain();
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.55);
+    gain.connect(audioContext.destination);
+
+    const osc = audioContext.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(740, now);
+    osc.frequency.setValueAtTime(988, now + 0.16);
+    osc.connect(gain);
+    osc.start(now);
+    osc.stop(now + 0.55);
+  } catch (_) {}
+}
+
+function showStaffNotification(conversationId) {
+  if (!isPharmacistPortal() || !('Notification' in window) || Notification.permission !== 'granted') return;
+  try {
+    const n = new Notification('New customer message', {
+      body: 'A customer has sent a message to the pharmacist support desk.',
+      tag: `kalidad-chat-${conversationId}`,
+      renotify: true
+    });
+    n.onclick = () => {
+      try { window.focus(); } catch (_) {}
+      try { n.close(); } catch (_) {}
+    };
+  } catch (_) {}
+}
+
 export async function ensureCustomer() {
   if (auth.currentUser && !auth.currentUser.isAnonymous) return auth.currentUser;
   await signInAnonymously(auth);
@@ -68,6 +128,7 @@ export async function staffLogin(email, password) {
     await signOut(auth);
     throw Error('This account is not authorised for the pharmacist portal.');
   }
+  await prepareStaffNotifications();
   return { user: cred.user, profile: snapshot.data() };
 }
 
@@ -75,7 +136,9 @@ export async function staffProfile() {
   const user = auth.currentUser;
   if (!user || user.isAnonymous) return null;
   const snapshot = await getDoc(doc(db, 'staff', user.uid));
-  return snapshot.exists() ? { user, ...snapshot.data() } : null;
+  if (!snapshot.exists()) return null;
+  await prepareStaffNotifications();
+  return { user, ...snapshot.data() };
 }
 
 export function watchWaitingConversations(cb) {
@@ -103,7 +166,21 @@ export function watchConversation(id, cb) {
   return onSnapshot(doc(db, 'conversations', id), snapshot => cb(snapshot.exists() ? { id: snapshot.id, ...snapshot.data() } : null));
 }
 
-export function watchStaffMessages(id, cb) { return watchCustomerMessages(id, cb); }
+export function watchStaffMessages(id, cb) {
+  let initialized = false;
+  return watchCustomerMessages(id, messages => {
+    cb(messages);
+    if (!initialized) {
+      initialized = true;
+      return;
+    }
+    const latest = messages[messages.length - 1];
+    if (latest?.senderType === 'customer') {
+      playStaffChime();
+      showStaffNotification(id);
+    }
+  });
+}
 
 export async function sendStaffMessage(id, body) {
   const user = auth.currentUser;
