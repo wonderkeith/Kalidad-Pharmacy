@@ -16,8 +16,8 @@ main{padding:30px 0 50px}.dashboard-grid{display:grid;grid-template-columns:350p
 </style>
 </head>
 <body>
-<header><div class="container header-inner"><a class="brand" href="/"><span class="brand-mark">K</span><span class="brand-copy"><strong>Kalidad</strong><span>Pharmacy</span></span></a><div class="header-actions"><span class="online"><i class="dot"></i> Pharmacist portal</span><button id="logout" class="btn btn-light">Sign out</button></div></div></header>
-<section class="hero"><div class="container hero-inner"><div class="crumb"><a href="/">Home</a> &nbsp;·&nbsp; Pharmacist Support</div><span class="eyebrow"><i class="dot"></i> Live care desk</span><h1>Pharmacist Support</h1><p>Respond to customers securely and provide professional guidance through Kalidad Pharmacy's live website chat.</p></div></section>
+<header><div class="container header-inner"><a class="brand" href="/"><span class="brand-mark">K</span><span class="brand-copy"><strong>Kalidad</strong><span>Pharmacy</span></span></a><div class="header-actions"><span class="online"><i class="dot"></i> Pharmacist portal</span><button id="logout" class="btn btn-light">Sign in</button></div></div></header>
+<section class="hero"><div class="container hero-inner"><div class="crumb"><a href="/">Home</a> &nbsp;·&nbsp; Pharmacist Support</div><span class="eyebrow"><i class="dot"></i> Live care desk</span><h1>Customer Support</h1><p>Respond to customers securely and provide professional guidance through Kalidad Pharmacy's live website chat.</p></div></section>
 <main class="container">
 <section id="login" class="login-wrap"><div class="panel login-card"><h2>Welcome back</h2><p>Sign in with your authorised Kalidad pharmacist account.</p><div class="field"><label for="email">Email address</label><input id="email" type="email" autocomplete="username" placeholder="pharmacist@..." /></div><div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" /></div><button id="loginBtn" class="btn btn-primary">Sign in to support desk</button><p id="loginError" class="login-error"></p></div></section>
 <section id="app" class="dashboard-grid hidden">
@@ -40,7 +40,7 @@ async function changeStatus(status){if(!selected)return;try{await updateConversa
 async function start(){const p=await staffProfile();if(!p)return;$('#login').classList.add('hidden');$('#app').classList.remove('hidden');unq=watchWaitingConversations(x=>{waiting=x;renderQueue()});una=watchActiveConversations(x=>{active=x;renderQueue()});unh=watchResolvedConversations(x=>{history=x;renderQueue()})}
 $('#waitingTab').onclick=()=>setTab('waiting');$('#activeTab').onclick=()=>setTab('active');$('#historyTab').onclick=()=>setTab('history');
 $('#loginBtn').onclick=async()=>{try{await staffLogin($('#email').value.trim(),$('#password').value);$('#loginError').textContent='';await start()}catch(e){$('#loginError').textContent=e.message}};
-$('#logout').onclick=async()=>{await logoutStaff();location.reload()};$('#resolveBtn').onclick=()=>changeStatus('resolved');$('#reopenBtn').onclick=()=>changeStatus('active');
+$('#logout').onclick=()=>{const login=$('#login');if(login){login.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>$('#email')?.focus(),450);}};$('#resolveBtn').onclick=()=>changeStatus('resolved');$('#reopenBtn').onclick=()=>changeStatus('active');
 $('#form').onsubmit=async e=>{e.preventDefault();const t=$('#body').value.trim();if(!t||!selected)return;const btn=$('#sendBtn');btn.disabled=true;try{await sendStaffMessage(selected,t);$('#body').value=''}catch(e){alert(e.message)}finally{btn.disabled=selectedConversation?.status==='resolved'||!selected}};
 $('#body').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('#form').requestSubmit()}});
 window.addEventListener('beforeunload',()=>{if(unq)unq();if(una)una();if(unh)unh();if(unm)unm();if(unc)unc()});start().catch(e=>console.error(e));
