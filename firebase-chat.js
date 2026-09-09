@@ -199,6 +199,7 @@ export async function sendStaffMessage(id, body) {
 export async function updateConversation(id, fields) {
   const user = auth.currentUser;
   if (!user || user.isAnonymous) throw Error('Staff login required.');
+  fields = typeof fields === 'string' ? { status: fields } : (fields || {});
   const updates = {};
   if (['waiting', 'active', 'resolved'].includes(fields.status)) updates.status = fields.status;
   if (fields.assignedStaffUid) updates.assignedStaffUid = fields.assignedStaffUid;
