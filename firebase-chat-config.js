@@ -12,10 +12,7 @@ window.KALIDAD_FIREBASE_CONFIG = {
   measurementId: 'G-XCHJSSPV6M'
 };
 
-/* Emergency bootstrap for the pharmacist portal.
- * The portal's main code is an ES module. If a browser/cache/network issue prevents
- * that module from executing, keep both sign-in controls responsive and show the real error.
- */
+/* Emergency bootstrap for the pharmacist portal. */
 (function(){
   function showError(message){
     var el=document.getElementById('loginError');
@@ -33,6 +30,34 @@ window.KALIDAD_FIREBASE_CONFIG = {
     console.error('Kalidad portal promise error:',e.reason);
     if(document.getElementById('loginBtn')) showError((e.reason&&e.reason.message)||'The pharmacist portal could not start. Please refresh the page.');
   });
+
+  /* Hard-wired sign-out guard. This runs in capture phase so the portal's normal
+   * button handler cannot prevent sign-out. It uses the exact same Firebase module
+   * and auth instance as the pharmacist portal, then reloads to a clean signed-out state.
+   */
+  document.addEventListener('click',async function(e){
+    var button=e.target && e.target.closest ? e.target.closest('#logout') : null;
+    if(!button || button.dataset.signoutBusy==='1') return;
+    if(button.textContent.trim()!=='Sign out') return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    button.dataset.signoutBusy='1';
+    button.disabled=true;
+    button.textContent='Signing out…';
+    try{
+      var m=await import('/firebase-chat.js');
+      await m.logoutStaff();
+      sessionStorage.removeItem('kalidad_live_chat_id');
+      window.location.reload();
+    }catch(error){
+      console.error('Kalidad pharmacist sign-out:',error);
+      button.dataset.signoutBusy='';
+      button.disabled=false;
+      button.textContent='Sign out';
+      showError(error&&error.message ? error.message : 'Unable to sign out. Please try again.');
+    }
+  },true);
+
   function bindFallback(){
     var header=document.getElementById('logout');
     if(header && header.textContent.trim()==='Sign in') header.onclick=scrollToLogin;
