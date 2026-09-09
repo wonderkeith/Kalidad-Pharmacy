@@ -1,6 +1,6 @@
 /* Kalidad Pharmacy — Firebase live pharmacist chat layer. */
 import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
-import { getAuth, signInAnonymously, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
+import { getAuth, signInAnonymously, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
 import { getFirestore, collection, addDoc, doc, getDoc, updateDoc, query, where, onSnapshot, serverTimestamp, limit, orderBy } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 var DEFAULT_FIREBASE_CONFIG = {
@@ -159,9 +159,8 @@ export async function closeCustomerConversation(conversationId) {
   if (snapshot.data().status === 'closed' || snapshot.data().status === 'resolved') return;
   await updateDoc(ref, {
     status: 'closed',
-    closedByCustomer: true,
-    closedAt: serverTimestamp(),
-    updatedAt: serverTimestamp()
+    updatedAt: serverTimestamp(),
+    lastMessageAt: serverTimestamp()
   });
 }
 
@@ -186,6 +185,7 @@ export async function getCustomerConversation(id) {
 }
 
 export async function staffLogin(email, password) {
+  await setPersistence(auth, browserLocalPersistence);
   var credential = await signInWithEmailAndPassword(auth, email, password);
   var snapshot = await getDoc(doc(db, 'staff', credential.user.uid));
   if (!snapshot.exists() || (snapshot.data().role !== 'pharmacist' && snapshot.data().role !== 'admin')) {
