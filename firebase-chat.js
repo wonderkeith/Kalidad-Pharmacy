@@ -4,7 +4,7 @@ import { getAuth, signInAnonymously, signInWithEmailAndPassword, signOut, onAuth
 import { getFirestore, collection, addDoc, doc, getDoc, updateDoc, query, where, onSnapshot, serverTimestamp, limit, orderBy } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 var DEFAULT_FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyBK6nEm0kdCp4aYbDBTPGB5JP2OK7JhRw',
+  apiKey: 'AIzaSyBK6nEm0kdCp8aYb_dbTPGB5JP2OK7JhRw',
   authDomain: 'kalidad-pharmacy.firebaseapp.com',
   projectId: 'kalidad-pharmacy',
   storageBucket: 'kalidad-pharmacy.firebasestorage.app',
