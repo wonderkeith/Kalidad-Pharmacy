@@ -1,0 +1,100 @@
+name: Temporary pharmacist header update
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/temp-pharmacist-header.yml']
+permissions:
+  contents: write
+jobs:
+  update:
+    if: startsWith(github.event.head_commit.message, 'TEMP: pharmacist header behavior')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Apply isolated header behavior
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('pharmacist.html')
+          text = path.read_text(encoding='utf-8')
+
+          style_id = 'pharmacist-hero-header-visibility'
+          script_id = 'pharmacist-hero-header-visibility-script'
+
+          if style_id not in text:
+              style = '''
+          <style id="pharmacist-hero-header-visibility">
+            header {
+              transition: opacity .3s ease, visibility .3s ease, transform .3s ease;
+            }
+
+            header.kalidad-header-hidden {
+              opacity: 0;
+              visibility: hidden;
+              pointer-events: none;
+              transform: translate(-50%, -18px);
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+              header {
+                transition: none;
+              }
+            }
+          </style>
+          '''
+              text = text.replace('</head>', style + '</head>', 1)
+
+          if script_id not in text:
+              script = '''
+          <script id="pharmacist-hero-header-visibility-script">
+          (function () {
+            const header = document.querySelector('header');
+            const hero = document.querySelector('.hero');
+            if (!header || !hero) return;
+
+            function updateHeaderVisibility() {
+              const y = window.scrollY || window.pageYOffset || 0;
+              header.classList.toggle('kalidad-header-hidden', y > 24);
+            }
+
+            let ticking = false;
+            window.addEventListener('scroll', function () {
+              if (ticking) return;
+              ticking = true;
+              window.requestAnimationFrame(function () {
+                updateHeaderVisibility();
+                ticking = false;
+              });
+            }, { passive: true });
+
+            window.addEventListener('resize', updateHeaderVisibility, { passive: true });
+            updateHeaderVisibility();
+          })();
+          </script>
+          '''
+              text = text.replace('</body>', script + '</body>', 1)
+
+          path.write_text(text, encoding='utf-8')
+
+          updated = path.read_text(encoding='utf-8')
+          assert style_id in updated
+          assert script_id in updated
+          assert updated.count(style_id) == 1
+          assert updated.count(script_id) == 1
+      - name: Verify and commit only pharmacist.html
+        shell: bash
+        run: |
+          git diff --check
+          git status --short
+          test "$(git status --short | wc -l | tr -d ' ')" = "1"
+          test "$(git status --short | awk '{print $2}')" = "pharmacist.html"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pharmacist.html
+          git rm .github/workflows/temp-pharmacist-header.yml
+          git commit -m "Add hero-only pharmacist header visibility"
+          git push origin main
