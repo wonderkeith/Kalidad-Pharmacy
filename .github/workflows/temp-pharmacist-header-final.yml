@@ -57,4 +57,10 @@ jobs:
           git add pharmacist.html
           git rm .github/workflows/temp-pharmacist-header-final.yml
           git commit -m "Fix pharmacist header hero visibility"
-          git push origin HEAD:main
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort || true; sleep 2; continue; }
+            git push origin HEAD:main && exit 0
+            sleep 2
+          done
+          exit 1
