@@ -1,0 +1,66 @@
+name: Temporary pharmacist header finalization 3
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/temp-pharmacist-header-final3.yml']
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Apply only pharmacist header behavior
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('pharmacist.html')
+          s = p.read_text(encoding='utf-8')
+          start = s.index('<script id="pharmacist-hero-header-visibility-script">')
+          end = s.index('</script>', start) + len('</script>')
+          new = '''<script id="pharmacist-hero-header-visibility-script">
+          (function () {
+            const header = document.querySelector('header');
+            const hero = document.querySelector('.hero');
+            if (!header || !hero) return;
+
+            function updateHeaderVisibility() {
+              const heroBottom = hero.getBoundingClientRect().bottom;
+              const heroVisible = heroBottom > 0;
+              header.classList.toggle('kalidad-header-hidden', !heroVisible);
+            }
+
+            let ticking = false;
+            window.addEventListener('scroll', function () {
+              if (ticking) return;
+              ticking = true;
+              window.requestAnimationFrame(function () {
+                updateHeaderVisibility();
+                ticking = false;
+              });
+            }, { passive: true });
+
+            window.addEventListener('resize', updateHeaderVisibility, { passive: true });
+            updateHeaderVisibility();
+          })();
+          </script>'''
+          s = s[:start] + new + s[end:]
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit only pharmacist.html in final state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pharmacist.html
+          git rm .github/workflows/temp-pharmacist-header-final3.yml
+          git commit -m "Fix pharmacist header hero visibility"
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort || true; sleep 2; continue; }
+            git push origin HEAD:main && exit 0
+            sleep 2
+          done
+          exit 1
