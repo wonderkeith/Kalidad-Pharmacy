@@ -70,7 +70,7 @@
     loaded = true;
     var script = document.createElement('script');
     script.id = 'kalidad-ai-agent-script';
-    script.src = 'ai-agent/kalidad-agent.js';
+    script.src = '/ai-agent/kalidad-agent.js';
     script.defer = true;
     document.head.appendChild(script);
   }
