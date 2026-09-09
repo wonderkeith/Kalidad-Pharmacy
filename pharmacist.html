@@ -1017,8 +1017,9 @@
   if (!header || !hero) return;
 
   function updateHeaderVisibility() {
-    const y = window.scrollY || window.pageYOffset || 0;
-    header.classList.toggle('kalidad-header-hidden', y > 24);
+    const heroBottom = hero.getBoundingClientRect().bottom;
+    const heroVisible = heroBottom > 0;
+    header.classList.toggle('kalidad-header-hidden', !heroVisible);
   }
 
   let ticking = false;
