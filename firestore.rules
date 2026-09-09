@@ -2,70 +2,42 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-
     function signedIn() {
       return request.auth != null;
     }
 
     function userProfile() {
-      return get(
-        /databases/$(database)/documents/users/$(request.auth.uid)
-      );
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
     }
 
     function isActiveUser() {
-      return signedIn()
-        && userProfile().data.active != false;
+      return signedIn() && userProfile().data.active != false;
     }
 
     function isStaff() {
-      return isActiveUser()
-        && userProfile().data.role in [
-          'staff',
-          'admin',
-          'superadmin'
-        ];
+      return isActiveUser() && userProfile().data.role in ['staff','admin','superadmin'];
     }
 
     function isAdmin() {
-      return isActiveUser()
-        && userProfile().data.role in [
-          'admin',
-          'superadmin'
-        ];
+      return isActiveUser() && userProfile().data.role in ['admin','superadmin'];
     }
 
     function chatStaff() {
       return signedIn()
         && exists(/databases/$(database)/documents/staff/$(request.auth.uid))
-        && get(
-          /databases/$(database)/documents/staff/$(request.auth.uid)
-        ).data.role in ['pharmacist', 'admin']
-        && get(
-          /databases/$(database)/documents/staff/$(request.auth.uid)
-        ).data.active != false;
+        && get(/databases/$(database)/documents/staff/$(request.auth.uid)).data.role in ['pharmacist','admin']
+        && get(/databases/$(database)/documents/staff/$(request.auth.uid)).data.active != false;
     }
 
     function mainConversationOwner(conversationId) {
       return signedIn()
-        && get(
-          /databases/$(database)/documents/main_conversations/$(conversationId)
-        ).data.customerUid == request.auth.uid;
+        && get(/databases/$(database)/documents/main_conversations/$(conversationId)).data.customerUid == request.auth.uid;
     }
 
     match /users/{userId} {
-      allow create:
-        if signedIn()
-        && request.auth.uid == userId
-        && request.resource.data.role == 'customer'
-        && request.resource.data.active == true;
-      allow read:
-        if signedIn() && (request.auth.uid == userId || isStaff());
-      allow update:
-        if isStaff()
-        || (signedIn() && request.auth.uid == userId
-          && request.resource.data.role == resource.data.role
-          && request.resource.data.active == resource.data.active);
+      allow create: if signedIn() && request.auth.uid == userId && request.resource.data.role == 'customer' && request.resource.data.active == true;
+      allow read: if signedIn() && (request.auth.uid == userId || isStaff());
+      allow update: if isStaff() || (signedIn() && request.auth.uid == userId && request.resource.data.role == resource.data.role && request.resource.data.active == resource.data.active);
       allow delete: if isAdmin();
     }
 
@@ -80,11 +52,7 @@ service cloud.firestore {
     }
 
     match /orders/{orderId} {
-      allow create:
-        if signedIn()
-        && request.resource.data.userId == request.auth.uid
-        && request.resource.data.orderStatus == 'pending'
-        && request.resource.data.paymentStatus == 'pending';
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid && request.resource.data.orderStatus == 'pending' && request.resource.data.paymentStatus == 'pending';
       allow read: if isStaff() || (signedIn() && resource.data.userId == request.auth.uid);
       allow update: if isStaff();
       allow delete: if isAdmin();
@@ -111,7 +79,13 @@ service cloud.firestore {
 
     match /staff/{uid} {
       allow read: if signedIn() && (request.auth.uid == uid || chatStaff());
-      allow create, update, delete: if false;
+      allow create, delete: if false;
+      allow update:
+        if signedIn()
+        && request.auth.uid == uid
+        && resource.data.mustChangePassword == true
+        && request.resource.data.mustChangePassword == false
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['mustChangePassword','updatedAt']);
     }
 
     match /main_conversations/{conversationId} {
@@ -129,12 +103,8 @@ service cloud.firestore {
         || (
           mainConversationOwner(conversationId)
           && request.resource.data.customerUid == resource.data.customerUid
-          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
-            'status',
-            'updatedAt',
-            'lastMessageAt'
-          ])
-          && request.resource.data.status in ['waiting', 'active', 'closed']
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','updatedAt','lastMessageAt'])
+          && request.resource.data.status in ['waiting','active','closed']
         );
 
       allow delete: if false;
