@@ -1,6 +1,6 @@
 /* Kalidad Pharmacy — Firebase live pharmacist chat layer. */
 import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
-import { getAuth, signInAnonymously, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
+import { getAuth, signInAnonymously, onAuthStateChanged, signInWithEmailAndPassword, signOut, setPersistence, browserSessionPersistence } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
 import { getFirestore, collection, addDoc, doc, getDoc, updateDoc, query, where, onSnapshot, serverTimestamp, limit } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 const cfg = window.KALIDAD_FIREBASE_CONFIG;
@@ -49,11 +49,9 @@ export function clearStaffNotificationTitle() {
 async function prepareStaffNotifications() {
   if (!isPharmacistPortal() || notificationPermissionRequested) return;
   notificationPermissionRequested = true;
-
   if ('Notification' in window && Notification.permission === 'default') {
     try { await Notification.requestPermission(); } catch (_) {}
   }
-
   try {
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     if (AudioCtx) {
@@ -103,13 +101,29 @@ function showStaffNotification(conversationId) {
   } catch (_) {}
 }
 
-export async function ensureCustomer() {
-  if (auth.currentUser && !auth.currentUser.isAnonymous) return auth.currentUser;
-  await signInAnonymously(auth);
+function waitForAuthUser(timeoutMs = 10000) {
   return new Promise((resolve, reject) => {
-    const stop = onAuthStateChanged(auth, user => { if (user) { stop(); resolve(user); } });
-    setTimeout(() => { stop(); reject(Error('Firebase authentication timed out.')); }, 10000);
+    let settled = false;
+    let timer = null;
+    const finish = (fn, value) => {
+      if (settled) return;
+      settled = true;
+      if (timer) clearTimeout(timer);
+      try { stop(); } catch (_) {}
+      fn(value);
+    };
+    const stop = onAuthStateChanged(auth, user => {
+      if (user) finish(resolve, user);
+    });
+    if (auth.currentUser) finish(resolve, auth.currentUser);
+    timer = setTimeout(() => finish(reject, Error('Firebase authentication timed out.')), timeoutMs);
   });
+}
+
+export async function ensureCustomer() {
+  if (auth.currentUser?.isAnonymous) return auth.currentUser;
+  const cred = await signInAnonymously(auth);
+  return cred.user;
 }
 
 export async function createHandoff({ history = [], reason = 'clinical-question' } = {}) {
@@ -134,6 +148,9 @@ export async function sendCustomerMessage(conversationId, body) {
   const user = await ensureCustomer();
   const text = String(body || '').trim().slice(0, 2000);
   if (!text) return;
+  const conversation = await getDoc(doc(db, 'conversations', conversationId));
+  if (!conversation.exists() || conversation.data().customerUid !== user.uid) throw Error('Conversation not found.');
+  if (['closed', 'resolved'].includes(conversation.data().status)) throw Error('This conversation is closed.');
   await addDoc(collection(db, 'conversations', conversationId, 'messages'), {
     senderUid: user.uid, senderType: 'customer', body: text, createdAt: serverTimestamp()
   });
@@ -169,9 +186,10 @@ export async function getCustomerConversation(id) {
 }
 
 export async function staffLogin(email, password) {
+  await setPersistence(auth, browserSessionPersistence);
   const cred = await signInWithEmailAndPassword(auth, email, password);
   const snapshot = await getDoc(doc(db, 'staff', cred.user.uid));
-  if (!snapshot.exists() || !['pharmacist', 'admin'].includes(snapshot.data().role)) {
+  if (!snapshot.exists() || !['pharmacist', 'admin'].includes(snapshot.data().role) || snapshot.data().active === false) {
     await signOut(auth);
     throw Error('This account is not authorised for the pharmacist portal.');
   }
@@ -180,12 +198,26 @@ export async function staffLogin(email, password) {
 }
 
 export async function staffProfile() {
-  const user = auth.currentUser;
+  let user = auth.currentUser;
+  if (!user) {
+    try { user = await waitForAuthUser(); } catch (_) { return null; }
+  }
   if (!user || user.isAnonymous) return null;
   const snapshot = await getDoc(doc(db, 'staff', user.uid));
-  if (!snapshot.exists()) return null;
+  if (!snapshot.exists() || !['pharmacist', 'admin'].includes(snapshot.data().role) || snapshot.data().active === false) return null;
   await prepareStaffNotifications();
   return { user, ...snapshot.data() };
+}
+
+async function requireStaffUser() {
+  let user = auth.currentUser;
+  if (!user) user = await waitForAuthUser();
+  if (!user || user.isAnonymous) throw Error('Staff login required.');
+  const snapshot = await getDoc(doc(db, 'staff', user.uid));
+  if (!snapshot.exists() || !['pharmacist', 'admin'].includes(snapshot.data().role) || snapshot.data().active === false) {
+    throw Error('Staff login required.');
+  }
+  return { user, profile: snapshot.data() };
 }
 
 export function watchWaitingConversations(cb) {
@@ -226,16 +258,11 @@ export function watchConversation(id, cb) {
 
 export function watchStaffMessages(id, cb) {
   clearStaffNotificationTitle();
-  let initialized = false;
-  return watchCustomerMessages(id, messages => {
-    cb(messages);
-    if (!initialized) initialized = true;
-  });
+  return watchCustomerMessages(id, messages => cb(messages));
 }
 
 export async function sendStaffMessage(id, body) {
-  const user = auth.currentUser;
-  if (!user || user.isAnonymous) throw Error('Staff login required.');
+  const { user } = await requireStaffUser();
   const text = String(body || '').trim().slice(0, 2000);
   if (!text) return;
   await addDoc(collection(db, 'conversations', id, 'messages'), {
@@ -248,15 +275,12 @@ export async function sendStaffMessage(id, body) {
 }
 
 export async function updateConversation(id, fields) {
-  const user = auth.currentUser;
-  if (!user || user.isAnonymous) throw Error('Staff login required.');
+  const { user, profile: staffData } = await requireStaffUser();
   fields = typeof fields === 'string' ? { status: fields } : (fields || {});
   const updates = {};
   if (['waiting', 'active', 'resolved'].includes(fields.status)) updates.status = fields.status;
   if (fields.assignedStaffUid) updates.assignedStaffUid = fields.assignedStaffUid;
   if (fields.status === 'resolved') {
-    const profile = await getDoc(doc(db, 'staff', user.uid));
-    const staffData = profile.exists() ? profile.data() : {};
     updates.resolvedByUid = user.uid;
     updates.resolvedByName = String(staffData.displayName || user.email || 'Kalidad pharmacist').slice(0, 160);
     updates.resolvedAt = serverTimestamp();
