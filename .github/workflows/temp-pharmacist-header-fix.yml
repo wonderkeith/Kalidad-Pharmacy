@@ -23,3 +23,4 @@ jobs:
           git rm .github/workflows/temp-pharmacist-header-fix.yml
           git commit -m "Correct pharmacist header visibility code"
           git push origin main
+# Final isolated header correction pass
