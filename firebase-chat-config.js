@@ -3,7 +3,7 @@
  * Access to customer/staff data is controlled by Firebase Authentication + Firestore Rules.
  */
 window.KALIDAD_FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyBK6nEm0kdCp8aYb_dbTPGB5JP2OK7JhRw',
+  apiKey: 'AIzaSyBK6nEm0kdCp4aYbDBTPGB5JP2OK7JhRw',
   authDomain: 'kalidad-pharmacy.firebaseapp.com',
   projectId: 'kalidad-pharmacy',
   storageBucket: 'kalidad-pharmacy.firebasestorage.app',
