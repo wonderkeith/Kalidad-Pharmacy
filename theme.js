@@ -14,7 +14,6 @@
     var header = document.querySelector('header');
     if (!toggle || !menu || !header) return;
 
-    /* Make the hamburger unmistakably visible on mobile, including Safari/WebKit. */
     toggle.innerHTML =
       '<svg class="kalidad-menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="#1E4F3B" stroke-width="2.2" stroke-linecap="round">' +
       '<path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>';
@@ -27,8 +26,6 @@
     if (toggle.dataset.kalidadMenuRepair === 'true') return;
     toggle.dataset.kalidadMenuRepair = 'true';
 
-    /* The page's existing controller is the source of truth. Only install a
-       fallback if that controller did not initialize. */
     if (toggle.dataset.careersMenuReady === 'true') return;
 
     function setOpen(open) {
@@ -61,5 +58,25 @@
     document.addEventListener('DOMContentLoaded', start, { once: true });
   } else {
     start();
+  }
+})();
+
+/* Kalidad AI Pharmacy Agent bootstrap. The API key never lives in the browser. */
+(function () {
+  'use strict';
+  var loaded = false;
+  function loadAgent() {
+    if (loaded || document.getElementById('kalidad-ai-agent-script')) return;
+    loaded = true;
+    var script = document.createElement('script');
+    script.id = 'kalidad-ai-agent-script';
+    script.src = 'ai-agent/kalidad-agent.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadAgent, { once: true });
+  } else {
+    loadAgent();
   }
 })();
