@@ -23,6 +23,7 @@ var db = getFirestore(app);
 var notificationPermissionRequested = false;
 var audioContext = null;
 var baseDocumentTitle = null;
+var CHAT_COLLECTION = 'main_conversations';
 
 function isPortal() {
   return typeof window !== 'undefined' && window.location.pathname.indexOf('/pharmacist.html') !== -1;
@@ -103,7 +104,7 @@ export async function createHandoff(options) {
   var history = Array.isArray(options.history) ? options.history : [];
   var reason = options.reason || 'clinical-question';
   var user = await ensureCustomer();
-  var ref = await addDoc(collection(db, 'conversations'), {
+  var ref = await addDoc(collection(db, CHAT_COLLECTION), {
     customerUid: user.uid,
     status: 'waiting',
     channel: 'website',
@@ -119,7 +120,7 @@ export async function createHandoff(options) {
     if (!m || m.role !== 'user') continue;
     var body = String(m.content || '').trim().slice(0, 2000);
     if (body) {
-      await addDoc(collection(db, 'conversations', ref.id, 'messages'), {
+      await addDoc(collection(db, CHAT_COLLECTION, ref.id, 'messages'), {
         senderUid: user.uid,
         senderType: 'customer',
         body: body,
@@ -134,16 +135,16 @@ export async function sendCustomerMessage(conversationId, body) {
   var user = await ensureCustomer();
   var text = String(body || '').trim().slice(0, 2000);
   if (!text) return;
-  var conversation = await getDoc(doc(db, 'conversations', conversationId));
+  var conversation = await getDoc(doc(db, CHAT_COLLECTION, conversationId));
   if (!conversation.exists() || conversation.data().customerUid !== user.uid) throw new Error('Conversation not found.');
   if (conversation.data().status === 'closed' || conversation.data().status === 'resolved') throw new Error('This conversation is closed.');
-  await addDoc(collection(db, 'conversations', conversationId, 'messages'), {
+  await addDoc(collection(db, CHAT_COLLECTION, conversationId, 'messages'), {
     senderUid: user.uid,
     senderType: 'customer',
     body: text,
     createdAt: serverTimestamp()
   });
-  await updateDoc(doc(db, 'conversations', conversationId), {
+  await updateDoc(doc(db, CHAT_COLLECTION, conversationId), {
     updatedAt: serverTimestamp(),
     lastMessageAt: serverTimestamp(),
     status: 'active'
@@ -152,7 +153,7 @@ export async function sendCustomerMessage(conversationId, body) {
 
 export async function closeCustomerConversation(conversationId) {
   var user = await ensureCustomer();
-  var ref = doc(db, 'conversations', conversationId);
+  var ref = doc(db, CHAT_COLLECTION, conversationId);
   var snapshot = await getDoc(ref);
   if (!snapshot.exists() || snapshot.data().customerUid !== user.uid) throw new Error('Conversation not found.');
   if (snapshot.data().status === 'closed' || snapshot.data().status === 'resolved') return;
@@ -166,7 +167,7 @@ export async function closeCustomerConversation(conversationId) {
 
 export function watchCustomerMessages(id, callback, onError) {
   return onSnapshot(
-    query(collection(db, 'conversations', id, 'messages'), orderBy('createdAt', 'asc'), limit(100)),
+    query(collection(db, CHAT_COLLECTION, id, 'messages'), orderBy('createdAt', 'asc'), limit(100)),
     function(snapshot) {
       callback(snapshot.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); }));
     },
@@ -179,7 +180,7 @@ export function watchCustomerMessages(id, callback, onError) {
 
 export async function getCustomerConversation(id) {
   var user = await ensureCustomer();
-  var snapshot = await getDoc(doc(db, 'conversations', id));
+  var snapshot = await getDoc(doc(db, CHAT_COLLECTION, id));
   if (!snapshot.exists() || snapshot.data().customerUid !== user.uid) throw new Error('Conversation not found.');
   return Object.assign({ id: snapshot.id }, snapshot.data());
 }
@@ -232,7 +233,7 @@ async function requireStaffUser() {
 export function watchWaitingConversations(callback) {
   var initialized = false;
   return onSnapshot(
-    query(collection(db, 'conversations'), where('status', '==', 'waiting'), limit(50)),
+    query(collection(db, CHAT_COLLECTION), where('status', '==', 'waiting'), limit(50)),
     function(snapshot) {
       var list = snapshot.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
       list.sort(function(a, b) { return (b.createdAt && b.createdAt.seconds || 0) - (a.createdAt && a.createdAt.seconds || 0); });
@@ -251,7 +252,7 @@ export function watchWaitingConversations(callback) {
 
 export function watchActiveConversations(callback) {
   return onSnapshot(
-    query(collection(db, 'conversations'), where('status', '==', 'active'), limit(50)),
+    query(collection(db, CHAT_COLLECTION), where('status', '==', 'active'), limit(50)),
     function(snapshot) {
       var list = snapshot.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
       list.sort(function(a, b) { return (b.updatedAt && b.updatedAt.seconds || 0) - (a.updatedAt && a.updatedAt.seconds || 0); });
@@ -265,7 +266,7 @@ export function watchActiveConversations(callback) {
 
 export function watchResolvedConversations(callback) {
   return onSnapshot(
-    query(collection(db, 'conversations'), where('status', '==', 'resolved'), limit(100)),
+    query(collection(db, CHAT_COLLECTION), where('status', '==', 'resolved'), limit(100)),
     function(snapshot) {
       var list = snapshot.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
       list.sort(function(a, b) { return (b.resolvedAt && b.resolvedAt.seconds || b.updatedAt && b.updatedAt.seconds || 0) - (a.resolvedAt && a.resolvedAt.seconds || a.updatedAt && a.updatedAt.seconds || 0); });
@@ -279,7 +280,7 @@ export function watchResolvedConversations(callback) {
 
 export function watchConversation(id, callback, onError) {
   return onSnapshot(
-    doc(db, 'conversations', id),
+    doc(db, CHAT_COLLECTION, id),
     function(snapshot) { callback(snapshot.exists() ? Object.assign({ id: snapshot.id }, snapshot.data()) : null); },
     function(error) { console.error('Conversation listener:', error); if (typeof onError === 'function') onError(error); }
   );
@@ -294,13 +295,13 @@ export async function sendStaffMessage(id, body) {
   var result = await requireStaffUser();
   var text = String(body || '').trim().slice(0, 2000);
   if (!text) return;
-  await addDoc(collection(db, 'conversations', id, 'messages'), {
+  await addDoc(collection(db, CHAT_COLLECTION, id, 'messages'), {
     senderUid: result.user.uid,
     senderType: 'staff',
     body: text,
     createdAt: serverTimestamp()
   });
-  await updateDoc(doc(db, 'conversations', id), {
+  await updateDoc(doc(db, CHAT_COLLECTION, id), {
     status: 'active',
     assignedStaffUid: result.user.uid,
     updatedAt: serverTimestamp(),
@@ -325,7 +326,7 @@ export async function updateConversation(id, fields) {
     updates.resolvedAt = null;
   }
   updates.updatedAt = serverTimestamp();
-  await updateDoc(doc(db, 'conversations', id), updates);
+  await updateDoc(doc(db, CHAT_COLLECTION, id), updates);
 }
 
 export async function logoutStaff() {
