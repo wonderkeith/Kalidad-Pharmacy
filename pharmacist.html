@@ -639,7 +639,7 @@
 
 <style id="pharmacist-hero-header-visibility">
   header {
-    transition: opacity .3s0ease, visibility .3s0ease, transform .3s ease;
+    transition: opacity .3s ease, visibility .3s ease, transform .3s ease;
   }
 
   header.kalidad-header-hidden {
@@ -1011,13 +1011,13 @@
   </script>
 
 <script id="pharmacist-hero-header-visibility-script">
-//( ) {
+(function () {
   const header = document.querySelector('header');
   const hero = document.querySelector('.hero');
   if (!header || !hero) return;
 
   function updateHeaderVisibility() {
-    const y = window.scrollY || window.pageOffset || 0;
+    const y = window.scrollY || window.pageYOffset || 0;
     header.classList.toggle('kalidad-header-hidden', y > 24);
   }
 
