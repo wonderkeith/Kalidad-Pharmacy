@@ -3,284 +3,79 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // =========================
-    // USER HELPERS
-    // =========================
+    function signedIn() { return request.auth != null; }
+    function userProfile() { return get(/databases/$(database)/documents/users/$(request.auth.uid)); }
+    function isActiveUser() { return signedIn() && userProfile().data.active != false; }
+    function isStaff() { return isActiveUser() && userProfile().data.role in ['staff','admin','superadmin']; }
+    function isAdmin() { return isActiveUser() && userProfile().data.role in ['admin','superadmin']; }
 
-    function signedIn() {
-      return request.auth != null;
-    }
-
-    function userProfile() {
-      return get(
-        /databases/$(database)/documents/users/$(request.auth.uid)
-      );
-    }
-
-    function isActiveUser() {
-      return signedIn()
-        && userProfile().data.active != false;
-    }
-
-    function isStaff() {
-      return isActiveUser()
-        && userProfile().data.role in [
-          'staff',
-          'admin',
-          'superadmin'
-        ];
-    }
-
-    function isAdmin() {
-      return isActiveUser()
-        && userProfile().data.role in [
-          'admin',
-          'superadmin'
-        ];
-    }
-
-    // =========================
-    // PHARMACIST CHAT HELPERS
-    // =========================
-
-    // Chat staff are authorised by a dedicated staff document.
-    // This keeps the pharmacist portal independent from customer profiles.
     function chatStaff() {
       return signedIn()
         && exists(/databases/$(database)/documents/staff/$(request.auth.uid))
-        && get(
-          /databases/$(database)/documents/staff/$(request.auth.uid)
-        ).data.role in ['pharmacist', 'admin'];
+        && get(/databases/$(database)/documents/staff/$(request.auth.uid)).data.role in ['pharmacist','admin'];
     }
-
     function conversationOwner(conversationId) {
       return signedIn()
-        && get(
-          /databases/$(database)/documents/conversations/$(conversationId)
-        ).data.customerUid == request.auth.uid;
+        && get(/databases/$(database)/documents/conversations/$(conversationId)).data.customerUid == request.auth.uid;
     }
-
-
-    // =========================
-    // USERS
-    // =========================
 
     match /users/{userId} {
-
-      allow create:
-        if signedIn()
-        && request.auth.uid == userId
-        && request.resource.data.role == 'customer'
-        && request.resource.data.active == true;
-
-      allow read:
-        if signedIn()
-        && (
-          request.auth.uid == userId
-          || isStaff()
-        );
-
-      allow update:
-        if isStaff()
-        ||
-        (
-          signedIn()
-          && request.auth.uid == userId
-          && request.resource.data.role == resource.data.role
-          && request.resource.data.active == resource.data.active
-        );
-
-      allow delete:
-        if isAdmin();
+      allow create: if signedIn() && request.auth.uid == userId && request.resource.data.role == 'customer' && request.resource.data.active == true;
+      allow read: if signedIn() && (request.auth.uid == userId || isStaff());
+      allow update: if isStaff() || (signedIn() && request.auth.uid == userId && request.resource.data.role == resource.data.role && request.resource.data.active == resource.data.active);
+      allow delete: if isAdmin();
     }
-
-
-    // =========================
-    // PRODUCTS
-    // =========================
 
     match /products/{productId} {
-
-      allow read:
-        if (
-          resource.data.active == true
-          || isStaff()
-        );
-
-      allow create, update, delete:
-        if isStaff();
+      allow read: if resource.data.active == true || isStaff();
+      allow create, update, delete: if isStaff();
     }
-
-
-    // =========================
-    // CATEGORIES
-    // =========================
-
     match /categories/{categoryId} {
-
-      allow read:
-        if (
-          resource.data.active == true
-          || isStaff()
-        );
-
-      allow create, update, delete:
-        if isStaff();
+      allow read: if resource.data.active == true || isStaff();
+      allow create, update, delete: if isStaff();
     }
-
-
-    // =========================
-    // ORDERS
-    // =========================
-
     match /orders/{orderId} {
-
-      allow create:
-        if signedIn()
-        && request.resource.data.userId == request.auth.uid
-        && request.resource.data.orderStatus == 'pending'
-        && request.resource.data.paymentStatus == 'pending';
-
-      allow read:
-        if isStaff()
-        || (
-          signedIn()
-          && resource.data.userId == request.auth.uid
-        );
-
-      allow update:
-        if isStaff();
-
-      allow delete:
-        if isAdmin();
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid && request.resource.data.orderStatus == 'pending' && request.resource.data.paymentStatus == 'pending';
+      allow read: if isStaff() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow update: if isStaff();
+      allow delete: if isAdmin();
     }
-
-
-    // =========================
-    // INVENTORY
-    // =========================
-
-    match /inventory/{productId} {
-
-      allow read, create, update, delete:
-        if isStaff();
-    }
-
-
-    // =========================
-    // PROMOTIONS
-    // =========================
-
-    match /promotions/{promotionId} {
-
-      allow read:
-        if (
-          resource.data.active == true
-          || isStaff()
-        );
-
-      allow create, update, delete:
-        if isStaff();
-    }
-
-
-    // =========================
-    // WEBSITE CONTENT
-    // =========================
-
-    match /website/{pageId} {
-
-      allow read:
-        if true;
-
-      allow create, update, delete:
-        if isAdmin();
-    }
-
-
-    // =========================
-    // STORE SETTINGS
-    // =========================
-
-    match /settings/{settingId} {
-
-      allow read:
-        if true;
-
-      allow create, update, delete:
-        if isAdmin();
-    }
-
-
-    // =========================
-    // LIVE PHARMACIST CHAT
-    // =========================
+    match /inventory/{productId} { allow read, create, update, delete: if isStaff(); }
+    match /promotions/{promotionId} { allow read: if resource.data.active == true || isStaff(); allow create, update, delete: if isStaff(); }
+    match /website/{pageId} { allow read: if true; allow create, update, delete: if isAdmin(); }
+    match /settings/{settingId} { allow read: if true; allow create, update, delete: if isAdmin(); }
 
     match /staff/{uid} {
-      // A pharmacist/admin can read their own staff record.
-      // Authorised chat staff can read staff records as needed.
-      allow read:
-        if signedIn()
-        && (
-          request.auth.uid == uid
-          || chatStaff()
-        );
-
-      // Staff records are created/managed manually from Firebase Console.
-      allow create, update, delete:
-        if false;
+      allow read: if signedIn() && (request.auth.uid == uid || chatStaff());
+      allow create, update, delete: if false;
     }
 
     match /conversations/{conversationId} {
-
-      // Customer creates a new handoff while authenticated anonymously.
-      allow create:
-        if signedIn()
+      allow create: if signedIn()
         && request.resource.data.customerUid == request.auth.uid
         && request.resource.data.status == 'waiting'
         && request.resource.data.channel == 'website'
         && request.resource.data.privacyConsent == true;
 
-      // Only the conversation owner or authorised pharmacist staff can read.
-      allow read:
-        if chatStaff() || conversationOwner(conversationId);
+      allow read: if chatStaff() || conversationOwner(conversationId);
 
-      // Staff can manage the conversation.
-      // The customer can only update the message/status timestamps used by the UI.
-      allow update:
-        if chatStaff()
+      allow update: if chatStaff()
         || (
           conversationOwner(conversationId)
           && request.resource.data.customerUid == resource.data.customerUid
-          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
-            'status',
-            'updatedAt',
-            'lastMessageAt'
-          ])
-          && request.resource.data.status in ['waiting', 'active']
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','updatedAt','lastMessageAt','closedByCustomer','closedAt'])
+          && (
+            request.resource.data.status in ['waiting','active']
+            || (request.resource.data.status == 'closed' && request.resource.data.closedByCustomer == true)
+          )
         );
 
-      allow delete:
-        if false;
+      allow delete: if false;
 
       match /messages/{messageId} {
-
-        // Customer and authorised pharmacist can read the conversation messages.
-        allow read:
-          if chatStaff() || conversationOwner(conversationId);
-
-        // Pharmacists can write staff replies.
-        // Customers can write only their own customer messages.
-        allow create:
-          if chatStaff()
-          || (
-            conversationOwner(conversationId)
-            && request.resource.data.senderUid == request.auth.uid
-            && request.resource.data.senderType == 'customer'
-          );
-
-        allow update, delete:
-          if false;
+        allow read: if chatStaff() || conversationOwner(conversationId);
+        allow create: if chatStaff() || (conversationOwner(conversationId) && request.resource.data.senderUid == request.auth.uid && request.resource.data.senderType == 'customer');
+        allow update, delete: if false;
       }
     }
   }
