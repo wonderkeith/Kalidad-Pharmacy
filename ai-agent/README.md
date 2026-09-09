@@ -12,6 +12,8 @@ Production-oriented AI pharmacy assistant foundation for the Kalidad Pharmacy we
 - Paediatric safety guardrails and urgent red-flag escalation rules.
 - No OpenAI secret in browser code.
 - `.env.example` documents the required server secret.
+- `vercel.json` configures the chat endpoint as a serverless function.
+- `TEST-PLAN.md` defines the acceptance checks for UI, safety, grounding and deployment.
 
 ## Deployment
 GitHub Pages can serve the static website but cannot execute `api/chat.js`. Deploy the repository/branch with a serverless runtime such as Vercel, then configure `OPENAI_API_KEY` as a server environment variable.
@@ -21,9 +23,11 @@ Vercel supports separate Preview and Production environment variables. Keep the 
 ## Safety boundary
 The assistant provides general information and navigation support. It must not diagnose, prescribe prescription-only medicines, invent product availability/prices, or guess individualized paediatric doses. Cases involving infants, pregnancy/breastfeeding, allergies, interactions, serious chronic disease, uncertain dosing, or emergency symptoms should be escalated appropriately.
 
-## Next integrations when the underlying systems are available
-- Connect the real Firebase customer/account and order data.
+## Final integration points
+The codebase is ready for the external credentials and live data that are not available to this build session:
+- Set `OPENAI_API_KEY` on the Vercel deployment.
+- Connect the real Firebase customer/account and order data when those credentials are available.
 - Connect a real product inventory/price source rather than inventing stock.
 - Deliver pharmacist handoffs to the staff dashboard/WhatsApp workflow.
 - Add authenticated customer order lookup.
-- Add automated evaluation tests and monitoring for safety and reliability.
+- Run the acceptance checklist against a deployed preview before merging to `main`.
