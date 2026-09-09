@@ -1,0 +1,45 @@
+{
+  "services": [
+    "Prescription and medicine support with pharmacist guidance",
+    "Health and wellness guidance",
+    "Over-the-counter wellness products",
+    "Pharmacy customer support and pharmacist escalation",
+    "The website may advertise additional services; the agent must not invent details that are not published."
+  ],
+  "wellness_categories": [
+    {
+      "name": "Nutritional Supplements & Boosters",
+      "description": "General wellness products such as vitamins, minerals and nutritional support products. Individual suitability should be checked with a pharmacist when medicines or medical conditions are involved."
+    },
+    {
+      "name": "Personal Hygiene & Oral Care",
+      "description": "Everyday personal hygiene and oral-care essentials."
+    },
+    {
+      "name": "Skincare & Body Care",
+      "description": "Skin and body care products for routine wellness and personal care."
+    },
+    {
+      "name": "Baby Care Essentials",
+      "description": "Baby-care products. For medicines or symptoms in infants and children, pharmacist or clinician review is preferred."
+    }
+  ],
+  "contact_guidance": {
+    "location": "Kisenyi, Fort Portal, Uganda",
+    "note": "Use the contact information and WhatsApp links published on the live Kalidad Pharmacy website. Do not invent or infer phone numbers."
+  },
+  "safety": {
+    "urgent": [
+      "difficulty breathing",
+      "blue or grey lips",
+      "severe dehydration",
+      "seizure",
+      "altered consciousness",
+      "severe allergic reaction",
+      "chest pain",
+      "severe bleeding",
+      "rapidly worsening illness"
+    ],
+    "paediatric": "Never guess a child's weight, medicine concentration or individualized dose. Ask for reliable weight and product concentration where clinically appropriate and escalate uncertain cases to a pharmacist."
+  }
+}
