@@ -1,7 +1,7 @@
 /* Kalidad Pharmacy — Firebase live pharmacist chat layer. */
 import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
 import { getAuth, signInAnonymously, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
-import { getFirestore, collection, addDoc, doc, getDoc, updateDoc, query, where, onSnapshot, serverTimestamp, limit, orderBy } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+import { getFirestore, collection, addDoc, doc, getDoc, updateDoc, query, onSnapshot, serverTimestamp, limit, orderBy } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 var DEFAULT_FIREBASE_CONFIG = {
   apiKey: 'AIzaSyBK6nEm0kdCp8aYb_dbTPGB5JP2OK7JhRw',
@@ -229,43 +229,85 @@ async function requireStaffUser() {
   return { user: user, profile: snapshot.data() };
 }
 
+function conversationTime(item) {
+  return (item.updatedAt && item.updatedAt.seconds) || (item.lastMessageAt && item.lastMessageAt.seconds) || (item.createdAt && item.createdAt.seconds) || (item.resolvedAt && item.resolvedAt.seconds) || (item.closedAt && item.closedAt.seconds) || 0;
+}
+
+function normalizeStatus(status) {
+  return String(status || '').toLowerCase().trim();
+}
+
+function splitConversationQueues(snapshot) {
+  var all = snapshot.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
+  var waitingStatuses = ['waiting', 'pending', 'queued', 'new'];
+  var activeStatuses = ['active', 'assigned', 'in_progress', 'in-progress'];
+  var historyStatuses = ['resolved', 'closed', 'completed'];
+  var waiting = [];
+  var active = [];
+  var history = [];
+  for (var i = 0; i < all.length; i++) {
+    var item = all[i];
+    var status = normalizeStatus(item.status);
+    if (waitingStatuses.indexOf(status) !== -1) waiting.push(item);
+    else if (activeStatuses.indexOf(status) !== -1) active.push(item);
+    else if (historyStatuses.indexOf(status) !== -1) history.push(item);
+    else if (status) history.push(item);
+  }
+  waiting.sort(function(a, b) { return conversationTime(b) - conversationTime(a); });
+  active.sort(function(a, b) { return conversationTime(b) - conversationTime(a); });
+  history.sort(function(a, b) { return conversationTime(b) - conversationTime(a); });
+  return { all: all, waiting: waiting, active: active, history: history };
+}
+
+function showQueueError(message) {
+  if (!isPortal()) return;
+  var queue = document.getElementById('queue');
+  if (queue) queue.innerHTML = '<div class="empty">Unable to load conversations.<br><small>' + String(message || 'Firestore listener error.').replace(/[&<>]/g, '') + '</small></div>';
+}
+
 export function watchWaitingConversations(callback) {
   var initialized = false;
   return onSnapshot(
-    query(collection(db, 'conversations'), where('status', '==', 'waiting'), limit(50)),
+    query(collection(db, 'conversations'), limit(200)),
     function(snapshot) {
-      var list = snapshot.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
-      list.sort(function(a, b) { return (b.createdAt && b.createdAt.seconds || 0) - (a.createdAt && a.createdAt.seconds || 0); });
-      callback(list);
-      setWaitingVisual(list.length > 0);
+      var queues = splitConversationQueues(snapshot);
+      callback(queues.waiting);
+      setWaitingVisual(queues.waiting.length > 0);
       if (!initialized) { initialized = true; return; }
-      snapshot.docChanges().filter(function(change) { return change.type === 'added'; }).forEach(function(change) { notifyStaff(change.doc.id); });
+      snapshot.docChanges().filter(function(change) {
+        if (change.type !== 'added') return false;
+        var status = normalizeStatus(change.doc.data().status);
+        return ['waiting', 'pending', 'queued', 'new'].indexOf(status) !== -1;
+      }).forEach(function(change) { notifyStaff(change.doc.id); });
     },
-    function(error) { console.error('Waiting listener:', error); }
+    function(error) {
+      console.error('Waiting conversations listener:', error);
+      showQueueError(error && error.message ? error.message : 'Firestore permission or connection error.');
+    }
   );
 }
 
 export function watchActiveConversations(callback) {
   return onSnapshot(
-    query(collection(db, 'conversations'), where('status', '==', 'active'), limit(50)),
+    query(collection(db, 'conversations'), limit(200)),
     function(snapshot) {
-      var list = snapshot.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
-      list.sort(function(a, b) { return (b.updatedAt && b.updatedAt.seconds || 0) - (a.updatedAt && a.updatedAt.seconds || 0); });
-      callback(list);
+      callback(splitConversationQueues(snapshot).active);
     },
-    function(error) { console.error('Active listener:', error); }
+    function(error) {
+      console.error('Active conversations listener:', error);
+    }
   );
 }
 
 export function watchResolvedConversations(callback) {
   return onSnapshot(
-    query(collection(db, 'conversations'), where('status', '==', 'resolved'), limit(100)),
+    query(collection(db, 'conversations'), limit(200)),
     function(snapshot) {
-      var list = snapshot.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
-      list.sort(function(a, b) { return (b.resolvedAt && b.resolvedAt.seconds || b.updatedAt && b.updatedAt.seconds || 0) - (a.resolvedAt && a.resolvedAt.seconds || a.updatedAt && a.updatedAt.seconds || 0); });
-      callback(list);
+      callback(splitConversationQueues(snapshot).history);
     },
-    function(error) { console.error('History listener:', error); }
+    function(error) {
+      console.error('History conversations listener:', error);
+    }
   );
 }
 
