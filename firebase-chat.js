@@ -11,9 +11,22 @@ const db = getFirestore(app);
 
 let notificationPermissionRequested = false;
 let audioContext = null;
+let baseDocumentTitle = null;
 
 function isPharmacistPortal() {
   return typeof window !== 'undefined' && window.location.pathname.endsWith('/pharmacist.html');
+}
+
+function setPendingStaffTitle() {
+  if (!isPharmacistPortal()) return;
+  if (baseDocumentTitle === null) baseDocumentTitle = document.title || 'Kalidad Pharmacy | Customer Support';
+  document.title = 'You have a new message!';
+}
+
+export function clearStaffNotificationTitle() {
+  if (!isPharmacistPortal()) return;
+  document.title = baseDocumentTitle || 'Kalidad Pharmacy | Customer Support';
+  baseDocumentTitle = null;
 }
 
 async function prepareStaffNotifications() {
@@ -55,15 +68,20 @@ function playStaffChime() {
 }
 
 function showStaffNotification(conversationId) {
-  if (!isPharmacistPortal() || !('Notification' in window) || Notification.permission !== 'granted') return;
+  if (!isPharmacistPortal()) return;
+  setPendingStaffTitle();
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
   try {
-    const n = new Notification('New customer message', {
-      body: 'A customer has sent a message to the pharmacist support desk.',
+    const n = new Notification('You have a new message!', {
+      body: 'Kalidad customer care',
+      icon: '/kalidad-icon.png',
       tag: `kalidad-chat-${conversationId}`,
-      renotify: true
+      renotify: true,
+      requireInteraction: true
     });
     n.onclick = () => {
       try { window.focus(); } catch (_) {}
+      clearStaffNotificationTitle();
       try { n.close(); } catch (_) {}
     };
   } catch (_) {}
@@ -142,10 +160,20 @@ export async function staffProfile() {
 }
 
 export function watchWaitingConversations(cb) {
-  return onSnapshot(query(collection(db, 'conversations'), where('status', '==', 'waiting'), limit(50)), snapshot => cb(
-    snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
-      .sort((a, b) => ((b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)))
-  ));
+  let initialized = false;
+  return onSnapshot(query(collection(db, 'conversations'), where('status', '==', 'waiting'), limit(50)), snapshot => {
+    const conversations = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => ((b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)));
+    cb(conversations);
+    if (!initialized) {
+      initialized = true;
+      return;
+    }
+    snapshot.docChanges().filter(change => change.type === 'added').forEach(change => {
+      playStaffChime();
+      showStaffNotification(change.doc.id);
+    });
+  });
 }
 
 export function watchActiveConversations(cb) {
@@ -167,6 +195,7 @@ export function watchConversation(id, cb) {
 }
 
 export function watchStaffMessages(id, cb) {
+  clearStaffNotificationTitle();
   let initialized = false;
   return watchCustomerMessages(id, messages => {
     cb(messages);
@@ -199,6 +228,7 @@ export async function sendStaffMessage(id, body) {
 export async function updateConversation(id, fields) {
   const user = auth.currentUser;
   if (!user || user.isAnonymous) throw Error('Staff login required.');
+  fields = typeof fields === 'string' ? { status: fields } : (fields || {});
   const updates = {};
   if (['waiting', 'active', 'resolved'].includes(fields.status)) updates.status = fields.status;
   if (fields.assignedStaffUid) updates.assignedStaffUid = fields.assignedStaffUid;
@@ -215,4 +245,7 @@ export async function updateConversation(id, fields) {
   await updateDoc(doc(db, 'conversations', id), updates);
 }
 
-export async function logoutStaff() { await signOut(auth); }
+export async function logoutStaff() {
+  clearStaffNotificationTitle();
+  await signOut(auth);
+}
