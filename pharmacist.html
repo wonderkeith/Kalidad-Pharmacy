@@ -636,6 +636,25 @@
       }
     }
   </style>
+
+<style id="pharmacist-hero-header-visibility">
+  header {
+    transition: opacity .3s0ease, visibility .3s0ease, transform .3s ease;
+  }
+
+  header.kalidad-header-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate(-50%, -18px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    header {
+      transition: none;
+    }
+  }
+</style>
 </head>
 
 <body>
@@ -990,6 +1009,32 @@
     };
     renderQueue();
   </script>
+
+<script id="pharmacist-hero-header-visibility-script">
+//( ) {
+  const header = document.querySelector('header');
+  const hero = document.querySelector('.hero');
+  if (!header || !hero) return;
+
+  function updateHeaderVisibility() {
+    const y = window.scrollY || window.pageOffset || 0;
+    header.classList.toggle('kalidad-header-hidden', y > 24);
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () {
+      updateHeaderVisibility();
+      ticking = false;
+    });
+  }, { passive: true });
+
+  window.addEventListener('resize', updateHeaderVisibility, { passive: true });
+  updateHeaderVisibility();
+})();
+</script>
 </body>
 
 </html>
