@@ -3,10 +3,25 @@ import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/12.18
 import { getAuth, signInAnonymously, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
 import { getFirestore, collection, addDoc, doc, getDoc, updateDoc, query, where, onSnapshot, serverTimestamp, limit, orderBy } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
-const cfg=window.KALIDAD_FIREBASE_CONFIG;
-if(!cfg||!cfg.apiKey||cfg.apiKey.indexOf('PASTE_')===0)throw Error('Firebase web configuration is not installed.');
-const app=getApps().length?getApps()[0]:initializeApp(cfg);const auth=getAuth(app);const db=getFirestore(app);
-let notificationPermissionRequested=false,audioContext=null,baseDocumentTitle=null;
+const DEFAULT_FIREBASE_CONFIG = {
+  apiKey: 'AIzaSyBK6nEm0kdCp4aYbDBTPGB5JP2OK7JhRw',
+  authDomain: 'kalidad-pharmacy.firebaseapp.com',
+  projectId: 'kalidad-pharmacy',
+  storageBucket: 'kalidad-pharmacy.firebasestorage.app',
+  messagingSenderId: '108387190764',
+  appId: '1:108387190764:web:302264adc7dc73d7a0e2c9',
+  measurementId: 'G-XCHJSSPV6M'
+};
+
+const cfg = window.KALIDAD_FIREBASE_CONFIG && window.KALIDAD_FIREBASE_CONFIG.apiKey
+  ? window.KALIDAD_FIREBASE_CONFIG
+  : DEFAULT_FIREBASE_CONFIG;
+
+const app = getApps().length ? getApps()[0] : initializeApp(cfg);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let notificationPermissionRequested = false, audioContext = null, baseDocumentTitle = null;
 function isPharmacistPortal(){return typeof window!=='undefined'&&window.location.pathname.endsWith('/pharmacist.html')}
 function installWaitingAlertStyle(){if(!isPharmacistPortal()||document.getElementById('kalidadWaitingAlertStyle'))return;const s=document.createElement('style');s.id='kalidadWaitingAlertStyle';s.textContent='.tab.kc-pending{animation:kalidadWaitingPulse 1.15s ease-in-out infinite;background:#e6f3d9;color:#33581f;box-shadow:0 0 0 2px rgba(143,184,36,.18)}@keyframes kalidadWaitingPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(143,184,36,.12)}50%{transform:scale(1.035);box-shadow:0 0 0 6px rgba(143,184,36,.16)}}';document.head.appendChild(s)}
 function setWaitingVisual(hasWaiting){if(!isPharmacistPortal())return;installWaitingAlertStyle();const tab=document.getElementById('waitingTab');if(!tab)return;tab.classList.toggle('kc-pending',!!hasWaiting);tab.setAttribute('aria-label',hasWaiting?'Waiting conversations — new customer requests pending':'Waiting conversations')}
