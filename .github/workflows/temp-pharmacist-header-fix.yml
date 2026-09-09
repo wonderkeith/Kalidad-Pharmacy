@@ -1,0 +1,32 @@
+name: Temporary pharmacist header correction
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/temp-pharmacist-header-fix.yml']
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Correct isolated header code
+        run: python3 -c "from pathlib import Path; p=Path('pharmacist.html'); s=p.read_text(encoding='utf-8'); s=s.replace('opacity .3s0ease','opacity .3s ease').replace('visibility .3s0ease','visibility .3s ease').replace('//( ) {','(function () {').replace('window.pageOffset','window.pageYOffset'); p.write_text(s,encoding='utf-8')"
+      - name: Verify and commit only pharmacist.html
+        run: |
+          git diff --check
+          test "$(git status --short | wc -l | tr -d ' ')" = "1"
+          test "$(git status --short | awk '{print $2}')" = "pharmacist.html"
+          grep -q "opacity .3s ease" pharmacist.html
+          grep -q "visibility .3s ease" pharmacist.html
+          grep -q "(function () {" pharmacist.html
+          grep -q "window.pageYOffset" pharmacist.html
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pharmacist.html
+          git rm .github/workflows/temp-pharmacist-header-fix.yml
+          git commit -m "Correct pharmacist header visibility code"
+          git push origin main
