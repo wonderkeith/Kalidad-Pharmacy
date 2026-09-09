@@ -7,7 +7,6 @@ permissions:
   contents: write
 jobs:
   update:
-    if: startsWith(github.event.head_commit.message, 'TEMP: pharmacist header behavior')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,8 +14,8 @@ jobs:
           ref: main
           fetch-depth: 0
       - name: Apply isolated header behavior
-        shell: python
         run: |
+          python3 <<'PY'
           from pathlib import Path
 
           path = Path('pharmacist.html')
@@ -81,15 +80,12 @@ jobs:
           path.write_text(text, encoding='utf-8')
 
           updated = path.read_text(encoding='utf-8')
-          assert style_id in updated
-          assert script_id in updated
           assert updated.count(style_id) == 1
           assert updated.count(script_id) == 1
+          PY
       - name: Verify and commit only pharmacist.html
-        shell: bash
         run: |
           git diff --check
-          git status --short
           test "$(git status --short | wc -l | tr -d ' ')" = "1"
           test "$(git status --short | awk '{print $2}')" = "pharmacist.html"
           git config user.name "github-actions[bot]"
