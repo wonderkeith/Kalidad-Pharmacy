@@ -1,7 +1,7 @@
 /* Kalidad Pharmacy — Firebase live pharmacist chat layer. */
 import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
 import { getAuth, signInAnonymously, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
-import { getFirestore, collection, addDoc, doc, getDoc, updateDoc, query, where, onSnapshot, serverTimestamp, limit, orderBy } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+import { getFirestore, collection, addDoc, doc, getDoc, updateDoc, query, where, onSnapshot, serverTimestamp, limit } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 var DEFAULT_FIREBASE_CONFIG = {
   apiKey: 'AIzaSyBK6nEm0kdCp8aYb_dbTPGB5JP2OK7JhRw',
@@ -166,9 +166,16 @@ export async function closeCustomerConversation(conversationId) {
 
 export function watchCustomerMessages(id, callback, onError) {
   return onSnapshot(
-    query(collection(db, CHAT_COLLECTION, id, 'messages'), orderBy('createdAt', 'asc'), limit(100)),
+    query(collection(db, CHAT_COLLECTION, id, 'messages'), limit(200)),
     function(snapshot) {
-      callback(snapshot.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); }));
+      var messages = snapshot.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
+      messages.sort(function(a, b) {
+        var at = a.createdAt && typeof a.createdAt.toMillis === 'function' ? a.createdAt.toMillis() : 0;
+        var bt = b.createdAt && typeof b.createdAt.toMillis === 'function' ? b.createdAt.toMillis() : 0;
+        if (at !== bt) return at - bt;
+        return String(a.id).localeCompare(String(b.id));
+      });
+      callback(messages);
     },
     function(error) {
       console.error('Customer message listener:', error);
