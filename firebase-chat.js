@@ -17,6 +17,23 @@ function isPharmacistPortal() {
   return typeof window !== 'undefined' && window.location.pathname.endsWith('/pharmacist.html');
 }
 
+function installWaitingAlertStyle() {
+  if (!isPharmacistPortal() || document.getElementById('kalidadWaitingAlertStyle')) return;
+  const s = document.createElement('style');
+  s.id = 'kalidadWaitingAlertStyle';
+  s.textContent = '.tab.kc-pending{animation:kalidadWaitingPulse 1.15s ease-in-out infinite;background:#e6f3d9;color:#33581f;box-shadow:0 0 0 2px rgba(143,184,36,.18)}@keyframes kalidadWaitingPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(143,184,36,.12)}50%{transform:scale(1.035);box-shadow:0 0 0 6px rgba(143,184,36,.16)}}';
+  document.head.appendChild(s);
+}
+
+function setWaitingVisual(hasWaiting) {
+  if (!isPharmacistPortal()) return;
+  installWaitingAlertStyle();
+  const tab = document.getElementById('waitingTab');
+  if (!tab) return;
+  tab.classList.toggle('kc-pending', !!hasWaiting);
+  tab.setAttribute('aria-label', hasWaiting ? 'Waiting conversations — new customer requests pending' : 'Waiting conversations');
+}
+
 function setPendingStaffTitle() {
   if (!isPharmacistPortal()) return;
   if (baseDocumentTitle === null) baseDocumentTitle = document.title || 'Kalidad Pharmacy | Customer Support';
@@ -32,9 +49,11 @@ export function clearStaffNotificationTitle() {
 async function prepareStaffNotifications() {
   if (!isPharmacistPortal() || notificationPermissionRequested) return;
   notificationPermissionRequested = true;
+
   if ('Notification' in window && Notification.permission === 'default') {
     try { await Notification.requestPermission(); } catch (_) {}
   }
+
   try {
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     if (AudioCtx) {
@@ -123,6 +142,19 @@ export async function sendCustomerMessage(conversationId, body) {
   });
 }
 
+export async function closeCustomerConversation(conversationId) {
+  const user = await ensureCustomer();
+  const ref = doc(db, 'conversations', conversationId);
+  const snapshot = await getDoc(ref);
+  if (!snapshot.exists() || snapshot.data().customerUid !== user.uid) throw Error('Conversation not found.');
+  const status = snapshot.data().status;
+  if (status === 'closed' || status === 'resolved') return;
+  await updateDoc(ref, {
+    status: 'closed', closedByCustomer: true, closedAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+  });
+}
+
 export function watchCustomerMessages(id, cb) {
   const q = query(collection(db, 'conversations', id, 'messages'), limit(100));
   return onSnapshot(q, snapshot => cb(snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
@@ -162,6 +194,7 @@ export function watchWaitingConversations(cb) {
     const conversations = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
       .sort((a, b) => ((b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)));
     cb(conversations);
+    setWaitingVisual(conversations.length > 0);
     if (!initialized) {
       initialized = true;
       return;
@@ -193,7 +226,11 @@ export function watchConversation(id, cb) {
 
 export function watchStaffMessages(id, cb) {
   clearStaffNotificationTitle();
-  return watchCustomerMessages(id, messages => cb(messages));
+  let initialized = false;
+  return watchCustomerMessages(id, messages => {
+    cb(messages);
+    if (!initialized) initialized = true;
+  });
 }
 
 export async function sendStaffMessage(id, body) {
