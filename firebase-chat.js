@@ -32,11 +32,9 @@ export function clearStaffNotificationTitle() {
 async function prepareStaffNotifications() {
   if (!isPharmacistPortal() || notificationPermissionRequested) return;
   notificationPermissionRequested = true;
-
   if ('Notification' in window && Notification.permission === 'default') {
     try { await Notification.requestPermission(); } catch (_) {}
   }
-
   try {
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     if (AudioCtx) {
@@ -56,7 +54,6 @@ function playStaffChime() {
     gain.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.55);
     gain.connect(audioContext.destination);
-
     const osc = audioContext.createOscillator();
     osc.type = 'sine';
     osc.frequency.setValueAtTime(740, now);
@@ -196,19 +193,7 @@ export function watchConversation(id, cb) {
 
 export function watchStaffMessages(id, cb) {
   clearStaffNotificationTitle();
-  let initialized = false;
-  return watchCustomerMessages(id, messages => {
-    cb(messages);
-    if (!initialized) {
-      initialized = true;
-      return;
-    }
-    const latest = messages[messages.length - 1];
-    if (latest?.senderType === 'customer') {
-      playStaffChime();
-      showStaffNotification(id);
-    }
-  });
+  return watchCustomerMessages(id, messages => cb(messages));
 }
 
 export async function sendStaffMessage(id, body) {
