@@ -2,6 +2,10 @@ import OpenAI from 'openai';
 import knowledge from '../ai-agent/knowledge.json' with { type: 'json' };
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const MODEL = process.env.OPENAI_MODEL || 'gpt-5.6-luna';
+const MAX_MESSAGE_LENGTH = 4000;
+const MAX_HISTORY_ITEMS = 12;
+const REQUEST_TIMEOUT_MS = 25000;
 
 const SYSTEM_PROMPT = `You are Kalidad Pharmacy's AI Pharmacy Assistant for a community pharmacy in Uganda.
 
@@ -77,64 +81,103 @@ function runTool(name, args) {
   return JSON.stringify({ error: 'Unknown tool' });
 }
 
+function json(res, status, payload) {
+  res.status(status).setHeader('Content-Type', 'application/json; charset=utf-8').json(payload);
+}
+
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-  if (!process.env.OPENAI_API_KEY) return res.status(503).json({ error: 'AI service is not configured' });
+  res.setHeader('Cache-Control', 'no-store, max-age=0');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'no-referrer');
+
+  // Lightweight health endpoint for deployment checks. Never exposes the secret.
+  if (req.method === 'GET') {
+    return json(res, 200, {
+      ok: true,
+      service: 'Kalidad AI Pharmacy Assistant',
+      configured: Boolean(process.env.OPENAI_API_KEY),
+      model: MODEL
+    });
+  }
+
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'GET, POST');
+    return json(res, 405, { error: 'Method not allowed' });
+  }
+
+  if (!process.env.OPENAI_API_KEY) {
+    return json(res, 503, { error: 'AI service is not configured' });
+  }
 
   try {
-    const { message, history = [] } = req.body || {};
-    if (!message || typeof message !== 'string' || message.length > 4000) {
-      return res.status(400).json({ error: 'A valid message is required' });
+    const body = req.body || {};
+    const message = typeof body.message === 'string' ? body.message.trim() : '';
+
+    if (!message || message.length > MAX_MESSAGE_LENGTH) {
+      return json(res, 400, { error: 'A valid message is required' });
     }
 
-    const safeHistory = Array.isArray(history)
-      ? history
+    const safeHistory = Array.isArray(body.history)
+      ? body.history
           .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
-          .slice(-12)
+          .map(m => ({ role: m.role, content: m.content.slice(0, MAX_MESSAGE_LENGTH) }))
+          .slice(-MAX_HISTORY_ITEMS)
       : [];
 
-    let response = await client.responses.create({
-      model: 'gpt-5.6-luna',
-      instructions: SYSTEM_PROMPT,
-      input: [...safeHistory, { role: 'user', content: message }],
-      tools,
-      tool_choice: 'auto',
-      max_output_tokens: 900,
-      safety_identifier: 'kalidad-public-web-user'
-    });
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
-    for (let round = 0; round < 3; round += 1) {
-      const calls = (response.output || []).filter(item => item.type === 'function_call');
-      if (!calls.length) break;
-
-      const outputs = calls.map(call => {
-        let args = {};
-        try { args = JSON.parse(call.arguments || '{}'); } catch (_) {}
-        return {
-          type: 'function_call_output',
-          call_id: call.call_id,
-          output: runTool(call.name, args)
-        };
-      });
-
-      response = await client.responses.create({
-        model: 'gpt-5.6-luna',
+    try {
+      let response = await client.responses.create({
+        model: MODEL,
         instructions: SYSTEM_PROMPT,
-        previous_response_id: response.id,
-        input: outputs,
+        input: [...safeHistory, { role: 'user', content: message }],
         tools,
         tool_choice: 'auto',
         max_output_tokens: 900,
-        safety_identifier: 'kalidad-public-web-user'
+        safety_identifier: 'kalidad-public-web-user',
+        signal: controller.signal
       });
-    }
 
-    return res.status(200).json({
-      reply: response.output_text || 'I could not complete that request. Please speak with a Kalidad pharmacist.',
-      response_id: response.id
-    });
+      for (let round = 0; round < 3; round += 1) {
+        const calls = (response.output || []).filter(item => item.type === 'function_call');
+        if (!calls.length) break;
+
+        const outputs = calls.map(call => {
+          let args = {};
+          try { args = JSON.parse(call.arguments || '{}'); } catch (_) {}
+          return {
+            type: 'function_call_output',
+            call_id: call.call_id,
+            output: runTool(call.name, args)
+          };
+        });
+
+        response = await client.responses.create({
+          model: MODEL,
+          instructions: SYSTEM_PROMPT,
+          previous_response_id: response.id,
+          input: outputs,
+          tools,
+          tool_choice: 'auto',
+          max_output_tokens: 900,
+          safety_identifier: 'kalidad-public-web-user',
+          signal: controller.signal
+        });
+      }
+
+      return json(res, 200, {
+        reply: response.output_text || 'I could not complete that request. Please speak with a Kalidad pharmacist.',
+        response_id: response.id
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
   } catch (error) {
     console.error('Kalidad AI agent error:', error);
-    return res.status(500).json({ error: 'AI service unavailable' });
+    if (error?.name === 'AbortError') {
+      return json(res, 504, { error: 'AI request timed out. Please try again.' });
+    }
+    return json(res, 500, { error: 'AI service unavailable' });
   }
 }
