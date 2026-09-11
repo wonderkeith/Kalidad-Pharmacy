@@ -1,35 +1,306 @@
-/* Kalidad Pharmacy — Guided service assistant + Firebase live pharmacist chat. */
-(function(){'use strict';
-var WA='256759845260',PHONE='+256 759 845 260',history=[],busy=false,liveId=null,firebase=null,shown={},opened=false,liveUnsub=null,conversationUnsub=null;
-var WELCOME='Hi! I’m Kalidad Pharmacy’s virtual assistant. How can I assist you today?';
-var SERVICE_CATALOG=[
-  {id:'prescription',label:'Prescription filling',detail:'Our prescription filling service helps you get your prescribed medicines prepared by the pharmacy team. Bring or submit a valid prescription and our team can guide you through the next steps, subject to pharmacist review and medicine availability.'},
-  {id:'otc-wellness',label:'OTC & wellness products',detail:'We offer over-the-counter and wellness products across nutritional supplements and boosters, personal hygiene and oral care, skincare and body care, and baby care essentials. Our team can help you find the appropriate products available at Kalidad Pharmacy.'},
-  {id:'health-checks',label:'Free health checks',detail:'Kalidad Pharmacy offers free health checks as part of its community pharmacy services. The pharmacy team can explain the checks currently available and guide you through the service.'},
-  {id:'delivery',label:'Same-day delivery',detail:'We offer same-day delivery. Delivery coverage, timing and order details are confirmed by the Kalidad Pharmacy team for your request.'},
-  {id:'consultation',label:'Pharmacist consultation',detail:'You can speak with a Kalidad pharmacist for medication and health-related guidance. For personal symptoms, treatment choices or medicine questions, a live pharmacist is the right next step.'},
-  {id:'refills',label:'Refill reminders',detail:'Our refill reminder service helps you remember when it is time to arrange a medicine refill. The Kalidad Pharmacy team can explain how the reminder service works and help you get started.'}
-];
-function api(){var m=document.querySelector('meta[name="kalidad-chat-api"]'),x=(window.KALIDAD_CHAT_API_BASE||(m&&m.content)||'').trim();if(!x&&/\.vercel\.app$/i.test(location.hostname))x=location.origin;if(!x&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1')x='https://kalidad-pharmacy.vercel.app';return x.replace(/\/+$/,'')||location.origin}
-function wa(t){return'https://wa.me/'+WA+'?text='+encodeURIComponent(t)}
-var s=document.createElement('style');s.textContent='.kc-bubble{position:fixed;right:20px;bottom:24px;z-index:1000;width:56px;height:56px;border:0;border-radius:50%;background:#163427;color:#fff;box-shadow:0 10px 24px #0004;cursor:pointer;font-size:24px}.kc-panel{position:fixed;right:20px;bottom:90px;z-index:1000;width:min(370px,calc(100vw - 32px));max-height:75vh;background:#fff;border-radius:18px;box-shadow:0 20px 50px #0004;display:none;flex-direction:column;overflow:hidden;border:1px solid #dfe5df;font:15px/1.45 system-ui,sans-serif}.kc-panel.open{display:flex}.kc-head{background:#163427;color:#fff;padding:14px 16px;display:flex;justify-content:space-between}.kc-head strong{font:700 16px Georgia,serif}.kc-head small{display:block;opacity:.8;font-size:11px}.kc-close{background:none;border:0;color:#fff;font-size:21px}.kc-messages{flex:1;overflow:auto;padding:14px;background:#f6f4ec;scroll-behavior:smooth}.kc-msg{max-width:88%;margin:0 0 10px;padding:10px 12px;border-radius:14px;white-space:pre-wrap;word-break:break-word}.kc-msg.bot{background:#edf5e8;color:#163427}.kc-msg.user{background:#163427;color:#fff;margin-left:auto}.kc-msg.system{background:transparent;color:#63746d;font-size:11px;padding:2px 4px}.kc-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}.kc-actions button,.kc-actions a{border:1px solid #dfe5df;background:#fff;color:#163427;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer}.kc-actions .primary{background:#163427;color:#fff}.kc-quick{display:flex;flex-wrap:wrap;gap:7px;padding:0 14px 10px;background:#f6f4ec}.kc-quick button{border:1px solid #dfe5df;background:#fff;border-radius:999px;padding:7px 10px;font-size:12px;color:#163427;font-weight:700;cursor:pointer}.kc-quick button.primary{background:#163427;color:#fff;border-color:#163427}.kc-links{display:flex;gap:8px;padding:9px 14px;background:#f6f4ec;border-top:1px solid #dfe5df}.kc-links a{flex:1;text-align:center;text-decoration:none;font-size:12px;font-weight:700;border-radius:999px;padding:8px}.kc-links .wa{background:#163427;color:#fff}.kc-links .tel{background:#fff;color:#163427;border:1px solid #163427}.kc-form{display:flex;gap:8px;padding:12px;border-top:1px solid #dfe5df}.kc-form input{flex:1;min-width:0;border:1px solid #dfe5df;border-radius:999px;padding:10px 14px;font:inherit}.kc-form button{border:0;background:#163427;color:#fff;border-radius:999px;padding:0 16px;font-weight:700}.kc-form input:disabled,.kc-form button:disabled{opacity:.55;cursor:not-allowed}.kc-resume{background:#edf5e8;border:1px solid #dfe5df;border-radius:14px;padding:11px 12px;margin-bottom:10px;font-size:12px}.kc-resume button{margin-top:7px;border:0;background:#163427;color:#fff;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:700;cursor:pointer}.kc-consent{background:#fff;border:1px solid #dfe5df;border-radius:14px;padding:12px;margin-top:8px;font-size:12px}.kc-live-actions{display:flex;gap:7px;padding:8px 14px;background:#f6f4ec;border-top:1px solid #dfe5df}.kc-live-actions button{flex:1;border:1px solid #dfe5df;background:#fff;color:#163427;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:700;cursor:pointer}.kc-live-actions .danger{border-color:#d9b9b2;background:#f7e7e3;color:#6e3027}.kc-live-actions .primary{background:#163427;color:#fff;border-color:#163427}@media(max-width:480px){.kc-panel{right:16px;bottom:84px;width:calc(100vw - 32px);max-height:78vh}.kc-bubble{right:16px;bottom:20px}}';document.head.appendChild(s);
-var quickHtml=SERVICE_CATALOG.map(function(x){return'<button type="button" data-service="'+x.id+'">'+x.label+'</button>'}).join('')+'<button type="button" class="primary" data-service="pharmacist">🧑‍⚕️ Chat with a pharmacist</button>';
-var r=document.createElement('div');r.innerHTML='<button class="kc-bubble" id="kcB" aria-label="Open Kalidad Pharmacy chat">💬</button><div class="kc-panel" id="kcP"><div class="kc-head"><div><strong>Kalidad Pharmacy</strong><small id="kcMode">Choose a service</small></div><button class="kc-close" id="kcC" aria-label="Close chat">×</button></div><div class="kc-messages" id="kcM"></div><div class="kc-quick" id="kcQ">'+quickHtml+'</div><div class="kc-live-actions" id="kcLiveActions" style="display:none"><button class="danger" id="kcCloseLive" type="button">Close chat</button><button class="primary" id="kcNewLive" type="button" style="display:none">Start a new conversation</button></div><div class="kc-links"><a class="wa" target="_blank" rel="noopener" href="'+wa('Hello Kalidad Pharmacy, I need help.')+'">WhatsApp</a><a class="tel" href="tel:+256759845260">Call '+PHONE+'</a></div><form class="kc-form" id="kcF"><input id="kcI" maxlength="600" placeholder="Choose a service above" autocomplete="off" disabled><button disabled>Send</button></form></div>';document.body.appendChild(r);
-var B=document.getElementById('kcB'),P=document.getElementById('kcP'),C=document.getElementById('kcC'),M=document.getElementById('kcM'),Q=document.getElementById('kcQ'),F=document.getElementById('kcF'),I=document.getElementById('kcI'),MODE=document.getElementById('kcMode'),LIVEA=document.getElementById('kcLiveActions'),CLOSELIVE=document.getElementById('kcCloseLive'),NEWLIVE=document.getElementById('kcNewLive');
-function say(t,c){var e=document.createElement('div');e.className='kc-msg '+(c||'bot');e.textContent=t;M.appendChild(e);requestAnimationFrame(function(){e.scrollIntoView({behavior:'smooth',block:'end'});M.scrollTop=M.scrollHeight;setTimeout(function(){M.scrollTop=M.scrollHeight},250)});return e}
-function addServiceActions(){var e=document.createElement('div');e.className='kc-msg bot';e.innerHTML='<b>Need more info?</b><div class="kc-actions"><button class="primary" type="button" id="kcH">🧑‍⚕️ Chat live with a pharmacist</button><button type="button" id="kcMore">More services</button></div>';M.appendChild(e);requestAnimationFrame(function(){e.scrollIntoView({behavior:'smooth',block:'end');M.scrollTop=M.scrollHeight});document.getElementById('kcH').onclick=consent;document.getElementById('kcMore').onclick=function(){showServices(true)}}
-function showServices(withPrompt){Q.style.display='flex';setLiveUi('general');if(withPrompt)say('What else can I help you with?','bot');requestAnimationFrame(function(){Q.scrollIntoView({behavior:'smooth',block:'end'});})}
-async function fb(){if(firebase)return firebase;if(!window.KALIDAD_FIREBASE_CONFIG)await new Promise(function(ok,no){var x=document.createElement('script');x.src='/firebase-chat-config.js';x.onload=ok;x.onerror=no;document.head.appendChild(x)});firebase=await import('/firebase-chat.js');return firebase}
-function setLiveUi(state){var states={general:['','Choose a service',true],connecting:['Connecting to pharmacist…','Connecting…',true],waiting:['You’re in the pharmacist queue.','Waiting for pharmacist',true],active:['A pharmacist has joined your chat.','Live pharmacist',false],resolved:['This pharmacist chat has been resolved.','Chat resolved',true],closed:['This chat has been closed.','Chat closed',true]};var x=states[state]||states.general;MODE.textContent=x[1];I.placeholder=state==='resolved'||state==='closed'?'Chat closed':state==='general'?'Choose a service above':'Message your pharmacist…';I.disabled=x[2];F.querySelector('button').disabled=x[2];LIVEA.style.display=(state==='waiting'||state==='active'||state==='resolved'||state==='closed')?'flex':'none';CLOSELIVE.style.display=(state==='waiting'||state==='active')?'block':'none';NEWLIVE.style.display=(state==='resolved'||state==='closed')?'block':'none';return x[0]}
-function renderResume(c){if(!c||!liveId)return;var e=document.createElement('div');e.className='kc-resume';e.innerHTML='<b>You have an existing pharmacist conversation.</b><br>Status: '+(c.status==='resolved'?'Resolved':c.status==='closed'?'Closed':c.status==='active'?'Active with pharmacist':'Waiting for pharmacist')+'.<br><button id="kcResume">Continue chat</button>';M.appendChild(e);document.getElementById('kcResume').onclick=function(){e.remove();watchLive(liveId)}}
-function consent(){var e=document.createElement('div');e.className='kc-consent';e.innerHTML='<b>Connect to a pharmacist</b><p>Your chat will be placed in the Kalidad pharmacist queue so a team member can reply here. Do not send passwords, PINs, card details or payment credentials.</p><label><input id="kcOK" type="checkbox"> I agree to continue with pharmacist support.</label><div class="kc-actions"><button class="primary" id="kcGo">Connect me</button><button id="kcNo">Cancel</button></div>';M.appendChild(e);requestAnimationFrame(function(){e.scrollIntoView({behavior:'smooth',block:'end');M.scrollTop=M.scrollHeight});document.getElementById('kcGo').onclick=function(){if(document.getElementById('kcOK').checked)startLive(e)};document.getElementById('kcNo').onclick=function(){e.remove()}}
-function watchLive(id){if(liveUnsub)liveUnsub();if(conversationUnsub)conversationUnsub();fb().then(async function(f){try{await f.ensureCustomer()}catch(e){console.error('Customer authentication for live chat:',e);setLiveUi('general');showServices(false);say('Your live pharmacist connection could not be authenticated. Please start a new conversation.','system');return}setLiveUi('waiting');liveUnsub=f.watchCustomerMessages(id,function(ms){ms.forEach(function(x){if(!shown[x.id]){shown[x.id]=1;if(x.senderType==='staff')say(x.body,'bot')}});var latest=ms[ms.length-1];if(latest&&latest.senderType==='staff')setLiveUi('active')},function(e){console.error('Customer live message listener:',e);setLiveUi('general');showServices(false);say('Live pharmacist messages are temporarily unavailable. Please refresh the page or use WhatsApp instead.','system')});conversationUnsub=f.watchConversation(id,function(c){if(!c){setLiveUi('closed');return}if(c.status==='resolved'){setLiveUi('resolved');say('This conversation has been resolved by the pharmacist. You can start a new pharmacist chat if you need further help.','system');try{sessionStorage.removeItem('kalidad_live_chat_id')}catch(_){}}else if(c.status==='closed'){setLiveUi('closed');say('You have closed this pharmacist conversation. You can start a new pharmacist chat whenever you need help.','system');try{sessionStorage.removeItem('kalidad_live_chat_id')}catch(_){}}else if(c.status==='active'){setLiveUi('active')}else if(c.status==='waiting'){setLiveUi('waiting')}})})}
-async function startLive(box){if(box)box.remove();setLiveUi('connecting');say('Connecting you securely to the Kalidad pharmacist team…','system');try{var f=await fb();liveId=await f.createHandoff({history:history,reason:'service-handoff'});try{sessionStorage.setItem('kalidad_live_chat_id',liveId)}catch(_){}Q.style.display='none';setLiveUi('waiting');say('You’re in the pharmacist queue. Keep this chat open; your pharmacist will reply here when they join.','system');watchLive(liveId)}catch(e){console.error(e);setLiveUi('general');showServices(false);say('We could not connect you to the live pharmacist right now. You can continue on WhatsApp instead.','bot');var a=document.createElement('a');a.href=wa('Hello Kalidad Pharmacy, I need to speak with a pharmacist.');a.target='_blank';a.rel='noopener';a.textContent='Open WhatsApp →';a.style='font-weight:700;color:#163427';M.appendChild(a);requestAnimationFrame(function(){a.scrollIntoView({behavior:'smooth',block:'end');M.scrollTop=M.scrollHeight})}}
-async function sendLive(t){if(!liveId)return;var status=await getLiveStatus();if(status==='resolved'||status==='closed'){say('This pharmacist chat is closed. Please start a new pharmacist chat if you need further help.','system');setLiveUi(status);return}say(t,'user');I.disabled=true;F.querySelector('button').disabled=true;try{await(await fb()).sendCustomerMessage(liveId,t)}catch(e){console.error('Live customer message error:',e);say('Your message could not be sent because the connection was interrupted. Please try again.','system')}finally{var st=await getLiveStatus();var closed=st==='resolved'||st==='closed';if(!closed)setLiveUi(st==='waiting'?'waiting':'active');else setLiveUi(st)}}
-async function getLiveStatus(){try{return(await(await fb()).getCustomerConversation(liveId)).status}catch(_){return'active'}}
-async function closeLive(){if(!liveId)return;if(!confirm('Close this pharmacist conversation? You can start a new conversation later.'))return;CLOSELIVE.disabled=true;var id=liveId;try{var f=await fb();var current=await f.getCustomerConversation(id);if(['closed','resolved'].includes(current.status)){setLiveUi(current.status);return}await f.closeCustomerConversation(id);var closed=await f.getCustomerConversation(id);if(closed.status!=='closed')throw Error('The conversation did not close.');setLiveUi('closed')}catch(e){console.error('Close pharmacist chat error:',e);say('We could not close the chat right now. Please try again.','system')}finally{CLOSELIVE.disabled=false}}
-function startNewConversation(){if(liveUnsub)liveUnsub();if(conversationUnsub)conversationUnsub();liveUnsub=null;conversationUnsub=null;liveId=null;history=[];shown={};try{sessionStorage.removeItem('kalidad_live_chat_id')}catch(_){}M.innerHTML='';Q.style.display='flex';setLiveUi('general');say(WELCOME,'bot');I.focus()}
-function selectService(id){if(busy||liveId)return;if(id==='pharmacist'){consent();return}var service=SERVICE_CATALOG.find(function(x){return x.id===id});if(!service)return;Q.style.display='none';history.push({role:'user',content:service.label});history.push({role:'assistant',content:service.detail});history=history.slice(-10);say(service.label,'user');say(service.detail,'bot');addServiceActions()}
-function restoreLive(){try{var id=sessionStorage.getItem('kalidad_live_chat_id');if(!id)return;fb().then(function(f){f.getCustomerConversation(id).then(function(c){if(['resolved','closed'].includes(c.status)){sessionStorage.removeItem('kalidad_live_chat_id');return}liveId=id;Q.style.display='none';renderResume(c)}).catch(function(){sessionStorage.removeItem('kalidad_live_chat_id')})})}catch(_){} }
-B.onclick=function(){opened=true;P.classList.add('open');if(!M.children.length){say(WELCOME,'bot');showServices(false)}restoreLive();I.focus()};C.onclick=function(){opened=false;P.classList.remove('open')};Q.querySelectorAll('button').forEach(function(b){b.onclick=function(){selectService(b.dataset.service)}});F.onsubmit=function(e){e.preventDefault();var t=I.value.trim();if(t&&liveId)sendLive(t)};CLOSELIVE.onclick=closeLive;NEWLIVE.onclick=startNewConversation;
+/* Kalidad Pharmacy — guided service assistant + live pharmacist chat */
+(function () {
+  'use strict';
+
+  var WA = '256759845260';
+  var PHONE = '+256 759 845 260';
+  var WELCOME = 'Hi! I’m Kalidad Pharmacy’s virtual assistant. How can I assist you today?';
+  var history = [];
+  var liveId = null;
+  var firebase = null;
+  var liveUnsub = null;
+  var conversationUnsub = null;
+  var shown = {};
+
+  var SERVICES = [
+    { id: 'prescription', label: 'Prescription filling', detail: 'Our prescription filling service helps you get your prescribed medicines prepared by the pharmacy team. Bring or submit a valid prescription and our team can guide you through the next steps, subject to pharmacist review and medicine availability.' },
+    { id: 'otc-wellness', label: 'OTC & wellness products', detail: 'We offer over-the-counter and wellness products across nutritional supplements and boosters, personal hygiene and oral care, skincare and body care, and baby care essentials. Our team can help you find the appropriate products available at Kalidad Pharmacy.' },
+    { id: 'health-checks', label: 'Free health checks', detail: 'Kalidad Pharmacy offers free health checks as part of its community pharmacy services. The pharmacy team can explain the checks currently available and guide you through the service.' },
+    { id: 'delivery', label: 'Same-day delivery', detail: 'We offer same-day delivery. Delivery coverage, timing and order details are confirmed by the Kalidad Pharmacy team for your request.' },
+    { id: 'consultation', label: 'Pharmacist consultation', detail: 'You can speak with a Kalidad pharmacist for medication and health-related guidance. For personal symptoms, treatment choices or medicine questions, a live pharmacist is the right next step.' },
+    { id: 'refills', label: 'Refill reminders', detail: 'Our refill reminder service helps you remember when it is time to arrange a medicine refill. The Kalidad Pharmacy team can explain how the reminder service works and help you get started.' }
+  ];
+
+  function wa(text) {
+    return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(text);
+  }
+
+  var style = document.createElement('style');
+  style.textContent = [
+    '.kc-bubble{position:fixed!important;right:20px!important;bottom:24px!important;z-index:2147483647!important;width:58px!important;height:58px!important;display:flex!important;align-items:center!important;justify-content:center!important;border:0!important;border-radius:50%!important;background:#163427!important;color:#fff!important;box-shadow:0 10px 28px rgba(0,0,0,.28)!important;cursor:pointer!important;font-size:25px!important;line-height:1!important;padding:0!important;visibility:visible!important;opacity:1!important}',
+    '.kc-panel{position:fixed!important;right:20px!important;bottom:92px!important;z-index:2147483647!important;width:min(380px,calc(100vw - 32px))!important;max-height:76vh!important;background:#fff!important;border-radius:18px!important;box-shadow:0 20px 55px rgba(0,0,0,.28)!important;display:none;flex-direction:column;overflow:hidden;border:1px solid #dfe5df!important;font:15px/1.45 system-ui,sans-serif!important}',
+    '.kc-panel.open{display:flex!important}',
+    '.kc-head{background:#163427!important;color:#fff!important;padding:14px 16px!important;display:flex!important;justify-content:space-between!important;align-items:center!important}',
+    '.kc-head strong{font:700 16px Georgia,serif!important}.kc-head small{display:block;opacity:.8;font-size:11px!important}.kc-close{background:none!important;border:0!important;color:#fff!important;font-size:21px!important;cursor:pointer!important}',
+    '.kc-messages{flex:1;overflow:auto;padding:14px;background:#f6f4ec;scroll-behavior:smooth}.kc-msg{max-width:88%;margin:0 0 10px;padding:10px 12px;border-radius:14px;white-space:pre-wrap;word-break:break-word}.kc-msg.bot{background:#edf5e8;color:#163427}.kc-msg.user{background:#163427;color:#fff;margin-left:auto}.kc-msg.system{background:transparent;color:#63746d;font-size:11px;padding:2px 4px}',
+    '.kc-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}.kc-actions button{border:1px solid #dfe5df;background:#fff;color:#163427;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:700;cursor:pointer}.kc-actions .primary{background:#163427;color:#fff}',
+    '.kc-quick{display:flex;flex-wrap:wrap;gap:7px;padding:0 14px 10px;background:#f6f4ec}.kc-quick button{border:1px solid #dfe5df;background:#fff;border-radius:999px;padding:7px 10px;font-size:12px;color:#163427;font-weight:700;cursor:pointer}.kc-quick button.primary{background:#163427;color:#fff;border-color:#163427}',
+    '.kc-links{display:flex;gap:8px;padding:9px 14px;background:#f6f4ec;border-top:1px solid #dfe5df}.kc-links a{flex:1;text-align:center;text-decoration:none;font-size:12px;font-weight:700;border-radius:999px;padding:8px}.kc-links .wa{background:#163427;color:#fff}.kc-links .tel{background:#fff;color:#163427;border:1px solid #163427}',
+    '.kc-form{display:flex;gap:8px;padding:12px;border-top:1px solid #dfe5df}.kc-form input{flex:1;min-width:0;border:1px solid #dfe5df;border-radius:999px;padding:10px 14px;font:inherit}.kc-form button{border:0;background:#163427;color:#fff;border-radius:999px;padding:0 16px;font-weight:700}.kc-form input:disabled,.kc-form button:disabled{opacity:.55;cursor:not-allowed}',
+    '.kc-consent{background:#fff;border:1px solid #dfe5df;border-radius:14px;padding:12px;margin-top:8px;font-size:12px}.kc-live-actions{display:flex;gap:7px;padding:8px 14px;background:#f6f4ec;border-top:1px solid #dfe5df}.kc-live-actions button{flex:1;border:1px solid #dfe5df;background:#fff;color:#163427;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:700;cursor:pointer}.kc-live-actions .primary{background:#163427;color:#fff;border-color:#163427}.kc-live-actions .danger{border-color:#d9b9b2;background:#f7e7e3;color:#6e3027}',
+    '@media(max-width:480px){.kc-bubble{right:16px!important;bottom:20px!important}.kc-panel{right:16px!important;bottom:84px!important;width:calc(100vw - 32px)!important;max-height:78vh!important}}'
+  ].join('');
+  document.head.appendChild(style);
+
+  var root = document.createElement('div');
+  root.innerHTML = '<button class="kc-bubble" id="kcB" type="button" aria-label="Open Kalidad Pharmacy chat">💬</button>' +
+    '<div class="kc-panel" id="kcP" role="dialog" aria-label="Kalidad Pharmacy chat">' +
+      '<div class="kc-head"><div><strong>Kalidad Pharmacy</strong><small id="kcMode">Choose a service</small></div><button class="kc-close" id="kcC" type="button" aria-label="Close chat">×</button></div>' +
+      '<div class="kc-messages" id="kcM"></div>' +
+      '<div class="kc-quick" id="kcQ"></div>' +
+      '<div class="kc-live-actions" id="kcLiveActions" style="display:none"><button class="danger" id="kcCloseLive" type="button">Close chat</button><button class="primary" id="kcNewLive" type="button" style="display:none">Start a new conversation</button></div>' +
+      '<div class="kc-links"><a class="wa" target="_blank" rel="noopener" href="' + wa('Hello Kalidad Pharmacy, I need help.') + '">WhatsApp</a><a class="tel" href="tel:+256759845260">Call ' + PHONE + '</a></div>' +
+      '<form class="kc-form" id="kcF"><input id="kcI" maxlength="600" placeholder="Choose a service above" autocomplete="off" disabled><button type="submit" disabled>Send</button></form>' +
+    '</div>';
+
+  function init() {
+    if (!document.body || document.getElementById('kcB')) return;
+    document.body.appendChild(root);
+
+    var B = document.getElementById('kcB');
+    var P = document.getElementById('kcP');
+    var C = document.getElementById('kcC');
+    var M = document.getElementById('kcM');
+    var Q = document.getElementById('kcQ');
+    var F = document.getElementById('kcF');
+    var I = document.getElementById('kcI');
+    var MODE = document.getElementById('kcMode');
+    var LIVEA = document.getElementById('kcLiveActions');
+    var CLOSELIVE = document.getElementById('kcCloseLive');
+    var NEWLIVE = document.getElementById('kcNewLive');
+
+    function say(text, cls) {
+      var e = document.createElement('div');
+      e.className = 'kc-msg ' + (cls || 'bot');
+      e.textContent = text;
+      M.appendChild(e);
+      M.scrollTop = M.scrollHeight;
+      return e;
+    }
+
+    function renderServices(prompt) {
+      Q.innerHTML = '';
+      SERVICES.forEach(function (service) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = service.label;
+        button.onclick = function () { selectService(service.id); };
+        Q.appendChild(button);
+      });
+      var pharmacist = document.createElement('button');
+      pharmacist.type = 'button';
+      pharmacist.className = 'primary';
+      pharmacist.textContent = '🧑‍⚕️ Chat with a pharmacist';
+      pharmacist.onclick = consent;
+      Q.appendChild(pharmacist);
+      Q.style.display = 'flex';
+      if (prompt) say('What else can I help you with?', 'bot');
+    }
+
+    function setLiveUi(state) {
+      var waiting = state === 'waiting';
+      var active = state === 'active';
+      var closed = state === 'closed' || state === 'resolved';
+      MODE.textContent = state === 'active' ? 'Live pharmacist' : state === 'waiting' ? 'Waiting for pharmacist' : closed ? 'Chat closed' : 'Choose a service';
+      I.placeholder = active ? 'Message your pharmacist…' : 'Choose a service above';
+      I.disabled = !active;
+      F.querySelector('button').disabled = !active;
+      LIVEA.style.display = waiting || active || closed ? 'flex' : 'none';
+      CLOSELIVE.style.display = waiting || active ? 'block' : 'none';
+      NEWLIVE.style.display = closed ? 'block' : 'none';
+    }
+
+    function showMoreServices() {
+      setLiveUi('general');
+      renderServices(true);
+    }
+
+    function addServiceActions() {
+      var e = document.createElement('div');
+      e.className = 'kc-msg bot';
+      var title = document.createElement('b');
+      title.textContent = 'Need more info?';
+      e.appendChild(title);
+      var actions = document.createElement('div');
+      actions.className = 'kc-actions';
+      var live = document.createElement('button');
+      live.className = 'primary';
+      live.type = 'button';
+      live.textContent = '🧑‍⚕️ Chat live with a pharmacist';
+      live.onclick = consent;
+      var more = document.createElement('button');
+      more.type = 'button';
+      more.textContent = 'More services';
+      more.onclick = showMoreServices;
+      actions.appendChild(live);
+      actions.appendChild(more);
+      e.appendChild(actions);
+      M.appendChild(e);
+      M.scrollTop = M.scrollHeight;
+    }
+
+    function selectService(id) {
+      if (liveId) return;
+      var service = SERVICES.find(function (item) { return item.id === id; });
+      if (!service) return;
+      Q.style.display = 'none';
+      history.push({ role: 'user', content: service.label });
+      history.push({ role: 'assistant', content: service.detail });
+      history = history.slice(-10);
+      say(service.label, 'user');
+      say(service.detail, 'bot');
+      addServiceActions();
+    }
+
+    async function fb() {
+      if (firebase) return firebase;
+      if (!window.KALIDAD_FIREBASE_CONFIG) {
+        await new Promise(function (resolve, reject) {
+          var script = document.createElement('script');
+          script.src = '/firebase-chat-config.js';
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+      }
+      firebase = await import('/firebase-chat.js');
+      return firebase;
+    }
+
+    function consent() {
+      if (liveId) return;
+      var box = document.createElement('div');
+      box.className = 'kc-consent';
+      box.innerHTML = '<b>Connect to a pharmacist</b><p>Your chat will be placed in the Kalidad pharmacist queue so a team member can reply here. Do not send passwords, PINs, card details or payment credentials.</p><label><input id="kcOK" type="checkbox"> I agree to continue with pharmacist support.</label><div class="kc-actions"><button class="primary" id="kcGo" type="button">Connect me</button><button id="kcNo" type="button">Cancel</button></div>';
+      M.appendChild(box);
+      M.scrollTop = M.scrollHeight;
+      document.getElementById('kcNo').onclick = function () { box.remove(); };
+      document.getElementById('kcGo').onclick = function () {
+        if (document.getElementById('kcOK').checked) startLive(box);
+      };
+    }
+
+    async function startLive(box) {
+      box.remove();
+      setLiveUi('waiting');
+      Q.style.display = 'none';
+      say('Connecting you securely to the Kalidad pharmacist team…', 'system');
+      try {
+        var f = await fb();
+        liveId = await f.createHandoff({ history: history, reason: 'service-handoff' });
+        try { sessionStorage.setItem('kalidad_live_chat_id', liveId); } catch (_) {}
+        say('You’re in the pharmacist queue. Keep this chat open; your pharmacist will reply here when they join.', 'system');
+        watchLive(liveId);
+      } catch (error) {
+        console.error('Kalidad live chat:', error);
+        liveId = null;
+        setLiveUi('general');
+        renderServices(false);
+        say('We could not connect you to the live pharmacist right now. You can continue on WhatsApp instead.', 'bot');
+      }
+    }
+
+    function watchLive(id) {
+      Promise.resolve(fb()).then(function (f) {
+        f.ensureCustomer().then(function () {
+          if (liveUnsub) liveUnsub();
+          if (conversationUnsub) conversationUnsub();
+          setLiveUi('waiting');
+          liveUnsub = f.watchCustomerMessages(id, function (messages) {
+            messages.forEach(function (message) {
+              if (!shown[message.id] && message.senderType === 'staff') {
+                shown[message.id] = true;
+                say(message.body, 'bot');
+              }
+            });
+          }, function (error) {
+            console.error(error);
+            setLiveUi('general');
+            renderServices(false);
+          });
+          conversationUnsub = f.watchConversation(id, function (conversation) {
+            if (!conversation) return;
+            if (conversation.status === 'active') setLiveUi('active');
+            else if (conversation.status === 'waiting') setLiveUi('waiting');
+            else if (conversation.status === 'resolved' || conversation.status === 'closed') {
+              setLiveUi(conversation.status);
+              say('This pharmacist conversation has ended. You can start a new pharmacist chat if you need further help.', 'system');
+              try { sessionStorage.removeItem('kalidad_live_chat_id'); } catch (_) {}
+              liveId = null;
+            }
+          });
+        }).catch(function (error) {
+          console.error(error);
+          liveId = null;
+          setLiveUi('general');
+          renderServices(false);
+        });
+      });
+    }
+
+    async function sendLive(text) {
+      if (!liveId) return;
+      say(text, 'user');
+      I.value = '';
+      I.disabled = true;
+      F.querySelector('button').disabled = true;
+      try {
+        var f = await fb();
+        await f.sendCustomerMessage(liveId, text);
+      } catch (error) {
+        console.error(error);
+        say('Your message could not be sent. Please try again.', 'system');
+      } finally {
+        I.disabled = false;
+        F.querySelector('button').disabled = false;
+      }
+    }
+
+    async function closeLive() {
+      if (!liveId) return;
+      if (!window.confirm('Close this pharmacist conversation?')) return;
+      try {
+        var f = await fb();
+        await f.closeCustomerConversation(liveId);
+      } catch (error) {
+        console.error(error);
+        say('We could not close the chat right now. Please try again.', 'system');
+      }
+    }
+
+    function startNewConversation() {
+      if (liveUnsub) liveUnsub();
+      if (conversationUnsub) conversationUnsub();
+      liveUnsub = null;
+      conversationUnsub = null;
+      liveId = null;
+      history = [];
+      shown = {};
+      try { sessionStorage.removeItem('kalidad_live_chat_id'); } catch (_) {}
+      M.innerHTML = '';
+      setLiveUi('general');
+      say(WELCOME, 'bot');
+      renderServices(false);
+    }
+
+    B.onclick = function () {
+      P.classList.add('open');
+      if (!M.children.length) {
+        say(WELCOME, 'bot');
+        renderServices(false);
+      }
+    };
+    C.onclick = function () { P.classList.remove('open'); };
+    F.onsubmit = function (event) {
+      event.preventDefault();
+      var text = I.value.trim();
+      if (text && liveId) sendLive(text);
+    };
+    CLOSELIVE.onclick = closeLive;
+    NEWLIVE.onclick = startNewConversation;
+    setLiveUi('general');
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
