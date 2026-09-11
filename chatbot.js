@@ -184,6 +184,7 @@
 
     async function startLive(box) {
       box.remove();
+      pharmacistConnected = false;
       setLiveUi('waiting');
       Q.style.display = 'none';
       say('Connecting you securely to the Kalidad pharmacist team…', 'system');
@@ -197,6 +198,7 @@
       } catch (error) {
         console.error('Kalidad live chat:', error);
         liveId = null;
+        pharmacistConnected = false;
         setLiveUi('general');
         renderServices(false);
         say('We could not connect you to the live pharmacist right now. You can continue on WhatsApp instead.', 'bot');
@@ -225,9 +227,12 @@
           });
           conversationUnsub = f.watchConversation(id, function (conversation) {
             if (!conversation) return;
-            if (conversation.status === 'active') { pharmacistConnected = true; setLiveUi('active'); }
-            else if (conversation.status === 'waiting') { if (!pharmacistConnected) setLiveUi('waiting'); }
-            else if (conversation.status === 'resolved' || conversation.status === 'closed') {
+            if (conversation.status === 'active') {
+              pharmacistConnected = true;
+              setLiveUi('active');
+            } else if (conversation.status === 'waiting') {
+              if (!pharmacistConnected) setLiveUi('waiting');
+            } else if (conversation.status === 'resolved' || conversation.status === 'closed') {
               setLiveUi(conversation.status);
               say('This pharmacist conversation has ended. You can start a new chat if you need further help.', 'system');
               try { sessionStorage.removeItem('kalidad_live_chat_id'); } catch (_) {}
@@ -237,6 +242,7 @@
         }).catch(function (error) {
           console.error(error);
           liveId = null;
+          pharmacistConnected = false;
           setLiveUi('general');
           renderServices(false);
         });
@@ -263,12 +269,20 @@
 
     async function closeLive() {
       if (!liveId) return;
+      if (!window.confirm('Close this pharmacist conversation?')) return;
+      var closingId = liveId;
       try {
         var f = await fb();
-        await f.closeCustomerConversation(liveId);
+        await f.closeCustomerConversation(closingId);
+        if (liveUnsub) liveUnsub();
+        if (conversationUnsub) conversationUnsub();
+        liveUnsub = null;
+        conversationUnsub = null;
+        liveId = null;
         pharmacistConnected = false;
-        setLiveUi('closed');
         try { sessionStorage.removeItem('kalidad_live_chat_id'); } catch (_) {}
+        setLiveUi('closed');
+        say('This pharmacist conversation has been closed. You can start a new chat whenever you need help.', 'system');
       } catch (error) {
         console.error(error);
         say('We could not close the chat right now. Please try again.', 'system');
