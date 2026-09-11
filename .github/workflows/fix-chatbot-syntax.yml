@@ -1,0 +1,37 @@
+name: Fix chatbot syntax
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'chatbot.js'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Fix syntax error
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('chatbot.js')
+          s = p.read_text()
+          old = "Q.scrollIntoView({behavior:'smooth',block:'end')})"
+          new = "Q.scrollIntoView({behavior:'smooth',block:'end'});})"
+          if old not in s:
+              raise SystemExit('Expected chatbot syntax error was not found')
+          p.write_text(s.replace(old, new, 1))
+          PY
+      - name: Commit fix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add chatbot.js
+          git diff --cached --quiet && exit 0
+          git commit -m 'Fix chatbot rendering syntax'
+          git push origin HEAD:main
