@@ -21,15 +21,17 @@ jobs:
           s = p.read_text()
           old = "Q.scrollIntoView({behavior:'smooth',block:'end')})"
           new = "Q.scrollIntoView({behavior:'smooth',block:'end'});})"
-          if old not in s:
-              raise SystemExit('Expected chatbot syntax error was not found')
-          p.write_text(s.replace(old, new, 1))
+          if old in s:
+              p.write_text(s.replace(old, new, 1))
+          else:
+              print('Chatbot syntax already fixed; nothing to change.')
           PY
       - name: Commit fix
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add chatbot.js
-          git diff --cached --quiet && exit 0
+          if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Fix chatbot rendering syntax'
+          git pull --rebase origin main
           git push origin HEAD:main
