@@ -11,6 +11,7 @@
   var liveUnsub = null;
   var conversationUnsub = null;
   var shown = {};
+  var pharmacistConnected = false;
 
   var SERVICES = [
     { id: 'prescription', label: 'Prescription filling', detail: 'Our prescription filling service helps you get your prescribed medicines prepared by the pharmacy team. Bring or submit a valid prescription and our team can guide you through the next steps, subject to pharmacist review and medicine availability.' },
@@ -48,7 +49,7 @@
       '<div class="kc-head"><div><strong>Kalidad Pharmacy</strong><small id="kcMode">Choose a service</small></div><button class="kc-close" id="kcC" type="button" aria-label="Close chat">×</button></div>' +
       '<div class="kc-messages" id="kcM"></div>' +
       '<div class="kc-quick" id="kcQ"></div>' +
-      '<div class="kc-live-actions" id="kcLiveActions" style="display:none"><button class="danger" id="kcCloseLive" type="button">Close chat</button><button class="primary" id="kcNewLive" type="button" style="display:none">Start a new conversation</button></div>' +
+      '<div class="kc-live-actions" id="kcLiveActions" style="display:none"><button class="danger" id="kcCloseLive" type="button">Close chat</button><button class="primary" id="kcNewLive" type="button" style="display:none">Start new chat</button></div>' +
       '<div class="kc-links"><a class="wa" target="_blank" rel="noopener" href="' + wa('Hello Kalidad Pharmacy, I need help.') + '">WhatsApp</a><a class="tel" href="tel:+256759845260">Call ' + PHONE + '</a></div>' +
       '<form class="kc-form" id="kcF"><input id="kcI" maxlength="600" placeholder="Choose a service above" autocomplete="off" disabled><button type="submit" disabled>Send</button></form>' +
     '</div>';
@@ -102,7 +103,7 @@
       var active = state === 'active';
       var closed = state === 'closed' || state === 'resolved';
       var live = waiting || active;
-      MODE.textContent = state === 'active' ? 'Live pharmacist' : state === 'waiting' ? 'Waiting for pharmacist' : closed ? 'Chat closed' : 'Choose a service';
+      MODE.textContent = state === 'active' ? 'Pharmacist connected' : state === 'waiting' ? 'Waiting for pharmacist' : closed ? 'Chat closed' : 'Choose a service';
       I.placeholder = live ? 'Message your pharmacist…' : 'Choose a service above';
       I.disabled = !live;
       F.querySelector('button').disabled = !live;
@@ -212,6 +213,8 @@
             messages.forEach(function (message) {
               if (!shown[message.id] && message.senderType === 'staff') {
                 shown[message.id] = true;
+                pharmacistConnected = true;
+                setLiveUi('active');
                 say(message.body, 'bot');
               }
             });
@@ -222,11 +225,11 @@
           });
           conversationUnsub = f.watchConversation(id, function (conversation) {
             if (!conversation) return;
-            if (conversation.status === 'active') setLiveUi('active');
-            else if (conversation.status === 'waiting') setLiveUi('waiting');
+            if (conversation.status === 'active') { pharmacistConnected = true; setLiveUi('active'); }
+            else if (conversation.status === 'waiting') { if (!pharmacistConnected) setLiveUi('waiting'); }
             else if (conversation.status === 'resolved' || conversation.status === 'closed') {
               setLiveUi(conversation.status);
-              say('This pharmacist conversation has ended. You can start a new pharmacist chat if you need further help.', 'system');
+              say('This pharmacist conversation has ended. You can start a new chat if you need further help.', 'system');
               try { sessionStorage.removeItem('kalidad_live_chat_id'); } catch (_) {}
               liveId = null;
             }
@@ -260,10 +263,12 @@
 
     async function closeLive() {
       if (!liveId) return;
-      if (!window.confirm('Close this pharmacist conversation?')) return;
       try {
         var f = await fb();
         await f.closeCustomerConversation(liveId);
+        pharmacistConnected = false;
+        setLiveUi('closed');
+        try { sessionStorage.removeItem('kalidad_live_chat_id'); } catch (_) {}
       } catch (error) {
         console.error(error);
         say('We could not close the chat right now. Please try again.', 'system');
@@ -276,6 +281,7 @@
       liveUnsub = null;
       conversationUnsub = null;
       liveId = null;
+      pharmacistConnected = false;
       history = [];
       shown = {};
       try { sessionStorage.removeItem('kalidad_live_chat_id'); } catch (_) {}
