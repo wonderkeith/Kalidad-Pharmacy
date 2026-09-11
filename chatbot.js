@@ -101,10 +101,11 @@
       var waiting = state === 'waiting';
       var active = state === 'active';
       var closed = state === 'closed' || state === 'resolved';
+      var live = waiting || active;
       MODE.textContent = state === 'active' ? 'Live pharmacist' : state === 'waiting' ? 'Waiting for pharmacist' : closed ? 'Chat closed' : 'Choose a service';
-      I.placeholder = active ? 'Message your pharmacist…' : 'Choose a service above';
-      I.disabled = !active;
-      F.querySelector('button').disabled = !active;
+      I.placeholder = live ? 'Message your pharmacist…' : 'Choose a service above';
+      I.disabled = !live;
+      F.querySelector('button').disabled = !live;
       LIVEA.style.display = waiting || active || closed ? 'flex' : 'none';
       CLOSELIVE.style.display = waiting || active ? 'block' : 'none';
       NEWLIVE.style.display = closed ? 'block' : 'none';
@@ -189,7 +190,8 @@
         var f = await fb();
         liveId = await f.createHandoff({ history: history, reason: 'service-handoff' });
         try { sessionStorage.setItem('kalidad_live_chat_id', liveId); } catch (_) {}
-        say('You’re in the pharmacist queue. Keep this chat open; your pharmacist will reply here when they join.', 'system');
+        say('You’re in the pharmacist queue. You can send a message now, and your pharmacist will reply here when they join.', 'system');
+        I.focus();
         watchLive(liveId);
       } catch (error) {
         console.error('Kalidad live chat:', error);
