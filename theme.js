@@ -1,9 +1,8 @@
-/* Kalidad Pharmacy shared theme/menu helper.
-   Mobile-only menu repair for the primary navigation pages. */
+/* Kalidad Pharmacy shared theme/menu helper. */
 (function () {
   'use strict';
 
-  var pages = /(?:^|\/)(index|services|news|about)\.html$/i;
+  var pages = /(?:^|\/)(index|services|news|about|nutritional-supplements)\.html$/i;
 
   function init() {
     if (window.innerWidth > 900) return;
@@ -26,8 +25,6 @@
     if (toggle.dataset.kalidadMenuRepair === 'true') return;
     toggle.dataset.kalidadMenuRepair = 'true';
 
-    if (toggle.dataset.careersMenuReady === 'true') return;
-
     function setOpen(open) {
       menu.classList.toggle('open', open);
       header.classList.toggle('nav-open', open);
@@ -36,16 +33,13 @@
     }
 
     toggle.addEventListener('click', function (event) {
-      if (toggle.dataset.careersMenuReady === 'true') return;
       event.preventDefault();
       event.stopPropagation();
       setOpen(!menu.classList.contains('open'));
     });
 
     menu.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        if (toggle.dataset.careersMenuReady !== 'true') setOpen(false);
-      });
+      link.addEventListener('click', function () { setOpen(false); });
     });
   }
 
@@ -78,16 +72,15 @@
   function initSupplementProductImages() {
     if (!/nutritional-supplements\.html$/i.test(window.location.pathname)) return;
 
-    /* The uploaded product photos are matched to the existing product cards
-       by their descriptions/titles. The files can be added to the repository
-       root later without changing this page again. */
+    /* Exact local filenames to upload to the repository root.
+       Each card is matched by its existing heading. */
     var images = {
-      'Pregnacare Supplements': '1000561597.webp',
-      'Multivitamin and neurological supplements': '1000561610.webp',
-      'Sexual wellness': '1000561598.webp',
-      "Men's health": '1000561595.webp',
-      "Women's Health": '1000561598.webp',
-      "Children's wellness": '1000561610.webp'
+      'Pregnacare Supplements': 'pregnacare.webp',
+      'Multivitamin and neurological supplements': 'neuroton-neurocap-natb.webp',
+      'Sexual wellness': 'sexual-wellness.webp',
+      "Men's health": 'wellman-domq.webp',
+      "Women's Health": 'womens-health.webp',
+      "Children's wellness": 'neuroton-neurocap-natb.webp'
     };
 
     document.querySelectorAll('.product-card').forEach(function (card) {
@@ -95,12 +88,15 @@
       var image = card.querySelector('.product-image img');
       if (!title || !image) return;
 
-      var src = images[title.textContent.trim()];
-      if (src) {
-        image.src = src;
-        image.removeAttribute('srcset');
-        image.loading = 'lazy';
-      }
+      var localSrc = images[title.textContent.trim()];
+      if (!localSrc) return;
+
+      /* Set the actual image src, replacing the Unsplash source. */
+      image.src = localSrc + '?v=1';
+      image.removeAttribute('srcset');
+      image.removeAttribute('data-src');
+      image.alt = title.textContent.trim();
+      image.loading = 'lazy';
     });
   }
 
