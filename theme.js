@@ -66,8 +66,7 @@
       '.catalog-page-hero{min-height:100svh!important;}' +
       '.catalog-page-hero .hero-bg{position:absolute;inset:0;width:100%;height:100%;}' +
       '.catalog-page-hero .hero-bg picture{display:block;width:100%;height:100%;}' +
-      '.catalog-page-hero .hero-bg img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;}' +
-      '.catalog-page-hero .hero-copy{min-height:100svh!important;}');
+      '.catalog-page-hero .hero-bg img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;}');
   }
 
   function initCatalogHeroes() {
@@ -79,10 +78,11 @@
     if (!hero) return;
 
     addStyle('kalidad-catalog-heroes-fullscreen',
-      '.catalog-page-hero{min-height:100svh!important;height:100svh!important;}' +
-      '.catalog-page-hero .hero-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;}' +
-      '.catalog-page-hero .hero-bg img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;}' +
-      '.catalog-page-hero .hero-copy{min-height:100svh!important;height:100svh!important;}' +
+      '.catalog-page-hero{position:relative!important;display:block!important;min-height:100svh!important;height:100svh!important;width:100%!important;overflow:hidden!important;}' +
+      '.catalog-page-hero .hero-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:1!important;}' +
+      '.catalog-page-hero .hero-bg img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;}' +
+      '.catalog-page-hero .hero-copy{position:relative!important;z-index:2!important;width:100%!important;min-height:100svh!important;height:100svh!important;background:transparent!important;}' +
+      '.catalog-page-hero::before,.catalog-page-hero::after,.catalog-page-hero .hero-bg::before,.catalog-page-hero .hero-bg::after{background:none!important;background-image:none!important;box-shadow:none!important;opacity:0!important;display:none!important;content:none!important;}' +
       '@media(max-width:620px){.catalog-page-hero,.catalog-page-hero .hero-copy{min-height:100svh!important;height:100svh!important;}}');
   }
 
@@ -107,12 +107,6 @@
     var isTarget = /(?:^|\/)(family-care|pharmacist-consultation|same-day-delivery|health-checks)\.html$/i.test(path);
     if (!isTarget) return;
 
-    var hero = document.querySelector('.service-detail-hero');
-    if (!hero) return;
-
-    /* Unify the four service heroes: keep the existing image and text positions,
-       but make the photograph the full-width/full-height background. No gradients,
-       color washes, pseudo-element overlays, or split image panel remain. */
     addStyle('kalidad-service-detail-heroes-unified',
       '.service-detail-hero{position:relative!important;display:block!important;min-height:100svh!important;height:100svh!important;width:100%!important;overflow:hidden!important;background:#12291F!important;}' +
       '.service-detail-hero .service-detail-image{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:1!important;overflow:hidden!important;}' +
@@ -120,16 +114,9 @@
       '.service-detail-hero .service-detail-copy{position:relative!important;z-index:2!important;width:100%!important;height:100%!important;min-height:100svh!important;padding:130px 7vw 90px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;background:transparent!important;}' +
       '.service-detail-hero .service-detail-copy h1{color:#fff!important;text-shadow:0 2px 18px rgba(0,0,0,.34)!important;}' +
       '.service-detail-hero .service-detail-copy .lead{color:rgba(255,255,255,.96)!important;text-shadow:0 1px 12px rgba(0,0,0,.30)!important;}' +
-      '.service-detail-hero .service-detail-copy .kicker{position:relative!important;}' +
       '.service-detail-hero::before,.service-detail-hero::after{background:none!important;display:none!important;content:none!important;}' +
-      '@media(max-width:850px){' +
-        '.service-detail-hero{min-height:100svh!important;height:100svh!important;}' +
-        '.service-detail-hero .service-detail-image{position:absolute!important;inset:0!important;height:100%!important;min-height:100%!important;}' +
-        '.service-detail-hero .service-detail-copy{height:100svh!important;min-height:100svh!important;padding:115px 28px 60px!important;}' +
-      '}' +
-      '@media(max-width:560px){' +
-        '.service-detail-hero .service-detail-copy{padding:105px 24px 55px!important;}' +
-      '}');
+      '@media(max-width:850px){.service-detail-hero{min-height:100svh!important;height:100svh!important;}.service-detail-hero .service-detail-image{position:absolute!important;inset:0!important;height:100%!important;min-height:100%!important;}.service-detail-hero .service-detail-copy{height:100svh!important;min-height:100svh!important;padding:115px 28px 60px!important;}}' +
+      '@media(max-width:560px){.service-detail-hero .service-detail-copy{padding:105px 24px 55px!important;}}');
   }
 
   function addStyle(id, css) {
