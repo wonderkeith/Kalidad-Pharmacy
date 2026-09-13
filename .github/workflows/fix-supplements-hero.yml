@@ -54,3 +54,5 @@ jobs:
           git rm .github/workflows/fix-supplements-hero.yml
           git commit -m "Remove temporary supplements hero workflow"
           git push
+
+# trigger run
