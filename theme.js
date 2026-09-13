@@ -58,8 +58,8 @@
 
     bg.innerHTML =
       '<picture>' +
-        '<source media="(max-width: 900px)" srcset="Supplements Mobile Hero.webp">' +
-        '<img src="Supplements PC Hero.webp" alt="Vitamins and nutritional supplements">' +
+        '<source media="(max-width: 900px)" srcset="Nutritional Supplements & Boosters.webp">' +
+        '<img src="Nutritional Supplements & Boosters.webp" alt="Nutritional supplements and boosters">' +
       '</picture>';
 
     addStyle('kalidad-supplements-hero-fullscreen',
