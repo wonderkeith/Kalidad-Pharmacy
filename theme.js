@@ -94,6 +94,25 @@
       '@media(max-width:620px){.catalog-page-hero,.catalog-page-hero .hero-copy{min-height:100svh!important;height:100svh!important;}}');
   }
 
+  function initOTCWellnessHero() {
+    if (!/(?:^|\/)otc-wellness\.html$/i.test(window.location.pathname)) return;
+
+    var hero = document.querySelector('.page-banner');
+    if (!hero) return;
+
+    addStyle('kalidad-otc-wellness-hero-fullscreen',
+      'html,body{margin:0!important;padding:0!important;}' +
+      'body{overflow-x:hidden!important;}' +
+      'header{position:absolute!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:50!important;}' +
+      '.page-banner{position:relative!important;display:block!important;width:100%!important;height:100svh!important;min-height:100svh!important;margin:0!important;padding:0!important;overflow:hidden!important;box-sizing:border-box!important;background:transparent!important;}' +
+      '.page-banner::before,.page-banner::after{display:none!important;content:none!important;background:none!important;background-image:none!important;}' +
+      '.page-banner .container{position:relative!important;width:100%!important;height:100%!important;min-height:100svh!important;max-width:none!important;margin:0!important;box-sizing:border-box!important;}' +
+      '.page-banner .hero-bg,.page-banner .page-banner-bg,.page-banner picture{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;}' +
+      '.page-banner img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;}' +
+      '.page-banner .hero-copy{position:relative!important;z-index:2!important;height:100%!important;min-height:100svh!important;}' +
+      '@media(max-width:900px){header{position:absolute!important;}.page-banner,.page-banner .container,.page-banner .hero-copy{height:100svh!important;min-height:100svh!important;}}');
+  }
+
   function initPrescriptionHero() {
     if (!/(?:^|\/)prescription-filling\.html$/i.test(window.location.pathname)) return;
 
@@ -139,6 +158,7 @@
     init();
     initSupplementsHero();
     initCatalogHeroes();
+    initOTCWellnessHero();
     initPrescriptionHero();
     initServiceDetailHeroes();
     window.addEventListener('resize', init, { passive: true });
