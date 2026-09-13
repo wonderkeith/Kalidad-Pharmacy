@@ -77,12 +77,20 @@
     var hero = document.querySelector('.catalog-page-hero');
     if (!hero) return;
 
+    var isOtc = /(?:^|\/)otc-wellness\.html$/i.test(path);
+
     addStyle('kalidad-catalog-heroes-fullscreen',
-      '.catalog-page-hero{position:relative!important;display:block!important;min-height:100svh!important;height:100svh!important;width:100%!important;overflow:hidden!important;}' +
-      '.catalog-page-hero .hero-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:1!important;}' +
-      '.catalog-page-hero .hero-bg img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;}' +
+      '.catalog-page-hero{position:relative!important;display:block!important;min-height:100svh!important;height:100svh!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;overflow:hidden!important;}' +
+      '.catalog-page-hero .hero-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:1!important;margin:0!important;padding:0!important;}' +
+      '.catalog-page-hero .hero-bg img{display:block!important;width:100%!important;height:100%!important;min-width:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important;margin:0!important;}' +
       '.catalog-page-hero .hero-copy{position:relative!important;z-index:2!important;width:100%!important;min-height:100svh!important;height:100svh!important;background:transparent!important;}' +
       '.catalog-page-hero::before,.catalog-page-hero::after,.catalog-page-hero .hero-bg::before,.catalog-page-hero .hero-bg::after{background:none!important;background-image:none!important;box-shadow:none!important;opacity:0!important;display:none!important;content:none!important;}' +
+      (isOtc ?
+        '.catalog-page-hero{height:100dvh!important;min-height:100dvh!important;}' +
+        '.catalog-page-hero .hero-copy{height:100dvh!important;min-height:100dvh!important;}' +
+        '.catalog-page-hero .hero-bg{height:100dvh!important;}' +
+        'body{overflow-x:hidden!important;}' +
+        '@media(min-width:901px){.catalog-page-hero{margin-bottom:0!important;}}' : '') +
       '@media(max-width:620px){.catalog-page-hero,.catalog-page-hero .hero-copy{min-height:100svh!important;height:100svh!important;}}');
   }
 
