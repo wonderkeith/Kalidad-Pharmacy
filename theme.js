@@ -14,7 +14,6 @@
     var header = document.querySelector('header');
     if (!toggle || !menu || !header) return;
 
-    /* Make the hamburger unmistakably visible on mobile, including Safari/WebKit. */
     toggle.innerHTML =
       '<svg class="kalidad-menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="#1E4F3B" stroke-width="2.2" stroke-linecap="round">' +
       '<path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>';
@@ -27,8 +26,6 @@
     if (toggle.dataset.kalidadMenuRepair === 'true') return;
     toggle.dataset.kalidadMenuRepair = 'true';
 
-    /* The page's existing controller is the source of truth. Only install a
-       fallback if that controller did not initialize. */
     if (toggle.dataset.careersMenuReady === 'true') return;
 
     function setOpen(open) {
@@ -59,7 +56,6 @@
     var bg = hero.querySelector('.hero-bg');
     if (!bg) return;
 
-    /* Dedicated desktop/mobile hero assets for the nutritional supplements page. */
     bg.innerHTML =
       '<picture>' +
         '<source media="(max-width: 900px)" srcset="Supplements Mobile Hero.webp">' +
@@ -82,8 +78,6 @@
     var hero = document.querySelector('.catalog-page-hero');
     if (!hero) return;
 
-    /* Same full-viewport treatment on desktop and mobile. Keep each page's
-       existing hero image and overlay/content; only change sizing/cropping. */
     addStyle('kalidad-catalog-heroes-fullscreen',
       '.catalog-page-hero{min-height:100svh!important;height:100svh!important;}' +
       '.catalog-page-hero .hero-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;}' +
@@ -98,9 +92,6 @@
     var hero = document.querySelector('.service-detail-hero');
     if (!hero) return;
 
-    /* Convert the prescription hero to the same edge-to-edge, full-viewport
-       treatment. Remove the existing white gradient completely; the original
-       hero photograph remains and fills the entire hero on desktop/mobile. */
     addStyle('kalidad-prescription-hero-fullscreen',
       '.service-detail-hero{position:relative!important;display:block!important;min-height:100svh!important;height:100svh!important;background:#12291F!important;overflow:hidden!important;}' +
       '.service-detail-image{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:1!important;}' +
@@ -109,6 +100,36 @@
       '.service-detail-copy h1{color:#fff!important;text-shadow:0 2px 18px rgba(0,0,0,.32)!important;}' +
       '.service-detail-copy .lead{color:rgba(255,255,255,.94)!important;text-shadow:0 1px 12px rgba(0,0,0,.28)!important;}' +
       '@media(max-width:850px){.service-detail-hero{min-height:100svh!important;height:100svh!important;}.service-detail-copy{height:100svh!important;min-height:100svh!important;padding:105px 24px 55px!important;}.service-detail-image{height:100%!important;min-height:100%!important;}}');
+  }
+
+  function initServiceDetailHeroes() {
+    var path = window.location.pathname;
+    var isTarget = /(?:^|\/)(family-care|pharmacist-consultation|same-day-delivery|health-checks)\.html$/i.test(path);
+    if (!isTarget) return;
+
+    var hero = document.querySelector('.service-detail-hero');
+    if (!hero) return;
+
+    /* Unify the four service heroes: keep the existing image and text positions,
+       but make the photograph the full-width/full-height background. No gradients,
+       color washes, pseudo-element overlays, or split image panel remain. */
+    addStyle('kalidad-service-detail-heroes-unified',
+      '.service-detail-hero{position:relative!important;display:block!important;min-height:100svh!important;height:100svh!important;width:100%!important;overflow:hidden!important;background:#12291F!important;}' +
+      '.service-detail-hero .service-detail-image{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:1!important;overflow:hidden!important;}' +
+      '.service-detail-hero .service-detail-image img{display:block!important;width:100%!important;height:100%!important;min-width:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important;}' +
+      '.service-detail-hero .service-detail-copy{position:relative!important;z-index:2!important;width:100%!important;height:100%!important;min-height:100svh!important;padding:130px 7vw 90px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;background:transparent!important;}' +
+      '.service-detail-hero .service-detail-copy h1{color:#fff!important;text-shadow:0 2px 18px rgba(0,0,0,.34)!important;}' +
+      '.service-detail-hero .service-detail-copy .lead{color:rgba(255,255,255,.96)!important;text-shadow:0 1px 12px rgba(0,0,0,.30)!important;}' +
+      '.service-detail-hero .service-detail-copy .kicker{position:relative!important;}' +
+      '.service-detail-hero::before,.service-detail-hero::after{background:none!important;display:none!important;content:none!important;}' +
+      '@media(max-width:850px){' +
+        '.service-detail-hero{min-height:100svh!important;height:100svh!important;}' +
+        '.service-detail-hero .service-detail-image{position:absolute!important;inset:0!important;height:100%!important;min-height:100%!important;}' +
+        '.service-detail-hero .service-detail-copy{height:100svh!important;min-height:100svh!important;padding:115px 28px 60px!important;}' +
+      '}' +
+      '@media(max-width:560px){' +
+        '.service-detail-hero .service-detail-copy{padding:105px 24px 55px!important;}' +
+      '}');
   }
 
   function addStyle(id, css) {
@@ -124,6 +145,7 @@
     initSupplementsHero();
     initCatalogHeroes();
     initPrescriptionHero();
+    initServiceDetailHeroes();
     window.addEventListener('resize', init, { passive: true });
   }
 
