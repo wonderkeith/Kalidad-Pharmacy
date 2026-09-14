@@ -194,6 +194,140 @@
       '.catalog-page-hero .hero-copy h1 .accent,.page-banner .hero-copy h1 .accent,.page-banner h1 .accent,.service-detail-hero .service-detail-copy h1 .accent,.service-detail-hero h1 .accent{color:#C7EF3E!important;}');
   }
 
+  function initAboutTeamSlider() {
+    if (!/(?:^|\/)about\.html$/i.test(window.location.pathname)) return;
+    if (document.getElementById('kalidad-about-team-slider')) return;
+
+    var headings = Array.prototype.slice.call(document.querySelectorAll('h1,h2,h3'));
+    var heading = headings.find(function (el) {
+      return /People who put care into every prescription/i.test(el.textContent || '');
+    });
+    if (!heading) return;
+
+    var section = heading.closest('section') || heading.parentElement;
+    if (!section) return;
+
+    var firstImage = section.querySelector('img')?.getAttribute('src') || 'kalidad_pharmacy_team_hero.webp';
+    var slides = [
+      {
+        name: 'People who put care into every prescription',
+        role: 'Meet our team',
+        description: 'Behind every prescription, recommendation, and conversation is a team committed to doing pharmacy care properly. Our pharmacists bring professional knowledge, attention to detail, and a genuine desire to help the people we serve. From dispensing medicines to answering questions and supporting everyday wellness, our team works together to make every visit feel personal, respectful, and reassuring.',
+        image: firstImage,
+        intro: true
+      },
+      { name: 'Dr. Abimanya Willbrod', role: 'Supervising Pharmacist · Managing Director', description: 'Provides clinical leadership, professional oversight and strategic direction for Kalidad Pharmacy, helping ensure safe, responsible and patient-centred pharmacy care.', image: '20260724_143031(1)(1).jpg' },
+      { name: 'Kato Julius', role: 'Operations Manager', description: 'Coordinates day-to-day pharmacy operations, helping the team deliver efficient, organised and dependable service to every customer.', image: '20260724_144840(1).jpg' },
+      { name: 'Kalule Briton', role: 'Assistant Operations Manager', description: 'Supports operational coordination and team performance, helping maintain smooth workflows and consistent customer service.', image: '20260724_145355(1).jpg' },
+      { name: 'Kafuuma Keith Paul', role: 'Pharmacy IT Technician · Salesman', description: 'Supports pharmacy technology and digital systems while also assisting customers with product information and sales.', image: '20260724_145446(1).jpg' },
+      { name: 'Katusiime Shallom Flavia', role: 'Quality Assurance Officer · Salesman', description: 'Supports quality-focused pharmacy processes while helping customers find appropriate products and receive attentive service.', image: '20260724_151100(1)_HD.webp' },
+      { name: 'Murungi Kenneth Godfrey', role: 'Salesman', description: 'Helps customers navigate the pharmacy range, understand available products and receive friendly, professional service.', image: '20260724_151800_HD.webp' },
+      { name: 'Tuhaise Justine', role: 'Salesman', description: 'Supports customers with product selection and day-to-day pharmacy service with a welcoming and helpful approach.', image: '20260724_152030(1)_HD.webp' },
+      { name: 'Atuhaire Chris', role: 'Salesman', description: 'Assists customers with product enquiries and sales while contributing to a smooth and positive pharmacy experience.', image: '20260724_152439(1)_HD.webp' },
+      { name: 'Namara Victoria', role: 'Salesman', description: 'Supports customers with product enquiries, selection and everyday pharmacy service.', image: '20260724_155052(1)(1)_HD.webp' },
+      { name: 'Kato Reagan', role: 'Salesman', description: 'Helps customers identify suitable products and provides attentive support throughout their pharmacy visit.', image: 'pharmacist_green_scrubs.webp' },
+      { name: 'Kenyange Rhita', role: 'Salesman', description: 'Supports customers with product information and sales while helping create a respectful, welcoming pharmacy experience.', image: 'team-pharmacists.jpg' }
+    ];
+
+    var root = document.createElement('section');
+    root.id = 'kalidad-about-team-slider';
+    root.className = 'kalidad-about-team-slider';
+    root.setAttribute('aria-label', 'Meet the Kalidad Pharmacy team');
+    root.innerHTML =
+      '<div class="kalidad-team-track">' +
+      slides.map(function (s, i) {
+        return '<article class="kalidad-team-slide' + (i === 0 ? ' is-active' : '') + '" data-slide="' + i + '">' +
+          '<div class="kalidad-team-copy">' +
+            '<div class="kalidad-team-kicker">' + (s.intro ? 'MEET OUR TEAM' : 'KALIDAD PHARMACY TEAM') + '</div>' +
+            '<h2>' + escapeHtml(s.name) + '</h2>' +
+            '<div class="kalidad-team-role">' + escapeHtml(s.role) + '</div>' +
+            '<p>' + escapeHtml(s.description) + '</p>' +
+          '</div>' +
+          '<div class="kalidad-team-image"><img src="' + escapeAttr(s.image) + '" alt="' + escapeAttr(s.intro ? 'Kalidad Pharmacy team' : s.name) + '" loading="' + (i === 0 ? 'eager' : 'lazy') + '"></div>' +
+        '</article>';
+      }).join('') +
+      '</div>' +
+      '<button class="kalidad-team-arrow prev" type="button" aria-label="Previous team member">&#8592;</button>' +
+      '<button class="kalidad-team-arrow next" type="button" aria-label="Next team member">&#8594;</button>' +
+      '<div class="kalidad-team-progress" aria-label="Team slider navigation">' +
+        slides.map(function (_, i) { return '<button type="button" data-go="' + i + '" aria-label="Go to slide ' + (i + 1) + '" class="' + (i === 0 ? 'active' : '') + '"></button>'; }).join('') +
+      '</div>';
+
+    section.replaceWith(root);
+
+    addStyle('kalidad-about-team-slider-style',
+      '#kalidad-about-team-slider{position:relative;width:100%;min-height:clamp(620px,76vh,820px);background:#fff;overflow:hidden;isolation:isolate;}' +
+      '#kalidad-about-team-slider .kalidad-team-track{position:relative;width:100%;height:100%;min-height:inherit;}' +
+      '#kalidad-about-team-slider .kalidad-team-slide{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;opacity:0;visibility:hidden;transform:translateX(3%);transition:opacity .55s ease,transform .65s cubic-bezier(.22,.61,.36,1),visibility .55s;}' +
+      '#kalidad-about-team-slider .kalidad-team-slide.is-active{opacity:1;visibility:visible;transform:translateX(0);z-index:2;}' +
+      '#kalidad-about-team-slider .kalidad-team-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(70px,8vw,120px) clamp(32px,7vw,128px);background:#fff;}' +
+      '#kalidad-about-team-slider .kalidad-team-kicker{font-size:.74rem;font-weight:800;letter-spacing:.18em;color:#1E4F3B;margin-bottom:18px;}' +
+      '#kalidad-about-team-slider .kalidad-team-copy h2{font-family:Lora,serif;font-weight:800;color:#12291F;font-size:clamp(2.25rem,4.6vw,4.25rem);line-height:1.03;margin:0;max-width:680px;}' +
+      '#kalidad-about-team-slider .kalidad-team-role{margin-top:20px;color:#1E4F3B;font-weight:800;font-size:clamp(1rem,1.5vw,1.22rem);line-height:1.35;max-width:600px;}' +
+      '#kalidad-about-team-slider .kalidad-team-copy p{margin-top:22px;max-width:640px;color:#284136;font-size:clamp(.98rem,1.35vw,1.16rem);line-height:1.85;}' +
+      '#kalidad-about-team-slider .kalidad-team-image{position:relative;min-height:100%;overflow:hidden;background:#eef3ea;}' +
+      '#kalidad-about-team-slider .kalidad-team-image img{width:100%;height:100%;min-height:100%;display:block;object-fit:cover;object-position:center;}' +
+      '#kalidad-about-team-slider .kalidad-team-arrow{position:absolute;z-index:8;top:50%;transform:translateY(-50%);width:52px;height:52px;border:1px solid rgba(18,41,31,.12);border-radius:50%;background:rgba(255,255,255,.92);color:#12291F;display:flex;align-items:center;justify-content:center;font-size:1.45rem;line-height:1;box-shadow:0 12px 30px rgba(18,41,31,.16);cursor:pointer;transition:transform .2s ease,background .2s ease,box-shadow .2s ease;}' +
+      '#kalidad-about-team-slider .kalidad-team-arrow:hover{background:#C7EF3E;box-shadow:0 14px 32px rgba(18,41,31,.22);}' +
+      '#kalidad-about-team-slider .kalidad-team-arrow.prev{left:22px;}' +
+      '#kalidad-about-team-slider .kalidad-team-arrow.next{right:22px;}' +
+      '#kalidad-about-team-slider .kalidad-team-progress{position:absolute;z-index:9;left:50%;bottom:22px;transform:translateX(-50%);display:flex;gap:6px;align-items:center;padding:8px 12px;border-radius:999px;background:rgba(18,41,31,.72);backdrop-filter:blur(8px);}' +
+      '#kalidad-about-team-slider .kalidad-team-progress button{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:width .25s ease,background .25s ease;}' +
+      '#kalidad-about-team-slider .kalidad-team-progress button.active{width:24px;border-radius:999px;background:#C7EF3E;}' +
+      '@media(max-width:800px){' +
+        '#kalidad-about-team-slider{min-height:780px;height:auto;}' +
+        '#kalidad-about-team-slider .kalidad-team-slide{grid-template-columns:1fr;grid-template-rows:minmax(360px,48vh) auto;overflow:auto;}' +
+        '#kalidad-about-team-slider .kalidad-team-copy{order:2;padding:48px 28px 82px;justify-content:flex-start;}' +
+        '#kalidad-about-team-slider .kalidad-team-image{order:1;min-height:360px;}' +
+        '#kalidad-about-team-slider .kalidad-team-copy h2{font-size:clamp(2rem,9vw,3.1rem);}' +
+        '#kalidad-about-team-slider .kalidad-team-copy p{font-size:.95rem;line-height:1.7;}' +
+        '#kalidad-about-team-slider .kalidad-team-arrow{width:44px;height:44px;top:44%;}' +
+        '#kalidad-about-team-slider .kalidad-team-arrow.prev{left:12px;}' +
+        '#kalidad-about-team-slider .kalidad-team-arrow.next{right:12px;}' +
+        '#kalidad-about-team-slider .kalidad-team-progress{bottom:16px;max-width:calc(100% - 90px);overflow:hidden;}' +
+      '}' +
+      '@media(prefers-reduced-motion:reduce){#kalidad-about-team-slider .kalidad-team-slide{transition:none;}}');
+
+    var current = 0;
+    var timer = null;
+    var duration = 3000;
+    var slideEls = Array.prototype.slice.call(root.querySelectorAll('.kalidad-team-slide'));
+    var dotEls = Array.prototype.slice.call(root.querySelectorAll('.kalidad-team-progress button'));
+
+    function goTo(index, userAction) {
+      current = (index + slideEls.length) % slideEls.length;
+      slideEls.forEach(function (el, i) { el.classList.toggle('is-active', i === current); });
+      dotEls.forEach(function (el, i) { el.classList.toggle('active', i === current); });
+      if (userAction) restart();
+    }
+
+    function restart() {
+      clearInterval(timer);
+      timer = setInterval(function () { goTo(current + 1, false); }, duration);
+    }
+
+    root.querySelector('.kalidad-team-arrow.prev').addEventListener('click', function () { goTo(current - 1, true); });
+    root.querySelector('.kalidad-team-arrow.next').addEventListener('click', function () { goTo(current + 1, true); });
+    dotEls.forEach(function (dot, i) { dot.addEventListener('click', function () { goTo(i, true); }); });
+
+    root.addEventListener('mouseenter', function () { clearInterval(timer); });
+    root.addEventListener('mouseleave', restart);
+    root.addEventListener('focusin', function () { clearInterval(timer); });
+    root.addEventListener('focusout', function () { restart(); });
+
+    restart();
+  }
+
+  function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
+  }
+
+  function escapeAttr(value) {
+    return escapeHtml(value);
+  }
+
   function addStyle(id, css) {
     if (document.getElementById(id)) return;
     var style = document.createElement('style');
@@ -211,6 +345,7 @@
     initPrescriptionHero();
     initServiceDetailHeroes();
     initLastWordHeroAccent();
+    initAboutTeamSlider();
     window.addEventListener('resize', init, { passive: true });
   }
 
