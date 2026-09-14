@@ -17,24 +17,39 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Ensure team slider script is loaded
+      - name: Ensure About enhancement scripts are loaded
         shell: python
         run: |
           from pathlib import Path
 
           path = Path('about.html')
           text = path.read_text(encoding='utf-8')
-          tag = '<script src="about-team-slider.js?v=1" defer></script>'
+          tags = [
+              '<script src="about-team-slider.js?v=2" defer></script>',
+              '<script src="about-mobile-hero.js?v=1" defer></script>'
+          ]
 
-          if tag not in text:
-              marker = '</body>'
-              if marker not in text:
-                  raise SystemExit('Could not find </body> in about.html')
-              text = text.replace(marker, tag + '\n' + marker, 1)
+          marker = '</body>'
+          if marker not in text:
+              raise SystemExit('Could not find </body> in about.html')
+
+          changed = False
+          for tag in tags:
+              if tag not in text:
+                  text = text.replace(marker, tag + '\n' + marker, 1)
+                  changed = True
+
+          # Replace the previous slider cache-busting tag if present.
+          old_tag = '<script src="about-team-slider.js?v=1" defer></script>'
+          if old_tag in text:
+              text = text.replace(old_tag, tags[0], 1)
+              changed = True
+
+          if changed:
               path.write_text(text, encoding='utf-8')
-              print('Inserted About team slider script tag.')
+              print('Updated About enhancement script tags.')
           else:
-              print('About team slider script tag already present.')
+              print('About enhancement script tags already present.')
 
       - name: Commit patch
         shell: bash
@@ -46,5 +61,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add about.html
-          git commit -m "Enable About team slider"
+          git commit -m "Load mobile About hero positioning"
           git push
