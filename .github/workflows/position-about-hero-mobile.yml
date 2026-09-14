@@ -1,0 +1,138 @@
+name: Position About Hero Mobile
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  position:
+    if: github.event.head_commit.message != 'Position About hero content in mobile hero'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Position About hero content
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('about.html')
+          html = path.read_text(encoding='utf-8')
+
+          marker = '<style id="kalidad-about-mobile-hero-position">'
+          html = re.sub(r'\\s*<style id="kalidad-about-mobile-hero-position">.*?</style>\\s*', '\\n', html, flags=re.S)
+
+          css = '''
+          <style id="kalidad-about-mobile-hero-position">
+          /* Mobile About hero: place the existing hero copy in the open left-middle area of the photograph. */
+          @media (max-width: 900px){
+            .about-hero{
+              min-height:100svh !important;
+              height:100svh !important;
+              position:relative !important;
+            }
+            .about-hero-inner{
+              display:block !important;
+              position:relative !important;
+              width:100% !important;
+              max-width:none !important;
+              min-height:100svh !important;
+              height:100% !important;
+            }
+            .about-hero-visual{
+              position:absolute !important;
+              inset:0 !important;
+              width:100% !important;
+              height:100% !important;
+              min-height:100% !important;
+              z-index:1 !important;
+            }
+            .about-hero-visual img{
+              width:100% !important;
+              height:100% !important;
+              object-fit:cover !important;
+              object-position:center center !important;
+            }
+            .about-hero-copy{
+              position:absolute !important;
+              left:24px !important;
+              top:52% !important;
+              transform:translateY(-50%) !important;
+              width:min(61%,410px) !important;
+              max-width:410px !important;
+              min-height:0 !important;
+              padding:0 !important;
+              margin:0 !important;
+              display:flex !important;
+              flex-direction:column !important;
+              justify-content:center !important;
+              background:transparent !important;
+              z-index:3 !important;
+            }
+            .about-hero-copy .hero-kicker,
+            .about-hero-copy .kicker{
+              margin:0 0 10px !important;
+            }
+            .about-hero h1{
+              margin:0 !important;
+              max-width:100% !important;
+              font-size:clamp(2.35rem,10vw,3.6rem) !important;
+              line-height:.98 !important;
+              letter-spacing:-.035em !important;
+              text-shadow:0 2px 12px rgba(255,255,255,.52) !important;
+            }
+            .about-hero-copy>p{
+              margin-top:14px !important;
+              max-width:100% !important;
+              font-size:.92rem !important;
+              line-height:1.5 !important;
+              color:#28473a !important;
+              text-shadow:0 1px 8px rgba(255,255,255,.65) !important;
+            }
+            .about-hero-copy .hero-actions{
+              margin-top:18px !important;
+              gap:10px !important;
+            }
+            .about-hero-copy .hero-actions .btn{
+              padding:11px 16px !important;
+              font-size:.78rem !important;
+            }
+          }
+
+          @media (max-width:560px){
+            .about-hero-copy{
+              left:24px !important;
+              top:51% !important;
+              width:58% !important;
+              max-width:380px !important;
+            }
+            .about-hero h1{
+              font-size:clamp(2.2rem,10.5vw,3.2rem) !important;
+            }
+            .about-hero-copy>p{
+              font-size:.86rem !important;
+            }
+          }
+          </style>
+          '''
+
+          html = html.replace('</head>', css + '\n</head>', 1)
+          path.write_text(html, encoding='utf-8')
+      - name: Commit About hero change
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add about.html
+          git diff --cached --quiet || git commit -m "Position About hero content in mobile hero"
+          git push
+
+      - name: Remove temporary workflow
+        if: always()
+        run: |
+          git rm .github/workflows/position-about-hero-mobile.yml || true
+          git commit -m "Remove temporary About hero workflow" || true
+          git push || true
