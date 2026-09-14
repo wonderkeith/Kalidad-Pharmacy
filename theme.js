@@ -94,6 +94,22 @@
       '@media(max-width:620px){.catalog-page-hero,.catalog-page-hero .hero-copy{min-height:100svh!important;height:100svh!important;}}');
   }
 
+  function initPersonalHygieneHeroText() {
+    if (!/(?:^|\/)personal-hygiene-oral-care\.html$/i.test(window.location.pathname)) return;
+
+    var hero = document.querySelector('.catalog-page-hero');
+    if (!hero) return;
+
+    var heading = hero.querySelector('.hero-copy h1');
+    if (!heading) return;
+
+    heading.innerHTML = 'Personal Hygiene &amp; Oral <span class="accent">Care</span>';
+
+    addStyle('kalidad-personal-hygiene-hero-text',
+      '.catalog-page-hero .hero-copy h1{color:#1E4F3B!important;}' +
+      '.catalog-page-hero .hero-copy h1 .accent{color:#C7EF3E!important;}');
+  }
+
   function initOTCWellnessHero() {
     if (!/(?:^|\/)otc-wellness\.html$/i.test(window.location.pathname)) return;
 
@@ -158,6 +174,7 @@
     init();
     initSupplementsHero();
     initCatalogHeroes();
+    initPersonalHygieneHeroText();
     initOTCWellnessHero();
     initPrescriptionHero();
     initServiceDetailHeroes();
