@@ -1,6 +1,6 @@
 /* Kalidad Pharmacy — About page team slider
    Loaded only by about.html. The first slide preserves the existing team section;
-   following slides show the named team members. Auto-advance: 3 seconds. */
+   following slides show the named team members. Auto-advance: 6 seconds. */
 (function () {
   'use strict';
 
@@ -113,7 +113,7 @@
     var dotEls = Array.prototype.slice.call(root.querySelectorAll('.kats-dots button'));
     var current = 0;
     var timer = null;
-    var duration = 3000;
+    var duration = 6000;
 
     function show(index, restartTimer) {
       current = (index + slideEls.length) % slideEls.length;
