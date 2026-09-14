@@ -45,6 +45,7 @@
     root.id = 'kalidad-about-team-slider';
     root.className = 'kalidad-about-team-slider';
     root.setAttribute('aria-label', 'Meet the Kalidad Pharmacy team');
+    root.setAttribute('data-scroll-anchor', 'meet-team');
 
     root.innerHTML =
       '<div class="kats-track">' +
@@ -73,7 +74,7 @@
     var style = document.createElement('style');
     style.id = 'kats-style';
     style.textContent =
-      '#kalidad-about-team-slider{position:relative;width:100%;height:clamp(560px,76vh,820px);min-height:560px;background:#fff;overflow:hidden;isolation:isolate;}' +
+      '#kalidad-about-team-slider{position:relative;width:100%;height:clamp(560px,76vh,820px);min-height:560px;background:#fff;overflow:hidden;isolation:isolate;scroll-margin-top:96px;}' +
       '#kalidad-about-team-slider .kats-track{position:relative;width:100%;height:100%;}' +
       '#kalidad-about-team-slider .kats-slide{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;opacity:0;visibility:hidden;transform:translateX(28px);transition:opacity .55s ease,transform .65s cubic-bezier(.22,.61,.36,1),visibility .55s;}' +
       '#kalidad-about-team-slider .kats-slide.is-active{opacity:1;visibility:visible;transform:translateX(0);z-index:2;}' +
@@ -93,7 +94,7 @@
       '#kalidad-about-team-slider .kats-dots button{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.52);cursor:pointer;transition:width .25s ease,background .25s ease;}' +
       '#kalidad-about-team-slider .kats-dots button.active{width:24px;border-radius:99px;background:#C7EF3E;}' +
       '@media(max-width:800px){' +
-        '#kalidad-about-team-slider{height:780px;min-height:780px;}' +
+        '#kalidad-about-team-slider{height:780px;min-height:780px;scroll-margin-top:76px;}' +
         '#kalidad-about-team-slider .kats-slide{grid-template-columns:1fr;grid-template-rows:46% 54%;transform:translateY(18px);overflow:hidden;}' +
         '#kalidad-about-team-slider .kats-slide.is-active{transform:translateY(0);}' +
         '#kalidad-about-team-slider .kats-image{grid-row:1;min-height:0;}' +
@@ -130,6 +131,27 @@
       clearInterval(timer);
       timer = setInterval(function () { show(current + 1, false); }, duration);
     }
+
+    /* Robustly handle the mobile hero "Meet Our Team" CTA even after the
+       original #meet-team section has been replaced by the slider. */
+    document.addEventListener('click', function (event) {
+      var target = event.target;
+      var link = target && target.closest ? target.closest('a[href="#meet-team"], a[href$="#meet-team"]') : null;
+      if (!link) return;
+
+      var teamSlider = document.getElementById('kalidad-about-team-slider');
+      if (!teamSlider) return;
+
+      event.preventDefault();
+      var header = document.querySelector('header');
+      var headerHeight = header ? header.getBoundingClientRect().height : 0;
+      var targetTop = teamSlider.getBoundingClientRect().top + window.pageYOffset - headerHeight - 10;
+
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+      try {
+        history.replaceState(null, '', '#meet-team');
+      } catch (ignore) {}
+    }, false);
 
     root.querySelector('.kats-prev').addEventListener('click', function () { show(current - 1, true); });
     root.querySelector('.kats-next').addEventListener('click', function () { show(current + 1, true); });
