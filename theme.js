@@ -97,17 +97,17 @@
   function initPersonalHygieneHeroText() {
     if (!/(?:^|\/)personal-hygiene-oral-care\.html$/i.test(window.location.pathname)) return;
 
-    var hero = document.querySelector('.catalog-page-hero');
+    var hero = document.querySelector('.catalog-page-hero') || document.querySelector('.page-banner');
     if (!hero) return;
 
-    var heading = hero.querySelector('.hero-copy h1');
+    var heading = hero.querySelector('.hero-copy h1') || hero.querySelector('h1');
     if (!heading) return;
 
     heading.innerHTML = 'Personal Hygiene &amp; Oral <span class="accent">Care</span>';
 
     addStyle('kalidad-personal-hygiene-hero-text',
-      '.catalog-page-hero .hero-copy h1{color:#1E4F3B!important;}' +
-      '.catalog-page-hero .hero-copy h1 .accent{color:#C7EF3E!important;}');
+      '.catalog-page-hero .hero-copy h1,.page-banner h1{color:#1E4F3B!important;}' +
+      '.catalog-page-hero .hero-copy h1 .accent,.page-banner h1 .accent{color:#C7EF3E!important;}');
   }
 
   function initOTCWellnessHero() {
@@ -162,6 +162,38 @@
       '@media(max-width:560px){.service-detail-hero .service-detail-copy{padding:105px 24px 55px!important;}}');
   }
 
+  function initLastWordHeroAccent() {
+    var target = /(?:^|\/)(skincare-body-care|baby-care|nutritional-supplements|prescription-filling|health-checks|same-day-delivery|pharmacist-consultation|family-care)\.html$/i;
+    if (!target.test(window.location.pathname)) return;
+
+    var heading = document.querySelector('.catalog-page-hero .hero-copy h1') ||
+      document.querySelector('.page-banner .hero-copy h1') ||
+      document.querySelector('.page-banner h1') ||
+      document.querySelector('.service-detail-hero .service-detail-copy h1') ||
+      document.querySelector('.service-detail-hero h1');
+    if (!heading) return;
+
+    var text = heading.textContent.replace(/\s+/g, ' ').trim();
+    if (!text) return;
+
+    var match = text.match(/^(.*?)(\S+)$/);
+    if (!match) return;
+
+    var lastWord = match[2];
+    var prefix = match[1];
+    heading.innerHTML = '';
+    heading.appendChild(document.createTextNode(prefix));
+    var accent = document.createElement('span');
+    accent.className = 'accent';
+    accent.textContent = lastWord;
+    heading.appendChild(accent);
+
+    addStyle('kalidad-last-word-hero-accent',
+      '.accent{color:#C7EF3E!important;}' +
+      '.catalog-page-hero .hero-copy h1,.page-banner .hero-copy h1,.page-banner h1,.service-detail-hero .service-detail-copy h1,.service-detail-hero h1{color:#1E4F3B!important;}' +
+      '.catalog-page-hero .hero-copy h1 .accent,.page-banner .hero-copy h1 .accent,.page-banner h1 .accent,.service-detail-hero .service-detail-copy h1 .accent,.service-detail-hero h1 .accent{color:#C7EF3E!important;}');
+  }
+
   function addStyle(id, css) {
     if (document.getElementById(id)) return;
     var style = document.createElement('style');
@@ -178,6 +210,7 @@
     initOTCWellnessHero();
     initPrescriptionHero();
     initServiceDetailHeroes();
+    initLastWordHeroAccent();
     window.addEventListener('resize', init, { passive: true });
   }
 
