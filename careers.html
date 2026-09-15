@@ -1650,6 +1650,30 @@ html[data-theme="dark"] .careers-page .menu{
         }
     }
 </style>
+
+<style id="careers-mobile-hero-position">
+/* Mobile only: place the careers hero headline in the left-middle area.
+   The desktop layout and the full-screen hero image are unchanged. */
+@media (max-width: 760px) {
+  .careers-page .reference-career-hero .reference-career-inner {
+    align-items: center !important;
+    padding: 0 20px !important;
+  }
+
+  .careers-page .reference-career-hero .reference-career-copy {
+    align-self: center !important;
+    justify-self: start !important;
+    width: min(82%, 360px) !important;
+    margin: 0 !important;
+    transform: translateY(14%) !important;
+  }
+
+  .careers-page .reference-career-hero .reference-career-copy h1 {
+    margin: 0 !important;
+    max-width: 330px !important;
+  }
+}
+</style>
 </head>
 <body class="careers-page">
 <header>
@@ -1895,18 +1919,3 @@ html[data-theme="dark"] .careers-page .menu{
     <script src="theme.js?v=2" defer></script>
 </body>
 </html>
-/* Kalidad Pharmacy — careers mobile hero positioning only */
-@media (max-width: 800px) {
-  .hero-content,
-  .careers-hero .hero-content,
-  .hero .hero-content,
-  .career-hero .hero-content {
-    top: 50% !important;
-    bottom: auto !important;
-    left: 6% !important;
-    right: auto !important;
-    transform: translateY(-50%) !important;
-    width: min(78%, 420px) !important;
-    margin: 0 !important;
-  }
-}
