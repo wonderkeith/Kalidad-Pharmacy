@@ -21,7 +21,6 @@
 
     var members = [
       { name: 'Dr. Abimanya Willbrod', role: 'Supervising Pharmacist · Managing Director', description: 'Provides professional and clinical leadership for Kalidad Pharmacy while guiding safe, responsible and patient-centred pharmacy care.', image: '20260724_143031(1)(1).jpg' },
-      { name: 'Kabazira Daphine', role: 'Inventory and Accounts Assistant', description: 'Supports inventory control and accounts activities, helping keep pharmacy stock and records accurate and organised.', image: 'team-pharmacists.jpg' },
       { name: 'Kato Julius', role: 'Pharmacy Operations Manager', description: 'Coordinates day-to-day pharmacy operations and helps the team deliver efficient, organised and dependable service.', image: '20260724_144840(1).jpg' },
       { name: 'Murungi Kenneth', role: 'Dispenser', description: 'Supports safe and efficient dispensing while helping patients receive clear, respectful and dependable pharmacy service.', image: '20260724_151800_HD.webp' },
       { name: 'Kalule Briton', role: 'Assistant Pharmacy Operations Manager · Procurement Officer', description: 'Supports pharmacy operations and procurement activities, helping maintain smooth workflows and reliable product availability.', image: '20260724_145355(1).jpg' },
