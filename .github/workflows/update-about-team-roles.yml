@@ -1,0 +1,69 @@
+name: Update About Team Roles
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-team:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Update team member names and roles
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('about-team-slider.js')
+          text = path.read_text(encoding='utf-8')
+
+          new_members = '''    var members = [
+      { name: 'Dr. Abimanya Willbrod', role: 'Supervising Pharmacist · Managing Director', description: 'Provides professional and clinical leadership for Kalidad Pharmacy while guiding safe, responsible and patient-centred pharmacy care.', image: '20260724_143031(1)(1).jpg' },
+      { name: 'Kabazira Daphine', role: 'Inventory and Accounts Assistant', description: 'Supports inventory control and accounts activities, helping keep pharmacy stock and records accurate and organised.', image: 'team-pharmacists.jpg' },
+      { name: 'Kato Julius', role: 'Pharmacy Operations Manager', description: 'Coordinates day-to-day pharmacy operations and helps the team deliver efficient, organised and dependable service.', image: '20260724_144840(1).jpg' },
+      { name: 'Murungi Kenneth', role: 'Dispenser', description: 'Supports safe and efficient dispensing while helping patients receive clear, respectful and dependable pharmacy service.', image: '20260724_151800_HD.webp' },
+      { name: 'Kalule Briton', role: 'Assistant Pharmacy Operations Manager · Procurement Officer', description: 'Supports pharmacy operations and procurement activities, helping maintain smooth workflows and reliable product availability.', image: '20260724_145355(1).jpg' },
+      { name: 'Kafuuma Keith Paul', role: 'IT Assistant · Dispenser', description: 'Supports pharmacy technology and digital systems while assisting with safe and efficient dispensing.', image: '20260724_145446(1).jpg' },
+      { name: 'Katusiime Shallum Flavia', role: 'Dispenser · Accounts Assistant', description: 'Supports dispensing and accounts activities while helping provide attentive and dependable pharmacy service.', image: '20260724_151100(1)_HD.webp' },
+      { name: 'Namara Victoria', role: 'Dispenser · Accounts Assistant', description: 'Supports dispensing and accounts activities while helping customers receive professional and welcoming pharmacy care.', image: '20260724_155052(1)(1)_HD.webp' },
+      { name: 'Tuhaise Justine', role: 'Inventory Assistant · Dispenser', description: 'Supports inventory activities and dispensing, helping maintain accurate stock and dependable patient service.', image: '20260724_152030(1)_HD.webp' },
+      { name: 'Kato Reagan', role: 'Dispenser', description: 'Supports safe and efficient dispensing while providing attentive assistance to patients and customers.', image: 'pharmacist_green_scrubs.webp' },
+      { name: 'Ahairweomugisa Christopher', role: 'Dispenser', description: 'Supports safe and efficient dispensing while contributing to a respectful and positive pharmacy experience.', image: '20260724_152439(1)_HD.webp' }
+    ];'''
+
+          pattern = r"    var members = \[.*?\n    \];"
+          updated, count = re.subn(pattern, new_members, text, count=1, flags=re.S)
+          if count != 1:
+              raise SystemExit('Could not locate the About team members block.')
+
+          path.write_text(updated, encoding='utf-8')
+          print('Updated About team member names and roles; removed Kenyange Rhita.')
+
+      - name: Commit About team update
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add about-team-slider.js
+          if git diff --cached --quiet; then
+            echo "No changes needed."
+          else
+            git commit -m "Update About team roles and members"
+            git push
+          fi
+
+      - name: Remove temporary workflow
+        shell: bash
+        run: |
+          git rm .github/workflows/update-about-team-roles.yml
+          git commit -m "Remove temporary team update workflow"
+          git push
