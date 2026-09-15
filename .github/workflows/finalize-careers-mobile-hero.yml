@@ -1,0 +1,75 @@
+name: Finalize Careers Mobile Hero
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Fix mobile hero and clean temporary files
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('careers.html')
+          text = path.read_text(encoding='utf-8')
+
+          # Remove the accidental CSS tail appended after </html> by the earlier
+          # temporary positioning workflow. Keep the actual document intact.
+          text = re.sub(r'\n/\* Kalidad Pharmacy — careers mobile hero positioning only \*/[\s\S]*$', '', text).rstrip() + '\n'
+
+          # Desktop is deliberately untouched. On mobile, move only the existing
+          # hero copy into the left-middle area indicated by the supplied reference.
+          mobile_css = '''\n<style id="careers-mobile-hero-position">\n/* Mobile only: place the careers hero headline in the left-middle area.\n   The desktop layout and the full-screen hero image are unchanged. */\n@media (max-width: 760px) {\n  .careers-page .reference-career-hero .reference-career-inner {\n    align-items: center !important;\n    padding: 0 20px !important;\n  }\n\n  .careers-page .reference-career-hero .reference-career-copy {\n    align-self: center !important;\n    justify-self: start !important;\n    width: min(82%, 360px) !important;\n    margin: 0 !important;\n    transform: translateY(14%) !important;\n  }\n\n  .careers-page .reference-career-hero .reference-career-copy h1 {\n    margin: 0 !important;\n    max-width: 330px !important;\n  }\n}\n</style>\n'''
+
+          # Replace an existing copy if this workflow is ever re-run.
+          text = re.sub(r'\n<style id="careers-mobile-hero-position">[\s\S]*?</style>\n?', '\n', text)
+          marker = '</head>'
+          if marker not in text:
+              raise SystemExit('Could not locate </head> in careers.html')
+          text = text.replace(marker, mobile_css + marker, 1)
+          path.write_text(text, encoding='utf-8')
+
+          # Remove all temporary files created while applying this targeted edit.
+          temp_paths = [
+              '.github/workflows/position-careers-hero-mobile.yml',
+              '.github/workflows/position-careers-hero-mobile-trigger.yml',
+              '.github/workflows/inspect-careers.yml',
+              '.github/workflows/noop-careers.yml',
+              '.github/workflows/remove-temp-careers.yml',
+              '.github/workflows/temp-cleanup-careers.yml',
+              'careers-mobile-fix.js',
+              'TEST', 'x2', 'x3', 'careers.html.bak-note'
+          ]
+          for item in temp_paths:
+              p = Path(item)
+              if p.exists():
+                  p.unlink()
+
+      - name: Commit final careers update
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add careers.html
+          git add -u
+          git commit -m "Adjust careers mobile hero to left middle"
+          git push
+
+      - name: Remove this temporary workflow
+        shell: bash
+        run: |
+          git rm .github/workflows/finalize-careers-mobile-hero.yml
+          git commit -m "Remove temporary careers hero workflow"
+          git push
