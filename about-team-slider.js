@@ -21,16 +21,16 @@
 
     var members = [
       { name: 'Dr. Abimanya Willbrod', role: 'Supervising Pharmacist · Managing Director', description: 'Provides professional and clinical leadership for Kalidad Pharmacy while guiding safe, responsible and patient-centred pharmacy care.', image: '20260724_143031(1)(1).jpg' },
-      { name: 'Kato Julius', role: 'Operations Manager', description: 'Coordinates day-to-day pharmacy operations and helps the team deliver efficient, organised and dependable service.', image: '20260724_144840(1).jpg' },
-      { name: 'Kalule Briton', role: 'Assistant Operations Manager', description: 'Supports operational coordination and team performance, helping maintain smooth workflows and consistent customer service.', image: '20260724_145355(1).jpg' },
-      { name: 'Kafuuma Keith Paul', role: 'Pharmacy IT Technician · Salesman', description: 'Supports pharmacy technology and digital systems while assisting customers with product information and sales.', image: '20260724_145446(1).jpg' },
-      { name: 'Katusiime Shallom Flavia', role: 'Quality Assurance Officer · Salesman', description: 'Supports quality-focused pharmacy processes while helping customers find appropriate products and receive attentive service.', image: '20260724_151100(1)_HD.webp' },
-      { name: 'Murungi Kenneth Godfrey', role: 'Salesman', description: 'Helps customers navigate the pharmacy range, understand available products and receive friendly, professional service.', image: '20260724_151800_HD.webp' },
-      { name: 'Tuhaise Justine', role: 'Salesman', description: 'Supports customers with product selection and day-to-day pharmacy service with a welcoming and helpful approach.', image: '20260724_152030(1)_HD.webp' },
-      { name: 'Atuhaire Chris', role: 'Salesman', description: 'Assists customers with product enquiries and sales while contributing to a smooth and positive pharmacy experience.', image: '20260724_152439(1)_HD.webp' },
-      { name: 'Namara Victoria', role: 'Salesman', description: 'Supports customers with product enquiries, selection and everyday pharmacy service.', image: '20260724_155052(1)(1)_HD.webp' },
-      { name: 'Kato Reagan', role: 'Salesman', description: 'Helps customers identify suitable products and provides attentive support throughout their pharmacy visit.', image: 'pharmacist_green_scrubs.webp' },
-      { name: 'Kenyange Rhita', role: 'Salesman', description: 'Supports customers with product information and sales while helping create a respectful, welcoming pharmacy experience.', image: 'team-pharmacists.jpg' }
+      { name: 'Kabazira Daphine', role: 'Inventory and Accounts Assistant', description: 'Supports inventory control and accounts activities, helping keep pharmacy stock and records accurate and organised.', image: 'team-pharmacists.jpg' },
+      { name: 'Kato Julius', role: 'Pharmacy Operations Manager', description: 'Coordinates day-to-day pharmacy operations and helps the team deliver efficient, organised and dependable service.', image: '20260724_144840(1).jpg' },
+      { name: 'Murungi Kenneth', role: 'Dispenser', description: 'Supports safe and efficient dispensing while helping patients receive clear, respectful and dependable pharmacy service.', image: '20260724_151800_HD.webp' },
+      { name: 'Kalule Briton', role: 'Assistant Pharmacy Operations Manager · Procurement Officer', description: 'Supports pharmacy operations and procurement activities, helping maintain smooth workflows and reliable product availability.', image: '20260724_145355(1).jpg' },
+      { name: 'Kafuuma Keith Paul', role: 'IT Assistant · Dispenser', description: 'Supports pharmacy technology and digital systems while assisting with safe and efficient dispensing.', image: '20260724_145446(1).jpg' },
+      { name: 'Katusiime Shallum Flavia', role: 'Dispenser · Accounts Assistant', description: 'Supports dispensing and accounts activities while helping provide attentive and dependable pharmacy service.', image: '20260724_151100(1)_HD.webp' },
+      { name: 'Namara Victoria', role: 'Dispenser · Accounts Assistant', description: 'Supports dispensing and accounts activities while helping customers receive professional and welcoming pharmacy care.', image: '20260724_155052(1)(1)_HD.webp' },
+      { name: 'Tuhaise Justine', role: 'Inventory Assistant · Dispenser', description: 'Supports inventory activities and dispensing, helping maintain accurate stock and dependable patient service.', image: '20260724_152030(1)_HD.webp' },
+      { name: 'Kato Reagan', role: 'Dispenser', description: 'Supports safe and efficient dispensing while providing attentive assistance to patients and customers.', image: 'pharmacist_green_scrubs.webp' },
+      { name: 'Ahairweomugisa Christopher', role: 'Dispenser', description: 'Supports safe and efficient dispensing while contributing to a respectful and positive pharmacy experience.', image: '20260724_152439(1)_HD.webp' }
     ];
 
     var slides = [{
