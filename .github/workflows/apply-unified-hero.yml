@@ -17,6 +17,8 @@ jobs:
           fetch-depth: 0
       - name: Apply hero treatment
         run: python scripts/apply-unified-hero.py
+      - name: Refine hero image layering
+        run: python scripts/refine-unified-hero.py
       - name: Validate HTML files
         run: |
           python - <<'PY'
@@ -30,7 +32,8 @@ jobs:
           for page in pages:
               s=Path(page).read_text(encoding='utf-8')
               assert 'kalidad-unified-hero' in s, page
-              assert s.count('Kalidad unified full-screen hero treatment') == 1, page
+              assert 'Kalidad unified full-screen hero treatment' in s, page
+              assert 'Kalidad unified hero image refinement' in s, page
               assert '</head>' in s and '</body>' in s, page
           print('Validated', len(pages), 'pages')
           PY
