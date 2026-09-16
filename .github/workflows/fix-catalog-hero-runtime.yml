@@ -1,0 +1,106 @@
+name: Fix catalog hero runtime overrides
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Apply root-cause hero fix
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          theme = Path('theme.js')
+          s = theme.read_text(encoding='utf-8')
+
+          old = """'.catalog-page-hero::before,.catalog-page-hero::after,.catalog-page-hero .hero-bg::before,.catalog-page-hero .hero-bg::after{background:none!important;background-image:none!important;box-shadow:none!important;opacity:0!important;display:none!important;content:none!important;}' +"""
+          new = """'.catalog-page-hero::before,.catalog-page-hero::after,.catalog-page-hero .hero-bg::before{background:none!important;background-image:none!important;box-shadow:none!important;opacity:0!important;display:none!important;content:none!important;}' +
+                '.catalog-page-hero .hero-bg::after{content:\"\"!important;position:absolute!important;inset:0!important;display:block!important;background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;z-index:1!important;pointer-events:none!important;}' +
+                '@media(max-width:850px){.catalog-page-hero .hero-bg::after{background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important;}}' +"""
+          if old not in s:
+              raise SystemExit('Expected catalog hero override was not found in theme.js')
+          s = s.replace(old, new, 1)
+
+          old = """'.catalog-page-hero .hero-copy h1,.page-banner h1{color:#1E4F3B!important;}' +
+                '.catalog-page-hero .hero-copy h1 .accent,.page-banner h1 .accent{color:#C7EF3E!important;}');"""
+          new = """'.catalog-page-hero .hero-copy h1{color:#fff!important;}' +
+                '.catalog-page-hero .hero-copy h1 .accent{color:#C7EF3E!important;}' +
+                '.page-banner h1{color:#1E4F3B!important;}' +
+                '.page-banner h1 .accent{color:#C7EF3E!important;}');"""
+          if old not in s:
+              raise SystemExit('Expected personal-hygiene hero override was not found in theme.js')
+          s = s.replace(old, new, 1)
+
+          old = """'.catalog-page-hero .hero-copy h1,.page-banner .hero-copy h1,.page-banner h1,.service-detail-hero .service-detail-copy h1,.service-detail-hero h1{color:#1E4F3B!important;}' +
+                '.catalog-page-hero .hero-copy h1 .accent,.page-banner .hero-copy h1 .accent,.page-banner h1 .accent,.service-detail-hero .service-detail-copy h1 .accent,.service-detail-hero h1 .accent{color:#C7EF3E!important;}');"""
+          new = """'.catalog-page-hero .hero-copy h1{color:#fff!important;}' +
+                '.catalog-page-hero .hero-copy h1 .accent{color:#C7EF3E!important;}' +
+                '.page-banner .hero-copy h1,.page-banner h1,.service-detail-hero .service-detail-copy h1,.service-detail-hero h1{color:#1E4F3B!important;}' +
+                '.page-banner .hero-copy h1 .accent,.page-banner h1 .accent,.service-detail-hero .service-detail-copy h1 .accent,.service-detail-hero h1 .accent{color:#C7EF3E!important;}');"""
+          if old not in s:
+              raise SystemExit('Expected last-word hero override was not found in theme.js')
+          s = s.replace(old, new, 1)
+          theme.write_text(s, encoding='utf-8')
+
+          pages = [
+              'nutritional-supplements.html',
+              'personal-hygiene-oral-care.html',
+              'skincare-body-care.html',
+              'baby-care.html',
+          ]
+          for name in pages:
+              p = Path(name)
+              html = p.read_text(encoding='utf-8')
+              html, removed = re.subn(r'<style id="final-otc-hero-match">.*?</style>\s*', '', html, count=1, flags=re.S)
+              if removed != 1:
+                  raise SystemExit(f'Expected temporary hero patch not found in {name}')
+              html = html.replace('class="catalog-page-hero otc-hero-match"', 'class="catalog-page-hero"', 1)
+              html, changed = re.subn(r'(<section class="catalog-page-hero"[^>]*>\s*<div class="hero-bg">.*?</div>\s*<div class="hero-copy) reveal(\b)', r'\1\2', html, count=1, flags=re.S)
+              if changed != 1:
+                  raise SystemExit(f'Expected hero reveal dependency not found in {name}')
+              p.write_text(html, encoding='utf-8')
+
+      - name: Validate the edited files
+        run: |
+          node --check theme.js
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          pages = ['nutritional-supplements.html','personal-hygiene-oral-care.html','skincare-body-care.html','baby-care.html']
+          for name in pages:
+              s = Path(name).read_text(encoding='utf-8')
+              assert 'otc-hero-match' not in s, name
+              assert '<style id="final-otc-hero-match">' not in s, name
+              assert 'class="hero-copy reveal"' not in s.split('<section class="catalog-page-hero"',1)[1].split('</section>',1)[0], name
+          t = Path('theme.js').read_text(encoding='utf-8')
+          assert 'linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)' in t
+          assert 'linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)' in t
+          assert "'.catalog-page-hero .hero-copy h1{color:#fff!important;}'" in t
+          print('Static validation passed.')
+          PY
+
+      - name: Commit repair and remove temporary workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add theme.js nutritional-supplements.html personal-hygiene-oral-care.html skincare-body-care.html baby-care.html
+          git diff --cached --quiet || git commit -m "Fix persistent OTC hero styling on catalog pages"
+          git rm .github/workflows/fix-catalog-hero-runtime.yml
+          git commit -m "Remove temporary hero repair workflow"
+          git push origin HEAD:${{ github.head_ref }}
