@@ -1,0 +1,196 @@
+name: Fix visible contact and careers heroes
+on:
+  push:
+    branches: [fix/contact-careers-hero-visible]
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repair hero rendering
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          contact = Path('contact.html')
+          s = contact.read_text()
+          css = r'''
+
+/* ===== FINAL CONTACT HERO VISIBILITY REPAIR ===== */
+.page-banner.kalidad-unified-hero,
+.page-banner.kalidad-unified-hero.page-banner {
+  position:relative !important;
+  width:100% !important;
+  height:100svh !important;
+  min-height:100svh !important;
+  margin:0 !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  display:block !important;
+  background-image:url('20260724_151100(1)_HD.webp') !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  background-color:#12291F !important;
+}
+.page-banner.kalidad-unified-hero::before {
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  z-index:1 !important;
+  background:linear-gradient(90deg,rgba(18,41,31,.82) 0%,rgba(18,41,31,.58) 27%,rgba(18,41,31,.18) 58%,rgba(18,41,31,.04) 100%) !important;
+  pointer-events:none !important;
+}
+.page-banner.kalidad-unified-hero::after { display:none !important; }
+.page-banner.kalidad-unified-hero .container {
+  position:relative !important;
+  z-index:3 !important;
+  width:100% !important;
+  max-width:none !important;
+  height:100% !important;
+  min-height:100svh !important;
+  margin:0 !important;
+  padding:0 7vw !important;
+  display:flex !important;
+  align-items:center !important;
+  box-sizing:border-box !important;
+}
+.page-banner.kalidad-unified-hero .hero-copy {
+  position:relative !important;
+  z-index:4 !important;
+  width:min(680px,72vw) !important;
+  max-width:680px !important;
+  height:auto !important;
+  min-height:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  align-items:flex-start !important;
+}
+.page-banner.kalidad-unified-hero h1,
+.page-banner.kalidad-unified-hero h1 .line-dark,
+.page-banner.kalidad-unified-hero h1 .line-lime,
+.page-banner.kalidad-unified-hero h1 .accent {
+  color:#fff !important;
+  text-shadow:0 3px 22px rgba(0,0,0,.42) !important;
+}
+.page-banner.kalidad-unified-hero h1 .line-lime,
+.page-banner.kalidad-unified-hero h1 .accent { color:#C7EF3E !important; }
+@media(max-width:900px){
+  .page-banner.kalidad-unified-hero {
+    height:100svh !important;
+    min-height:100svh !important;
+    background-image:url('20260724_151100(1)_HD.webp') !important;
+    background-position:64% center !important;
+  }
+  .page-banner.kalidad-unified-hero::before {
+    background:linear-gradient(90deg,rgba(18,41,31,.78) 0%,rgba(18,41,31,.54) 43%,rgba(18,41,31,.16) 100%) !important;
+  }
+  .page-banner.kalidad-unified-hero .container { padding:0 28px !important; align-items:center !important; }
+  .page-banner.kalidad-unified-hero .hero-copy { width:70% !important; max-width:360px !important; transform:translateY(8%) !important; }
+  .page-banner.kalidad-unified-hero h1 { font-size:clamp(2.15rem,8vw,3rem) !important; line-height:1 !important; }
+}
+@media(max-width:560px){
+  .page-banner.kalidad-unified-hero { min-height:100svh !important; background-position:62% center !important; }
+  .page-banner.kalidad-unified-hero .container { padding:0 22px !important; }
+  .page-banner.kalidad-unified-hero .hero-copy { width:72% !important; max-width:260px !important; }
+  .page-banner.kalidad-unified-hero h1 { font-size:clamp(1.9rem,9vw,2.45rem) !important; }
+}
+'''
+          if 'FINAL CONTACT HERO VISIBILITY REPAIR' not in s:
+              s = s.replace('</head>', '<style id="final-contact-hero-visibility">' + css + '\n</style>\n</head>')
+          contact.write_text(s)
+
+          careers = Path('careers.html')
+          s = careers.read_text()
+          css = r'''
+
+/* ===== FINAL CAREERS HERO VISIBILITY REPAIR ===== */
+.careers-page .reference-career-hero {
+  position:relative !important;
+  width:100% !important;
+  height:100svh !important;
+  min-height:100svh !important;
+  margin:0 !important;
+  overflow:hidden !important;
+  background:#12291F !important;
+}
+.careers-page .reference-career-hero .career-hero-image {
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:100% !important;
+  min-height:100% !important;
+  max-width:none !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+  z-index:0 !important;
+}
+.careers-page .reference-career-hero::after {
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  z-index:1 !important;
+  pointer-events:none !important;
+  background:linear-gradient(90deg,rgba(18,41,31,.72) 0%,rgba(18,41,31,.42) 35%,rgba(18,41,31,.08) 68%,rgba(18,41,31,.02) 100%) !important;
+}
+.careers-page .reference-career-inner {
+  position:relative !important;
+  z-index:3 !important;
+  width:100% !important;
+  height:100% !important;
+  min-height:100svh !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 7vw !important;
+  display:flex !important;
+  align-items:center !important;
+  box-sizing:border-box !important;
+}
+.careers-page .reference-career-copy { grid-column:auto !important; max-width:620px !important; }
+.careers-page .reference-career-copy h1 {
+  color:#fff !important;
+  text-shadow:0 3px 22px rgba(0,0,0,.42) !important;
+}
+.careers-page .reference-career-copy h1 span { color:#C7EF3E !important; }
+@media(max-width:900px){
+  .careers-page .reference-career-hero { height:100svh !important; min-height:100svh !important; }
+  .careers-page .reference-career-hero .career-hero-image { object-position:58% center !important; }
+  .careers-page .reference-career-hero::after { background:linear-gradient(90deg,rgba(18,41,31,.74) 0%,rgba(18,41,31,.40) 48%,rgba(18,41,31,.10) 100%) !important; }
+  .careers-page .reference-career-inner { min-height:100svh !important; padding:0 28px !important; align-items:center !important; }
+  .careers-page .reference-career-copy { width:70% !important; max-width:360px !important; transform:translateY(8%) !important; }
+  .careers-page .reference-career-copy h1 { font-size:clamp(2.2rem,9vw,3.4rem) !important; }
+}
+@media(max-width:560px){
+  .careers-page .reference-career-hero .career-hero-image { object-position:58% center !important; }
+  .careers-page .reference-career-inner { padding:0 22px !important; }
+  .careers-page .reference-career-copy { width:72% !important; max-width:270px !important; }
+  .careers-page .reference-career-copy h1 { font-size:clamp(2rem,10vw,2.7rem) !important; }
+}
+'''
+          if 'FINAL CAREERS HERO VISIBILITY REPAIR' not in s:
+              s = s.replace('</head>', '<style id="final-careers-hero-visibility">' + css + '\n</style>\n</head>')
+          careers.write_text(s)
+          PY
+      - name: Validate only the two intended pages
+        run: |
+          grep -q 'FINAL CONTACT HERO VISIBILITY REPAIR' contact.html
+          grep -q 'FINAL CAREERS HERO VISIBILITY REPAIR' careers.html
+          test -z "$(git diff --name-only | grep -vE '^(contact.html|careers.html)$' || true)"
+      - name: Remove temporary workflow
+        run: rm -f .github/workflows/fix-visible-contact-careers.yml
+      - name: Commit and push final repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add contact.html careers.html .github/workflows/fix-visible-contact-careers.yml
+          git commit -m "Fix visible contact and careers heroes"
+          git push origin HEAD
