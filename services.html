@@ -1307,6 +1307,33 @@ header.logo-hidden {
 }
 
 </style>
+<style id="kalidad-final-services-gradient-fix">
+.page-banner .hero-image {
+  z-index: 0 !important;
+}
+.page-banner .hero-image img {
+  position: relative !important;
+  z-index: 0 !important;
+}
+.page-banner .hero-image::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background: linear-gradient(90deg, rgba(18,41,31,.86) 0%, rgba(18,41,31,.70) 25%, rgba(18,41,31,.38) 48%, rgba(18,41,31,.12) 72%, rgba(18,41,31,.02) 100%) !important;
+}
+.page-banner .hero-copy {
+  position: relative !important;
+  z-index: 3 !important;
+}
+@media (max-width: 900px) {
+  .page-banner .hero-image::before {
+    background: linear-gradient(90deg, rgba(18,41,31,.84) 0%, rgba(18,41,31,.66) 30%, rgba(18,41,31,.34) 58%, rgba(18,41,31,.08) 100%) !important;
+  }
+}
+</style>
 </head>
 <body>
 
