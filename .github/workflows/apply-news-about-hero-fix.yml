@@ -1,0 +1,311 @@
+name: Apply News About Hero Fix
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-news-about-hero-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Apply actual hero selectors
+        shell: python
+        run: |
+          from pathlib import Path
+
+          news_css = r'''
+          /* ==========================================================
+             FINAL NEWS HERO — actual .news-hero structure
+             ========================================================== */
+          .news-hero{
+            position:relative!important;
+            width:100%!important;
+            height:100svh!important;
+            min-height:100svh!important;
+            margin:0!important;
+            padding:0!important;
+            overflow:hidden!important;
+            display:flex!important;
+            align-items:center!important;
+            background:url('pharmacist_green_scrubs.webp') center center / cover no-repeat!important;
+            isolation:isolate!important;
+          }
+          .news-hero::before{
+            content:""!important;
+            position:absolute!important;
+            inset:0!important;
+            z-index:1!important;
+            pointer-events:none!important;
+            background:linear-gradient(90deg,rgba(18,41,31,.84) 0%,rgba(18,41,31,.66) 28%,rgba(18,41,31,.24) 60%,rgba(18,41,31,.05) 100%)!important;
+          }
+          .news-hero .container{
+            position:relative!important;
+            z-index:3!important;
+            width:100%!important;
+            max-width:none!important;
+            height:100%!important;
+            margin:0!important;
+            padding:0 7vw!important;
+            display:flex!important;
+            align-items:center!important;
+            box-sizing:border-box!important;
+          }
+          .news-hero h1{
+            margin:0!important;
+            max-width:720px!important;
+            font-family:'Lora',serif!important;
+            font-size:clamp(48px,6.2vw,88px)!important;
+            line-height:.96!important;
+            letter-spacing:-.04em!important;
+            font-weight:800!important;
+            color:#fff!important;
+            text-shadow:0 3px 22px rgba(0,0,0,.42)!important;
+          }
+          .news-hero h1 span,
+          .news-hero h1 .accent{
+            color:#C7EF3E!important;
+          }
+          .news-hero p{color:#fff!important;}
+          .news-hero-mobile-img{display:none!important;}
+          @media(max-width:900px){
+            .news-hero{
+              height:100svh!important;
+              min-height:100svh!important;
+              display:block!important;
+              background:#12291F!important;
+            }
+            .news-hero-mobile-img{
+              display:block!important;
+              position:absolute!important;
+              inset:0!important;
+              width:100%!important;
+              height:100%!important;
+              max-width:none!important;
+              object-fit:cover!important;
+              object-position:78% center!important;
+              z-index:0!important;
+            }
+            .news-hero::before{
+              z-index:1!important;
+              background:linear-gradient(90deg,rgba(18,41,31,.78) 0%,rgba(18,41,31,.55) 46%,rgba(18,41,31,.10) 100%)!important;
+            }
+            .news-hero .container{
+              position:absolute!important;
+              inset:0!important;
+              height:100%!important;
+              padding:0 28px!important;
+              display:flex!important;
+              align-items:center!important;
+            }
+            .news-hero h1{
+              width:72%!important;
+              max-width:380px!important;
+              font-size:clamp(40px,9vw,66px)!important;
+              line-height:.98!important;
+            }
+          }
+          @media(max-width:560px){
+            .news-hero-mobile-img{object-position:76% center!important;}
+            .news-hero .container{padding:0 22px!important;align-items:center!important;}
+            .news-hero h1{width:74%!important;max-width:285px!important;font-size:clamp(34px,9.4vw,52px)!important;}
+          }
+          '''
+
+          about_css = r'''
+          /* ==========================================================
+             FINAL ABOUT HERO — actual .about-hero structure
+             ========================================================== */
+          .about-hero{
+            position:relative!important;
+            width:100%!important;
+            height:100svh!important;
+            min-height:100svh!important;
+            margin:0!important;
+            padding:0!important;
+            overflow:hidden!important;
+            background:url('about-hero-desktop-adjusted.webp') center center / cover no-repeat!important;
+            isolation:isolate!important;
+          }
+          .about-hero::before{
+            content:""!important;
+            position:absolute!important;
+            inset:0!important;
+            z-index:1!important;
+            pointer-events:none!important;
+            background:linear-gradient(90deg,rgba(18,41,31,.84) 0%,rgba(18,41,31,.66) 28%,rgba(18,41,31,.24) 60%,rgba(18,41,31,.05) 100%)!important;
+          }
+          .about-hero-inner{
+            position:relative!important;
+            z-index:3!important;
+            width:100%!important;
+            max-width:none!important;
+            height:100%!important;
+            min-height:100svh!important;
+            margin:0!important;
+            padding:0 7vw!important;
+            display:flex!important;
+            align-items:center!important;
+            box-sizing:border-box!important;
+          }
+          .about-hero-copy{
+            position:relative!important;
+            z-index:4!important;
+            width:min(680px,72vw)!important;
+            max-width:680px!important;
+            margin:0!important;
+            padding:0!important;
+            display:flex!important;
+            flex-direction:column!important;
+            justify-content:center!important;
+            align-items:flex-start!important;
+            background:transparent!important;
+          }
+          .about-hero h1{
+            margin:0!important;
+            max-width:680px!important;
+            font-family:'Lora',serif!important;
+            font-size:clamp(48px,6.2vw,88px)!important;
+            line-height:.96!important;
+            letter-spacing:-.04em!important;
+            font-weight:800!important;
+            color:#fff!important;
+            text-shadow:0 3px 22px rgba(0,0,0,.42)!important;
+          }
+          .about-hero h1 .accent{color:#C7EF3E!important;}
+          .about-hero .hero-actions{margin-top:28px!important;display:flex!important;flex-wrap:wrap!important;gap:12px!important;}
+          .about-hero .hero-actions .btn-primary{
+            background:#C7EF3E!important;
+            border-color:#C7EF3E!important;
+            color:#12291F!important;
+            box-shadow:0 12px 28px rgba(0,0,0,.18)!important;
+          }
+          .about-hero .hero-actions .btn-outline{
+            background:rgba(18,41,31,.16)!important;
+            border-color:#fff!important;
+            color:#fff!important;
+          }
+          .about-hero .about-hero-visual{display:none!important;}
+          @media(max-width:900px){
+            .about-hero{
+              height:100svh!important;
+              min-height:100svh!important;
+              background:#12291F!important;
+            }
+            .about-hero::before{
+              background:linear-gradient(90deg,rgba(18,41,31,.78) 0%,rgba(18,41,31,.54) 48%,rgba(18,41,31,.10) 100%)!important;
+            }
+            .about-hero-inner{
+              height:100%!important;
+              min-height:100svh!important;
+              padding:0 24px!important;
+              display:block!important;
+            }
+            .about-hero-visual{
+              display:block!important;
+              position:absolute!important;
+              inset:0!important;
+              width:100%!important;
+              height:100%!important;
+              min-height:0!important;
+              z-index:0!important;
+              background:#12291F!important;
+            }
+            .about-hero-visual > img:not(.about-hero-mobile-img){display:none!important;}
+            .about-hero-mobile-img{
+              display:block!important;
+              position:absolute!important;
+              inset:0!important;
+              width:100%!important;
+              height:100%!important;
+              min-width:100%!important;
+              min-height:100%!important;
+              object-fit:cover!important;
+              object-position:50% 35%!important;
+              z-index:0!important;
+            }
+            .about-hero-visual::before,
+            .about-hero-visual::after{display:none!important;}
+            .about-hero-copy{
+              position:absolute!important;
+              left:24px!important;
+              top:56%!important;
+              transform:translateY(-50%)!important;
+              width:61%!important;
+              max-width:410px!important;
+              min-height:0!important;
+              padding:0!important;
+              margin:0!important;
+              display:flex!important;
+              flex-direction:column!important;
+              justify-content:center!important;
+              background:transparent!important;
+              z-index:3!important;
+            }
+            .about-hero h1{
+              max-width:100%!important;
+              font-size:clamp(38px,10vw,60px)!important;
+              line-height:.98!important;
+            }
+            .about-hero .hero-actions{margin-top:18px!important;gap:10px!important;}
+            .about-hero .hero-actions .btn{padding:10px 14px!important;font-size:.74rem!important;}
+          }
+          @media(max-width:560px){
+            .about-hero-inner{padding:0 22px!important;}
+            .about-hero-mobile-img{object-position:50% 33%!important;}
+            .about-hero-copy{left:22px!important;top:55%!important;width:64%!important;max-width:285px!important;}
+            .about-hero h1{font-size:clamp(32px,9.6vw,50px)!important;}
+            .about-hero .hero-actions{gap:8px!important;}
+            .about-hero .hero-actions .btn{padding:8px 11px!important;font-size:.66rem!important;}
+          }
+          '''
+
+          def inject(path, style_id, css):
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              if f'id="{style_id}"' in text:
+                  print(f'{path}: style already present')
+                  return False
+              marker='</head>'
+              if marker not in text:
+                  raise SystemExit(f'{path}: missing </head>')
+              block=f'\n<style id="{style_id}">\n{css}\n</style>\n'
+              p.write_text(text.replace(marker, block+marker, 1), encoding='utf-8')
+              print(f'{path}: injected {style_id}')
+              return True
+
+          changed = False
+          changed |= inject('news.html','kalidad-final-news-actual-hero',news_css)
+          changed |= inject('about.html','kalidad-final-about-actual-hero',about_css)
+
+          workflow = Path('.github/workflows/apply-news-about-hero-fix.yml')
+          if workflow.exists():
+              workflow.unlink()
+              changed = True
+
+          if changed:
+              Path('news.html').touch()
+              Path('about.html').touch()
+
+      - name: Commit hero fix
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add news.html about.html .github/workflows/apply-news-about-hero-fix.yml
+          if git diff --cached --quiet; then
+            echo "No changes needed."
+            exit 0
+          fi
+          git commit -m "Fix News and About hero treatments"
+          git push
