@@ -416,7 +416,7 @@ button, input, textarea, select {
     align-items:center;
   }
   .page-banner::before{
-    display:none !important;
+    display:block !important;
   }
   .page-banner .container{
     display:block;
@@ -466,7 +466,7 @@ button, input, textarea, select {
 .hero-dots span{width:14px;height:14px;border-radius:50%;background:#fff;opacity:.9;}
 .hero-dots span.active{background:#8fbd1d;opacity:1;}
 @media(max-width:900px){
-  .page-banner{min-height:600px;background:url('kalidad_pharmacy_clean_photo.webp') center 30% / cover no-repeat;display:flex;align-items:flex-end;}
+  .page-banner{min-height:600px;background-image:url('kalidad_pharmacy_scene.webp') !important;display:flex;align-items:flex-end;}
   .page-banner .container{grid-template-columns:1fr;padding:0 24px 40px;}
   .page-banner h1{font-size:clamp(1.9rem,7vw,2.6rem);max-width:400px;}
   .page-banner p{max-width:340px;font-size:.9rem;}
@@ -482,6 +482,43 @@ button, input, textarea, select {
   .hero-dots{bottom:32px;gap:9px}.hero-dots span{width:11px;height:11px}
 }
 
+
+/* ===== Contact hero gradient fix ===== */
+.page-banner {
+  position:relative !important;
+  isolation:isolate !important;
+  overflow:hidden !important;
+  background-image:url('kalidad_pharmacy_scene.webp') !important;
+  background-size:cover !important;
+  background-position:center center !important;
+  background-repeat:no-repeat !important;
+}
+.page-banner::before {
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  inset:0 !important;
+  z-index:1 !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:none !important;
+  background:linear-gradient(90deg,rgba(18,41,31,.92) 0%,rgba(18,41,31,.82) 20%,rgba(18,41,31,.62) 40%,rgba(18,41,31,.32) 60%,rgba(18,41,31,.10) 78%,rgba(18,41,31,0) 100%) !important;
+}
+.page-banner > .container,
+.page-banner .container,
+.page-banner .hero-copy {
+  position:relative !important;
+  z-index:3 !important;
+}
+@media (max-width:900px) {
+  .page-banner {
+    background-image:url('kalidad_pharmacy_scene.webp') !important;
+    background-position:center center !important;
+  }
+  .page-banner::before {
+    background:linear-gradient(90deg,rgba(18,41,31,.92) 0%,rgba(18,41,31,.78) 28%,rgba(18,41,31,.52) 55%,rgba(18,41,31,.18) 80%,rgba(18,41,31,0) 100%) !important;
+  }
+}
 
 /* ===== Contact page refinements & additions ===== */
 .nav-chat{
@@ -1293,266 +1330,6 @@ header.logo-hidden nav.main-nav {
 }
 </style>
 
-<style>
-
-/* Kalidad unified full-screen hero treatment */
-.kalidad-unified-hero,
-.kalidad-unified-hero.page-banner,
-.kalidad-unified-hero.hero {
-  position:relative!important;
-  display:block!important;
-  width:100%!important;
-  height:100svh!important;
-  min-height:100svh!important;
-  margin:0!important;
-  padding:0!important;
-  overflow:hidden!important;
-  box-sizing:border-box!important;
-  background:#12291F!important;
-  isolation:isolate!important;
-}
-.kalidad-unified-hero::before,
-.kalidad-unified-hero::after,
-.kalidad-unified-hero .blob,
-.kalidad-unified-hero.page-banner .blob {
-  display:none!important;
-  content:none!important;
-  background:none!important;
-}
-/* Existing hero visual/slider becomes the full-bleed image layer. */
-.kalidad-unified-hero .hero-visual,
-.kalidad-unified-hero .hero-bg,
-.kalidad-unified-hero .page-banner-bg,
-.kalidad-unified-hero picture,
-.kalidad-unified-hero .slider,
-.kalidad-unified-hero .hero-slider,
-.kalidad-unified-hero .carousel {
-  position:absolute!important;
-  inset:0!important;
-  width:100%!important;
-  height:100%!important;
-  min-height:100%!important;
-  max-width:none!important;
-  margin:0!important;
-  z-index:1!important;
-}
-.kalidad-unified-hero .slider,
-.kalidad-unified-hero .hero-slider,
-.kalidad-unified-hero .carousel {
-  border-radius:0!important;
-  box-shadow:none!important;
-}
-.kalidad-unified-hero .hero-visual img,
-.kalidad-unified-hero .hero-bg img,
-.kalidad-unified-hero .page-banner-bg img,
-.kalidad-unified-hero picture img,
-.kalidad-unified-hero .slider img,
-.kalidad-unified-hero .hero-slider img,
-.kalidad-unified-hero .carousel img {
-  width:100%!important;
-  height:100%!important;
-  min-width:100%!important;
-  min-height:100%!important;
-  object-fit:cover!important;
-  object-position:center!important;
-}
-/* Existing CSS-gradient slider panels stay usable when they contain no image. */
-.kalidad-unified-hero .hero-visual::after,
-.kalidad-unified-hero .hero-bg::after,
-.kalidad-unified-hero .page-banner-bg::after,
-.kalidad-unified-hero .slider::after,
-.kalidad-unified-hero .hero-slider::after,
-.kalidad-unified-hero .carousel::after {
-  content:""!important;
-  position:absolute!important;
-  inset:0!important;
-  display:block!important;
-  z-index:4!important;
-  pointer-events:none!important;
-  background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;
-}
-.kalidad-unified-hero .hero-grid,
-.kalidad-unified-hero .container {
-  position:relative!important;
-  z-index:5!important;
-  width:100%!important;
-  max-width:none!important;
-  height:100%!important;
-  min-height:100svh!important;
-  margin:0!important;
-  padding:0!important;
-  display:block!important;
-  box-sizing:border-box!important;
-}
-.kalidad-unified-hero .hero-copy,
-.kalidad-unified-hero .page-banner .hero-copy,
-.kalidad-unified-hero .hero-copy {
-  position:relative!important;
-  z-index:6!important;
-  width:min(680px,72vw)!important;
-  max-width:680px!important;
-  height:100%!important;
-  min-height:100svh!important;
-  padding:130px 7vw 90px!important;
-  margin:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
-  align-items:flex-start!important;
-  background:transparent!important;
-  box-sizing:border-box!important;
-}
-.kalidad-unified-hero h1,
-.kalidad-unified-hero .hero-copy h1,
-.kalidad-unified-hero.page-banner h1 {
-  color:#fff!important;
-  text-shadow:0 2px 18px rgba(0,0,0,.34)!important;
-}
-.kalidad-unified-hero h1 .accent,
-.kalidad-unified-hero .hero-copy h1 .accent { color:#C7EF3E!important; }
-.kalidad-unified-hero p,
-.kalidad-unified-hero .lede,
-.kalidad-unified-hero .lead,
-.kalidad-unified-hero .hero-copy p,
-.kalidad-unified-hero.page-banner p {
-  color:rgba(255,255,255,.96)!important;
-  text-shadow:0 1px 12px rgba(0,0,0,.30)!important;
-}
-.kalidad-unified-hero .eyebrow,
-.kalidad-unified-hero .kicker { background:rgba(230,243,217,.9)!important; color:#33581F!important; }
-.kalidad-unified-hero .btn-outline { border-color:#fff!important; color:#fff!important; background:rgba(18,41,31,.12)!important; }
-.kalidad-unified-hero .btn-outline:hover { background:rgba(255,255,255,.14)!important; }
-/* Prevent the old split-layout card from floating over the new full-bleed treatment. */
-.kalidad-unified-hero .info-card { display:none!important; }
-@media(max-width:850px){
-  .kalidad-unified-hero,
-  .kalidad-unified-hero.hero,
-  .kalidad-unified-hero.page-banner { height:100svh!important; min-height:100svh!important; }
-  .kalidad-unified-hero .hero-copy,
-  .kalidad-unified-hero.page-banner .hero-copy { width:100%!important; max-width:none!important; min-height:100svh!important; height:100svh!important; padding:115px 28px 60px!important; }
-  .kalidad-unified-hero .hero-visual::after,
-  .kalidad-unified-hero .hero-bg::after,
-  .kalidad-unified-hero .page-banner-bg::after,
-  .kalidad-unified-hero .slider::after,
-  .kalidad-unified-hero .hero-slider::after,
-  .kalidad-unified-hero .carousel::after { background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important; }
-}
-@media(max-width:560px){
-  .kalidad-unified-hero .hero-copy,
-  .kalidad-unified-hero.page-banner .hero-copy { padding:105px 24px 55px!important; }
-}
-
-</style>
-<style>
-
-/* Kalidad unified hero image refinement */
-.kalidad-unified-hero .hero-image,
-.kalidad-unified-hero .hero-visual,
-.kalidad-unified-hero .hero-bg,
-.kalidad-unified-hero .page-banner-bg {
-  position:absolute!important;
-  inset:0!important;
-  width:100%!important;
-  height:100%!important;
-  min-height:100%!important;
-  z-index:1!important;
-  overflow:hidden!important;
-}
-.kalidad-unified-hero .hero-image img,
-.kalidad-unified-hero .hero-visual img,
-.kalidad-unified-hero .hero-bg img,
-.kalidad-unified-hero .page-banner-bg img {
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  min-width:100%!important;
-  min-height:100%!important;
-  object-fit:cover!important;
-  object-position:center!important;
-}
-.kalidad-unified-hero .hero-image::after {
-  content:""!important;
-  position:absolute!important;
-  inset:0!important;
-  z-index:2!important;
-  pointer-events:none!important;
-  background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;
-}
-.kalidad-unified-hero .hero-copy { position:relative!important; z-index:6!important; }
-@media(max-width:850px){
-  .kalidad-unified-hero .hero-image::after { background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important; }
-}
-
-</style>
-<style id="final-contact-hero-visibility">
-.page-banner.kalidad-unified-hero{position:relative!important;width:100%!important;height:100svh!important;min-height:100svh!important;margin:0!important;padding:0!important;overflow:hidden!important;display:block!important;background-image:url('20260724_151100(1)_HD.webp')!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;background-color:#12291F!important}
-.page-banner.kalidad-unified-hero::before{content:""!important;position:absolute!important;inset:0!important;z-index:1!important;background:linear-gradient(90deg,rgba(18,41,31,.82) 0%,rgba(18,41,31,.58) 27%,rgba(18,41,31,.18) 58%,rgba(18,41,31,.04) 100%)!important;pointer-events:none!important}
-.page-banner.kalidad-unified-hero::after{display:none!important}
-.page-banner.kalidad-unified-hero .container{position:relative!important;z-index:3!important;width:100%!important;max-width:none!important;height:100%!important;min-height:100svh!important;margin:0!important;padding:0 7vw!important;display:flex!important;align-items:center!important;box-sizing:border-box!important}
-.page-banner.kalidad-unified-hero .hero-copy{position:relative!important;z-index:4!important;width:min(680px,72vw)!important;max-width:680px!important;height:auto!important;min-height:0!important;padding:0!important;margin:0!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important}
-.page-banner.kalidad-unified-hero h1,.page-banner.kalidad-unified-hero h1 .line-dark{color:#fff!important;text-shadow:0 3px 22px rgba(0,0,0,.42)!important}
-.page-banner.kalidad-unified-hero h1 .line-lime,.page-banner.kalidad-unified-hero h1 .accent{color:#C7EF3E!important}
-@media(max-width:900px){.page-banner.kalidad-unified-hero{height:100svh!important;min-height:100svh!important;background-position:64% center!important}.page-banner.kalidad-unified-hero .container{padding:0 28px!important}.page-banner.kalidad-unified-hero .hero-copy{width:70%!important;max-width:360px!important;transform:translateY(8%)!important}}
-@media(max-width:560px){.page-banner.kalidad-unified-hero{background-position:62% center!important}.page-banner.kalidad-unified-hero .container{padding:0 22px!important}.page-banner.kalidad-unified-hero .hero-copy{width:72%!important;max-width:260px!important}}
-</style>
-<style id="kalidad-final-contact-gradient-fix">
-/* Final Contact hero: full-bleed pharmacy photograph with a forest-green readability fade from the left. */
-.page-banner {
-  position: relative !important;
-  min-height: calc(100svh - 84px) !important;
-  display: flex !important;
-  align-items: center !important;
-  overflow: hidden !important;
-  padding: 72px 0 !important;
-  color: #fff !important;
-  background-image: url('kalidad_pharmacy_scene.webp') !important;
-  background-position: center center !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-color: #12291F !important;
-}
-.page-banner::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 1 !important;
-  pointer-events: none !important;
-  background: linear-gradient(90deg, rgba(18,41,31,.88) 0%, rgba(18,41,31,.76) 24%, rgba(18,41,31,.46) 48%, rgba(18,41,31,.18) 72%, rgba(18,41,31,.04) 100%) !important;
-}
-.page-banner .blob {
-  display: none !important;
-}
-.page-banner > .container,
-.page-banner .container,
-.page-banner .hero-copy {
-  position: relative !important;
-  z-index: 3 !important;
-}
-.page-banner h1 {
-  color: #fff !important;
-}
-.page-banner p {
-  color: #fff !important;
-  opacity: .94 !important;
-}
-.page-banner .kicker {
-  color: #C7EF3E !important;
-}
-.page-banner .breadcrumb {
-  color: #fff !important;
-  opacity: .86 !important;
-}
-@media (max-width: 900px) {
-  .page-banner {
-    min-height: calc(100svh - 70px) !important;
-    padding: 64px 0 76px !important;
-    background-position: 62% center !important;
-  }
-  .page-banner::before {
-    background: linear-gradient(90deg, rgba(18,41,31,.88) 0%, rgba(18,41,31,.76) 28%, rgba(18,41,31,.48) 58%, rgba(18,41,31,.14) 82%, rgba(18,41,31,.03) 100%) !important;
-  }
-}
-</style>
 </head>
 <body>
 
@@ -1806,6 +1583,15 @@ header.logo-hidden nav.main-nav {
 
 <script>
 (function(){
+  /* mobile menu */
+  var toggle = document.getElementById('menuToggle');
+  var menu = document.getElementById('mobileMenu');
+  if(toggle && menu){
+    toggle.addEventListener('click', function(){
+      var open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
 
   /* hero slider (home page only) */
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
@@ -1972,158 +1758,5 @@ header.logo-hidden nav.main-nav {
 
     <script src="chatbot.js" defer></script>
     <script src="theme.js?v=2" defer></script>
-
-<style id="careers-matched-mobile-header">
-@media (max-width:900px){
-  header .menu-toggle{
-    display:flex !important; align-items:center !important; justify-content:center !important;
-    flex:0 0 46px !important; width:46px !important; height:46px !important; min-width:46px !important;
-    border:1.5px solid rgba(22,52,39,.35) !important; border-radius:12px !important;
-    background:rgba(255,255,255,.55) !important; color:var(--forest) !important;
-    -webkit-backdrop-filter:blur(10px) saturate(140%) !important;
-    backdrop-filter:blur(10px) saturate(140%) !important;
-    box-shadow:none !important; touch-action:manipulation !important;
-    -webkit-tap-highlight-color:transparent !important; position:relative !important; z-index:1002 !important;
-    transition:background .35s ease,border-color .35s ease,color .35s ease,
-               transform .25s ease,box-shadow .25s ease !important;
-  }
-  header .menu-toggle svg{width:28px !important;height:28px !important;display:block !important;visibility:visible !important;opacity:1 !important;}
-  html[data-theme="dark"] header .menu-toggle{
-    background:var(--forest) !important;border-color:rgba(255,255,255,.28) !important;color:#fff !important;
-  }
-
-  header .mobile-menu{
-    color:var(--forest) !important;background:rgba(246,244,236,.96) !important;
-    border-top:1px solid rgba(223,229,223,.75) !important;
-    -webkit-backdrop-filter:blur(12px) saturate(140%) !important;
-    backdrop-filter:blur(12px) saturate(140%) !important;
-    box-shadow:0 14px 38px rgba(18,41,31,.18) !important;
-  }
-  header .mobile-menu a{
-    display:block !important;padding:12px 8px !important;border-radius:10px !important;
-    font-weight:600 !important;text-decoration:none !important;color:var(--forest) !important;
-    background:transparent !important;transition:background .2s ease,color .2s ease,transform .2s ease !important;
-  }
-  header .mobile-menu a:hover,header .mobile-menu a:focus-visible,header .mobile-menu a.active{
-    background:var(--lime-soft,#e8f4d8) !important;color:var(--green,#006837) !important;
-  }
-  html[data-theme="dark"] header .mobile-menu{
-    background:rgba(11,26,20,.96) !important;border-top-color:rgba(255,255,255,.14) !important;
-    color:#fff !important;box-shadow:0 14px 38px rgba(0,0,0,.45) !important;
-  }
-  html[data-theme="dark"] header .mobile-menu a{color:#fff !important;}
-  html[data-theme="dark"] header .mobile-menu a:hover,
-  html[data-theme="dark"] header .mobile-menu a:focus-visible,
-  html[data-theme="dark"] header .mobile-menu a.active{
-    background:rgba(232,244,216,.14) !important;color:var(--lime) !important;
-  }
-
-  header{
-    overflow:visible !important;
-    transition:width .45s cubic-bezier(.2,.8,.2,1),height .45s cubic-bezier(.2,.8,.2,1),
-               left .45s cubic-bezier(.2,.8,.2,1),right .45s cubic-bezier(.2,.8,.2,1),
-               top .45s cubic-bezier(.2,.8,.2,1),border-radius .45s ease,
-               background .35s ease,box-shadow .35s ease !important;
-  }
-  header.logo-hidden{
-    left:auto !important;right:14px !important;top:12px !important;transform:none !important;
-    width:58px !important;height:58px !important;min-height:58px !important;border-radius:20px !important;
-    background:transparent !important;border:0 !important;box-shadow:none !important;overflow:hidden !important;
-  }
-  header.logo-hidden .header-inner{
-    width:58px !important;height:58px !important;min-height:58px !important;padding:0 !important;
-    gap:0 !important;justify-content:center !important;background:transparent !important;
-  }
-  header.logo-hidden .logo{display:none !important;width:0 !important;max-width:0 !important;opacity:0 !important;pointer-events:none !important;}
-  header.logo-hidden .menu-toggle{
-    margin:0 !important;width:58px !important;height:58px !important;min-width:58px !important;
-    border-radius:20px !important;box-shadow:0 12px 26px rgba(22,52,39,.20) !important;
-  }
-
-  header.logo-hidden.nav-open{
-    left:50% !important;right:auto !important;top:9px !important;transform:translateX(-50%) !important;
-    width:calc(100% - 18px) !important;height:auto !important;min-height:0 !important;border-radius:18px !important;
-    background:rgba(246,244,236,.96) !important;border:1px solid rgba(255,255,255,.55) !important;
-    box-shadow:0 14px 38px rgba(18,41,31,.18) !important;overflow:visible !important;
-  }
-  html[data-theme="dark"] header.logo-hidden.nav-open{
-    background:rgba(11,26,20,.96) !important;border-color:rgba(255,255,255,.14) !important;
-    box-shadow:0 14px 38px rgba(0,0,0,.45) !important;
-  }
-  header.logo-hidden.nav-open .header-inner{
-    width:100% !important;height:74px !important;min-height:74px !important;padding:0 20px !important;
-    gap:16px !important;justify-content:space-between !important;background:transparent !important;
-  }
-  header.logo-hidden.nav-open .logo{
-    display:flex !important;width:145px !important;max-width:145px !important;opacity:1 !important;pointer-events:auto !important;
-  }
-  header.logo-hidden.nav-open .menu-toggle{
-    width:46px !important;height:46px !important;min-width:46px !important;border-radius:12px !important;
-    box-shadow:none !important;
-  }
-  header.logo-hidden.nav-open .mobile-menu{
-    display:flex !important;width:100% !important;max-height:calc(100svh - 84px) !important;overflow-y:auto !important;
-    padding:10px 20px 18px !important;border-top:1px solid rgba(223,229,223,.4) !important;
-    border-radius:0 0 18px 18px !important;box-shadow:none !important;
-  }
-  header.nav-open:not(.logo-hidden) .mobile-menu{display:flex !important;padding:10px 20px 18px !important;}
-}
-@media (prefers-reduced-motion:reduce){
-  header,header .menu-toggle,header .mobile-menu,header .mobile-menu a{transition:none !important;}
-}
-</style>
-
-
-<script id="careers-matched-mobile-menu-controller">
-(function(){
-  function init(){
-    var toggle=document.getElementById('menuToggle');
-    var menu=document.getElementById('mobileMenu');
-    var header=document.querySelector('header');
-    if(!toggle||!menu||!header||toggle.dataset.careersMenuReady==='true') return;
-    toggle.dataset.careersMenuReady='true';
-
-    function setOpen(open){
-      menu.classList.toggle('open',open);
-      header.classList.toggle('nav-open',open);
-      toggle.setAttribute('aria-expanded',open?'true':'false');
-      toggle.setAttribute('aria-label',open?'Close menu':'Open menu');
-    }
-
-    toggle.addEventListener('click',function(e){
-      e.preventDefault();e.stopPropagation();
-      setOpen(!menu.classList.contains('open'));
-    });
-    menu.querySelectorAll('a').forEach(function(link){
-      link.addEventListener('click',function(){setOpen(false);});
-    });
-    document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false);});
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
-  else init();
-})();
-</script>
-
-
-<style id="kalidad-mobile-glass-nav-v1">
-/* KALIDAD MOBILE GLASS NAV v1 */
-@media (max-width:900px){
-  header{background:rgba(246,244,236,.72)!important;border-bottom:1px solid rgba(18,41,31,.14)!important;box-shadow:0 10px 30px rgba(18,41,31,.10)!important;-webkit-backdrop-filter:blur(18px) saturate(145%)!important;backdrop-filter:blur(18px) saturate(145%)!important}
-  .menu-toggle,.menu{display:flex!important;align-items:center!important;justify-content:center!important;width:46px!important;height:46px!important;border:1.5px solid rgba(30,79,59,.55)!important;border-radius:14px!important;background:rgba(246,244,236,.42)!important;color:var(--forest,#1E4F3B)!important;box-shadow:0 8px 24px rgba(18,41,31,.10)!important;-webkit-backdrop-filter:blur(14px) saturate(150%)!important;backdrop-filter:blur(14px) saturate(150%)!important}
-  .menu-toggle:hover,.menu:hover,.menu-toggle:focus-visible,.menu:focus-visible{background:rgba(246,244,236,.64)!important;border-color:rgba(30,79,59,.75)!important;box-shadow:0 12px 28px rgba(18,41,31,.14)!important;outline:none!important}
-  .mobile-menu{background:rgba(246,244,236,.68)!important;border-top:1px solid rgba(18,41,31,.12)!important;border-bottom:1px solid rgba(18,41,31,.10)!important;box-shadow:0 18px 40px rgba(18,41,31,.13)!important;-webkit-backdrop-filter:blur(22px) saturate(145%)!important;backdrop-filter:blur(22px) saturate(145%)!important}
-  .mobile-menu a{color:var(--forest,#1E4F3B)!important;background:transparent!important;border:1px solid transparent!important}
-  .mobile-menu a:hover,.mobile-menu a:focus-visible,.mobile-menu a.active{color:var(--accent-fg,#33581F)!important;background:rgba(230,243,217,.72)!important;border-color:rgba(51,88,31,.10)!important;outline:none!important}
-}
-</style>
-
-<script>
-(function(){
-  var hero = document.querySelector('.hero') || document.querySelector('.page-banner');
-  if (!hero) return;
-  hero.classList.add('kalidad-unified-hero');
-})();
-</script>
-
 </body>
 </html>
