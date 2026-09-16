@@ -1,0 +1,80 @@
+name: Temporary Contact Mobile Hero Fix
+on:
+  push:
+    paths:
+      - '.github/workflows/temp-contact-mobile-fix.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply final mobile hero visibility fix
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('contact.html')
+          s = p.read_text(encoding='utf-8')
+          marker = '</head>'
+          fix = '''
+<style id="contact-mobile-hero-image-visibility-final">
+@media (max-width:900px){
+  .page-banner{
+    position:relative !important;
+    isolation:isolate !important;
+    overflow:hidden !important;
+    height:100svh !important;
+    min-height:100svh !important;
+    max-height:none !important;
+    padding:0 !important;
+    background-image:url('kalidad_pharmacy_scene.webp') !important;
+    background-size:cover !important;
+    background-repeat:no-repeat !important;
+    background-position:68% center !important;
+    background-color:transparent !important;
+    background-blend-mode:normal !important;
+  }
+  .page-banner::before{
+    content:"" !important;
+    position:absolute !important;
+    inset:0 !important;
+    z-index:1 !important;
+    display:block !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    pointer-events:none !important;
+    background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.54) 28%,rgba(18,41,31,.34) 55%,rgba(18,41,31,.12) 80%,rgba(18,41,31,0) 100%) !important;
+  }
+  .page-banner::after{
+    content:none !important;
+    display:none !important;
+    background:none !important;
+  }
+  .page-banner > .container,
+  .page-banner .container,
+  .page-banner .hero-copy{
+    position:relative !important;
+    z-index:3 !important;
+  }
+}
+@media (max-width:560px){
+  .page-banner{
+    height:100svh !important;
+    min-height:100svh !important;
+    max-height:none !important;
+    background-position:68% center !important;
+  }
+}
+</style>
+'''
+          if 'contact-mobile-hero-image-visibility-final' not in s:
+              s = s.replace(marker, fix + marker, 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add contact.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'Fix mobile Contact hero image visibility'
+          git push
