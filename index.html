@@ -3550,194 +3550,134 @@ header.logo-hidden {
         }
     </style>
 
-<style>
+<style id="hero-two-page-final">
 
-/* Kalidad unified full-screen hero treatment */
-.kalidad-unified-hero,
-.kalidad-unified-hero.page-banner,
-.kalidad-unified-hero.hero {
-  position:relative!important;
-  display:block!important;
-  width:100%!important;
-  height:100svh!important;
-  min-height:100svh!important;
-  margin:0!important;
-  padding:0!important;
-  overflow:hidden!important;
-  box-sizing:border-box!important;
-  background:#12291F!important;
-  isolation:isolate!important;
+/* ==========================================================
+   KALIDAD HERO REWORK — HOME
+   Final, page-specific rules. No runtime hero class required.
+   ========================================================== */
+.hero-reference {
+  position: relative !important;
+  width: 100% !important;
+  height: calc(100svh - 84px) !important;
+  min-height: 620px !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  display: block !important;
+  background: #12291F !important;
+  isolation: isolate !important;
 }
-.kalidad-unified-hero::before,
-.kalidad-unified-hero::after,
-.kalidad-unified-hero .blob,
-.kalidad-unified-hero.page-banner .blob {
-  display:none!important;
-  content:none!important;
-  background:none!important;
+.hero-reference-bg,
+.hero-reference-bg.hero-reference-image-1,
+.hero-reference-bg.hero-reference-image-2,
+.hero-reference-bg.hero-reference-image-3 {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  z-index: 0 !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
 }
-/* Existing hero visual/slider becomes the full-bleed image layer. */
-.kalidad-unified-hero .hero-visual,
-.kalidad-unified-hero .hero-bg,
-.kalidad-unified-hero .page-banner-bg,
-.kalidad-unified-hero picture,
-.kalidad-unified-hero .slider,
-.kalidad-unified-hero .hero-slider,
-.kalidad-unified-hero .carousel {
-  position:absolute!important;
-  inset:0!important;
-  width:100%!important;
-  height:100%!important;
-  min-height:100%!important;
-  max-width:none!important;
-  margin:0!important;
-  z-index:1!important;
+.hero-reference-bg.hero-reference-image-1 { background-image: url("image-07-caa3270325.webp") !important; }
+.hero-reference-bg.hero-reference-image-2 { background-image: url("image-08-99b804a9ad.webp") !important; }
+.hero-reference-bg.hero-reference-image-3 { background-image: url("image-09-b2d22f9d65.webp") !important; }
+.hero-reference::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background: linear-gradient(90deg, rgba(18,41,31,.84) 0%, rgba(18,41,31,.64) 25%, rgba(18,41,31,.22) 52%, rgba(18,41,31,.02) 78%, rgba(18,41,31,0) 100%) !important;
 }
-.kalidad-unified-hero .slider,
-.kalidad-unified-hero .hero-slider,
-.kalidad-unified-hero .carousel {
-  border-radius:0!important;
-  box-shadow:none!important;
+.hero-reference::after { display: none !important; content: none !important; }
+.hero-reference-content {
+  position: relative !important;
+  z-index: 3 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  padding: 0 7vw !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  max-width: none !important;
 }
-.kalidad-unified-hero .hero-visual img,
-.kalidad-unified-hero .hero-bg img,
-.kalidad-unified-hero .page-banner-bg img,
-.kalidad-unified-hero picture img,
-.kalidad-unified-hero .slider img,
-.kalidad-unified-hero .hero-slider img,
-.kalidad-unified-hero .carousel img {
-  width:100%!important;
-  height:100%!important;
-  min-width:100%!important;
-  min-height:100%!important;
-  object-fit:cover!important;
-  object-position:center!important;
+.hero-reference-copy {
+  position: relative !important;
+  width: min(680px, 52vw) !important;
+  max-width: 680px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  align-items: center !important;
 }
-/* Existing CSS-gradient slider panels stay usable when they contain no image. */
-.kalidad-unified-hero .hero-visual::after,
-.kalidad-unified-hero .hero-bg::after,
-.kalidad-unified-hero .page-banner-bg::after,
-.kalidad-unified-hero .slider::after,
-.kalidad-unified-hero .hero-slider::after,
-.kalidad-unified-hero .carousel::after {
-  content:""!important;
-  position:absolute!important;
-  inset:0!important;
-  display:block!important;
-  z-index:4!important;
-  pointer-events:none!important;
-  background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;
+.hero-reference-slide { grid-area: 1 / 1 !important; }
+.hero-reference-slide h1 {
+  max-width: 680px !important;
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: clamp(3.2rem, 5.7vw, 5.8rem) !important;
+  line-height: .98 !important;
+  letter-spacing: -.045em !important;
+  text-shadow: 0 3px 24px rgba(0,0,0,.38) !important;
 }
-.kalidad-unified-hero .hero-grid,
-.kalidad-unified-hero .container {
-  position:relative!important;
-  z-index:5!important;
-  width:100%!important;
-  max-width:none!important;
-  height:100%!important;
-  min-height:100svh!important;
-  margin:0!important;
-  padding:0!important;
-  display:block!important;
-  box-sizing:border-box!important;
+.hero-reference-slide h1 .accent { color: #C7EF3E !important; }
+.hero-reference-dots {
+  position: absolute !important;
+  z-index: 4 !important;
+  left: 7vw !important;
+  right: auto !important;
+  bottom: 38px !important;
 }
-.kalidad-unified-hero .hero-copy,
-.kalidad-unified-hero .page-banner .hero-copy,
-.kalidad-unified-hero .hero-copy {
-  position:relative!important;
-  z-index:6!important;
-  width:min(680px,72vw)!important;
-  max-width:680px!important;
-  height:100%!important;
-  min-height:100svh!important;
-  padding:130px 7vw 90px!important;
-  margin:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
-  align-items:flex-start!important;
-  background:transparent!important;
-  box-sizing:border-box!important;
+.hero-reference-nav {
+  z-index: 5 !important;
 }
-.kalidad-unified-hero h1,
-.kalidad-unified-hero .hero-copy h1,
-.kalidad-unified-hero.page-banner h1 {
-  color:#fff!important;
-  text-shadow:0 2px 18px rgba(0,0,0,.34)!important;
+@media (max-width: 900px) {
+  .hero-reference { height: 100svh !important; min-height: 600px !important; }
+  .hero-reference-content { padding: 0 24px !important; }
+  .hero-reference-copy { width: min(620px, 62vw) !important; }
+  .hero-reference-slide h1 { font-size: clamp(2.6rem, 8.8vw, 4.6rem) !important; }
 }
-.kalidad-unified-hero h1 .accent,
-.kalidad-unified-hero .hero-copy h1 .accent { color:#C7EF3E!important; }
-.kalidad-unified-hero p,
-.kalidad-unified-hero .lede,
-.kalidad-unified-hero .lead,
-.kalidad-unified-hero .hero-copy p,
-.kalidad-unified-hero.page-banner p {
-  color:rgba(255,255,255,.96)!important;
-  text-shadow:0 1px 12px rgba(0,0,0,.30)!important;
+@media (max-width: 700px) {
+  .hero-reference-bg,
+  .hero-reference-bg.hero-reference-image-1,
+  .hero-reference-bg.hero-reference-image-2,
+  .hero-reference-bg.hero-reference-image-3 {
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+  .hero-reference-bg.hero-reference-image-1 { background-image: url("mobile-hero-1.webp") !important; }
+  .hero-reference-bg.hero-reference-image-2 { background-image: url("mobile-hero-2.webp") !important; }
+  .hero-reference-bg.hero-reference-image-3 { background-image: url("mobile-hero-3.webp") !important; }
+  .hero-reference::before {
+    background: linear-gradient(90deg, rgba(18,41,31,.82) 0%, rgba(18,41,31,.57) 43%, rgba(18,41,31,.18) 75%, rgba(18,41,31,.03) 100%) !important;
+  }
+  .hero-reference-content {
+    padding: 0 22px !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+  .hero-reference-copy { width: min(58%, 340px) !important; }
+  .hero-reference-slide h1 {
+    max-width: 100% !important;
+    font-size: clamp(2.2rem, 9.5vw, 3.5rem) !important;
+    line-height: 1.02 !important;
+  }
+  .hero-reference .hero-reference-prev,
+  .hero-reference .hero-reference-next { display: none !important; }
+  .hero-reference-dots { left: 22px !important; bottom: 28px !important; }
 }
-.kalidad-unified-hero .eyebrow,
-.kalidad-unified-hero .kicker { background:rgba(230,243,217,.9)!important; color:#33581F!important; }
-.kalidad-unified-hero .btn-outline { border-color:#fff!important; color:#fff!important; background:rgba(18,41,31,.12)!important; }
-.kalidad-unified-hero .btn-outline:hover { background:rgba(255,255,255,.14)!important; }
-/* Prevent the old split-layout card from floating over the new full-bleed treatment. */
-.kalidad-unified-hero .info-card { display:none!important; }
-@media(max-width:850px){
-  .kalidad-unified-hero,
-  .kalidad-unified-hero.hero,
-  .kalidad-unified-hero.page-banner { height:100svh!important; min-height:100svh!important; }
-  .kalidad-unified-hero .hero-copy,
-  .kalidad-unified-hero.page-banner .hero-copy { width:100%!important; max-width:none!important; min-height:100svh!important; height:100svh!important; padding:115px 28px 60px!important; }
-  .kalidad-unified-hero .hero-visual::after,
-  .kalidad-unified-hero .hero-bg::after,
-  .kalidad-unified-hero .page-banner-bg::after,
-  .kalidad-unified-hero .slider::after,
-  .kalidad-unified-hero .hero-slider::after,
-  .kalidad-unified-hero .carousel::after { background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important; }
-}
-@media(max-width:560px){
-  .kalidad-unified-hero .hero-copy,
-  .kalidad-unified-hero.page-banner .hero-copy { padding:105px 24px 55px!important; }
-}
-
-</style>
-<style>
-
-/* Kalidad unified hero image refinement */
-.kalidad-unified-hero .hero-image,
-.kalidad-unified-hero .hero-visual,
-.kalidad-unified-hero .hero-bg,
-.kalidad-unified-hero .page-banner-bg {
-  position:absolute!important;
-  inset:0!important;
-  width:100%!important;
-  height:100%!important;
-  min-height:100%!important;
-  z-index:1!important;
-  overflow:hidden!important;
-}
-.kalidad-unified-hero .hero-image img,
-.kalidad-unified-hero .hero-visual img,
-.kalidad-unified-hero .hero-bg img,
-.kalidad-unified-hero .page-banner-bg img {
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  min-width:100%!important;
-  min-height:100%!important;
-  object-fit:cover!important;
-  object-position:center!important;
-}
-.kalidad-unified-hero .hero-image::after {
-  content:""!important;
-  position:absolute!important;
-  inset:0!important;
-  z-index:2!important;
-  pointer-events:none!important;
-  background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;
-}
-.kalidad-unified-hero .hero-copy { position:relative!important; z-index:6!important; }
-@media(max-width:850px){
-  .kalidad-unified-hero .hero-image::after { background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important; }
+@media (max-width: 430px) {
+  .hero-reference-content { padding: 0 20px !important; }
+  .hero-reference-copy { width: 57% !important; }
+  .hero-reference-slide h1 { font-size: clamp(2rem, 9.8vw, 3rem) !important; }
 }
 
 </style>
@@ -4679,13 +4619,6 @@ header.logo-hidden {
 }
 </style>
 
-<script>
-(function(){
-  var hero = document.querySelector('.hero') || document.querySelector('.page-banner');
-  if (!hero) return;
-  hero.classList.add('kalidad-unified-hero');
-})();
-</script>
 
 </body>
 </html>
