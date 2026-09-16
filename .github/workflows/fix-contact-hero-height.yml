@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Apply full viewport hero height
+      - name: Apply Contact hero viewport and mobile image fix
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -23,10 +23,44 @@ jobs:
           old_mobile = 'height:calc(100svh - 84px)!important;min-height:calc(100svh - 84px)!important;'
           new = 'height:100vh!important;min-height:100vh!important;'
           new_mobile = 'height:100svh!important;min-height:100svh!important;'
-          if old not in s or old_mobile not in s:
-              raise SystemExit('Expected Contact hero height rules were not found; refusing to modify the file.')
-          s = s.replace(old, new)
-          s = s.replace(old_mobile, new_mobile)
+          if old in s:
+              s = s.replace(old, new)
+          if old_mobile in s:
+              s = s.replace(old_mobile, new_mobile)
+
+          marker = '</style>\n\n</head>'
+          fix = '''/* ===== Contact mobile hero image visibility fix ===== */
+          @media (max-width:900px){
+            .page-banner{
+              position:relative !important;
+              background-color:#12291F !important;
+              background-image:url('kalidad_pharmacy_scene.webp') !important;
+              background-size:cover !important;
+              background-repeat:no-repeat !important;
+              background-position:70% center !important;
+            }
+            .page-banner::after{
+              content:"" !important;
+              position:absolute !important;
+              inset:0 !important;
+              z-index:0 !important;
+              display:block !important;
+              background:url('kalidad_pharmacy_scene.webp') 70% center / cover no-repeat !important;
+              pointer-events:none !important;
+            }
+            .page-banner::before{z-index:1 !important;}
+            .page-banner > .container,
+            .page-banner .container,
+            .page-banner .hero-copy{
+              position:relative !important;
+              z-index:3 !important;
+            }
+          }
+          '''
+          if 'Contact mobile hero image visibility fix' not in s:
+              if marker not in s:
+                  raise SystemExit('Contact style closing marker not found; refusing to modify the file.')
+              s = s.replace(marker, fix + '\n' + marker, 1)
           p.write_text(s, encoding='utf-8')
           PY
       - name: Commit Contact hero fix
@@ -35,5 +69,5 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add contact.html
           git diff --cached --quiet && exit 0
-          git commit -m 'Fix Contact hero to fill viewport'
+          git commit -m 'Fix Contact mobile hero image visibility'
           git push
