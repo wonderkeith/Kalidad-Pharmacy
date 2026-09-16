@@ -1,0 +1,53 @@
+name: Rework two hero pages
+
+on:
+  push:
+    branches: [fix/hero-rework-two-pages]
+
+permissions:
+  contents: write
+
+jobs:
+  rework:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply hero rework
+        run: python scripts/rework-hero-two.py
+      - name: Remove previous hero overrides
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          for name in ['index.html','services.html']:
+              p=Path(name)
+              s=p.read_text(encoding='utf-8')
+              s=re.sub(r'\n<style[^>]*>\s*/\* Kalidad unified full-screen hero treatment \*/.*?</style>\s*', '\n', s, flags=re.S)
+              s=re.sub(r'\n<style[^>]*>\s*/\* Kalidad unified hero image refinement \*/.*?</style>\s*', '\n', s, flags=re.S)
+              s=re.sub(r'\n<script>\s*\(function\(\)\{\s*var hero = document\.querySelector\(\'\.hero\'\) \|\| document\.querySelector\(\'\.page-banner\'\);.*?</script>\s*', '\n', s, flags=re.S)
+              p.write_text(s, encoding='utf-8')
+          PY
+      - name: Validate target pages
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          for name in ['index.html','services.html']:
+              s=Path(name).read_text(encoding='utf-8')
+              assert '<style id="hero-two-page-final">' in s, f'{name}: final style missing'
+              assert 'Kalidad unified full-screen hero treatment' not in s, f'{name}: old unified style remains'
+              assert 'Kalidad unified hero image refinement' not in s, f'{name}: old image refinement remains'
+              assert "var hero = document.querySelector('.hero')" not in s, f'{name}: old class script remains'
+              print(name, 'OK')
+          PY
+      - name: Remove temporary tooling
+        run: |
+          rm -f scripts/rework-hero-two.py
+          rm -f scripts/rework-hero-trigger.txt
+          rm -f .github/workflows/rework-hero-two-pages.yml
+      - name: Commit final page changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --quiet || git commit -m 'Rework home and services heroes from scratch'
+          git push
