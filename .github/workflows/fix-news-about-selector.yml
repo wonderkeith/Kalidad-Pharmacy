@@ -1,0 +1,39 @@
+name: Fix News About Hero Selectors
+on:
+  push:
+    branches: [fix/news-about-hero]
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix actual hero selectors
+        shell: python
+        run: |
+          from pathlib import Path
+          for name, cls in [('news.html','news-hero-reworked'),('about.html','about-hero-reworked')]:
+              p=Path(name); s=p.read_text(encoding='utf-8')
+              if cls not in s:
+                  old='class="page-banner"'
+                  if old not in s:
+                      raise SystemExit(f'Actual page-banner element not found in {name}')
+                  s=s.replace(old, f'class="page-banner {cls}"', 1)
+              p.write_text(s,encoding='utf-8')
+      - name: Validate only news and about changed
+        shell: bash
+        run: |
+          grep -q 'class="page-banner news-hero-reworked"' news.html
+          grep -q 'class="page-banner about-hero-reworked"' about.html
+          files=$(git diff --name-only | sort | tr '\n' ' ')
+          test "$files" = 'about.html news.html '
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/fix-news-about-selector.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add news.html about.html .github/workflows/fix-news-about-selector.yml
+          git commit -m "Fix news and about hero selectors"
+          git push origin HEAD
