@@ -3195,6 +3195,106 @@ a.btn:focus-visible {
 @media(max-width:560px){.page-banner .container{padding:0 22px!important}.page-banner .hero-copy{width:74%!important;max-width:275px!important}}
 
 </style>
+
+<style id="kalidad-final-news-actual-hero">
+
+/* ==========================================================
+   FINAL NEWS HERO — actual .news-hero structure
+   ========================================================== */
+.news-hero{
+  position:relative!important;
+  width:100%!important;
+  height:100svh!important;
+  min-height:100svh!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  display:flex!important;
+  align-items:center!important;
+  background:url('pharmacist_green_scrubs.webp') center center / cover no-repeat!important;
+  isolation:isolate!important;
+}
+.news-hero::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  background:linear-gradient(90deg,rgba(18,41,31,.84) 0%,rgba(18,41,31,.66) 28%,rgba(18,41,31,.24) 60%,rgba(18,41,31,.05) 100%)!important;
+}
+.news-hero .container{
+  position:relative!important;
+  z-index:3!important;
+  width:100%!important;
+  max-width:none!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0 7vw!important;
+  display:flex!important;
+  align-items:center!important;
+  box-sizing:border-box!important;
+}
+.news-hero h1{
+  margin:0!important;
+  max-width:720px!important;
+  font-family:'Lora',serif!important;
+  font-size:clamp(48px,6.2vw,88px)!important;
+  line-height:.96!important;
+  letter-spacing:-.04em!important;
+  font-weight:800!important;
+  color:#fff!important;
+  text-shadow:0 3px 22px rgba(0,0,0,.42)!important;
+}
+.news-hero h1 span,
+.news-hero h1 .accent{
+  color:#C7EF3E!important;
+}
+.news-hero p{color:#fff!important;}
+.news-hero-mobile-img{display:none!important;}
+@media(max-width:900px){
+  .news-hero{
+    height:100svh!important;
+    min-height:100svh!important;
+    display:block!important;
+    background:#12291F!important;
+  }
+  .news-hero-mobile-img{
+    display:block!important;
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    max-width:none!important;
+    object-fit:cover!important;
+    object-position:78% center!important;
+    z-index:0!important;
+  }
+  .news-hero::before{
+    z-index:1!important;
+    background:linear-gradient(90deg,rgba(18,41,31,.78) 0%,rgba(18,41,31,.55) 46%,rgba(18,41,31,.10) 100%)!important;
+  }
+  .news-hero .container{
+    position:absolute!important;
+    inset:0!important;
+    height:100%!important;
+    padding:0 28px!important;
+    display:flex!important;
+    align-items:center!important;
+  }
+  .news-hero h1{
+    width:72%!important;
+    max-width:380px!important;
+    font-size:clamp(40px,9vw,66px)!important;
+    line-height:.98!important;
+  }
+}
+@media(max-width:560px){
+  .news-hero-mobile-img{object-position:76% center!important;}
+  .news-hero .container{padding:0 22px!important;align-items:center!important;}
+  .news-hero h1{width:74%!important;max-width:285px!important;font-size:clamp(34px,9.4vw,52px)!important;}
+}
+
+</style>
 </head>
 <body>
 <header>
