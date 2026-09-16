@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Repair hero markup and styles
-        shell: python
+        shell: python {0}
         run: |
           from pathlib import Path
           import re
@@ -30,150 +30,31 @@ jobs:
           service_css = r'''
 <style id="final-otc-hero-match">
 /* FINAL OTC WELLNESS HERO MATCH — authoritative page-level override */
-.service-detail-hero.otc-hero-match {
-  min-height:650px !important;
-  position:relative !important;
-  display:block !important;
-  overflow:hidden !important;
-  background:#12291F !important;
-}
-.service-detail-hero.otc-hero-match .service-detail-image {
-  position:absolute !important;
-  inset:0 !important;
-  width:100% !important;
-  height:100% !important;
-  min-height:100% !important;
-  z-index:0 !important;
-}
-.service-detail-hero.otc-hero-match .service-detail-image img {
-  display:block !important;
-  width:100% !important;
-  height:100% !important;
-  min-height:100% !important;
-  object-fit:cover !important;
-  object-position:center !important;
-}
-.service-detail-hero.otc-hero-match .service-detail-image::after {
-  content:"" !important;
-  position:absolute !important;
-  inset:0 !important;
-  display:block !important;
-  background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%) !important;
-  z-index:1 !important;
-  pointer-events:none !important;
-}
-.service-detail-hero.otc-hero-match .service-detail-copy {
-  position:relative !important;
-  z-index:2 !important;
-  min-height:650px !important;
-  width:100% !important;
-  max-width:1180px !important;
-  margin:0 auto !important;
-  padding:110px 24px 90px !important;
-  display:flex !important;
-  flex-direction:column !important;
-  justify-content:center !important;
-  align-items:flex-start !important;
-  opacity:1 !important;
-  transform:none !important;
-}
-.service-detail-hero.otc-hero-match .service-detail-copy h1 {
-  max-width:650px !important;
-  color:#fff !important;
-}
-.service-detail-hero.otc-hero-match .service-detail-copy h1 .accent {
-  color:var(--lime) !important;
-}
-.service-detail-hero.otc-hero-match .service-detail-copy .lead {
-  max-width:590px !important;
-  color:rgba(255,255,255,.9) !important;
-}
-.service-detail-hero.otc-hero-match .service-detail-copy .kicker {
-  background:rgba(230,243,217,.94) !important;
-  color:#42652f !important;
-}
-.service-detail-hero.otc-hero-match .service-detail-copy .btn-outline {
-  border-color:#fff !important;
-  color:#fff !important;
-  background:rgba(18,41,31,.12) !important;
-}
-@media(max-width:850px) {
-  .service-detail-hero.otc-hero-match,
-  .service-detail-hero.otc-hero-match .service-detail-copy {
-    min-height:650px !important;
-  }
-  .service-detail-hero.otc-hero-match .service-detail-copy {
-    padding:115px 28px 70px !important;
-  }
-  .service-detail-hero.otc-hero-match .service-detail-image {
-    height:100% !important;
-    min-height:100% !important;
-  }
-  .service-detail-hero.otc-hero-match .service-detail-image::after {
-    background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%) !important;
-  }
-}
-@media(max-width:560px) {
-  .service-detail-hero.otc-hero-match,
-  .service-detail-hero.otc-hero-match .service-detail-copy {min-height:610px !important;}
-  .service-detail-hero.otc-hero-match .service-detail-copy {padding:105px 24px 55px !important;}
-  .service-detail-hero.otc-hero-match .service-detail-copy h1 {font-size:clamp(2.8rem,14vw,4.2rem) !important;}
-}
+.service-detail-hero.otc-hero-match{min-height:650px!important;position:relative!important;display:block!important;overflow:hidden!important;background:#12291F!important}
+.service-detail-hero.otc-hero-match .service-detail-image{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:0!important}
+.service-detail-hero.otc-hero-match .service-detail-image img{display:block!important;width:100%!important;height:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important}
+.service-detail-hero.otc-hero-match .service-detail-image::after{content:""!important;position:absolute!important;inset:0!important;display:block!important;background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;z-index:1!important;pointer-events:none!important}
+.service-detail-hero.otc-hero-match .service-detail-copy{position:relative!important;z-index:2!important;min-height:650px!important;width:100%!important;max-width:1180px!important;margin:0 auto!important;padding:110px 24px 90px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;opacity:1!important;transform:none!important}
+.service-detail-hero.otc-hero-match .service-detail-copy h1{max-width:650px!important;color:#fff!important}
+.service-detail-hero.otc-hero-match .service-detail-copy h1 .accent{color:var(--lime)!important}
+.service-detail-hero.otc-hero-match .service-detail-copy .lead{max-width:590px!important;color:rgba(255,255,255,.9)!important}
+.service-detail-hero.otc-hero-match .service-detail-copy .kicker{background:rgba(230,243,217,.94)!important;color:#42652f!important}
+.service-detail-hero.otc-hero-match .service-detail-copy .btn-outline{border-color:#fff!important;color:#fff!important;background:rgba(18,41,31,.12)!important}
+@media(max-width:850px){.service-detail-hero.otc-hero-match,.service-detail-hero.otc-hero-match .service-detail-copy{min-height:650px!important}.service-detail-hero.otc-hero-match .service-detail-copy{padding:115px 28px 70px!important}.service-detail-hero.otc-hero-match .service-detail-image{height:100%!important;min-height:100%!important}.service-detail-hero.otc-hero-match .service-detail-image::after{background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important}}
+@media(max-width:560px){.service-detail-hero.otc-hero-match,.service-detail-hero.otc-hero-match .service-detail-copy{min-height:610px!important}.service-detail-hero.otc-hero-match .service-detail-copy{padding:105px 24px 55px!important}.service-detail-hero.otc-hero-match .service-detail-copy h1{font-size:clamp(2.8rem,14vw,4.2rem)!important}}
 </style>
 '''
 
           nutritional_css = r'''
 <style id="final-otc-hero-match">
 /* FINAL OTC WELLNESS HERO MATCH — authoritative page-level override */
-.catalog-page-hero.otc-hero-match {
-  min-height:600px !important;
-  position:relative !important;
-  overflow:hidden !important;
-  background:#12291F !important;
-}
-.catalog-page-hero.otc-hero-match .hero-bg {
-  position:absolute !important;
-  inset:0 !important;
-  width:100% !important;
-  height:100% !important;
-  z-index:0 !important;
-}
-.catalog-page-hero.otc-hero-match .hero-bg img {
-  display:block !important;
-  width:100% !important;
-  height:100% !important;
-  object-fit:cover !important;
-  object-position:center !important;
-}
-.catalog-page-hero.otc-hero-match .hero-bg::after {
-  content:"" !important;
-  position:absolute !important;
-  inset:0 !important;
-  display:block !important;
-  background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%) !important;
-  z-index:1 !important;
-  pointer-events:none !important;
-}
-.catalog-page-hero.otc-hero-match .hero-copy {
-  position:relative !important;
-  z-index:2 !important;
-  min-height:600px !important;
-  max-width:1180px !important;
-  margin:0 auto !important;
-  padding:120px 24px 80px !important;
-  display:flex !important;
-  flex-direction:column !important;
-  justify-content:center !important;
-  align-items:flex-start !important;
-}
-.catalog-page-hero.otc-hero-match h1 {color:#fff !important;}
-.catalog-page-hero.otc-hero-match h1 .accent {color:var(--lime) !important;}
-.catalog-page-hero.otc-hero-match .btn-outline {border-color:#fff !important;color:#fff !important;background:rgba(18,41,31,.12) !important;}
-@media(max-width:850px) {
-  .catalog-page-hero.otc-hero-match .hero-bg::after {
-    background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%) !important;
-  }
-}
+.catalog-page-hero.otc-hero-match{min-height:600px!important;position:relative!important;overflow:hidden!important;background:#12291F!important}
+.catalog-page-hero.otc-hero-match .hero-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:0!important}
+.catalog-page-hero.otc-hero-match .hero-bg img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+.catalog-page-hero.otc-hero-match .hero-bg::after{content:""!important;position:absolute!important;inset:0!important;display:block!important;background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;z-index:1!important;pointer-events:none!important}
+.catalog-page-hero.otc-hero-match .hero-copy{position:relative!important;z-index:2!important;min-height:600px!important;max-width:1180px!important;margin:0 auto!important;padding:120px 24px 80px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important}
+.catalog-page-hero.otc-hero-match h1{color:#fff!important}.catalog-page-hero.otc-hero-match h1 .accent{color:var(--lime)!important}.catalog-page-hero.otc-hero-match .btn-outline{border-color:#fff!important;color:#fff!important;background:rgba(18,41,31,.12)!important}
+@media(max-width:850px){.catalog-page-hero.otc-hero-match .hero-bg::after{background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important}}
 </style>
 '''
 
@@ -185,23 +66,18 @@ jobs:
 
           changed = []
 
-          # Nutritional Supplements: force a unique class so no legacy selector can win.
           p = Path(nutritional)
-          html = p.read_text(encoding='utf-8')
-          html2, n = re.subn(r'<section class="catalog-page-hero(?:\s+otc-hero-match)?">', '<section class="catalog-page-hero otc-hero-match">', html, count=1)
-          if n:
-              html = html2
+          original = p.read_text(encoding='utf-8')
+          html = re.sub(r'<section class="catalog-page-hero(?:\s+otc-hero-match)?">', '<section class="catalog-page-hero otc-hero-match">', original, count=1)
           html = add_or_replace_style(html, 'final-otc-hero-match', nutritional_css)
-          if html != p.read_text(encoding='utf-8'):
+          if html != original:
               p.write_text(html, encoding='utf-8')
               changed.append(nutritional)
 
-          # Three service pages: force the same full-image structure used by OTC Wellness.
           for name in service_pages:
               p = Path(name)
               original = p.read_text(encoding='utf-8')
-              html = original
-              html, n = re.subn(r'<section class="service-detail-hero(?:\s+otc-hero-match)?">', '<section class="service-detail-hero otc-hero-match">', html, count=1)
+              html = re.sub(r'<section class="service-detail-hero(?:\s+otc-hero-match)?">', '<section class="service-detail-hero otc-hero-match">', original, count=1)
               html = add_or_replace_style(html, 'final-otc-hero-match', service_css)
               if html != original:
                   p.write_text(html, encoding='utf-8')
