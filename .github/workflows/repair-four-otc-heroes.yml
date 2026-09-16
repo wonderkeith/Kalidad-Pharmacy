@@ -47,33 +47,53 @@ jobs:
           @media(max-width:850px){.catalog-page-hero.otc-hero-match .hero-bg::after{background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important}}
           </style>'''
 
-          def patch(path, selector, replacement, css):
-              p=Path(path)
-              original=p.read_text(encoding='utf-8')
-              html=re.sub(selector, replacement, original, count=1)
-              style_re=re.compile(r'<style id="final-otc-hero-match">.*?</style>', re.S)
-              if style_re.search(html):
-                  html=style_re.sub(css, html, count=1)
-              else:
-                  html=html.replace('</head>', css+'\n</head>', 1)
-              p.write_text(html, encoding='utf-8')
-              print(path, 'hero markup:', replacement in html, 'style:', 'final-otc-hero-match' in html)
+          def ensure_class(html, class_name, extra_class):
+              pattern = re.compile(r'(<(?:section|div)\b[^>]*\bclass=["\'])([^"\']*\b' + re.escape(class_name) + r'\b[^"\']*)(["\'])>', re.I)
+              m = pattern.search(html)
+              if not m:
+                  raise SystemExit(f'Hero markup not found: {class_name}')
+              classes = m.group(2).split()
+              if extra_class not in classes:
+                  classes.append(extra_class)
+              new_tag = m.group(1) + ' '.join(classes) + m.group(3) + '>'
+              return html[:m.start()] + new_tag + html[m.end():]
 
-          patch('nutritional-supplements.html', r'<section class="catalog-page-hero(?:\s+otc-hero-match)?">', '<section class="catalog-page-hero otc-hero-match">', NUTRITIONAL_CSS)
-          for path in ['personal-hygiene-oral-care.html','skincare-body-care.html','baby-care.html']:
-              patch(path, r'<section class="service-detail-hero(?:\s+[^>]*)?>', '<section class="service-detail-hero otc-hero-match">', SERVICE_CSS)
+          def install_style(html, css):
+              style_re = re.compile(r'<style id="final-otc-hero-match">.*?</style>', re.S)
+              if style_re.search(html):
+                  return style_re.sub(css, html, count=1)
+              if '</head>' not in html:
+                  raise SystemExit('Missing </head>')
+              return html.replace('</head>', css + '\n</head>', 1)
+
+          # Nutritional page: exact OTC catalog hero structure.
+          p = Path('nutritional-supplements.html')
+          html = p.read_text(encoding='utf-8')
+          html = ensure_class(html, 'catalog-page-hero', 'otc-hero-match')
+          html = install_style(html, NUTRITIONAL_CSS)
+          p.write_text(html, encoding='utf-8')
+
+          # These three pages use the service-detail hero markup; force the OTC treatment onto it.
+          for name in ['personal-hygiene-oral-care.html','skincare-body-care.html','baby-care.html']:
+              p = Path(name)
+              html = p.read_text(encoding='utf-8')
+              html = ensure_class(html, 'service-detail-hero', 'otc-hero-match')
+              html = install_style(html, SERVICE_CSS)
+              p.write_text(html, encoding='utf-8')
+
+          print('All four hero pages patched successfully.')
           PY
 
       - name: Verify exact hero hooks
         shell: bash
         run: |
           set -e
-          grep -q '<section class="catalog-page-hero otc-hero-match">' nutritional-supplements.html
+          grep -q 'catalog-page-hero otc-hero-match' nutritional-supplements.html
+          grep -q 'final-otc-hero-match' nutritional-supplements.html
           for f in personal-hygiene-oral-care.html skincare-body-care.html baby-care.html; do
-            grep -q '<section class="service-detail-hero otc-hero-match">' "$f"
+            grep -q 'service-detail-hero otc-hero-match' "$f"
             grep -q 'final-otc-hero-match' "$f"
           done
-          grep -q 'final-otc-hero-match' nutritional-supplements.html
           echo 'All four hero pages verified.'
 
       - name: Commit and push
