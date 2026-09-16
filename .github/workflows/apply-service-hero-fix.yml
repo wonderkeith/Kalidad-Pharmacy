@@ -3,6 +3,8 @@ name: Apply service hero treatment
 on:
   push:
     branches: [fix/service-hero-treatment]
+  pull_request:
+    types: [opened, synchronize]
 
 permissions:
   contents: write
