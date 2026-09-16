@@ -84,7 +84,9 @@
       '.catalog-page-hero .hero-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:1!important;margin:0!important;padding:0!important;}' +
       '.catalog-page-hero .hero-bg img{display:block!important;width:100%!important;height:100%!important;min-width:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important;margin:0!important;}' +
       '.catalog-page-hero .hero-copy{position:relative!important;z-index:2!important;width:100%!important;min-height:100svh!important;height:100svh!important;background:transparent!important;}' +
-      '.catalog-page-hero::before,.catalog-page-hero::after,.catalog-page-hero .hero-bg::before,.catalog-page-hero .hero-bg::after{background:none!important;background-image:none!important;box-shadow:none!important;opacity:0!important;display:none!important;content:none!important;}' +
+      '.catalog-page-hero::before,.catalog-page-hero::after,.catalog-page-hero .hero-bg::before{background:none!important;background-image:none!important;box-shadow:none!important;opacity:0!important;display:none!important;content:none!important;}' +
+      '.catalog-page-hero .hero-bg::after{content:""!important;position:absolute!important;inset:0!important;display:block!important;background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;z-index:1!important;pointer-events:none!important;}' +
+      '@media(max-width:850px){.catalog-page-hero .hero-bg::after{background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important;}}' +
       (isOtc ?
         '.catalog-page-hero{height:100dvh!important;min-height:100dvh!important;}' +
         '.catalog-page-hero .hero-copy{height:100dvh!important;min-height:100dvh!important;}' +
@@ -106,8 +108,10 @@
     heading.innerHTML = 'Personal Hygiene &amp; Oral <span class="accent">Care</span>';
 
     addStyle('kalidad-personal-hygiene-hero-text',
-      '.catalog-page-hero .hero-copy h1,.page-banner h1{color:#1E4F3B!important;}' +
-      '.catalog-page-hero .hero-copy h1 .accent,.page-banner h1 .accent{color:#C7EF3E!important;}');
+      '.catalog-page-hero .hero-copy h1{color:#fff!important;}' +
+      '.catalog-page-hero .hero-copy h1 .accent{color:#C7EF3E!important;}' +
+      '.page-banner h1{color:#1E4F3B!important;}' +
+      '.page-banner h1 .accent{color:#C7EF3E!important;}');
   }
 
   function initOTCWellnessHero() {
@@ -190,8 +194,10 @@
 
     addStyle('kalidad-last-word-hero-accent',
       '.accent{color:#C7EF3E!important;}' +
-      '.catalog-page-hero .hero-copy h1,.page-banner .hero-copy h1,.page-banner h1,.service-detail-hero .service-detail-copy h1,.service-detail-hero h1{color:#1E4F3B!important;}' +
-      '.catalog-page-hero .hero-copy h1 .accent,.page-banner .hero-copy h1 .accent,.page-banner h1 .accent,.service-detail-hero .service-detail-copy h1 .accent,.service-detail-hero h1 .accent{color:#C7EF3E!important;}');
+      '.catalog-page-hero .hero-copy h1{color:#fff!important;}' +
+      '.catalog-page-hero .hero-copy h1 .accent{color:#C7EF3E!important;}' +
+      '.page-banner .hero-copy h1,.page-banner h1,.service-detail-hero .service-detail-copy h1,.service-detail-hero h1{color:#1E4F3B!important;}' +
+      '.page-banner .hero-copy h1 .accent,.page-banner h1 .accent,.service-detail-hero .service-detail-copy h1 .accent,.service-detail-hero h1 .accent{color:#C7EF3E!important;}');
   }
 
   function initAboutTeamSlider() {
