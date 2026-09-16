@@ -1006,6 +1006,28 @@ header.logo-hidden {
   color: var(--lime) !important;
 }
 </style>
+
+<style id="otc-wellness-hero-gradient-match">
+/* OTC Wellness hero treatment shared across service detail/catalog heroes. */
+.service-detail-hero .service-detail-image::after,
+.catalog-page-hero .hero-bg::after {
+  background: linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%) !important;
+}
+.service-detail-hero .service-detail-copy h1,
+.catalog-page-hero h1 {
+  color: #fff !important;
+}
+.service-detail-hero .service-detail-copy h1 .accent,
+.catalog-page-hero h1 .accent {
+  color: var(--lime) !important;
+}
+@media (max-width:850px) {
+  .service-detail-hero .service-detail-image::after,
+  .catalog-page-hero .hero-bg::after {
+    background: linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%) !important;
+  }
+}
+</style>
 </head>
 <body><header>
     <div class="container header-inner">
