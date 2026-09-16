@@ -21,34 +21,19 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-
           path = Path('about.html')
           text = path.read_text(encoding='utf-8')
-          tags = [
-              '<script src="about-team-slider.js?v=2" defer></script>',
-              '<script src="about-mobile-hero.js?v=1" defer></script>'
-          ]
-
+          tags = ['<script src="about-team-slider.js?v=2" defer></script>','<script src="about-mobile-hero.js?v=1" defer></script>']
           marker = '</body>'
-          if marker not in text:
-              raise SystemExit('Could not find </body> in about.html')
-
+          if marker not in text: raise SystemExit('Could not find </body> in about.html')
           changed = False
           for tag in tags:
               if tag not in text:
-                  text = text.replace(marker, tag + '\n' + marker, 1)
-                  changed = True
-
+                  text = text.replace(marker, tag + '\n' + marker, 1); changed = True
           old_tag = '<script src="about-team-slider.js?v=1" defer></script>'
           if old_tag in text:
-              text = text.replace(old_tag, tags[0], 1)
-              changed = True
-
-          if changed:
-              path.write_text(text, encoding='utf-8')
-              print('Updated About enhancement script tags.')
-          else:
-              print('About enhancement script tags already present.')
+              text = text.replace(old_tag, tags[0], 1); changed = True
+          if changed: path.write_text(text, encoding='utf-8')
 
       - name: Apply News, Services, and Contact hero gradients
         shell: bash
@@ -58,25 +43,16 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-
-          checks = {
-              'news.html': 'kalidad-final-news-gradient-fix',
-              'services.html': 'kalidad-final-services-gradient-fix',
-              'contact.html': 'kalidad-final-contact-gradient-fix',
-          }
+          checks = {'news.html':'kalidad-final-news-gradient-fix','services.html':'kalidad-final-services-gradient-fix','contact.html':'kalidad-final-contact-gradient-fix'}
           for filename, marker in checks.items():
               text = Path(filename).read_text(encoding='utf-8')
-              if marker not in text:
-                  raise SystemExit(f'{filename}: expected gradient marker not found')
+              if marker not in text: raise SystemExit(f'{filename}: expected gradient marker not found')
               print(f'{filename}: validation passed')
 
       - name: Commit patch
         shell: bash
         run: |
-          if git diff --quiet; then
-            echo "No changes needed."
-            exit 0
-          fi
+          if git diff --quiet; then echo "No changes needed."; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add about.html news.html services.html contact.html scripts/apply_news_services_hero_gradients.py
