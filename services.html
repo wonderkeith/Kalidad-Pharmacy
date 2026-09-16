@@ -1793,5 +1793,22 @@ header.logo-hidden {
 </style>
 
 
+
+<style id="hero-full-viewport-height-final">
+/* FINAL OVERRIDE (desktop): hero fills the entire screen height */
+@media (min-width: 901px) {
+  .page-banner {
+    height: 100vh !important;
+    height: 100svh !important;
+    min-height: 100vh !important;
+  }
+  .page-banner .hero-image,
+  .page-banner .hero-image picture,
+  .page-banner .hero-image img {
+    height: 100% !important;
+    min-height: 100% !important;
+  }
+}
+</style>
 </body>
 </html>
