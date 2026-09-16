@@ -39,14 +39,23 @@ jobs:
         shell: bash
         run: python scripts/apply_news_services_hero_gradients.py
 
+      - name: Consolidate Home hero height and viewport rules
+        shell: bash
+        run: python scripts/consolidate_home_hero.py
+
       - name: Validate patched pages
         shell: python
         run: |
           from pathlib import Path
-          checks = {'news.html':'kalidad-final-news-gradient-fix','services.html':'kalidad-final-services-gradient-fix','contact.html':'kalidad-final-contact-gradient-fix'}
+          checks = {
+              'news.html': 'kalidad-final-news-gradient-fix',
+              'services.html': 'kalidad-final-services-gradient-fix',
+              'contact.html': 'kalidad-final-contact-gradient-fix',
+              'index.html': 'kalidad-home-hero-final',
+          }
           for filename, marker in checks.items():
               text = Path(filename).read_text(encoding='utf-8')
-              if marker not in text: raise SystemExit(f'{filename}: expected gradient marker not found')
+              if marker not in text: raise SystemExit(f'{filename}: expected marker not found: {marker}')
               print(f'{filename}: validation passed')
 
       - name: Commit patch
@@ -55,6 +64,6 @@ jobs:
           if git diff --quiet; then echo "No changes needed."; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add about.html news.html services.html contact.html scripts/apply_news_services_hero_gradients.py
-          git commit -m "Fix Contact hero gradient"
+          git add about.html news.html services.html contact.html index.html scripts/apply_news_services_hero_gradients.py scripts/consolidate_home_hero.py
+          git commit -m "Consolidate home hero viewport rules"
           git push
