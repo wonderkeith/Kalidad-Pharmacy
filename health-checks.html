@@ -916,6 +916,31 @@ header.logo-hidden {
 }
 </style>
 <link rel="icon" type="image/png" href="kalidad-icon.png">
+
+<style id="otc-wellness-hero-gradient-match">
+/* Match the OTC Wellness hero treatment across service pages.
+   Source gradient: otc-wellness.html .wellness-parent-hero image overlay. */
+.service-detail-hero .service-detail-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.service-detail-hero .service-detail-copy {
+  position: relative;
+  z-index: 2;
+}
+.service-detail-hero .service-detail-copy h1,
+.service-detail-hero .service-detail-copy h1:not(.accent) {
+  color: #fff !important;
+}
+.service-detail-hero .service-detail-copy h1 .accent,
+.service-detail-hero .service-detail-copy .accent {
+  color: var(--lime) !important;
+}
+</style>
 </head>
 <body>
 <header>
