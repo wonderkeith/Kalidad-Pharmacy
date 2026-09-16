@@ -50,7 +50,7 @@ jobs:
           else:
               print('About enhancement script tags already present.')
 
-      - name: Apply News and Services hero gradients
+      - name: Apply News, Services, and Contact hero gradients
         shell: bash
         run: python scripts/apply_news_services_hero_gradients.py
 
@@ -62,6 +62,7 @@ jobs:
           checks = {
               'news.html': 'kalidad-final-news-gradient-fix',
               'services.html': 'kalidad-final-services-gradient-fix',
+              'contact.html': 'kalidad-final-contact-gradient-fix',
           }
           for filename, marker in checks.items():
               text = Path(filename).read_text(encoding='utf-8')
@@ -78,6 +79,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add about.html news.html services.html
-          git commit -m "Fix News and Services hero gradients"
+          git add about.html news.html services.html contact.html scripts/apply_news_services_hero_gradients.py
+          git commit -m "Fix Contact hero gradient"
           git push
