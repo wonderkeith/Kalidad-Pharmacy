@@ -15,86 +15,68 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Repair four pages
+      - name: Apply exact OTC Wellness hero treatment
         shell: bash
         run: |
           python3 <<'PY'
           from pathlib import Path
           import re
 
-          SERVICE_CSS = '''<style id="final-otc-hero-match">
-          .service-detail-hero.otc-hero-match{min-height:650px!important;position:relative!important;display:block!important;overflow:hidden!important;background:#12291F!important}
-          .service-detail-hero.otc-hero-match .service-detail-image{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:0!important}
-          .service-detail-hero.otc-hero-match .service-detail-image img{display:block!important;width:100%!important;height:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important}
-          .service-detail-hero.otc-hero-match .service-detail-image::after{content:""!important;position:absolute!important;inset:0!important;display:block!important;background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;z-index:1!important;pointer-events:none!important}
-          .service-detail-hero.otc-hero-match .service-detail-copy{position:relative!important;z-index:2!important;min-height:650px!important;width:100%!important;max-width:1180px!important;margin:0 auto!important;padding:110px 24px 90px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;opacity:1!important;transform:none!important}
-          .service-detail-hero.otc-hero-match .service-detail-copy h1{max-width:650px!important;color:#fff!important}
-          .service-detail-hero.otc-hero-match .service-detail-copy h1 .accent{color:var(--lime)!important}
-          .service-detail-hero.otc-hero-match .service-detail-copy .lead{max-width:590px!important;color:rgba(255,255,255,.9)!important}
-          .service-detail-hero.otc-hero-match .service-detail-copy .kicker{background:rgba(230,243,217,.94)!important;color:#42652f!important}
-          .service-detail-hero.otc-hero-match .service-detail-copy .btn-outline{border-color:#fff!important;color:#fff!important;background:rgba(18,41,31,.12)!important}
-          @media(max-width:850px){.service-detail-hero.otc-hero-match,.service-detail-hero.otc-hero-match .service-detail-copy{min-height:650px!important}.service-detail-hero.otc-hero-match .service-detail-copy{padding:115px 28px 70px!important}.service-detail-hero.otc-hero-match .service-detail-image{height:100%!important;min-height:100%!important}.service-detail-hero.otc-hero-match .service-detail-image::after{background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important}}
-          @media(max-width:560px){.service-detail-hero.otc-hero-match,.service-detail-hero.otc-hero-match .service-detail-copy{min-height:610px!important}.service-detail-hero.otc-hero-match .service-detail-copy{padding:105px 24px 55px!important}.service-detail-hero.otc-hero-match .service-detail-copy h1{font-size:clamp(2.8rem,14vw,4.2rem)!important}}
-          </style>'''
-
-          NUTRITIONAL_CSS = '''<style id="final-otc-hero-match">
+          CSS = '''<style id="final-otc-hero-match">
+          /* FINAL OTC WELLNESS HERO MATCH — exact overlay and text treatment */
           .catalog-page-hero.otc-hero-match{min-height:600px!important;position:relative!important;overflow:hidden!important;background:#12291F!important}
           .catalog-page-hero.otc-hero-match .hero-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:0!important}
           .catalog-page-hero.otc-hero-match .hero-bg img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
           .catalog-page-hero.otc-hero-match .hero-bg::after{content:""!important;position:absolute!important;inset:0!important;display:block!important;background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;z-index:1!important;pointer-events:none!important}
-          .catalog-page-hero.otc-hero-match .hero-copy{position:relative!important;z-index:2!important;min-height:600px!important;max-width:1180px!important;margin:0 auto!important;padding:120px 24px 80px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important}
-          .catalog-page-hero.otc-hero-match h1{color:#fff!important}.catalog-page-hero.otc-hero-match h1 .accent{color:var(--lime)!important}.catalog-page-hero.otc-hero-match .btn-outline{border-color:#fff!important;color:#fff!important;background:rgba(18,41,31,.12)!important}
+          .catalog-page-hero.otc-hero-match .hero-copy{position:relative!important;z-index:2!important;min-height:600px!important;max-width:1180px!important;margin:0 auto!important;padding:120px 24px 80px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;opacity:1!important;transform:none!important}
+          .catalog-page-hero.otc-hero-match h1{color:#fff!important}
+          .catalog-page-hero.otc-hero-match h1 .accent{color:var(--lime)!important}
+          .catalog-page-hero.otc-hero-match .btn-outline{border-color:#fff!important;color:#fff!important;background:rgba(18,41,31,.12)!important}
           @media(max-width:850px){.catalog-page-hero.otc-hero-match .hero-bg::after{background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important}}
           </style>'''
 
-          def ensure_class(html, class_name, extra_class):
-              pattern = re.compile(r'(<(?:section|div)\b[^>]*\bclass=["\'])([^"\']*\b' + re.escape(class_name) + r'\b[^"\']*)(["\'])>', re.I)
-              m = pattern.search(html)
-              if not m:
-                  raise SystemExit(f'Hero markup not found: {class_name}')
-              classes = m.group(2).split()
-              if extra_class not in classes:
-                  classes.append(extra_class)
-              new_tag = m.group(1) + ' '.join(classes) + m.group(3) + '>'
-              return html[:m.start()] + new_tag + html[m.end():]
+          pages = [
+              'nutritional-supplements.html',
+              'personal-hygiene-oral-care.html',
+              'skincare-body-care.html',
+              'baby-care.html',
+          ]
 
-          def install_style(html, css):
-              style_re = re.compile(r'<style id="final-otc-hero-match">.*?</style>', re.S)
-              if style_re.search(html):
-                  return style_re.sub(css, html, count=1)
-              if '</head>' not in html:
-                  raise SystemExit('Missing </head>')
-              return html.replace('</head>', css + '\n</head>', 1)
+          style_re = re.compile(r'<style id="final-otc-hero-match">.*?</style>', re.S)
+          hero_re = re.compile(r'(<(?:section|div)\b[^>]*\bclass=["\'])([^"\']*\bcatalog-page-hero\b[^"\']*)(["\'])>', re.I)
 
-          # Nutritional page: exact OTC catalog hero structure.
-          p = Path('nutritional-supplements.html')
-          html = p.read_text(encoding='utf-8')
-          html = ensure_class(html, 'catalog-page-hero', 'otc-hero-match')
-          html = install_style(html, NUTRITIONAL_CSS)
-          p.write_text(html, encoding='utf-8')
-
-          # These three pages use the service-detail hero markup; force the OTC treatment onto it.
-          for name in ['personal-hygiene-oral-care.html','skincare-body-care.html','baby-care.html']:
+          for name in pages:
               p = Path(name)
-              html = p.read_text(encoding='utf-8')
-              html = ensure_class(html, 'service-detail-hero', 'otc-hero-match')
-              html = install_style(html, SERVICE_CSS)
+              original = p.read_text(encoding='utf-8')
+              m = hero_re.search(original)
+              if not m:
+                  raise SystemExit(f'Catalog hero markup not found in {name}')
+              classes = m.group(2).split()
+              if 'otc-hero-match' not in classes:
+                  classes.append('otc-hero-match')
+              tag = m.group(1) + ' '.join(classes) + m.group(3) + '>'
+              html = original[:m.start()] + tag + original[m.end():]
+              if style_re.search(html):
+                  html = style_re.sub(CSS, html, count=1)
+              else:
+                  html = html.replace('</head>', CSS + '\n</head>', 1)
               p.write_text(html, encoding='utf-8')
+              print(f'Patched {name}: OTC catalog hero installed')
 
-          print('All four hero pages patched successfully.')
+          print('FOUR CATALOG HERO PAGES PATCHED.')
           PY
 
-      - name: Verify exact hero hooks
+      - name: Verify
         shell: bash
         run: |
           set -e
-          grep -q 'catalog-page-hero otc-hero-match' nutritional-supplements.html
-          grep -q 'final-otc-hero-match' nutritional-supplements.html
-          for f in personal-hygiene-oral-care.html skincare-body-care.html baby-care.html; do
-            grep -q 'service-detail-hero otc-hero-match' "$f"
+          for f in nutritional-supplements.html personal-hygiene-oral-care.html skincare-body-care.html baby-care.html; do
+            grep -q 'catalog-page-hero otc-hero-match' "$f"
             grep -q 'final-otc-hero-match' "$f"
+            grep -q 'rgba(18,41,31,.68)' "$f"
+            grep -q 'h1 .accent' "$f"
           done
-          echo 'All four hero pages verified.'
+          echo 'Verified all four catalog hero pages.'
 
       - name: Commit and push
         shell: bash
@@ -106,5 +88,5 @@ jobs:
             echo 'No changes required.'
             exit 0
           fi
-          git commit -m "Fix four OTC hero pages"
+          git commit -m "Fix OTC hero treatment on four catalog pages"
           git push
