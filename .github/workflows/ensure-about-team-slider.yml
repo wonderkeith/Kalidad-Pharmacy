@@ -52,93 +52,22 @@ jobs:
 
       - name: Apply News and Services hero gradients
         shell: python
+        run: python scripts/apply_news_services_hero_gradients.py
+
+      - name: Validate patched pages
+        shell: python
         run: |
           from pathlib import Path
 
-          patches = {
-              'news.html': r'''
-<style id="kalidad-final-news-gradient-fix">
-/* Final News hero readability gradient: image remains visible while the left side gains a strong forest-green fade. */
-.news-hero{
-  position:relative!important;
-  background-image:url('pharmacist_green_scrubs.webp')!important;
-  background-position:center 38%!important;
-  background-size:cover!important;
-  background-repeat:no-repeat!important;
-}
-.news-hero::before{
-  content:""!important;
-  display:block!important;
-  position:absolute!important;
-  inset:0!important;
-  z-index:1!important;
-  pointer-events:none!important;
-  background:linear-gradient(90deg,rgba(18,41,31,.86) 0%,rgba(18,41,31,.70) 25%,rgba(18,41,31,.38) 48%,rgba(18,41,31,.12) 72%,rgba(18,41,31,.02) 100%)!important;
-}
-.news-hero .container,
-.news-hero .hero-copy{
-  position:relative!important;
-  z-index:3!important;
-}
-.news-hero-mobile-img{
-  z-index:0!important;
-}
-@media(max-width:900px){
-  .news-hero{
-    background-image:none!important;
-  }
-  .news-hero::before{
-    background:linear-gradient(90deg,rgba(18,41,31,.84) 0%,rgba(18,41,31,.66) 30%,rgba(18,41,31,.34) 58%,rgba(18,41,31,.08) 100%)!important;
-  }
-}
-</style>
-''',
-              'services.html': r'''
-<style id="kalidad-final-services-gradient-fix">
-/* Final Services hero readability gradient: preserve the full photograph and fade forest green in from the left. */
-.page-banner .hero-image{
-  z-index:0!important;
-}
-.page-banner .hero-image img{
-  position:relative!important;
-  z-index:0!important;
-}
-.page-banner .hero-image::before{
-  content:""!important;
-  display:block!important;
-  position:absolute!important;
-  inset:0!important;
-  z-index:1!important;
-  pointer-events:none!important;
-  background:linear-gradient(90deg,rgba(18,41,31,.86) 0%,rgba(18,41,31,.70) 25%,rgba(18,41,31,.38) 48%,rgba(18,41,31,.12) 72%,rgba(18,41,31,.02) 100%)!important;
-}
-.page-banner .hero-copy{
-  position:relative!important;
-  z-index:3!important;
-}
-@media(max-width:900px){
-  .page-banner .hero-image::before{
-    background:linear-gradient(90deg,rgba(18,41,31,.84) 0%,rgba(18,41,31,.66) 30%,rgba(18,41,31,.34) 58%,rgba(18,41,31,.08) 100%)!important;
-  }
-}
-</style>
-'''
+          checks = {
+              'news.html': 'kalidad-final-news-gradient-fix',
+              'services.html': 'kalidad-final-services-gradient-fix',
           }
-
-          for filename, css in patches.items():
-              path = Path(filename)
-              text = path.read_text(encoding='utf-8')
-              marker = '</head>'
+          for filename, marker in checks.items():
+              text = Path(filename).read_text(encoding='utf-8')
               if marker not in text:
-                  raise SystemExit(f'Could not find </head> in {filename}')
-
-              if 'id="kalidad-final-news-gradient-fix"' in text or 'id="kalidad-final-services-gradient-fix"' in text:
-                  print(f'{filename}: gradient fix already present.')
-                  continue
-
-              text = text.replace(marker, css.strip() + '\n' + marker, 1)
-              path.write_text(text, encoding='utf-8')
-              print(f'{filename}: added final hero gradient fix.')
+                  raise SystemExit(f'{filename}: expected gradient marker not found')
+              print(f'{filename}: validation passed')
 
       - name: Commit patch
         shell: bash
