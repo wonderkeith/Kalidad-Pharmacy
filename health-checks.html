@@ -918,81 +918,90 @@ header.logo-hidden {
 <link rel="icon" type="image/png" href="kalidad-icon.png">
 
 <style id="otc-wellness-hero-gradient-match">
-/* Exact OTC Wellness hero treatment applied as a full-image service hero. */
-.service-detail-hero {
-  position: relative !important;
-  display: block !important;
-  min-height: 650px !important;
-  overflow: hidden !important;
-  background: var(--forest-deep) !important;
+/* STRUCTURAL MATCH: this is the same hero treatment used by OTC Wellness. */
+.service-detail-hero.wellness-parent-hero {
+  min-height:650px !important;
+  position:relative !important;
+  display:block !important;
+  overflow:hidden !important;
+  background:var(--forest-deep) !important;
 }
-.service-detail-image {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 100% !important;
-  z-index: 0 !important;
+.service-detail-hero.wellness-parent-hero .service-detail-image {
+  position:absolute !important;
+  inset:0 !important;
+  min-height:100% !important;
+  width:100% !important;
+  height:100% !important;
+  z-index:0 !important;
 }
-.service-detail-image::after {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  background: linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%) !important;
-  z-index: 1 !important;
-  pointer-events: none !important;
+.service-detail-hero.wellness-parent-hero .service-detail-image::after {
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%) !important;
+  z-index:1 !important;
+  pointer-events:none !important;
 }
-.service-detail-image img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
+.service-detail-hero.wellness-parent-hero .service-detail-image img {
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center !important;
 }
-.service-detail-copy {
-  position: relative !important;
-  z-index: 2 !important;
-  width: 100% !important;
-  max-width: 1180px !important;
-  min-height: 650px !important;
-  margin: 0 auto !important;
-  padding: 120px 24px 90px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
+.service-detail-hero.wellness-parent-hero .service-detail-copy {
+  position:relative !important;
+  z-index:2 !important;
+  min-height:650px !important;
+  max-width:1180px !important;
+  margin:0 auto !important;
+  padding:110px 24px 90px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  align-items:flex-start !important;
+  opacity:1 !important;
+  transform:none !important;
 }
-.service-detail-copy h1 {
-  max-width: 760px !important;
-  color: #fff !important;
+.service-detail-hero.wellness-parent-hero .service-detail-copy h1 {
+  margin-top:28px !important;
+  max-width:650px !important;
+  color:#fff !important;
 }
-.service-detail-copy h1 .accent {
-  color: var(--lime) !important;
+.service-detail-hero.wellness-parent-hero .service-detail-copy h1 .accent {
+  color:var(--lime) !important;
 }
-.service-detail-copy .lead {
-  max-width: 620px !important;
-  color: rgba(255,255,255,.90) !important;
+.service-detail-hero.wellness-parent-hero .service-detail-copy .lead {
+  max-width:590px !important;
+  color:rgba(255,255,255,.9) !important;
 }
-.service-detail-actions .btn-outline {
-  border-color: #fff !important;
-  color: #fff !important;
-  background: rgba(18,41,31,.12) !important;
+.service-detail-hero.wellness-parent-hero .service-detail-copy .kicker {
+  background:rgba(230,243,217,.94) !important;
+  color:#42652f !important;
 }
-@media (max-width:850px) {
-  .service-detail-hero {
-    min-height: 570px !important;
+.service-detail-hero.wellness-parent-hero .service-detail-copy .btn-outline {
+  border-color:#fff !important;
+  color:#fff !important;
+  background:rgba(18,41,31,.12) !important;
+}
+@media(max-width:850px) {
+  .service-detail-hero.wellness-parent-hero {min-height:650px !important;}
+  .service-detail-hero.wellness-parent-hero .service-detail-copy {
+    min-height:650px !important;
+    padding:115px 28px 70px !important;
   }
-  .service-detail-image {
-    height: 570px !important;
-    min-height: 570px !important;
+  .service-detail-hero.wellness-parent-hero .service-detail-image {
+    height:100% !important;
+    min-height:100% !important;
   }
-  .service-detail-image::after {
-    background: linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%) !important;
+  .service-detail-hero.wellness-parent-hero .service-detail-image::after {
+    background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%) !important;
   }
-  .service-detail-copy {
-    min-height: 570px !important;
-    padding: 105px 24px 70px !important;
-  }
-  .service-detail-copy h1 {
-    font-size: clamp(2.8rem,13vw,4.6rem) !important;
-  }
+}
+@media(max-width:560px) {
+  .service-detail-hero.wellness-parent-hero,
+  .service-detail-hero.wellness-parent-hero .service-detail-copy {min-height:610px !important;}
+  .service-detail-hero.wellness-parent-hero .service-detail-copy {padding:105px 24px 55px !important;}
+  .service-detail-hero.wellness-parent-hero .service-detail-copy h1 {font-size:clamp(2.8rem,14vw,4.2rem) !important;}
 }
 </style>
 </head>
@@ -1032,7 +1041,7 @@ header.logo-hidden {
     </div>
 </header>
 <main>
-<section class="service-detail-hero">
+<section class="service-detail-hero wellness-parent-hero">
  <div class="service-detail-copy reveal">
   <h1>Free Health <span class="accent">Checks</span></h1>
   <div class="service-detail-actions">
