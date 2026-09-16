@@ -24,65 +24,64 @@ jobs:
           p = Path('contact.html')
           s = p.read_text(encoding='utf-8')
 
-          fix = r'''
-<style id="contact-mobile-hero-image-visibility-final">
-@media (max-width:900px){
-  .page-banner{
-    position:relative !important;
-    isolation:isolate !important;
-    overflow:hidden !important;
-    height:100svh !important;
-    min-height:100svh !important;
-    max-height:none !important;
-    padding:0 !important;
-    background-image:url('kalidad_pharmacy_scene.webp') !important;
-    background-size:cover !important;
-    background-repeat:no-repeat !important;
-    background-position:68% center !important;
-    background-color:transparent !important;
-    background-blend-mode:normal !important;
-  }
-  .page-banner::before{
-    content:"" !important;
-    position:absolute !important;
-    inset:0 !important;
-    z-index:1 !important;
-    display:block !important;
-    opacity:1 !important;
-    visibility:visible !important;
-    pointer-events:none !important;
-    background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.54) 28%,rgba(18,41,31,.34) 55%,rgba(18,41,31,.12) 80%,rgba(18,41,31,0) 100%) !important;
-  }
-  .page-banner::after{
-    content:none !important;
-    display:none !important;
-    background:none !important;
-  }
-  .page-banner > .container,
-  .page-banner .container,
-  .page-banner .hero-copy{
-    position:relative !important;
-    z-index:3 !important;
-  }
-}
-@media (max-width:560px){
-  .page-banner{
-    height:100svh !important;
-    min-height:100svh !important;
-    max-height:none !important;
-    background-position:68% center !important;
-  }
-}
-</style>
-'''
+          fix = '''
+          <style id="contact-mobile-hero-image-visibility-final">
+          @media (max-width:900px){
+            .page-banner{
+              position:relative !important;
+              isolation:isolate !important;
+              overflow:hidden !important;
+              height:100svh !important;
+              min-height:100svh !important;
+              max-height:none !important;
+              padding:0 !important;
+              background-image:url('kalidad_pharmacy_scene.webp') !important;
+              background-size:cover !important;
+              background-repeat:no-repeat !important;
+              background-position:68% center !important;
+              background-color:transparent !important;
+              background-blend-mode:normal !important;
+            }
+            .page-banner::before{
+              content:"" !important;
+              position:absolute !important;
+              inset:0 !important;
+              z-index:1 !important;
+              display:block !important;
+              opacity:1 !important;
+              visibility:visible !important;
+              pointer-events:none !important;
+              background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.54) 28%,rgba(18,41,31,.34) 55%,rgba(18,41,31,.12) 80%,rgba(18,41,31,0) 100%) !important;
+            }
+            .page-banner::after{
+              content:none !important;
+              display:none !important;
+              background:none !important;
+            }
+            .page-banner > .container,
+            .page-banner .container,
+            .page-banner .hero-copy{
+              position:relative !important;
+              z-index:3 !important;
+            }
+          }
+          @media (max-width:560px){
+            .page-banner{
+              height:100svh !important;
+              min-height:100svh !important;
+              max-height:none !important;
+              background-position:68% center !important;
+            }
+          }
+          </style>
+          '''
 
           marker = 'contact-mobile-hero-image-visibility-final'
           if marker not in s:
               if '</head>' not in s:
                   raise SystemExit('contact.html: </head> marker not found')
               s = s.replace('</head>', fix + '\n</head>', 1)
-
-          p.write_text(s, encoding='utf-8')
+              p.write_text(s, encoding='utf-8')
           PY
 
       - name: Commit Contact hero fix
