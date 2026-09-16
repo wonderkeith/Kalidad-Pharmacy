@@ -146,6 +146,119 @@ html,body,body *,button,input,textarea,select{font-family:'Lora',serif!important
 }
 </style>
 
+
+<style id="careers-matched-mobile-header">
+@media (max-width:900px){
+  header .menu-toggle{
+    display:flex !important; align-items:center !important; justify-content:center !important;
+    flex:0 0 46px !important; width:46px !important; height:46px !important; min-width:46px !important;
+    border:1.5px solid rgba(22,52,39,.35) !important; border-radius:12px !important;
+    background:rgba(255,255,255,.55) !important; color:var(--forest) !important;
+    -webkit-backdrop-filter:blur(10px) saturate(140%) !important;
+    backdrop-filter:blur(10px) saturate(140%) !important;
+    box-shadow:none !important; touch-action:manipulation !important;
+    -webkit-tap-highlight-color:transparent !important; position:relative !important; z-index:1002 !important;
+    transition:background .35s ease,border-color .35s ease,color .35s ease,
+               transform .25s ease,box-shadow .25s ease !important;
+  }
+  header .menu-toggle svg{width:28px !important;height:28px !important;display:block !important;visibility:visible !important;opacity:1 !important;}
+  html[data-theme="dark"] header .menu-toggle{
+    background:var(--forest) !important;border-color:rgba(255,255,255,.28) !important;color:#fff !important;
+  }
+
+  header .mobile-menu{
+    color:var(--forest) !important;background:rgba(246,244,236,.96) !important;
+    border-top:1px solid rgba(223,229,223,.75) !important;
+    -webkit-backdrop-filter:blur(12px) saturate(140%) !important;
+    backdrop-filter:blur(12px) saturate(140%) !important;
+    box-shadow:0 14px 38px rgba(18,41,31,.18) !important;
+  }
+  header .mobile-menu a{
+    display:block !important;padding:12px 8px !important;border-radius:10px !important;
+    font-weight:600 !important;text-decoration:none !important;color:var(--forest) !important;
+    background:transparent !important;transition:background .2s ease,color .2s ease,transform .2s ease !important;
+  }
+  header .mobile-menu a:hover,header .mobile-menu a:focus-visible,header .mobile-menu a.active{
+    background:var(--lime-soft,#e8f4d8) !important;color:var(--green,#006837) !important;
+  }
+  html[data-theme="dark"] header .mobile-menu{
+    background:rgba(11,26,20,.96) !important;border-top-color:rgba(255,255,255,.14) !important;
+    color:#fff !important;box-shadow:0 14px 38px rgba(0,0,0,.45) !important;
+  }
+  html[data-theme="dark"] header .mobile-menu a{color:#fff !important;}
+  html[data-theme="dark"] header .mobile-menu a:hover,
+  html[data-theme="dark"] header .mobile-menu a:focus-visible,
+  html[data-theme="dark"] header .mobile-menu a.active{
+    background:rgba(232,244,216,.14) !important;color:var(--lime) !important;
+  }
+
+  header{
+    overflow:visible !important;
+    transition:width .45s cubic-bezier(.2,.8,.2,1),height .45s cubic-bezier(.2,.8,.2,1),
+               left .45s cubic-bezier(.2,.8,.2,1),right .45s cubic-bezier(.2,.8,.2,1),
+               top .45s cubic-bezier(.2,.8,.2,1),border-radius .45s ease,
+               background .35s ease,box-shadow .35s ease !important;
+  }
+  header.logo-hidden{
+    left:auto !important;right:14px !important;top:12px !important;transform:none !important;
+    width:58px !important;height:58px !important;min-height:58px !important;border-radius:20px !important;
+    background:transparent !important;border:0 !important;box-shadow:none !important;overflow:hidden !important;
+  }
+  header.logo-hidden .header-inner{
+    width:58px !important;height:58px !important;min-height:58px !important;padding:0 !important;
+    gap:0 !important;justify-content:center !important;background:transparent !important;
+  }
+  header.logo-hidden .logo{display:none !important;width:0 !important;max-width:0 !important;opacity:0 !important;pointer-events:none !important;}
+  header.logo-hidden .menu-toggle{
+    margin:0 !important;width:58px !important;height:58px !important;min-width:58px !important;
+    border-radius:20px !important;box-shadow:0 12px 26px rgba(22,52,39,.20) !important;
+  }
+
+  header.logo-hidden.nav-open{
+    left:50% !important;right:auto !important;top:9px !important;transform:translateX(-50%) !important;
+    width:calc(100% - 18px) !important;height:auto !important;min-height:0 !important;border-radius:18px !important;
+    background:rgba(246,244,236,.96) !important;border:1px solid rgba(255,255,255,.55) !important;
+    box-shadow:0 14px 38px rgba(18,41,31,.18) !important;overflow:visible !important;
+  }
+  html[data-theme="dark"] header.logo-hidden.nav-open{
+    background:rgba(11,26,20,.96) !important;border-color:rgba(255,255,255,.14) !important;
+    box-shadow:0 14px 38px rgba(0,0,0,.45) !important;
+  }
+  header.logo-hidden.nav-open .header-inner{
+    width:100% !important;height:74px !important;min-height:74px !important;padding:0 20px !important;
+    gap:16px !important;justify-content:space-between !important;background:transparent !important;
+  }
+  header.logo-hidden.nav-open .logo{
+    display:flex !important;width:145px !important;max-width:145px !important;opacity:1 !important;pointer-events:auto !important;
+  }
+  header.logo-hidden.nav-open .menu-toggle{
+    width:46px !important;height:46px !important;min-width:46px !important;border-radius:12px !important;
+    box-shadow:none !important;
+  }
+  header.logo-hidden.nav-open .mobile-menu{
+    display:flex !important;width:100% !important;max-height:calc(100svh - 84px) !important;overflow-y:auto !important;
+    padding:10px 20px 18px !important;border-top:1px solid rgba(223,229,223,.4) !important;
+    border-radius:0 0 18px 18px !important;box-shadow:none !important;
+  }
+  header.nav-open:not(.logo-hidden) .mobile-menu{display:flex !important;padding:10px 20px 18px !important;}
+}
+@media (prefers-reduced-motion:reduce){
+  header,header .menu-toggle,header .mobile-menu,header .mobile-menu a{transition:none !important;}
+}
+</style>
+
+<style id="kalidad-mobile-glass-nav-v1">
+/* KALIDAD MOBILE GLASS NAV v1 */
+@media (max-width:900px){
+  header{background:rgba(246,244,236,.72)!important;border-bottom:1px solid rgba(18,41,31,.14)!important;box-shadow:0 10px 30px rgba(18,41,31,.10)!important;-webkit-backdrop-filter:blur(18px) saturate(145%)!important;backdrop-filter:blur(18px) saturate(145%)!important}
+  .menu-toggle,.menu{display:flex!important;align-items:center!important;justify-content:center!important;width:46px!important;height:46px!important;border:1.5px solid rgba(30,79,59,.55)!important;border-radius:14px!important;background:rgba(246,244,236,.42)!important;color:var(--forest,#1E4F3B)!important;box-shadow:0 8px 24px rgba(18,41,31,.10)!important;-webkit-backdrop-filter:blur(14px) saturate(150%)!important;backdrop-filter:blur(14px) saturate(150%)!important}
+  .menu-toggle:hover,.menu:hover,.menu-toggle:focus-visible,.menu:focus-visible{background:rgba(246,244,236,.64)!important;border-color:rgba(30,79,59,.75)!important;box-shadow:0 12px 28px rgba(18,41,31,.14)!important;outline:none!important}
+  .mobile-menu{background:rgba(246,244,236,.68)!important;border-top:1px solid rgba(18,41,31,.12)!important;border-bottom:1px solid rgba(18,41,31,.10)!important;box-shadow:0 18px 40px rgba(18,41,31,.13)!important;-webkit-backdrop-filter:blur(22px) saturate(145%)!important;backdrop-filter:blur(22px) saturate(145%)!important}
+  .mobile-menu a{color:var(--forest,#1E4F3B)!important;background:transparent!important;border:1px solid transparent!important}
+  .mobile-menu a:hover,.mobile-menu a:focus-visible,.mobile-menu a.active{color:var(--accent-fg,#33581F)!important;background:rgba(230,243,217,.72)!important;border-color:rgba(51,88,31,.10)!important;outline:none!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -156,7 +269,7 @@ html,body,body *,button,input,textarea,select{font-family:'Lora',serif!important
 <section class="branches-section" aria-labelledby="branches-title"><div class="container"><div class="section-head reveal"><h2 id="branches-title">Our locations</h2><p>You are welcome to visit us at any of our branches below.</p><div class="leaf-rule"></div></div><div class="branch-list"><article class="branch-card reveal"><div class="branch-slider" data-branch-slider="kisenyi"><div class="branch-slide active"><img class="branch-photo" src="20260724_151100(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch exterior front view"></div><div class="branch-slide"><img class="branch-photo" src="20260724_151800_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch medicine display interior"></div><div class="branch-slide"><img class="branch-photo" src="20260724_152030(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch interior aisle"></div><div class="branch-slide"><img class="branch-photo" src="20260724_152439(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch counter and shelves"></div><div class="branch-slide"><img class="branch-photo" src="20260724_155052(1)(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch exterior angle view"></div><div class="branch-slide"><img class="branch-photo" src="file_000000007d308243b53f0aa6fcf37cd3_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch exterior at night"></div><button class="branch-slider-nav prev" type="button" aria-label="Previous Kisenyi Branch image"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button><button class="branch-slider-nav next" type="button" aria-label="Next Kisenyi Branch image"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button><div class="branch-slider-dots" aria-label="Kisenyi Branch image navigation"></div></div><div class="branch-copy"><span class="kicker"> Main branch</span><h3>Kisenyi-Fort Portal</h3><p>Located next to Rosefoam Mattress Depot at the MT-Bwamba road junction . We are always open 24/7 to fill your health, wellness,cosmetic and baby needs in the heart of the city.</p><span class="branch-note"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Fort Portal, Uganda</span></div></article><article class="branch-card reverse reveal"><div class="branch-slider" data-branch-slider="kahungabunyonyi"><div class="branch-slide active"><img class="branch-photo" src="1000111640.png" alt="Kalidad Pharmacy Kahungabunyonyi Branch exterior at night"></div><div class="branch-slide"><img class="branch-photo" src="20260724_143031(1)(1).jpg" alt="Kalidad Pharmacy Kahungabunyonyi Branch exterior during the day"></div><div class="branch-slide"><img class="branch-photo" src="20260724_144840(1).jpg" alt="Kalidad Pharmacy Kahungabunyonyi Branch interior view"></div><div class="branch-slide"><img class="branch-photo" src="20260724_145355(1).jpg" alt="Kalidad Pharmacy Kahungabunyonyi Branch interior from the entrance"></div><div class="branch-slide"><img class="branch-photo" src="20260724_145446(1).jpg" alt="Customers inside Kalidad Pharmacy Kahungabunyonyi Branch"></div><button class="branch-slider-nav prev" type="button" aria-label="Previous Kahungabunyonyi Branch image"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button><button class="branch-slider-nav next" type="button" aria-label="Next Kahungabunyonyi Branch image"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button><div class="branch-slider-dots" aria-label="Kahungabunyonyi Branch image navigation"></div></div><div class="branch-copy"><span class="kicker">Our second Branch</span><h3>Kahungabunyonyi-Fort Portal</h3><p>Located along Kahungabunyonyi road on the City Inn building ground floor. We are always open 24/7 to fill your health, wellness,cosmetic and baby needs.</p><span class="branch-note"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> FortPortal,Uganda</span></div></article></div></div></section>
 <section class="location-section" aria-labelledby="location-title"><div class="container"><div class="location-head reveal"><span class="kicker">Find us</span><p>Use the map below to locate our brances in Fort Portal.</p></div><div class="map-frame reveal"><a class="map-open" href="https://maps.app.goo.gl/Eaxz7fNvanTzsc7B7" target="_blank" rel="noopener"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Open in Google Maps</a><iframe title="Kalidad Pharmacy location in Kisenyi, Fort Portal" src="https://www.google.com/maps?q=Kisenyi%2C%20Fort%20Portal%2C%20Uganda&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div></div></section></main>
 <footer><div class="container footer-grid"><div class="footer-brand"><img class="footer-brand-logo" src="kalidad-logo.png" alt="Kalidad Pharmacy — Your health, your wealth"></div><div class="footer-col"><p class="head">Explore</p><ul><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="careers.html">Careers</a></li><li><a href="news.html">News</a></li><li><a href="about.html">About Us</a></li></ul></div><div class="footer-col"><p class="head">Visit us</p><ul class="footer-contact"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg> Kisenyi, FortPortal, Uganda</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg><a href="tel:+256759845260">+256759845260</a> or <a href="tel:+256772292177">+256772292177</a></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Open 24/7, Every day</li></ul></div></div><div class="footer-bottom"><div class="container"><p>© 2026 Kalidad Pharmacy. All rights reserved.</p><p>Your health, your wealth.</p></div></div></footer>
-<script>(function(){var toggle=document.getElementById('menuToggle');var menu=document.getElementById('mobileMenu');if(toggle&&menu){toggle.addEventListener('click',function(){var open=menu.classList.toggle('open');toggle.setAttribute('aria-expanded',open?'true':'false')})}var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));var dotsWrap=document.getElementById('sliderDots');if(slides.length&&dotsWrap){var current=0,timer;slides.forEach(function(_,i){var b=document.createElement('button');b.setAttribute('aria-label','Go to slide '+(i+1));if(i===0)b.classList.add('active');b.addEventListener('click',function(){goTo(i);resetTimer()});dotsWrap.appendChild(b)});var dots=Array.prototype.slice.call(dotsWrap.children);function goTo(i){slides[current].classList.remove('active');dots[current].classList.remove('active');current=(i+slides.length)%slides.length;slides[current].classList.add('active');dots[current].classList.add('active')}function next(){goTo(current+1)}function prev(){goTo(current-1)}function resetTimer(){clearInterval(timer);timer=setInterval(next,5000)}var nextBtn=document.getElementById('nextBtn');var prevBtn=document.getElementById('prevBtn');if(nextBtn)nextBtn.addEventListener('click',function(){next();resetTimer()});if(prevBtn)prevBtn.addEventListener('click',function(){prev();resetTimer()});resetTimer()}document.querySelectorAll('[data-branch-slider]').forEach(function(slider){var slides=Array.prototype.slice.call(slider.querySelectorAll('.branch-slide'));var dotsWrap=slider.querySelector('.branch-slider-dots');var prevBtn=slider.querySelector('.branch-slider-nav.prev');var nextBtn=slider.querySelector('.branch-slider-nav.next');var current=0,timer;slides.forEach(function(_,i){var dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label','Go to image '+(i+1));if(i===0)dot.classList.add('active');dot.addEventListener('click',function(){goTo(i);resetTimer()});dotsWrap.appendChild(dot)});var dots=Array.prototype.slice.call(dotsWrap.children);function goTo(i){slides[current].classList.remove('active');dots[current].classList.remove('active');current=(i+slides.length)%slides.length;slides[current].classList.add('active');dots[current].classList.add('active')}function next(){goTo(current+1)}function prev(){goTo(current-1)}function resetTimer(){clearInterval(timer);timer=setInterval(next,5000)}if(prevBtn)prevBtn.addEventListener('click',function(){prev();resetTimer()});if(nextBtn)nextBtn.addEventListener('click',function(){next();resetTimer()});resetTimer();slider.addEventListener('mouseenter',function(){clearInterval(timer)});slider.addEventListener('mouseleave',resetTimer)});var revealEls=document.querySelectorAll('.reveal');if('IntersectionObserver'in window){var io=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target)}})},{threshold:.15});revealEls.forEach(function(el){io.observe(el)})}else{revealEls.forEach(function(el){el.classList.add('in')})}var form=document.getElementById('contactForm');if(form){form.addEventListener('submit',function(e){e.preventDefault();var btn=form.querySelector('button[type="submit"]');var original=btn.textContent;btn.textContent='Message ready — opening WhatsApp…';var name=document.getElementById('name').value;var message=document.getElementById('message').value;var text=encodeURIComponent('Hello Kalidad Pharmacy, my name is '+name+'. '+message);setTimeout(function(){window.open('https://wa.me/256764201229?text='+text,'_blank');btn.textContent=original;form.reset()},500)})}})();</script>
+<script>(function(){var toggle=document.getElementById('menuToggle');var menu=document.getElementById('mobileMenu');var header=document.querySelector('header');if(toggle&&menu&&header){function setOpen(open){menu.classList.toggle('open',open);header.classList.toggle('nav-open',open);toggle.setAttribute('aria-expanded',open?'true':'false');toggle.setAttribute('aria-label',open?'Close menu':'Open menu')}toggle.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();setOpen(!menu.classList.contains('open'))});menu.querySelectorAll('a').forEach(function(link){link.addEventListener('click',function(){setOpen(false)})});document.addEventListener('keydown',function(e){if(e.key==='Escape'){setOpen(false)}})}var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));var dotsWrap=document.getElementById('sliderDots');if(slides.length&&dotsWrap){var current=0,timer;slides.forEach(function(_,i){var b=document.createElement('button');b.setAttribute('aria-label','Go to slide '+(i+1));if(i===0)b.classList.add('active');b.addEventListener('click',function(){goTo(i);resetTimer()});dotsWrap.appendChild(b)});var dots=Array.prototype.slice.call(dotsWrap.children);function goTo(i){slides[current].classList.remove('active');dots[current].classList.remove('active');current=(i+slides.length)%slides.length;slides[current].classList.add('active');dots[current].classList.add('active')}function next(){goTo(current+1)}function prev(){goTo(current-1)}function resetTimer(){clearInterval(timer);timer=setInterval(next,5000)}var nextBtn=document.getElementById('nextBtn');var prevBtn=document.getElementById('prevBtn');if(nextBtn)nextBtn.addEventListener('click',function(){next();resetTimer()});if(prevBtn)prevBtn.addEventListener('click',function(){prev();resetTimer()});resetTimer()}document.querySelectorAll('[data-branch-slider]').forEach(function(slider){var slides=Array.prototype.slice.call(slider.querySelectorAll('.branch-slide'));var dotsWrap=slider.querySelector('.branch-slider-dots');var prevBtn=slider.querySelector('.branch-slider-nav.prev');var nextBtn=slider.querySelector('.branch-slider-nav.next');var current=0,timer;slides.forEach(function(_,i){var dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label','Go to image '+(i+1));if(i===0)dot.classList.add('active');dot.addEventListener('click',function(){goTo(i);resetTimer()});dotsWrap.appendChild(dot)});var dots=Array.prototype.slice.call(dotsWrap.children);function goTo(i){slides[current].classList.remove('active');dots[current].classList.remove('active');current=(i+slides.length)%slides.length;slides[current].classList.add('active');dots[current].classList.add('active')}function next(){goTo(current+1)}function prev(){goTo(current-1)}function resetTimer(){clearInterval(timer);timer=setInterval(next,5000)}if(prevBtn)prevBtn.addEventListener('click',function(){prev();resetTimer()});if(nextBtn)nextBtn.addEventListener('click',function(){next();resetTimer()});resetTimer();slider.addEventListener('mouseenter',function(){clearInterval(timer)});slider.addEventListener('mouseleave',resetTimer)});var revealEls=document.querySelectorAll('.reveal');if('IntersectionObserver'in window){var io=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target)}})},{threshold:.15});revealEls.forEach(function(el){io.observe(el)})}else{revealEls.forEach(function(el){el.classList.add('in')})}var form=document.getElementById('contactForm');if(form){form.addEventListener('submit',function(e){e.preventDefault();var btn=form.querySelector('button[type="submit"]');var original=btn.textContent;btn.textContent='Message ready — opening WhatsApp…';var name=document.getElementById('name').value;var message=document.getElementById('message').value;var text=encodeURIComponent('Hello Kalidad Pharmacy, my name is '+name+'. '+message);setTimeout(function(){window.open('https://wa.me/256764201229?text='+text,'_blank');btn.textContent=original;form.reset()},500)})}})();</script>
 <script id="kalidad-shared-header-behavior">(function(){const header=document.querySelector('header');const hero=document.querySelector('.page-banner,.hero,.hero-reframed,.career-hero');if(!header)return;function update(){const y=window.scrollY||window.pageYOffset;header.classList.toggle('is-scrolled',y>24);if(hero){const bottom=hero.getBoundingClientRect().bottom;header.classList.toggle('logo-hidden',bottom<=90)}}let ticking=false;window.addEventListener('scroll',function(){if(!ticking){requestAnimationFrame(function(){update();ticking=false});ticking=true}},{passive:true});window.addEventListener('resize',update,{passive:true});update()})();</script>
 <script id="contact-hero-logo-scroll">(function(){const header=document.querySelector('header');const hero=document.querySelector('.page-banner');if(!header||!hero)return;const updateHeader=()=>{const heroBottom=hero.getBoundingClientRect().bottom;header.classList.toggle('is-scrolled',window.scrollY>24);header.classList.toggle('logo-hidden',heroBottom<=90)};let ticking=false;const onScroll=()=>{if(ticking)return;ticking=true;window.requestAnimationFrame(()=>{updateHeader();ticking=false})};window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',updateHeader,{passive:true});updateHeader()})();</script>
 <script src="chatbot.js" defer></script><script src="theme.js?v=2" defer></script>
