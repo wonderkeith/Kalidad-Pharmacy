@@ -1,0 +1,27 @@
+/* Kalidad Contact hero — enforced left-to-right forest-green readability gradient */
+.page-banner.kalidad-unified-hero {
+  position: relative !important;
+  isolation: isolate !important;
+  background-image:
+    linear-gradient(90deg, rgba(8,30,21,.94) 0%, rgba(18,41,31,.86) 18%, rgba(18,41,31,.64) 36%, rgba(18,41,31,.30) 58%, rgba(18,41,31,.08) 78%, rgba(18,41,31,0) 100%),
+    url('kalidad_pharmacy_scene.webp') !important;
+  background-size: cover, cover !important;
+  background-position: center, center !important;
+  background-repeat: no-repeat, no-repeat !important;
+}
+.page-banner.kalidad-unified-hero::before,
+.page-banner.kalidad-unified-hero::after { display:none !important; content:none !important; }
+.page-banner.kalidad-unified-hero .container,
+.page-banner.kalidad-unified-hero .hero-copy { position:relative !important; z-index:5 !important; }
+.page-banner.kalidad-unified-hero h1,
+.page-banner.kalidad-unified-hero h1 .line-dark { color:#fff !important; }
+.page-banner.kalidad-unified-hero h1 .line-lime,
+.page-banner.kalidad-unified-hero h1 .accent { color:#C7EF3E !important; }
+@media (max-width:900px) {
+  .page-banner.kalidad-unified-hero {
+    background-image:
+      linear-gradient(90deg, rgba(8,30,21,.94) 0%, rgba(18,41,31,.84) 22%, rgba(18,41,31,.58) 42%, rgba(18,41,31,.24) 66%, rgba(18,41,31,.04) 88%, rgba(18,41,31,0) 100%),
+      url('kalidad_pharmacy_clean_photo.webp') !important;
+    background-position:center, 62% center !important;
+  }
+}
