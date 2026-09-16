@@ -917,26 +917,81 @@ header.logo-hidden {
 </style>
 <link rel="icon" type="image/png" href="kalidad-icon.png">
 
-
-
 <style id="otc-wellness-hero-gradient-match">
-/* Exact OTC Wellness hero image-overlay gradient, shared across service heroes. */
-.service-detail-hero .service-detail-image::after,
-.catalog-page-hero .hero-bg::after {
-  background: linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%) !important;
+/* Exact OTC Wellness hero treatment applied as a full-image service hero. */
+.service-detail-hero {
+  position: relative !important;
+  display: block !important;
+  min-height: 650px !important;
+  overflow: hidden !important;
+  background: var(--forest-deep) !important;
 }
-.service-detail-hero .service-detail-copy h1,
-.catalog-page-hero h1 {
+.service-detail-image {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  z-index: 0 !important;
+}
+.service-detail-image::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%) !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+.service-detail-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+.service-detail-copy {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  max-width: 1180px !important;
+  min-height: 650px !important;
+  margin: 0 auto !important;
+  padding: 120px 24px 90px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+.service-detail-copy h1 {
+  max-width: 760px !important;
   color: #fff !important;
 }
-.service-detail-hero .service-detail-copy h1 .accent,
-.catalog-page-hero h1 .accent {
+.service-detail-copy h1 .accent {
   color: var(--lime) !important;
 }
+.service-detail-copy .lead {
+  max-width: 620px !important;
+  color: rgba(255,255,255,.90) !important;
+}
+.service-detail-actions .btn-outline {
+  border-color: #fff !important;
+  color: #fff !important;
+  background: rgba(18,41,31,.12) !important;
+}
 @media (max-width:850px) {
-  .service-detail-hero .service-detail-image::after,
-  .catalog-page-hero .hero-bg::after {
+  .service-detail-hero {
+    min-height: 570px !important;
+  }
+  .service-detail-image {
+    height: 570px !important;
+    min-height: 570px !important;
+  }
+  .service-detail-image::after {
     background: linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%) !important;
+  }
+  .service-detail-copy {
+    min-height: 570px !important;
+    padding: 105px 24px 70px !important;
+  }
+  .service-detail-copy h1 {
+    font-size: clamp(2.8rem,13vw,4.6rem) !important;
   }
 }
 </style>
