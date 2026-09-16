@@ -12,62 +12,87 @@ jobs:
   fix:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Apply Contact hero viewport and mobile image fix
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Apply final Contact mobile hero fix
+        shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
+
           p = Path('contact.html')
           s = p.read_text(encoding='utf-8')
-          old = 'height:calc(100vh - 84px)!important;min-height:calc(100vh - 84px)!important;'
-          old_mobile = 'height:calc(100svh - 84px)!important;min-height:calc(100svh - 84px)!important;'
-          new = 'height:100vh!important;min-height:100vh!important;'
-          new_mobile = 'height:100svh!important;min-height:100svh!important;'
-          if old in s:
-              s = s.replace(old, new)
-          if old_mobile in s:
-              s = s.replace(old_mobile, new_mobile)
 
-          marker = '</style>\n\n</head>'
-          fix = '''/* ===== Contact mobile hero image visibility fix ===== */
-          @media (max-width:900px){
-            .page-banner{
-              position:relative !important;
-              background-color:#12291F !important;
-              background-image:url('kalidad_pharmacy_scene.webp') !important;
-              background-size:cover !important;
-              background-repeat:no-repeat !important;
-              background-position:70% center !important;
-            }
-            .page-banner::after{
-              content:"" !important;
-              position:absolute !important;
-              inset:0 !important;
-              z-index:0 !important;
-              display:block !important;
-              background:url('kalidad_pharmacy_scene.webp') 70% center / cover no-repeat !important;
-              pointer-events:none !important;
-            }
-            .page-banner::before{z-index:1 !important;}
-            .page-banner > .container,
-            .page-banner .container,
-            .page-banner .hero-copy{
-              position:relative !important;
-              z-index:3 !important;
-            }
-          }
-          '''
-          if 'Contact mobile hero image visibility fix' not in s:
-              if marker not in s:
-                  raise SystemExit('Contact style closing marker not found; refusing to modify the file.')
-              s = s.replace(marker, fix + '\n' + marker, 1)
+          fix = r'''
+<style id="contact-mobile-hero-image-visibility-final">
+@media (max-width:900px){
+  .page-banner{
+    position:relative !important;
+    isolation:isolate !important;
+    overflow:hidden !important;
+    height:100svh !important;
+    min-height:100svh !important;
+    max-height:none !important;
+    padding:0 !important;
+    background-image:url('kalidad_pharmacy_scene.webp') !important;
+    background-size:cover !important;
+    background-repeat:no-repeat !important;
+    background-position:68% center !important;
+    background-color:transparent !important;
+    background-blend-mode:normal !important;
+  }
+  .page-banner::before{
+    content:"" !important;
+    position:absolute !important;
+    inset:0 !important;
+    z-index:1 !important;
+    display:block !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    pointer-events:none !important;
+    background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.54) 28%,rgba(18,41,31,.34) 55%,rgba(18,41,31,.12) 80%,rgba(18,41,31,0) 100%) !important;
+  }
+  .page-banner::after{
+    content:none !important;
+    display:none !important;
+    background:none !important;
+  }
+  .page-banner > .container,
+  .page-banner .container,
+  .page-banner .hero-copy{
+    position:relative !important;
+    z-index:3 !important;
+  }
+}
+@media (max-width:560px){
+  .page-banner{
+    height:100svh !important;
+    min-height:100svh !important;
+    max-height:none !important;
+    background-position:68% center !important;
+  }
+}
+</style>
+'''
+
+          marker = 'contact-mobile-hero-image-visibility-final'
+          if marker not in s:
+              if '</head>' not in s:
+                  raise SystemExit('contact.html: </head> marker not found')
+              s = s.replace('</head>', fix + '\n</head>', 1)
+
           p.write_text(s, encoding='utf-8')
           PY
+
       - name: Commit Contact hero fix
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add contact.html
-          git diff --cached --quiet && exit 0
+          if git diff --cached --quiet; then
+            echo 'No Contact hero changes required.'
+            exit 0
+          fi
           git commit -m 'Fix Contact mobile hero image visibility'
           git push
