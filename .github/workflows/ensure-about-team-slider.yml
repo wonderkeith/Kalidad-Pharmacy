@@ -51,7 +51,7 @@ jobs:
               print('About enhancement script tags already present.')
 
       - name: Apply News and Services hero gradients
-        shell: python
+        shell: bash
         run: python scripts/apply_news_services_hero_gradients.py
 
       - name: Validate patched pages
