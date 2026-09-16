@@ -15,11 +15,12 @@ jobs:
           from pathlib import Path
           for name, cls in [('news.html','news-hero-reworked'),('about.html','about-hero-reworked')]:
               p=Path(name); s=p.read_text(encoding='utf-8')
-              if cls not in s:
+              exact=f'class="page-banner {cls}"'
+              if exact not in s:
                   old='class="page-banner"'
                   if old not in s:
                       raise SystemExit(f'Actual page-banner element not found in {name}')
-                  s=s.replace(old, f'class="page-banner {cls}"', 1)
+                  s=s.replace(old, exact, 1)
               p.write_text(s,encoding='utf-8')
       - name: Validate only news and about changed
         shell: bash
