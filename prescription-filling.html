@@ -917,33 +917,10 @@ header.logo-hidden {
 </style>
 <link rel="icon" type="image/png" href="kalidad-icon.png">
 
-<style id="otc-wellness-hero-gradient-match">
-/* Match the OTC Wellness hero treatment across service pages.
-   Source gradient: otc-wellness.html .wellness-parent-hero image overlay. */
-.service-detail-hero .service-detail-image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-.service-detail-hero .service-detail-copy {
-  position: relative;
-  z-index: 2;
-}
-.service-detail-hero .service-detail-copy h1,
-.service-detail-hero .service-detail-copy h1:not(.accent) {
-  color: #fff !important;
-}
-.service-detail-hero .service-detail-copy h1 .accent,
-.service-detail-hero .service-detail-copy .accent {
-  color: var(--lime) !important;
-}
-</style>
+
 
 <style id="otc-wellness-hero-gradient-match">
-/* OTC Wellness hero treatment shared across service detail/catalog heroes. */
+/* Exact OTC Wellness hero image-overlay gradient, shared across service heroes. */
 .service-detail-hero .service-detail-image::after,
 .catalog-page-hero .hero-bg::after {
   background: linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%) !important;
@@ -1002,7 +979,7 @@ header.logo-hidden {
 <main>
 <section class="service-detail-hero">
  <div class="service-detail-copy reveal">
-  <h1>Prescription Filling</h1>
+  <h1>Prescription <span class="accent">Filling</span></h1>
   <div class="service-detail-actions">
    <a class="btn btn-primary" href="https://wa.me/256764201229?text=Hello Kalidad Pharmacy, I would like to order Prescription Filling. " target="_blank" rel="noopener">Place your order <span aria-hidden="true">→</span></a>
    <a class="btn btn-outline" href="services.html">Back to services</a>
