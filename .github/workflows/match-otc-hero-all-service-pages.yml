@@ -1,0 +1,83 @@
+name: Match OTC Hero Gradient All Service Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  match-hero:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Match OTC gradient and accent last hero word
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          files = [
+              'nutritional-supplements.html',
+              'personal-hygiene-oral-care.html',
+              'skincare-body-care.html',
+              'baby-care.html',
+              'health-checks.html',
+              'prescription-filling.html',
+          ]
+
+          css = '''\n<style id="otc-wellness-hero-gradient-match">\n/* OTC Wellness hero treatment shared across service detail/catalog heroes. */\n.service-detail-hero .service-detail-image::after,\n.catalog-page-hero .hero-bg::after {\n  background: linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%) !important;\n}\n.service-detail-hero .service-detail-copy h1,\n.catalog-page-hero h1 {\n  color: #fff !important;\n}\n.service-detail-hero .service-detail-copy h1 .accent,\n.catalog-page-hero h1 .accent {\n  color: var(--lime) !important;\n}\n@media (max-width:850px) {\n  .service-detail-hero .service-detail-image::after,\n  .catalog-page-hero .hero-bg::after {\n    background: linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%) !important;\n  }\n}\n</style>\n'''
+
+          for name in files:
+              path = Path(name)
+              text = path.read_text(encoding='utf-8')
+
+              # Replace any earlier version of the shared override.
+              text = re.sub(r'\n<style id="otc-wellness-hero-gradient-match">[\\s\\S]*?</style>\n?', '\n', text)
+
+              # In the page's hero, keep the existing wording but make the final
+              # word the lime accent. Existing accent spans are preserved.
+              hero_pattern = re.compile(
+                  r'(<(?:section|div)[^>]*class="[^"]*(?:catalog-page-hero|service-detail-hero)[^"]*"[\\s\\S]*?<h1[^>]*>)([\\s\\S]*?)(</h1>)',
+                  re.I
+              )
+
+              def accent_last_word(match):
+                  opening, inner, closing = match.groups()
+                  if re.search(r'class=["\'][^"\']*\\baccent\\b', inner, re.I):
+                      return match.group(0)
+                  # Only alter a plain final word; leave unusual/structured headings alone.
+                  m = re.search(r'(\\b[\\w’\'-]+)(\\s*)$', inner)
+                  if not m:
+                      return match.group(0)
+                  word, space = m.groups()
+                  inner = inner[:m.start()] + f'<span class="accent">{word}</span>' + space
+                  return opening + inner + closing
+
+              text = hero_pattern.sub(accent_last_word, text, count=1)
+
+              if '</head>' not in text:
+                  raise SystemExit(f'Missing </head> in {name}')
+              text = text.replace('</head>', css + '</head>', 1)
+              path.write_text(text, encoding='utf-8')
+
+      - name: Commit hero updates
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add nutritional-supplements.html personal-hygiene-oral-care.html skincare-body-care.html baby-care.html health-checks.html prescription-filling.html
+          git commit -m "Match OTC hero gradient and accent service hero words"
+          git push
+
+      - name: Remove temporary workflow
+        shell: bash
+        run: |
+          git rm .github/workflows/match-otc-hero-all-service-pages.yml
+          git commit -m "Remove temporary hero update workflow"
+          git push
