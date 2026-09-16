@@ -9,89 +9,82 @@ permissions:
 
 jobs:
   repair:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Repair hero markup and styles
-        shell: python {0}
+      - name: Repair four pages
+        shell: bash
         run: |
+          python3 <<'PY'
           from pathlib import Path
           import re
 
-          service_pages = [
-              'personal-hygiene-oral-care.html',
-              'skincare-body-care.html',
-              'baby-care.html',
-          ]
-          nutritional = 'nutritional-supplements.html'
+          SERVICE_CSS = '''<style id="final-otc-hero-match">
+          .service-detail-hero.otc-hero-match{min-height:650px!important;position:relative!important;display:block!important;overflow:hidden!important;background:#12291F!important}
+          .service-detail-hero.otc-hero-match .service-detail-image{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:0!important}
+          .service-detail-hero.otc-hero-match .service-detail-image img{display:block!important;width:100%!important;height:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important}
+          .service-detail-hero.otc-hero-match .service-detail-image::after{content:""!important;position:absolute!important;inset:0!important;display:block!important;background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;z-index:1!important;pointer-events:none!important}
+          .service-detail-hero.otc-hero-match .service-detail-copy{position:relative!important;z-index:2!important;min-height:650px!important;width:100%!important;max-width:1180px!important;margin:0 auto!important;padding:110px 24px 90px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;opacity:1!important;transform:none!important}
+          .service-detail-hero.otc-hero-match .service-detail-copy h1{max-width:650px!important;color:#fff!important}
+          .service-detail-hero.otc-hero-match .service-detail-copy h1 .accent{color:var(--lime)!important}
+          .service-detail-hero.otc-hero-match .service-detail-copy .lead{max-width:590px!important;color:rgba(255,255,255,.9)!important}
+          .service-detail-hero.otc-hero-match .service-detail-copy .kicker{background:rgba(230,243,217,.94)!important;color:#42652f!important}
+          .service-detail-hero.otc-hero-match .service-detail-copy .btn-outline{border-color:#fff!important;color:#fff!important;background:rgba(18,41,31,.12)!important}
+          @media(max-width:850px){.service-detail-hero.otc-hero-match,.service-detail-hero.otc-hero-match .service-detail-copy{min-height:650px!important}.service-detail-hero.otc-hero-match .service-detail-copy{padding:115px 28px 70px!important}.service-detail-hero.otc-hero-match .service-detail-image{height:100%!important;min-height:100%!important}.service-detail-hero.otc-hero-match .service-detail-image::after{background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important}}
+          @media(max-width:560px){.service-detail-hero.otc-hero-match,.service-detail-hero.otc-hero-match .service-detail-copy{min-height:610px!important}.service-detail-hero.otc-hero-match .service-detail-copy{padding:105px 24px 55px!important}.service-detail-hero.otc-hero-match .service-detail-copy h1{font-size:clamp(2.8rem,14vw,4.2rem)!important}}
+          </style>'''
 
-          service_css = r'''
-<style id="final-otc-hero-match">
-/* FINAL OTC WELLNESS HERO MATCH — authoritative page-level override */
-.service-detail-hero.otc-hero-match{min-height:650px!important;position:relative!important;display:block!important;overflow:hidden!important;background:#12291F!important}
-.service-detail-hero.otc-hero-match .service-detail-image{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:0!important}
-.service-detail-hero.otc-hero-match .service-detail-image img{display:block!important;width:100%!important;height:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important}
-.service-detail-hero.otc-hero-match .service-detail-image::after{content:""!important;position:absolute!important;inset:0!important;display:block!important;background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;z-index:1!important;pointer-events:none!important}
-.service-detail-hero.otc-hero-match .service-detail-copy{position:relative!important;z-index:2!important;min-height:650px!important;width:100%!important;max-width:1180px!important;margin:0 auto!important;padding:110px 24px 90px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;opacity:1!important;transform:none!important}
-.service-detail-hero.otc-hero-match .service-detail-copy h1{max-width:650px!important;color:#fff!important}
-.service-detail-hero.otc-hero-match .service-detail-copy h1 .accent{color:var(--lime)!important}
-.service-detail-hero.otc-hero-match .service-detail-copy .lead{max-width:590px!important;color:rgba(255,255,255,.9)!important}
-.service-detail-hero.otc-hero-match .service-detail-copy .kicker{background:rgba(230,243,217,.94)!important;color:#42652f!important}
-.service-detail-hero.otc-hero-match .service-detail-copy .btn-outline{border-color:#fff!important;color:#fff!important;background:rgba(18,41,31,.12)!important}
-@media(max-width:850px){.service-detail-hero.otc-hero-match,.service-detail-hero.otc-hero-match .service-detail-copy{min-height:650px!important}.service-detail-hero.otc-hero-match .service-detail-copy{padding:115px 28px 70px!important}.service-detail-hero.otc-hero-match .service-detail-image{height:100%!important;min-height:100%!important}.service-detail-hero.otc-hero-match .service-detail-image::after{background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important}}
-@media(max-width:560px){.service-detail-hero.otc-hero-match,.service-detail-hero.otc-hero-match .service-detail-copy{min-height:610px!important}.service-detail-hero.otc-hero-match .service-detail-copy{padding:105px 24px 55px!important}.service-detail-hero.otc-hero-match .service-detail-copy h1{font-size:clamp(2.8rem,14vw,4.2rem)!important}}
-</style>
-'''
+          NUTRITIONAL_CSS = '''<style id="final-otc-hero-match">
+          .catalog-page-hero.otc-hero-match{min-height:600px!important;position:relative!important;overflow:hidden!important;background:#12291F!important}
+          .catalog-page-hero.otc-hero-match .hero-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:0!important}
+          .catalog-page-hero.otc-hero-match .hero-bg img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+          .catalog-page-hero.otc-hero-match .hero-bg::after{content:""!important;position:absolute!important;inset:0!important;display:block!important;background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;z-index:1!important;pointer-events:none!important}
+          .catalog-page-hero.otc-hero-match .hero-copy{position:relative!important;z-index:2!important;min-height:600px!important;max-width:1180px!important;margin:0 auto!important;padding:120px 24px 80px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important}
+          .catalog-page-hero.otc-hero-match h1{color:#fff!important}.catalog-page-hero.otc-hero-match h1 .accent{color:var(--lime)!important}.catalog-page-hero.otc-hero-match .btn-outline{border-color:#fff!important;color:#fff!important;background:rgba(18,41,31,.12)!important}
+          @media(max-width:850px){.catalog-page-hero.otc-hero-match .hero-bg::after{background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important}}
+          </style>'''
 
-          nutritional_css = r'''
-<style id="final-otc-hero-match">
-/* FINAL OTC WELLNESS HERO MATCH — authoritative page-level override */
-.catalog-page-hero.otc-hero-match{min-height:600px!important;position:relative!important;overflow:hidden!important;background:#12291F!important}
-.catalog-page-hero.otc-hero-match .hero-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:0!important}
-.catalog-page-hero.otc-hero-match .hero-bg img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
-.catalog-page-hero.otc-hero-match .hero-bg::after{content:""!important;position:absolute!important;inset:0!important;display:block!important;background:linear-gradient(90deg,rgba(18,41,31,.68) 0%,rgba(18,41,31,.45) 28%,rgba(18,41,31,.12) 58%,rgba(18,41,31,.02) 100%)!important;z-index:1!important;pointer-events:none!important}
-.catalog-page-hero.otc-hero-match .hero-copy{position:relative!important;z-index:2!important;min-height:600px!important;max-width:1180px!important;margin:0 auto!important;padding:120px 24px 80px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important}
-.catalog-page-hero.otc-hero-match h1{color:#fff!important}.catalog-page-hero.otc-hero-match h1 .accent{color:var(--lime)!important}.catalog-page-hero.otc-hero-match .btn-outline{border-color:#fff!important;color:#fff!important;background:rgba(18,41,31,.12)!important}
-@media(max-width:850px){.catalog-page-hero.otc-hero-match .hero-bg::after{background:linear-gradient(90deg,rgba(18,41,31,.66) 0%,rgba(18,41,31,.36) 55%,rgba(18,41,31,.12) 100%)!important}}
-</style>
-'''
-
-          def add_or_replace_style(html, style_id, css):
-              pattern = re.compile(r'<style id="' + re.escape(style_id) + r'">.*?</style>', re.S)
-              if pattern.search(html):
-                  return pattern.sub(css.strip(), html, count=1)
-              return html.replace('</head>', css.strip() + '\n</head>', 1)
-
-          changed = []
-
-          p = Path(nutritional)
-          original = p.read_text(encoding='utf-8')
-          html = re.sub(r'<section class="catalog-page-hero(?:\s+otc-hero-match)?">', '<section class="catalog-page-hero otc-hero-match">', original, count=1)
-          html = add_or_replace_style(html, 'final-otc-hero-match', nutritional_css)
-          if html != original:
+          def patch(path, selector, replacement, css):
+              p=Path(path)
+              original=p.read_text(encoding='utf-8')
+              html=re.sub(selector, replacement, original, count=1)
+              style_re=re.compile(r'<style id="final-otc-hero-match">.*?</style>', re.S)
+              if style_re.search(html):
+                  html=style_re.sub(css, html, count=1)
+              else:
+                  html=html.replace('</head>', css+'\n</head>', 1)
               p.write_text(html, encoding='utf-8')
-              changed.append(nutritional)
+              print(path, 'hero markup:', replacement in html, 'style:', 'final-otc-hero-match' in html)
 
-          for name in service_pages:
-              p = Path(name)
-              original = p.read_text(encoding='utf-8')
-              html = re.sub(r'<section class="service-detail-hero(?:\s+otc-hero-match)?">', '<section class="service-detail-hero otc-hero-match">', original, count=1)
-              html = add_or_replace_style(html, 'final-otc-hero-match', service_css)
-              if html != original:
-                  p.write_text(html, encoding='utf-8')
-                  changed.append(name)
+          patch('nutritional-supplements.html', r'<section class="catalog-page-hero(?:\s+otc-hero-match)?">', '<section class="catalog-page-hero otc-hero-match">', NUTRITIONAL_CSS)
+          for path in ['personal-hygiene-oral-care.html','skincare-body-care.html','baby-care.html']:
+              patch(path, r'<section class="service-detail-hero(?:\s+[^>]*)?>', '<section class="service-detail-hero otc-hero-match">', SERVICE_CSS)
+          PY
 
-          print('REPAIRED:', ', '.join(changed))
-          if len(changed) != 4:
-              raise SystemExit(f'Expected 4 changed pages, got {len(changed)}')
+      - name: Verify exact hero hooks
+        shell: bash
+        run: |
+          set -e
+          grep -q '<section class="catalog-page-hero otc-hero-match">' nutritional-supplements.html
+          for f in personal-hygiene-oral-care.html skincare-body-care.html baby-care.html; do
+            grep -q '<section class="service-detail-hero otc-hero-match">' "$f"
+            grep -q 'final-otc-hero-match' "$f"
+          done
+          grep -q 'final-otc-hero-match' nutritional-supplements.html
+          echo 'All four hero pages verified.'
 
-      - name: Commit repaired pages
+      - name: Commit and push
+        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add nutritional-supplements.html personal-hygiene-oral-care.html skincare-body-care.html baby-care.html
-          git diff --cached --quiet && exit 0
-          git commit -m "Fix OTC-style hero gradients on four pages"
+          if git diff --cached --quiet; then
+            echo 'No changes required.'
+            exit 0
+          fi
+          git commit -m "Fix four OTC hero pages"
           git push
