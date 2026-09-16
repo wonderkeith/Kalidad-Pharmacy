@@ -1,0 +1,32 @@
+name: Rework contact and careers heroes
+on:
+  push:
+    branches: [fix/contact-careers-hero]
+permissions:
+  contents: write
+jobs:
+  rework:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply page-specific hero rework
+        run: python scripts/rework-contact-careers.py
+      - name: Validate only target pages changed
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          for n in ['contact.html','careers.html']:
+              s=Path(n).read_text(encoding='utf-8')
+              assert '<style id="contact-careers-hero-final">' in s, f'{n}: final hero style missing'
+          print('contact.html OK')
+          print('careers.html OK')
+          PY
+      - name: Remove temporary tooling
+        run: rm -f scripts/rework-contact-careers.py .github/workflows/rework-contact-careers.yml
+      - name: Commit final changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --quiet || git commit -m 'Rework contact and careers heroes'
+          git push
