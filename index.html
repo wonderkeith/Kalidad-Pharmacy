@@ -1279,6 +1279,31 @@
             }
         }
     </style>
+
+    <style id="kalidad-pc-hero-height-fix">
+        /* Desktop / PC only: make the home hero fill the full viewport height.
+           Mobile/tablet hero sizing remains unchanged. */
+        @media (min-width: 901px) {
+            .hero {
+                height: 100vh !important;
+                min-height: 100vh !important;
+                max-height: none !important;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .hero-visual,
+            .slider {
+                height: 100% !important;
+                aspect-ratio: auto !important;
+            }
+
+            .slide {
+                height: 100% !important;
+            }
+        }
+    </style>
+
 </head>
 <body>
     <!-- Header and content goes here -->
