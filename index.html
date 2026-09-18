@@ -3721,6 +3721,7 @@ header.logo-hidden {
 }
 </style>
 
+<base target="_blank">
 </head>
 <body>
 
@@ -4676,5 +4677,234 @@ header.logo-hidden {
   }
 }
 </style>
+
+
+<style id="kalidad-transparent-floating-header-final">
+/* ==========================================================
+   TRANSPARENT FLOATING HEADER — PC & MOBILE
+   The header is now just floating objects: logo + buttons.
+   No background, no border, no shadow, no blur, no pill shape.
+   ========================================================== */
+header,
+header.is-scrolled,
+header.logo-hidden,
+header.logo-hidden.nav-open,
+header.nav-open {
+    position: fixed !important;
+    top: 18px !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: min(1180px, calc(100% - 28px)) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: visible !important;
+    z-index: 100 !important;
+    transition: top .35s ease !important;
+}
+
+header .header-inner {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    gap: 16px !important;
+    background: transparent !important;
+    justify-content: space-between !important;
+}
+
+/* Logo floats with no container */
+header .logo {
+    display: flex !important;
+    align-items: center !important;
+    width: 180px !important;
+    max-width: 180px !important;
+    height: 64px !important;
+    opacity: 1 !important;
+    transform: none !important;
+    margin: 0 !important;
+    pointer-events: auto !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+header .logo-image {
+    width: 180px !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 64px !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
+}
+
+/* Nav buttons float individually */
+nav.main-nav {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    background: transparent !important;
+}
+nav.main-nav a.nav-link {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: var(--forest) !important;
+    text-shadow: 0 1px 3px rgba(255,255,255,.55);
+}
+nav.main-nav a.nav-link:hover,
+nav.main-nav a.nav-link:focus-visible,
+nav.main-nav a.nav-link.active {
+    background: rgba(230,243,217,.85) !important;
+    border: 0 !important;
+    box-shadow: 0 8px 20px rgba(18,41,31,.14) !important;
+    transform: translateY(-3px) !important;
+}
+nav.main-nav a.nav-link::after { display: none !important; }
+
+/* Open badge floats */
+header .open-badge {
+    background: rgba(230,243,217,.85) !important;
+    border: 0 !important;
+    box-shadow: 0 8px 20px rgba(18,41,31,.12) !important;
+}
+
+/* CTA button */
+.nav-cta .btn {
+    box-shadow: 0 10px 24px rgba(18,41,31,.22) !important;
+}
+
+/* Mobile: keep everything floating & transparent */
+@media (max-width: 900px) {
+    header,
+    header.is-scrolled,
+    header.logo-hidden,
+    header.logo-hidden.nav-open,
+    header.nav-open {
+        top: 12px !important;
+        left: 14px !important;
+        right: 14px !important;
+        transform: none !important;
+        width: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        overflow: visible !important;
+    }
+
+    header .header-inner {
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        justify-content: space-between !important;
+    }
+
+    header .logo {
+        width: 150px !important;
+        max-width: 150px !important;
+        height: 58px !important;
+    }
+    header .logo-image {
+        width: 150px !important;
+        max-height: 58px !important;
+        filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
+    }
+
+    /* Menu toggle: floating round glass button, no header bar */
+    header .menu-toggle,
+    header.logo-hidden .menu-toggle,
+    header.logo-hidden.nav-open .menu-toggle {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 52px !important;
+        height: 52px !important;
+        min-width: 52px !important;
+        min-height: 52px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
+        background: rgba(246,244,236,.55) !important;
+        border: 1.5px solid rgba(30,79,59,.35) !important;
+        color: var(--forest) !important;
+        box-shadow: 0 10px 26px rgba(18,41,31,.18) !important;
+        backdrop-filter: blur(14px) saturate(150%) !important;
+        -webkit-backdrop-filter: blur(14px) saturate(150%) !important;
+        position: relative !important;
+        z-index: 1002 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    header .menu-toggle svg {
+        display: block !important;
+        width: 26px !important;
+        height: 26px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Mobile dropdown menu: floating glass card, not attached to a bar */
+    header .mobile-menu,
+    header.logo-hidden .mobile-menu,
+    header.logo-hidden.nav-open .mobile-menu,
+    header.nav-open .mobile-menu {
+        position: absolute !important;
+        top: calc(100% + 10px) !important;
+        right: 0 !important;
+        left: auto !important;
+        width: min(300px, calc(100vw - 28px)) !important;
+        display: none !important;
+        flex-direction: column !important;
+        gap: 4px !important;
+        padding: 12px !important;
+        background: rgba(246,244,236,.92) !important;
+        border: 1px solid rgba(255,255,255,.5) !important;
+        border-radius: 18px !important;
+        box-shadow: 0 20px 50px rgba(18,41,31,.22) !important;
+        backdrop-filter: blur(20px) saturate(150%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+        border-top: 1px solid rgba(255,255,255,.5) !important;
+    }
+    header .mobile-menu.open,
+    header.logo-hidden .mobile-menu.open,
+    header.logo-hidden.nav-open .mobile-menu.open,
+    header.nav-open .mobile-menu.open {
+        display: flex !important;
+    }
+    header .mobile-menu a {
+        padding: 12px 14px !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        color: var(--forest) !important;
+        background: transparent !important;
+    }
+    header .mobile-menu a:hover,
+    header .mobile-menu a:focus-visible,
+    header .mobile-menu a.active {
+        background: rgba(230,243,217,.9) !important;
+        color: var(--accent-fg) !important;
+    }
+
+    /* Kill the old retract-to-corner behavior visuals */
+    header.logo-hidden .logo { display: flex !important; width: 150px !important; max-width: 150px !important; opacity: 1 !important; }
+    header.logo-hidden .header-inner { width: auto !important; height: auto !important; justify-content: space-between !important; background: transparent !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    header, header .menu-toggle { transition: none !important; }
+}
+</style>
+
 </body>
 </html>
