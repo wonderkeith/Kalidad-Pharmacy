@@ -1979,26 +1979,12 @@ footer .footer-bottom .container {
     background-repeat: no-repeat;
 }
 
-/* Uploaded image for hero slide 1 */
-.hero-reference-bg.hero-reference-image-1 {
-    background-image: url("Better care for everyday PC hero.webp"), linear-gradient(90deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.88) 32%, rgba(255,255,255,.12) 62%, rgba(255,255,255,0) 100%);
-    background-position: center center;
-}
-
-/* Uploaded image for hero slide 2 — pharmacist reviewing prescription */
-.hero-reference-bg.hero-reference-image-2 {
-    background-image: url("Better care for everyday PC hero.webp");
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-/* Uploaded image for hero slide 3 — pharmacist advising customer */
-.hero-reference-bg.hero-reference-image-3 {
-    background-image: url("Better care for everyday PC hero.webp");
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
+.hero-reference-bg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
 }
 
 
@@ -2952,32 +2938,7 @@ footer .footer-bottom .container{justify-content:center;text-align:center;}
 
 
 
-/* ==========================================================
-   MOBILE HERO IMAGES — uploaded phone-specific photography
-   Desktop/PC hero images above remain completely unchanged.
-   ========================================================== */
-@media (max-width: 700px) {
-    .hero-reference-bg.hero-reference-image-1 {
-        background-image: url("Better care for everyday mobile.webp");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-    }
 
-    .hero-reference-bg.hero-reference-image-2 {
-        background-image: url("Better care for everyday mobile.webp");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-    }
-
-    .hero-reference-bg.hero-reference-image-3 {
-        background-image: url("Better care for everyday mobile.webp");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-    }
-}
 
 
 
@@ -3556,19 +3517,10 @@ header.logo-hidden {
     height: 100% !important;
     min-height: 100% !important;
     z-index: 0 !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    background-position: center center !important;
-}
-
-.hero-reference-bg.hero-reference-image-1 {
-    background-image: url("image-07-caa3270325.webp") !important;
-}
-.hero-reference-bg.hero-reference-image-2 {
-    background-image: url("image-08-99b804a9ad.webp") !important;
-}
-.hero-reference-bg.hero-reference-image-3 {
-    background-image: url("image-09-b2d22f9d65.webp") !important;
+    display: block !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    background: none !important;
 }
 
 .hero-reference::before {
@@ -3664,17 +3616,7 @@ header.logo-hidden {
     .hero-reference-bg.hero-reference-image-1,
     .hero-reference-bg.hero-reference-image-2,
     .hero-reference-bg.hero-reference-image-3 {
-        background-size: cover !important;
-        background-position: center center !important;
-    }
-    .hero-reference-bg.hero-reference-image-1 {
-        background-image: url("mobile-hero-1.webp") !important;
-    }
-    .hero-reference-bg.hero-reference-image-2 {
-        background-image: url("mobile-hero-2.webp") !important;
-    }
-    .hero-reference-bg.hero-reference-image-3 {
-        background-image: url("mobile-hero-3.webp") !important;
+        object-position: center center !important;
     }
     .hero-reference::before {
         background: linear-gradient(
@@ -3755,7 +3697,10 @@ header.logo-hidden {
     <main>
         <!-- ========== HERO ========== -->
         <section class="hero hero-reference" aria-label="Kalidad Pharmacy introduction">
-            <div class="hero-reference-bg" aria-hidden="true"></div>
+            <picture class="hero-reference-bg" aria-hidden="true">
+                <source media="(max-width: 700px)" srcset="Better care for everyday mobile.webp">
+                <img src="Better care for everyday PC hero.webp" alt="" width="1600" height="900">
+            </picture>
 
             <button class="hero-reference-nav hero-reference-prev" id="heroReferencePrev" aria-label="Previous hero message">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
