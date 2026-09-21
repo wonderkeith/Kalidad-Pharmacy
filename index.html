@@ -3517,10 +3517,19 @@ header.logo-hidden {
     height: 100% !important;
     min-height: 100% !important;
     z-index: 0 !important;
-    display: block !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-    background: none !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+}
+
+.hero-reference-bg.hero-reference-image-1 {
+    background-image: url("image-07-caa3270325.webp") !important;
+}
+.hero-reference-bg.hero-reference-image-2 {
+    background-image: url("image-08-99b804a9ad.webp") !important;
+}
+.hero-reference-bg.hero-reference-image-3 {
+    background-image: url("image-09-b2d22f9d65.webp") !important;
 }
 
 .hero-reference::before {
@@ -3616,7 +3625,17 @@ header.logo-hidden {
     .hero-reference-bg.hero-reference-image-1,
     .hero-reference-bg.hero-reference-image-2,
     .hero-reference-bg.hero-reference-image-3 {
-        object-position: center center !important;
+        background-size: cover !important;
+        background-position: center center !important;
+    }
+    .hero-reference-bg.hero-reference-image-1 {
+        background-image: url("mobile-hero-1.webp") !important;
+    }
+    .hero-reference-bg.hero-reference-image-2 {
+        background-image: url("mobile-hero-2.webp") !important;
+    }
+    .hero-reference-bg.hero-reference-image-3 {
+        background-image: url("mobile-hero-3.webp") !important;
     }
     .hero-reference::before {
         background: linear-gradient(
