@@ -3149,6 +3149,38 @@ header.is-compact nav.main-nav a.nav-link{
   .mobile-menu a:hover,.mobile-menu a:focus-visible,.mobile-menu a.active{color:var(--accent-fg,#33581F)!important;background:rgba(230,243,217,.72)!important;border-color:rgba(51,88,31,.10)!important;outline:none!important}
 }
 </style>
+<style id="about-mobile-nav-full-width">
+/* Keep the open mobile navigation panel flush with the viewport edges. */
+@media (max-width:900px){
+  header.is-compact.nav-open,
+  header.nav-open:not(.is-compact){
+    left:0 !important;
+    right:auto !important;
+    width:100vw !important;
+    max-width:100vw !important;
+    transform:none !important;
+    top:0 !important;
+    border-radius:0 !important;
+    box-sizing:border-box !important;
+  }
+
+  header.is-compact.nav-open .header-inner,
+  header.nav-open:not(.is-compact) .header-inner,
+  header.is-compact.nav-open .mobile-menu,
+  header.nav-open:not(.is-compact) .mobile-menu{
+    width:100% !important;
+    max-width:100% !important;
+    box-sizing:border-box !important;
+  }
+
+  header.is-compact.nav-open .mobile-menu,
+  header.nav-open:not(.is-compact) .mobile-menu{
+    padding-left:20px !important;
+    padding-right:20px !important;
+    border-radius:0 !important;
+  }
+}
+</style>
 <script src="about-team-slider.js?v=2" defer></script>
 <script src="about-team-slider.js?v=2" defer></script>
 <script src="about-mobile-hero.js?v=1" defer></script>
