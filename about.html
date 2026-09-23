@@ -2236,6 +2236,55 @@ html[data-theme="dark"] .about-hero-visual::before {
   }
 }
 </style>
+<style id="about-hero-slider-final-fix">
+/* FINAL ABOUT HERO SLIDER
+   Uses background-image layers so existing mobile hero rules cannot hide the slides.
+   Text is outside these layers and never changes.
+*/
+.about-hero .about-hero-visual{
+  position:relative !important;
+  overflow:hidden !important;
+  isolation:isolate !important;
+}
+.about-hero .about-hero-slide{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:100% !important;
+  min-height:100% !important;
+  display:block !important;
+  background-size:cover !important;
+  background-position:center center !important;
+  background-repeat:no-repeat !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  transform:scale(1.035) !important;
+  transition:opacity 1s ease-in-out,transform 5s ease-in-out !important;
+  z-index:0 !important;
+  pointer-events:none !important;
+}
+.about-hero .about-hero-slide.is-active{
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:scale(1) !important;
+  z-index:1 !important;
+}
+.about-hero .about-hero-visual::after{
+  z-index:3 !important;
+}
+@media(max-width:900px){
+  .about-hero .about-hero-slide{
+    background-position:center center !important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .about-hero .about-hero-slide{
+    transition:none !important;
+    transform:none !important;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -2277,11 +2326,11 @@ html[data-theme="dark"] .about-hero-visual::before {
         </div>
       </div>
       <div class="about-hero-visual reveal" aria-label="Kalidad Pharmacy highlights">
-        <img class="about-hero-slide is-active" src="about-hero-desktop-adjusted.webp" alt="Kalidad Pharmacy pharmacist assisting a customer">
-        <img class="about-hero-slide" src="about-hero-desktop-new.jpg" alt="Kalidad Pharmacy healthcare setting">
-        <img class="about-hero-slide" src="kalidad_pharmacy_scene.webp" alt="Kalidad Pharmacy interior">
-        <img class="about-hero-slide" src="kalidad_pharmacy_clean_photo.webp" alt="Kalidad Pharmacy interior and services">
-        <img class="about-hero-slide" src="kalidad_pharmacy_team_hero.webp" alt="Kalidad Pharmacy team">
+        <div class="about-hero-slide is-active" style="background-image:url('about-hero-desktop-adjusted.webp')" role="img" aria-label="Kalidad Pharmacy pharmacist assisting a customer"></div>
+        <div class="about-hero-slide" style="background-image:url('about-hero-desktop-new.jpg')" role="img" aria-label="Kalidad Pharmacy healthcare setting"></div>
+        <div class="about-hero-slide" style="background-image:url('kalidad_pharmacy_scene.webp')" role="img" aria-label="Kalidad Pharmacy interior"></div>
+        <div class="about-hero-slide" style="background-image:url('kalidad_pharmacy_clean_photo.webp')" role="img" aria-label="Kalidad Pharmacy interior and services"></div>
+        <div class="about-hero-slide" style="background-image:url('kalidad_pharmacy_team_hero.webp')" role="img" aria-label="Kalidad Pharmacy team"></div>
       </div>
     </div>
   </section>
@@ -3093,6 +3142,37 @@ header.is-compact nav.main-nav a.nav-link{
     document.addEventListener('DOMContentLoaded',initAboutHeroSlider);
   }else{
     initAboutHeroSlider();
+  }
+})();
+</script>
+<script id="about-hero-slider-final-fix-js">
+(function(){
+  function startAboutHeroSlider(){
+    var visual=document.querySelector('.about-hero .about-hero-visual');
+    if(!visual || visual.dataset.sliderStarted==='true') return;
+
+    var slides=Array.prototype.slice.call(visual.querySelectorAll('.about-hero-slide'));
+    if(slides.length!==5) return;
+
+    visual.dataset.sliderStarted='true';
+    var current=0;
+
+    // Keep the first image visible immediately, then change ONLY the image every 5 seconds.
+    slides.forEach(function(slide,index){
+      slide.classList.toggle('is-active',index===0);
+    });
+
+    window.setInterval(function(){
+      slides[current].classList.remove('is-active');
+      current=(current+1)%slides.length;
+      slides[current].classList.add('is-active');
+    },5000);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',startAboutHeroSlider);
+  }else{
+    startAboutHeroSlider();
   }
 })();
 </script>
