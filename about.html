@@ -3341,5 +3341,49 @@ header.is-compact nav.main-nav a.nav-link{
   document.documentElement.setAttribute('data-about-hero-slider',v);
 })();
 </script>
+<style id="about-mobile-hero-gradient-final">
+/* Full-size image layer owns the gradient; copy stays transparent and aligned. */
+.about-hero .about-hero-visual::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  z-index:3 !important;
+  pointer-events:none !important;
+  background:linear-gradient(90deg,
+    rgba(18,41,31,.84) 0%,
+    rgba(18,41,31,.60) 38%,
+    rgba(18,41,31,.24) 68%,
+    rgba(18,41,31,.06) 100%) !important;
+}
+.about-hero .about-hero-copy{
+  background:transparent !important;
+}
+@media(max-width:900px){
+  .about-hero .about-hero-copy{
+    left:0 !important;
+    top:50% !important;
+    transform:translateY(-50%) !important;
+    width:100% !important;
+    max-width:none !important;
+    padding:0 24px !important;
+    z-index:5 !important;
+  }
+  .about-hero .about-hero-visual::after{
+    background:linear-gradient(90deg,
+      rgba(18,41,31,.84) 0%,
+      rgba(18,41,31,.56) 48%,
+      rgba(18,41,31,.16) 100%) !important;
+  }
+}
+@media(max-width:560px){
+  .about-hero .about-hero-copy{
+    left:0 !important;
+    top:50% !important;
+    padding-left:22px !important;
+    padding-right:22px !important;
+  }
+}
+</style>
 </body>
 </html>
