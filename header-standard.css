@@ -19,7 +19,8 @@ html { scroll-behavior: smooth; }
 .page-banner h1 .accent,
 .catalog-page-hero h1 .accent,
 .service-detail-hero h1 .accent,
-.about-hero h1 .accent {
+.about-hero h1 .accent,
+main > section:first-child h1 .accent {
   position: relative !important;
   display: inline-block !important;
 }
@@ -28,7 +29,8 @@ html { scroll-behavior: smooth; }
 .page-banner h1 .accent::after,
 .catalog-page-hero h1 .accent::after,
 .service-detail-hero h1 .accent::after,
-.about-hero h1 .accent::after {
+.about-hero h1 .accent::after,
+main > section:first-child h1 .accent::after {
   content: "" !important;
   position: absolute !important;
   left: 0 !important;
@@ -48,7 +50,8 @@ html { scroll-behavior: smooth; }
   .page-banner h1 .accent::after,
   .catalog-page-hero h1 .accent::after,
   .service-detail-hero h1 .accent::after,
-  .about-hero h1 .accent::after {
+  .about-hero h1 .accent::after,
+  main > section:first-child h1 .accent::after {
     animation: none !important;
     transform: scaleX(1) !important;
   }
