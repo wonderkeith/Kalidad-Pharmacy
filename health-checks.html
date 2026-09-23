@@ -914,6 +914,27 @@ header.logo-hidden {
  .detail-section{padding:72px 0;}
  .detail-grid{grid-template-columns:1fr;gap:45px;}
 }
+
+/* ---------- health check explainers ---------- */
+.health-explainers{background:#fff;padding:100px 0;}
+.health-explainers .section-intro{max-width:700px;margin:0 auto 48px;text-align:center;}
+.health-explainers .section-intro .kicker{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--forest-mid);}
+.health-explainers .section-intro h2{margin-top:10px;font-size:clamp(2rem,4vw,3rem);}
+.health-explainers .section-intro p{margin-top:14px;color:var(--muted);font-size:1rem;}
+.health-check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.health-check-card{background:var(--cream);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:var(--shadow-soft);transition:transform .25s ease,box-shadow .25s ease;}
+.health-check-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-card);}
+.health-check-image{height:220px;overflow:hidden;background:var(--forest-deep);}
+.health-check-image img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.health-check-card:hover .health-check-image img{transform:scale(1.04);}
+.health-check-body{padding:28px;}
+.health-check-body .number{display:inline-flex;width:34px;height:34px;border-radius:50%;align-items:center;justify-content:center;background:var(--lime);color:var(--forest-deep);font-weight:900;font-size:.8rem;}
+.health-check-body h3{margin-top:16px;font-size:1.35rem;}
+.health-check-body p{margin-top:12px;color:var(--muted);font-size:.92rem;line-height:1.75;}
+.health-check-note{margin-top:18px;padding:14px 16px;border-left:4px solid var(--lime-deep);background:#fff;border-radius:10px;color:var(--ink);font-size:.82rem;line-height:1.6;}
+.health-check-note strong{color:var(--forest);}
+@media(max-width:900px){.health-check-grid{grid-template-columns:1fr;max-width:620px;margin:0 auto;}.health-check-image{height:250px;}}
+
 </style>
 <link rel="icon" type="image/png" href="kalidad-icon.png">
 
@@ -1070,6 +1091,54 @@ header.logo-hidden {
   </div>
  </div>
 </section>
+
+<section class="health-explainers">
+ <div class="container">
+  <div class="section-intro reveal">
+   <span class="kicker">Know your numbers</span>
+   <h2>Three simple checks that help you understand your health</h2>
+   <p>Small measurements can give you useful information about your wellbeing. Visit Kalidad Pharmacy for a simple, friendly screening and have your results explained to you.</p>
+  </div>
+  <div class="health-check-grid">
+   <article class="health-check-card reveal">
+    <div class="health-check-image">
+     <img src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=1200&q=85" alt="Healthcare professional checking a patient's blood pressure" loading="lazy">
+    </div>
+    <div class="health-check-body">
+     <span class="number">01</span>
+     <h3>Know your Blood Pressure for free</h3>
+     <p>Blood pressure is the force of blood moving through your blood vessels. A quick check can show whether your reading is within a healthy range at the time of measurement. Because high blood pressure may have no obvious symptoms, checking it regularly can help you notice changes early and discuss them with a healthcare professional when needed.</p>
+     <div class="health-check-note"><strong>What to expect:</strong> Sit quietly for a few minutes, have the cuff placed correctly on your arm, and receive an easy-to-understand explanation of your reading.</div>
+    </div>
+   </article>
+
+   <article class="health-check-card reveal">
+    <div class="health-check-image">
+     <img src="https://images.unsplash.com/photo-1588776814546-daab30f310ce?auto=format&fit=crop&w=1200&q=85" alt="Person standing on a digital weighing scale" loading="lazy">
+    </div>
+    <div class="health-check-body">
+     <span class="number">02</span>
+     <h3>Know your Weight for free</h3>
+     <p>Your weight is one useful part of understanding your overall health. Tracking it over time can help you notice meaningful changes and can support conversations about nutrition, physical activity and healthy weight management. A single number does not tell the whole story, so our team can help put the measurement into context.</p>
+     <div class="health-check-note"><strong>What to expect:</strong> Step onto the scale with minimal extra weight where practical, receive your measurement, and ask our team what it means for your personal health goals.</div>
+    </div>
+   </article>
+
+   <article class="health-check-card reveal">
+    <div class="health-check-image">
+     <img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=85" alt="Person checking blood glucose with a glucometer" loading="lazy">
+    </div>
+    <div class="health-check-body">
+     <span class="number">03</span>
+     <h3>Know your Blood Glucose for free</h3>
+     <p>Blood glucose is the amount of sugar in your blood at the time of testing. A glucose check can be useful for understanding your current reading and may help identify results that need further assessment. The meaning of a result depends on factors such as whether you have eaten recently, your medicines and your health history.</p>
+     <div class="health-check-note"><strong>What to expect:</strong> A small finger-prick sample is tested with a glucose meter, followed by a clear explanation and guidance on when further medical assessment may be appropriate.</div>
+    </div>
+   </article>
+  </div>
+ </div>
+</section>
+
 <section class="order-band reveal">
  <h2>Ready to get started?</h2>
  <p>Speak with the Kalidad team and arrange a free health check that you need.</p>
