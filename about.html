@@ -3136,6 +3136,28 @@ header.is-compact nav.main-nav a.nav-link{
 })();
 </script>
 
+
+<style id="about-hero-white-overlay-killer">
+/* FINAL CLEAN HERO: remove every legacy white overlay/background layer. */
+.about-hero,
+.about-hero::before,
+.about-hero::after{
+  background:none!important;
+}
+.about-hero .about-hero-visual,
+.about-hero .about-hero-visual::before{
+  background:transparent!important;
+}
+.about-hero .about-hero-copy{
+  background:transparent!important;
+}
+@media(max-width:900px){
+  .about-hero-copy,
+  .about-hero .about-hero-copy{
+    background:transparent!important;
+  }
+}
+</style>
 <style id="about-hero-slider-live-final">
 /* FINAL LIVE HERO SLIDER OVERRIDE — image fills the hero; copy remains static */
 .about-hero{position:relative!important;overflow:hidden!important;}
@@ -3205,7 +3227,7 @@ header.is-compact nav.main-nav a.nav-link{
 </style>
 <script id="about-hero-slider-cache-buster">
 (function(){
-  var v='about-hero-slider-20260923-green-gradient';
+  var v='about-hero-slider-20260923-clean-green-v2';
   document.documentElement.setAttribute('data-about-hero-slider',v);
 })();
 </script>
