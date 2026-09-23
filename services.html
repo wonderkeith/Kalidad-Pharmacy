@@ -1268,7 +1268,8 @@ header.logo-hidden {
   }
 }
 </style>
-<base target="_blank">
+<link rel="stylesheet" href="header-standard.css?v=1">
+<script src="header-standard.js?v=1" defer></script>
 </head>
 <body>
 
@@ -1293,7 +1294,7 @@ header.logo-hidden {
             <a href="news.html" class="nav-link" target="_self">News</a>
             <a href="about.html" class="nav-link" target="_self">About Us</a>
             <span class="open-badge"><span class="pulse-dot"></span>Open 24/7</span>
-            <a href="#" data-kalidad-order-open class="btn btn-primary nav-cta" aria-label="Place your order">
+            <a href="#prescription-filling" class="btn btn-primary nav-cta" aria-label="Place your order">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                 <span>Place your order</span>
             </a>
@@ -1309,7 +1310,7 @@ header.logo-hidden {
         <a href="careers.html" target="_self">Careers</a>
         <a href="news.html" target="_self">News</a>
         <a href="about.html" target="_self">About Us</a>
-        <a href="#" data-kalidad-order-open>
+        <a href="#prescription-filling">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;margin-right:6px;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Place your order
         </a>
     </div>
@@ -1338,7 +1339,7 @@ header.logo-hidden {
     </div>
 
     <div class="service-panels">
-      <article class="service-panel panel-1 reveal-service">
+      <article class="service-panel panel-1 reveal-service" id="prescription-filling" style="scroll-margin-top:120px;">
         <div class="service-image"><img src="Prescription-filling.webp" alt="Medicines prepared for prescription dispensing" loading="lazy"></div>
         <div class="service-content">
           <h3>Prescription Filling</h3>

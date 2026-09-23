@@ -1,0 +1,144 @@
+/* Shared public-site header: index desktop, Careers mobile behavior. */
+:root {
+  --header-forest: #1e4f3b;
+  --header-forest-deep: #12291f;
+  --header-cream: #f6f4ec;
+  --header-lime-soft: #e6f3d9;
+  --header-line: rgba(255, 255, 255, .55);
+}
+
+html { scroll-behavior: smooth; }
+
+body > header,
+header:not(.top) {
+  position: fixed !important;
+  top: 14px !important;
+  left: 50% !important;
+  z-index: 1000 !important;
+  width: min(1180px, calc(100% - 28px)) !important;
+  transform: translateX(-50%) !important;
+  border: 1px solid rgba(255, 255, 255, .3) !important;
+  border-radius: 22px !important;
+  background: rgba(246, 244, 236, .2) !important;
+  backdrop-filter: blur(18px) saturate(145%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(145%) !important;
+  box-shadow: 0 12px 40px rgba(18, 41, 31, .1), inset 0 1px 0 rgba(255, 255, 255, .35) !important;
+  transition: background .35s ease, box-shadow .35s ease, border-color .35s ease,
+    top .35s ease, width .35s ease, left .35s ease, right .35s ease !important;
+}
+
+body > header.is-scrolled,
+header:not(.top).is-scrolled {
+  background: rgba(246, 244, 236, .82) !important;
+  border-color: var(--header-line) !important;
+  box-shadow: 0 14px 38px rgba(18, 41, 31, .18), inset 0 1px 0 rgba(255, 255, 255, .55) !important;
+}
+
+body > header .header-inner,
+header:not(.top) .header-inner {
+  min-height: 84px;
+}
+
+body > header nav a,
+header:not(.top) nav a {
+  text-decoration: none !important;
+  transition: transform .25s ease, background .25s ease, color .25s ease, box-shadow .25s ease !important;
+}
+
+body > header nav a:hover,
+body > header nav a:focus-visible,
+header:not(.top) nav a:hover,
+header:not(.top) nav a:focus-visible {
+  transform: translateY(-3px) !important;
+  background: var(--header-lime-soft) !important;
+  color: var(--header-forest) !important;
+  box-shadow: 0 8px 20px rgba(18, 41, 31, .1) !important;
+}
+
+body > header .menu-toggle,
+header:not(.top) .menu-toggle,
+.careers-page header .menu {
+  touch-action: manipulation;
+}
+
+body > header .mobile-menu,
+header:not(.top) .mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: max-height .3s ease, opacity .2s ease;
+}
+
+body > header .mobile-menu.open,
+header:not(.top) .mobile-menu.open {
+  max-height: 520px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body > header.logo-hidden .logo,
+header:not(.top).logo-hidden .logo {
+  max-width: 0 !important;
+  width: 0 !important;
+  margin-right: -8px !important;
+  opacity: 0 !important;
+  transform: translateY(-8px) scale(.72) !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 900px) {
+  body > header,
+  header:not(.top) {
+    top: 9px !important;
+    width: calc(100% - 18px) !important;
+    border-radius: 18px !important;
+  }
+
+  body > header .main-nav,
+  header:not(.top) .main-nav,
+  body > header nav:not(.mobile-menu),
+  header:not(.top) nav:not(.mobile-menu) {
+    display: none !important;
+  }
+
+  body > header .menu-toggle,
+  header:not(.top) .menu-toggle {
+    display: flex !important;
+  }
+
+  body > header .mobile-menu,
+  header:not(.top) .mobile-menu {
+    display: flex !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body > header,
+  body > header *,
+  header:not(.top),
+  header:not(.top) * {
+    transition: none !important;
+  }
+}
+
+/* Careers owns the mobile reference markup (#mobileNav + .menu). */
+@media (max-width: 900px) {
+  .careers-page header #mobileNav {
+    overflow: hidden !important;
+    transition: max-height .3s ease, opacity .2s ease;
+  }
+
+  .careers-page header:not(.nav-open) #mobileNav {
+    max-height: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .careers-page header.nav-open #mobileNav,
+  .careers-page header #mobileNav.open {
+    max-height: 520px !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}
