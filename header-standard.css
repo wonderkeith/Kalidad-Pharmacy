@@ -9,6 +9,51 @@
 
 html { scroll-behavior: smooth; }
 
+@keyframes publicHeroAccentLine {
+  from { transform: scaleX(.18); transform-origin: left; }
+  to { transform: scaleX(1); transform-origin: left; }
+}
+
+/* Match Index's animated underline on every hero heading accent. */
+.hero h1 .accent,
+.page-banner h1 .accent,
+.catalog-page-hero h1 .accent,
+.service-detail-hero h1 .accent,
+.about-hero h1 .accent {
+  position: relative !important;
+  display: inline-block !important;
+}
+
+.hero h1 .accent::after,
+.page-banner h1 .accent::after,
+.catalog-page-hero h1 .accent::after,
+.service-detail-hero h1 .accent::after,
+.about-hero h1 .accent::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: -5px !important;
+  height: 4px !important;
+  border-radius: 99px !important;
+  background: var(--header-lime, #c7ef3e) !important;
+  transform: scaleX(.18) !important;
+  transform-origin: left !important;
+  animation: publicHeroAccentLine 1.1s .65s cubic-bezier(.16, 1, .3, 1) forwards !important;
+  pointer-events: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero h1 .accent::after,
+  .page-banner h1 .accent::after,
+  .catalog-page-hero h1 .accent::after,
+  .service-detail-hero h1 .accent::after,
+  .about-hero h1 .accent::after {
+    animation: none !important;
+    transform: scaleX(1) !important;
+  }
+}
+
 body > header,
 header:not(.top) {
   position: fixed !important;
@@ -305,5 +350,24 @@ header:not(.top).logo-hidden .logo {
     max-height: 520px !important;
     opacity: 1 !important;
     pointer-events: auto !important;
+  }
+
+  /* Match About's rounded open-menu geometry on every public page. */
+  body > header.is-compact.nav-open,
+  body > header.nav-open:not(.is-compact),
+  header:not(.top).is-compact.nav-open,
+  header:not(.top).nav-open:not(.is-compact) {
+    border-radius: 18px !important;
+  }
+
+  body > header.is-compact.nav-open .mobile-menu,
+  body > header.nav-open:not(.is-compact) .mobile-menu,
+  header:not(.top).is-compact.nav-open .mobile-menu,
+  header:not(.top).nav-open:not(.is-compact) .mobile-menu,
+  body > header.is-compact.nav-open #mobileNav,
+  body > header.nav-open:not(.is-compact) #mobileNav,
+  header:not(.top).is-compact.nav-open #mobileNav,
+  header:not(.top).nav-open:not(.is-compact) #mobileNav {
+    border-radius: 0 0 18px 18px !important;
   }
 }

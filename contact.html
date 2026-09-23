@@ -293,6 +293,33 @@ html,body,body *,button,input,textarea,select{font-family:'Lora',serif!important
   .page-banner h1 .accent{color:#8fbd1d !important;}
 }
 </style>
+<style id="contact-mobile-menu-surface-and-links">
+@media (max-width:900px){
+  header.nav-open .mobile-menu{
+    background:rgba(246,244,236,.96) !important;
+    border-top:1px solid rgba(223,229,223,.75) !important;
+    box-shadow:0 14px 38px rgba(18,41,31,.18) !important;
+    -webkit-backdrop-filter:blur(14px) saturate(140%) !important;
+    backdrop-filter:blur(14px) saturate(140%) !important;
+  }
+  header.nav-open .mobile-menu a,
+  header.nav-open .mobile-menu a:hover,
+  header.nav-open .mobile-menu a:focus-visible,
+  header.nav-open .mobile-menu a.active{
+    text-decoration:none !important;
+    border-bottom:0 !important;
+    box-shadow:none !important;
+  }
+  header.nav-open .mobile-menu a::before,
+  header.nav-open .mobile-menu a::after{
+    content:none !important;
+    display:none !important;
+  }
+}
+.page-banner .hero-line{
+  display:none !important;
+}
+</style>
 <link rel="stylesheet" href="header-standard.css?v=1">
 <script src="header-standard.js?v=1" defer></script>
 </head>
