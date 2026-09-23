@@ -305,13 +305,21 @@
       renderServices(false);
     }
 
-    B.onclick = function () {
+    function openChat() {
       P.classList.add('open');
       if (!M.children.length) {
         say(WELCOME, 'bot');
         renderServices(false);
       }
-    };
+    }
+
+    B.onclick = openChat;
+    document.querySelectorAll('[data-kalidad-chat-open]').forEach(function (trigger) {
+      trigger.addEventListener('click', function (event) {
+        event.preventDefault();
+        openChat();
+      });
+    });
     C.onclick = function () { P.classList.remove('open'); };
     F.onsubmit = function (event) {
       event.preventDefault();
