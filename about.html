@@ -2285,6 +2285,47 @@ html[data-theme="dark"] .about-hero-visual::before {
   }
 }
 </style>
+
+<style id="about-intro-right-image-final">
+/* About intro: restore the intended editorial two-column layout with image on the right. */
+.about-intro .reference-about-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:52px!important;
+  align-items:center!important;
+}
+.about-intro .about-photo{
+  display:block!important;
+  width:100%!important;
+  min-height:420px!important;
+  height:420px!important;
+  border-radius:24px!important;
+  overflow:hidden!important;
+  background:var(--forest-mid,#376C59)!important;
+  box-shadow:var(--shadow-card,0 18px 45px rgba(18,41,31,.14))!important;
+  position:relative!important;
+}
+.about-intro .about-photo img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+@media(max-width:880px){
+  .about-intro .reference-about-grid{
+    grid-template-columns:1fr!important;
+    gap:32px!important;
+  }
+  .about-intro .about-photo{
+    order:2!important;
+    min-height:320px!important;
+    height:320px!important;
+  }
+  .about-intro .about-copy{order:1!important;}
+}
+</style>
 </head>
 <body>
 
@@ -2337,12 +2378,15 @@ html[data-theme="dark"] .about-hero-visual::before {
 
   <section class="section about-intro" id="about-pharmacy">
     <div class="container about-grid reference-about-grid">
-      
       <div class="about-copy reveal">
         <span class="kicker">Who We Are</span>
         <h2>Your Trusted<br>Neighbourhood Pharmacy</h2>
         <p>Kalidad Pharmacy is a fully licensed pharmacy located in Fort Portal, Uganda. For over five years, we have been dedicated to improving lives by making quality healthcare accessible, affordable, and convenient for everyone.</p>
         <p>We combine professional expertise with a personal touch to ensure every customer feels valued, understood, and cared for.</p>
+      </div>
+
+      <div class="about-photo reveal" aria-label="Inside Kalidad Pharmacy">
+        <img src="kalidad_pharmacy_scene.webp" alt="Inside Kalidad Pharmacy, showing the pharmacy environment and healthcare setting" loading="lazy">
       </div>
     </div>
 
