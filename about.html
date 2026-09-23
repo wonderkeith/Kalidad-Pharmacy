@@ -2186,6 +2186,56 @@ html[data-theme="dark"] .about-hero-visual::before {
 }
 
 </style>
+<style id="about-hero-five-image-slider">
+/* ABOUT HERO — 5-image visual slider, static text */
+.about-hero-visual{
+  position:relative !important;
+  overflow:hidden !important;
+}
+.about-hero-visual .about-hero-slide{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:100% !important;
+  min-height:100% !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  transform:scale(1.015) !important;
+  transition:opacity 1.1s ease,transform 5s ease !important;
+  display:block !important;
+}
+.about-hero-visual .about-hero-slide.is-active{
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:scale(1) !important;
+  z-index:1 !important;
+}
+.about-hero-visual::after{
+  z-index:5 !important;
+}
+.about-hero-visual::before{
+  z-index:4 !important;
+}
+@media(max-width:900px){
+  .about-hero-visual .about-hero-slide{
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center center !important;
+  }
+  .about-hero-visual .about-hero-mobile-img{display:none !important;}
+}
+@media(prefers-reduced-motion:reduce){
+  .about-hero-visual .about-hero-slide{
+    transition:none !important;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -2226,9 +2276,12 @@ html[data-theme="dark"] .about-hero-visual::before {
           <a class="btn btn-outline" href="#meet-team">Meet Our Team <span aria-hidden="true">→</span></a>
         </div>
       </div>
-      <div class="about-hero-visual reveal">
-        <img src="about-hero-desktop-adjusted.webp" alt="Pharmacist in a modern Kalidad Pharmacy">
-        <img class="about-hero-mobile-img" src="pharmacist-mobile-hero.webp" alt="Pharmacist in a modern Kalidad Pharmacy">
+      <div class="about-hero-visual reveal" aria-label="Kalidad Pharmacy highlights">
+        <img class="about-hero-slide is-active" src="about-hero-desktop-adjusted.webp" alt="Kalidad Pharmacy pharmacist assisting a customer">
+        <img class="about-hero-slide" src="about-hero-desktop-new.jpg" alt="Kalidad Pharmacy healthcare setting">
+        <img class="about-hero-slide" src="kalidad_pharmacy_scene.webp" alt="Kalidad Pharmacy interior">
+        <img class="about-hero-slide" src="kalidad_pharmacy_clean_photo.webp" alt="Kalidad Pharmacy interior and services">
+        <img class="about-hero-slide" src="kalidad_pharmacy_team_hero.webp" alt="Kalidad Pharmacy team">
       </div>
     </div>
   </section>
@@ -3013,5 +3066,35 @@ header.is-compact nav.main-nav a.nav-link{
 })();
 </script>
 
+<script id="about-hero-five-image-slider-js">
+(function(){
+  function initAboutHeroSlider(){
+    var slider=document.querySelector('.about-hero-visual');
+    if(!slider || slider.dataset.fiveImageSliderReady==='true') return;
+    var slides=Array.prototype.slice.call(slider.querySelectorAll('.about-hero-slide'));
+    if(slides.length<2) return;
+    slider.dataset.fiveImageSliderReady='true';
+
+    var current=0;
+    var interval=5000;
+
+    function showSlide(index){
+      slides[current].classList.remove('is-active');
+      current=(index+slides.length)%slides.length;
+      slides[current].classList.add('is-active');
+    }
+
+    window.setInterval(function(){
+      showSlide(current+1);
+    }, interval);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initAboutHeroSlider);
+  }else{
+    initAboutHeroSlider();
+  }
+})();
+</script>
 </body>
 </html>
