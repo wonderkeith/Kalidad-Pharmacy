@@ -2328,6 +2328,72 @@ html[data-theme="dark"] .about-hero-visual::before {
 </style>
 <link rel="stylesheet" href="header-standard.css?v=2">
 <script src="header-standard.js?v=1" defer></script>
+
+<style id="meet-team-two-slide-empty-slider">
+/* Meet Our Team: one explainer + two intentionally empty image slides. */
+.team-image-slider{
+  position:relative!important;
+  overflow:hidden!important;
+  background:#f6f4ec!important;
+}
+.team-image-slider .team-slide{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  background:#f6f4ec!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  transition:opacity .6s ease!important;
+}
+.team-image-slider .team-slide.is-active{
+  opacity:1!important;
+  visibility:visible!important;
+}
+.team-slider-btn{
+  position:absolute!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  z-index:4!important;
+  width:42px!important;
+  height:42px!important;
+  border:1px solid rgba(30,79,59,.18)!important;
+  border-radius:50%!important;
+  background:rgba(255,255,255,.88)!important;
+  color:#1E4F3B!important;
+  font-size:25px!important;
+  line-height:1!important;
+  cursor:pointer!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-shadow:0 8px 20px rgba(18,41,31,.12)!important;
+}
+.team-slider-prev{left:18px!important;}
+.team-slider-next{right:18px!important;}
+.team-slider-dots{
+  position:absolute!important;
+  left:50%!important;
+  bottom:18px!important;
+  transform:translateX(-50%)!important;
+  z-index:4!important;
+  display:flex!important;
+  gap:7px!important;
+}
+.team-slider-dots button{
+  width:9px!important;
+  height:9px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:50%!important;
+  background:rgba(30,79,59,.28)!important;
+  cursor:pointer!important;
+}
+.team-slider-dots button.is-active{background:#C7EF3E!important;}
+@media(max-width:900px){
+  .team-image-slider{min-height:390px!important;height:390px!important;}
+}
+</style>
 </head>
 <body>
 
@@ -2408,8 +2474,18 @@ html[data-theme="dark"] .about-hero-visual::before {
         <p>Behind every prescription, recommendation, and conversation is a team committed to doing pharmacy care properly. Our pharmacists bring professional knowledge, attention to detail, and a genuine desire to help the people we serve.</p>
         <p>From dispensing medicines to answering questions and supporting everyday wellness, our team works together to make every visit feel personal, respectful, and reassuring.</p>
       </div>
-      <div class="team-image-wrap reveal">
-        <img src="kalidad_pharmacy_team_hero.webp" alt="Kalidad Pharmacy team">
+
+      <div class="team-image-wrap team-image-slider reveal" aria-label="Kalidad Pharmacy team images">
+        <div class="team-slide is-active" aria-label="Team image slide 1"></div>
+        <div class="team-slide" aria-label="Team image slide 2"></div>
+
+        <button class="team-slider-btn team-slider-prev" type="button" aria-label="Previous team image">‹</button>
+        <button class="team-slider-btn team-slider-next" type="button" aria-label="Next team image">›</button>
+
+        <div class="team-slider-dots" aria-label="Team image slides">
+          <button class="is-active" type="button" aria-label="Show team image slide 1"></button>
+          <button type="button" aria-label="Show team image slide 2"></button>
+        </div>
       </div>
     </div>
   </section>
@@ -3395,6 +3471,77 @@ header.is-compact nav.main-nav a.nav-link{
   .about-hero h1{
     line-height:.88 !important;
   }
+}
+</style>
+
+<script id="meet-team-two-slide-controller">
+(function(){
+  var slider=document.querySelector('.team-image-slider');
+  if(!slider)return;
+  var slides=Array.prototype.slice.call(slider.querySelectorAll('.team-slide'));
+  var dots=Array.prototype.slice.call(slider.querySelectorAll('.team-slider-dots button'));
+  var prev=slider.querySelector('.team-slider-prev');
+  var next=slider.querySelector('.team-slider-next');
+  if(slides.length!==2)return;
+  var current=0;
+  function show(index){
+    current=(index+slides.length)%slides.length;
+    slides.forEach(function(s,i){s.classList.toggle('is-active',i===current);});
+    dots.forEach(function(d,i){d.classList.toggle('is-active',i===current);});
+  }
+  if(prev)prev.addEventListener('click',function(){show(current-1);});
+  if(next)next.addEventListener('click',function(){show(current+1);});
+  dots.forEach(function(d,i){d.addEventListener('click',function(){show(i);});});
+  show(0);
+})();
+</script>
+
+<style id="meet-team-two-slide-final-fix">
+/* FINAL OVERRIDE: guarantee the Meet Our Team right side is the new two-slide image area. */
+.team-section .team-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:60px!important;
+  align-items:center!important;
+}
+.team-section .team-image-slider{
+  display:block!important;
+  position:relative!important;
+  width:100%!important;
+  height:420px!important;
+  min-height:420px!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border-radius:24px!important;
+  background:#f6f4ec!important;
+  box-shadow:0 18px 45px rgba(18,41,31,.14)!important;
+}
+.team-section .team-image-slider .team-slide{
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  background:#f6f4ec!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  z-index:1!important;
+}
+.team-section .team-image-slider .team-slide.is-active{
+  opacity:1!important;
+  visibility:visible!important;
+  z-index:2!important;
+}
+.team-section .team-slider-btn{z-index:10!important;}
+.team-section .team-slider-dots{z-index:10!important;}
+@media(max-width:880px){
+  .team-section .team-grid{grid-template-columns:1fr!important;gap:34px!important;}
+  .team-section .team-image-slider{height:320px!important;min-height:320px!important;order:2!important;}
+  .team-section .team-copy{order:1!important;}
 }
 </style>
 </body>
