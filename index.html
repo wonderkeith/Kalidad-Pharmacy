@@ -3518,13 +3518,13 @@ header.logo-hidden {
 }
 
 .hero-reference-bg.hero-reference-image-1 {
-    background-image: url("image-07-caa3270325.webp") !important;
+    background-image: url("Kato%20Rhita%20Index%20hero%20PC%202.webp") !important;
 }
 .hero-reference-bg.hero-reference-image-2 {
-    background-image: url("image-08-99b804a9ad.webp") !important;
+    background-image: url("Kato%20prescription%20filling%20PC.webp") !important;
 }
 .hero-reference-bg.hero-reference-image-3 {
-    background-image: url("image-09-b2d22f9d65.webp") !important;
+    background-image: url("Shallom%20and%20Rhita%20index%20hero%201.webp") !important;
 }
 
 .hero-reference::before {
@@ -3624,13 +3624,13 @@ header.logo-hidden {
         background-position: center center !important;
     }
     .hero-reference-bg.hero-reference-image-1 {
-        background-image: url("mobile-hero-1.webp") !important;
+        background-image: url("Kato%20Rhita%20Index%20hero%20Mobile%202.webp") !important;
     }
     .hero-reference-bg.hero-reference-image-2 {
-        background-image: url("mobile-hero-2.webp") !important;
+        background-image: url("Kato%20prescription%20filling%20mobile.webp") !important;
     }
     .hero-reference-bg.hero-reference-image-3 {
-        background-image: url("mobile-hero-3.webp") !important;
+        background-image: url("Shallom%20and%20Rhita%20index%20hero%20mobile%201.webp") !important;
     }
     .hero-reference::before {
         background: linear-gradient(
@@ -4052,13 +4052,18 @@ header.logo-hidden {
                 var referenceCurrent = 0;
                 var referenceTimer;
                 var referenceBg = document.querySelector('.hero-reference-bg');
+                var referenceDesktopImages = ['Kato%20Rhita%20Index%20hero%20PC%202.webp', 'Kato%20prescription%20filling%20PC.webp', 'Shallom%20and%20Rhita%20index%20hero%201.webp'];
+                var referenceMobileImages = ['Kato%20Rhita%20Index%20hero%20Mobile%202.webp', 'Kato%20prescription%20filling%20mobile.webp', 'Shallom%20and%20Rhita%20index%20hero%20mobile%201.webp'];
                 function referenceUpdateBackground() {
                     if (!referenceBg) return;
-                    referenceBg.classList.toggle('hero-reference-image-1', referenceCurrent === 0);
-                    referenceBg.classList.toggle('hero-reference-image-2', referenceCurrent === 1);
-                    referenceBg.classList.toggle('hero-reference-image-3', referenceCurrent === 2);
+                    referenceBg.classList.remove('hero-reference-image-1', 'hero-reference-image-2', 'hero-reference-image-3');
+                    referenceBg.classList.add('hero-reference-image-' + (referenceCurrent + 1));
+                    var mobile = window.matchMedia('(max-width: 700px)').matches;
+                    var image = (mobile ? referenceMobileImages : referenceDesktopImages)[referenceCurrent];
+                    referenceBg.style.setProperty('background-image', 'url(' + image + ')', 'important');
                 }
                 referenceUpdateBackground();
+                window.addEventListener('resize', referenceUpdateBackground);
 
                 referenceSlides.forEach(function(_, i) {
                     var dot = document.createElement('button');
