@@ -3273,6 +3273,19 @@ header.is-compact nav.main-nav a.nav-link{
     var hero=document.querySelector('.about-hero');
     if(!hero || hero.dataset.sliderReady==='true') return;
     var slides=Array.prototype.slice.call(hero.querySelectorAll('.about-hero-slide'));
+    if(!slides.length) return;
+    hero.dataset.sliderReady='true';
+    if(slides.length===1){
+      var visual=hero.querySelector('.about-hero-visual');
+      if(visual) visual.style.setProperty('display','block','important');
+      slides[0].classList.add('is-active');
+      slides[0].style.setProperty('display','block','important');
+      slides[0].style.setProperty('opacity','1','important');
+      slides[0].style.setProperty('visibility','visible','important');
+      slides[0].style.setProperty('transform','none','important');
+      slides[0].style.setProperty('z-index','1','important');
+      return;
+    }
     if(slides.length!==5) return;
     hero.dataset.sliderReady='true';
     var current=0;
