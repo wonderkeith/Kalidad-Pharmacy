@@ -331,11 +331,32 @@ html,body,body *,button,input,textarea,select{font-family:'Lora',serif!important
   }
 }
 </style>
+<style id="contact-hero-slider-styles">
+.page-banner { isolation: isolate !important; }
+.page-banner .contact-hero-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: opacity .9s ease;
+  pointer-events: none;
+}
+.page-banner .contact-hero-photo.is-active { opacity: 1; }
+@media (max-width: 900px) {
+  .page-banner .contact-hero-photo { background-position: 68% center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-banner .contact-hero-photo { transition: none; }
+}
+</style>
 </head>
 <body>
 
 <header><div class="container header-inner"><a href="index.html" class="logo" aria-label="Kalidad Pharmacy home"><span class="logo-mark"><img src="kalidad-icon.png" alt="Kalidad Pharmacy icon" width="70" height="70"></span><span class="logo-text"><span class="kalidad">Kalidad</span><span class="pharmacy">Pharmacy</span><span class="tag">Your health, your wealth</span></span></a><nav class="main-nav" aria-label="Main navigation"><a href="index.html" class="nav-link">Home</a><a href="services.html" class="nav-link">Services</a><a href="contact.html" class="nav-link active">Contact Us</a><a href="careers.html" class="nav-link">Careers</a><a href="news.html" class="nav-link">News</a><a href="about.html" class="nav-link">About Us</a><span class="open-badge"><span class="pulse-dot"></span>Open 24/7</span><a href="#" data-kalidad-chat-open class="btn btn-primary nav-cta nav-chat" aria-label="Chat with us"><i class="fa-solid fa-comments" aria-hidden="true"></i><span>Chat with us</span></a></nav><button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg></button></div><div class="mobile-menu" id="mobileMenu"><a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html" class="active">Contact Us</a><a href="careers.html">Careers</a><a href="news.html">News</a><a href="about.html">About Us</a><a href="#" data-kalidad-chat-open class="btn btn-primary nav-chat" style="justify-content:center;margin-top:8px;"><i class="fa-solid fa-comments" aria-hidden="true"></i><span>Chat with us</span></a></div></header>
-<main><section class="page-banner" aria-label="Get in touch"><div class="container"><div class="hero-copy"><h1><span class="line-dark">We're always open,</span><span class="line-lime">just say <span class="accent">hello</span></span></h1><span class="hero-line"></span></div></div></section>
+<main><section class="page-banner" aria-label="Get in touch"><div class="contact-hero-photo is-active" aria-hidden="true"></div><div class="contact-hero-photo" aria-hidden="true"></div><div class="container"><div class="hero-copy"><h1><span class="line-dark">We're always open,</span><span class="line-lime">just say <span class="accent">hello</span></span></h1><span class="hero-line"></span></div></div></section>
 <section class="section"><div class="container"><div class="contact-wrap reveal"><div class="contact-info"><h3>Visit or call anytime</h3><p class="sub">We are always open 24 hours a day, every day of the week.</p><div class="info-row"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span><div><p class="label">Address</p><p class="value">MT-Bwamba rd junction,Kisenyi,FortPortal,Uganda</p></div></div><div class="info-row"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></span><div><p class="label">Phone</p><p class="value">+256 759 845 260 or +256 772 292 177</p></div></div><div class="info-row"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span><div><p class="label">Hours</p><p class="value">Open 24/7, Every day</p></div></div><a href="https://wa.me/256764201229" target="_blank" rel="noopener" class="btn" style="background:var(--lime);color:var(--forest-deep);margin-top:26px;"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>Message us</a></div><form class="contact-form" id="contactForm"><div class="form-row"><div><label for="name">Full name</label><input id="name" name="name" type="text" placeholder="Jane Namara" required></div><div><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" placeholder="07XX XXX XXX" required></div></div><div><label for="topic">What's this about?</label><select id="topic" name="topic"><option>Prescription filling</option><option>Health check booking</option><option>Delivery question</option><option>General question</option></select></div><div><label for="message">Message</label><textarea id="message" name="message" rows="4" placeholder="Tell us what you need..." required></textarea></div><p class="form-note">We'll get back to you within a few minutes.</p><button type="submit" class="btn btn-primary" style="justify-content:center;">Send message</button></form></div></div></section>
 <section class="social-section reveal" aria-labelledby="social-title"><div class="container"><div class="social-banner"><div class="social-title"><span class="kicker">Stay connected</span><h2 id="social-title">Follow our socials</h2></div><div class="social-links" aria-label="Kalidad Pharmacy social media"><a class="social-link instagram" href="https://www.instagram.com/kalidadpharmacy" target="_blank" rel="noopener" aria-label="Follow Kalidad Pharmacy on Instagram" title="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a><a class="social-link x" href="https://x.com/kalidadpharmacy" target="_blank" rel="noopener" aria-label="Follow Kalidad Pharmacy on X" title="X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a><a class="social-link whatsapp" href="https://whatsapp.com/channel/0029Vb8YYAiKAwEjZw50cm40" target="_blank" rel="noopener" aria-label="Follow the Kalidad Pharmacy WhatsApp channel" title="WhatsApp Channel"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a><a class="social-link linkedin" href="https://linkedin.com/company/kalidad-pharmacy" target="_blank" rel="noopener" aria-label="Follow Kalidad Pharmacy on LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a></div></div></div></section>
 <section class="branches-section" aria-labelledby="branches-title"><div class="container"><div class="section-head reveal"><h2 id="branches-title">Our locations</h2><p>You are welcome to visit us at any of our branches below.</p><div class="leaf-rule"></div></div><div class="branch-list"><article class="branch-card reveal"><div class="branch-slider" data-branch-slider="kisenyi"><div class="branch-slide active"><img class="branch-photo" src="20260724_151100(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch exterior front view"></div><div class="branch-slide"><img class="branch-photo" src="20260724_151800_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch medicine display interior"></div><div class="branch-slide"><img class="branch-photo" src="20260724_152030(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch interior aisle"></div><div class="branch-slide"><img class="branch-photo" src="20260724_152439(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch counter and shelves"></div><div class="branch-slide"><img class="branch-photo" src="20260724_155052(1)(1)_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch exterior angle view"></div><div class="branch-slide"><img class="branch-photo" src="file_000000007d308243b53f0aa6fcf37cd3_HD.webp" alt="Kalidad Pharmacy Kisenyi Branch exterior at night"></div><button class="branch-slider-nav prev" type="button" aria-label="Previous Kisenyi Branch image"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button><button class="branch-slider-nav next" type="button" aria-label="Next Kisenyi Branch image"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button><div class="branch-slider-dots" aria-label="Kisenyi Branch image navigation"></div></div><div class="branch-copy"><span class="kicker"> Main branch</span><h3>Kisenyi-Fort Portal</h3><p>Located next to Rosefoam Mattress Depot at the MT-Bwamba road junction . We are always open 24/7 to fill your health, wellness,cosmetic and baby needs in the heart of the city.</p><span class="branch-note"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Fort Portal, Uganda</span></div></article><article class="branch-card reverse reveal"><div class="branch-slider" data-branch-slider="kahungabunyonyi"><div class="branch-slide active"><img class="branch-photo" src="1000111640.png" alt="Kalidad Pharmacy Kahungabunyonyi Branch exterior at night"></div><div class="branch-slide"><img class="branch-photo" src="20260724_143031(1)(1).jpg" alt="Kalidad Pharmacy Kahungabunyonyi Branch exterior during the day"></div><div class="branch-slide"><img class="branch-photo" src="20260724_144840(1).jpg" alt="Kalidad Pharmacy Kahungabunyonyi Branch interior view"></div><div class="branch-slide"><img class="branch-photo" src="20260724_145355(1).jpg" alt="Kalidad Pharmacy Kahungabunyonyi Branch interior from the entrance"></div><div class="branch-slide"><img class="branch-photo" src="20260724_145446(1).jpg" alt="Customers inside Kalidad Pharmacy Kahungabunyonyi Branch"></div><button class="branch-slider-nav prev" type="button" aria-label="Previous Kahungabunyonyi Branch image"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button><button class="branch-slider-nav next" type="button" aria-label="Next Kahungabunyonyi Branch image"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button><div class="branch-slider-dots" aria-label="Kahungabunyonyi Branch image navigation"></div></div><div class="branch-copy"><span class="kicker">Our second Branch</span><h3>Kahungabunyonyi-Fort Portal</h3><p>Located along Kahungabunyonyi road on the City Inn building ground floor. We are always open 24/7 to fill your health, wellness,cosmetic and baby needs.</p><span class="branch-note"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> FortPortal,Uganda</span></div></article></div></div></section>
@@ -345,4 +366,45 @@ html,body,body *,button,input,textarea,select{font-family:'Lora',serif!important
 <script id="kalidad-shared-header-behavior">(function(){const header=document.querySelector('header');const hero=document.querySelector('.page-banner,.hero,.hero-reframed,.career-hero');if(!header)return;function update(){const y=window.scrollY||window.pageYOffset;header.classList.toggle('is-scrolled',y>24);if(hero){const bottom=hero.getBoundingClientRect().bottom;header.classList.toggle('logo-hidden',bottom<=90)}}let ticking=false;window.addEventListener('scroll',function(){if(!ticking){requestAnimationFrame(function(){update();ticking=false});ticking=true}},{passive:true});window.addEventListener('resize',update,{passive:true});update()})();</script>
 <script id="contact-hero-logo-scroll">(function(){const header=document.querySelector('header');const hero=document.querySelector('.page-banner');if(!header||!hero)return;const updateHeader=()=>{const heroBottom=hero.getBoundingClientRect().bottom;header.classList.toggle('is-scrolled',window.scrollY>24);header.classList.toggle('logo-hidden',heroBottom<=90)};let ticking=false;const onScroll=()=>{if(ticking)return;ticking=true;window.requestAnimationFrame(()=>{updateHeader();ticking=false})};window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',updateHeader,{passive:true});updateHeader()})();</script>
 <script src="chatbot.js" defer></script><script src="theme.js?v=2" defer></script>
+<script id="contact-hero-image-slider">
+(function () {
+  var hero = document.querySelector('.page-banner');
+  if (!hero) return;
+  var layers = Array.prototype.slice.call(hero.querySelectorAll('.contact-hero-photo'));
+  if (layers.length < 2) return;
+  var desktopImages = [
+    'Shallom%20contact%20us%20PC%20hero.webp',
+    'Kisenyi%20night.webp',
+    '1000111640.png'
+  ];
+  var mobileImages = [
+    'Shallom%20Contact%20us%20Mobile%20hero.webp',
+    'Kisenyi%20night%20mobile.webp',
+    '1000111640.png'
+  ];
+  var current = 0;
+  var activeLayer = 0;
+  var mobileQuery = window.matchMedia('(max-width: 900px)');
+  var imageSets = desktopImages.concat(mobileImages);
+  imageSets.forEach(function (src) { var preload = new Image(); preload.src = src; });
+
+  function imageFor(index) {
+    return (mobileQuery.matches ? mobileImages : desktopImages)[index];
+  }
+  function show(index) {
+    var nextLayer = activeLayer === 0 ? 1 : 0;
+    layers[nextLayer].style.backgroundImage = 'url("' + imageFor(index) + '")';
+    layers[nextLayer].classList.add('is-active');
+    layers[activeLayer].classList.remove('is-active');
+    activeLayer = nextLayer;
+    current = index;
+  }
+  layers[activeLayer].style.backgroundImage = 'url("' + imageFor(current) + '")';
+  hero.style.setProperty('background-image', 'none', 'important');
+  window.setInterval(function () { show((current + 1) % desktopImages.length); }, 5000);
+  window.addEventListener('resize', function () {
+    layers[activeLayer].style.backgroundImage = 'url("' + imageFor(current) + '")';
+  }, { passive: true });
+}());
+</script>
 </body></html>
