@@ -768,7 +768,7 @@
             pointer-events: none;
         }
 
-        /* Soft white fade from the left into a fully clear image on the right. */
+        /* Light forest-green fade from the left into a clear image. */
         .service-slide::after {
             content: "";
             display: block;
@@ -777,12 +777,12 @@
             z-index: 1;
             pointer-events: none;
             background: linear-gradient(90deg,
-                rgba(255,255,255,.88) 0%,
-                rgba(255,255,255,.82) 28%,
-                rgba(255,255,255,.58) 43%,
-                rgba(255,255,255,.24) 54%,
-                rgba(255,255,255,0) 70%,
-                rgba(255,255,255,0) 100%
+                rgba(180,204,188,.88) 0%,
+                rgba(180,204,188,.82) 28%,
+                rgba(180,204,188,.58) 43%,
+                rgba(180,204,188,.24) 54%,
+                rgba(180,204,188,0) 70%,
+                rgba(180,204,188,0) 100%
             );
         }
 
@@ -831,6 +831,9 @@
 
 
         /* Embedded HD service images — supplied by the user */
+        .service-slide[data-service="0"] { background-image: url("keith%20prescription%20filling.webp"); }
+        .service-slide[data-service="3"] { background-image: url("wellness-skincare-hero.webp"); }
+        .service-slide[data-service="4"] { background-image: url("Baby%20care%20PC%20hero.webp"); }
         .service-slide[data-service="5"] { background-image: url("image-06-f0b58c89f6.webp"); }
 
         .service-display {
@@ -2482,12 +2485,12 @@ footer .footer-bottom .container {
 @media (max-width: 620px) {
     #services .service-slide::after {
         background: linear-gradient(90deg,
-            rgba(255,255,255,.90) 0%,
-            rgba(255,255,255,.82) 30%,
-            rgba(255,255,255,.50) 48%,
-            rgba(255,255,255,.16) 65%,
-            rgba(255,255,255,0) 82%,
-            rgba(255,255,255,0) 100%
+            rgba(180,204,188,.90) 0%,
+            rgba(180,204,188,.82) 30%,
+            rgba(180,204,188,.50) 48%,
+            rgba(180,204,188,.16) 65%,
+            rgba(180,204,188,0) 82%,
+            rgba(180,204,188,0) 100%
         );
     }
 
@@ -3677,6 +3680,32 @@ header.logo-hidden {
 }
 </style>
 
+<style id="service-slider-green-fade-white-copy">
+#services .service-slide::after {
+    background: linear-gradient(90deg,
+        rgba(18, 41, 31, .84) 0%,
+        rgba(18, 41, 31, .64) 25%,
+        rgba(18, 41, 31, .22) 52%,
+        rgba(18, 41, 31, .02) 78%,
+        rgba(18, 41, 31, 0) 100%
+    ) !important;
+}
+#services .service-slide-copy h3,
+#services .service-slide-copy p {
+    color: #fff !important;
+    text-shadow: 0 2px 10px rgba(18, 41, 31, .45) !important;
+}
+@media (max-width: 700px) {
+    #services .service-slide::after {
+        background: linear-gradient(90deg,
+            rgba(18, 41, 31, .82) 0%,
+            rgba(18, 41, 31, .57) 43%,
+            rgba(18, 41, 31, .18) 75%,
+            rgba(18, 41, 31, .03) 100%
+        ) !important;
+    }
+}
+</style>
 </head>
 <body>
 
