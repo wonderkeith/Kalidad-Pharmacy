@@ -278,6 +278,53 @@ header:not(.top).logo-hidden .logo {
   }
 }
 
+@media (max-width: 900px) {
+  html body > header:not(.top),
+  html body > header:not(.top).is-scrolled,
+  html body > header:not(.top).is-compact,
+  html body > header:not(.top).nav-open,
+  html body > header:not(.top).menu-open,
+  html body > header:not(.top).is-compact.nav-open {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  html body > header #menuToggle,
+  html body > header #menu {
+    border: 1px solid rgba(255, 255, 255, .38) !important;
+    border-radius: 14px !important;
+    background: rgba(255, 255, 255, .18) !important;
+    color: #fff !important;
+    box-shadow: 0 6px 20px rgba(18, 41, 31, .14) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(150%) !important;
+    backdrop-filter: blur(14px) saturate(150%) !important;
+  }
+
+  html body > header #menuToggle svg,
+  html body > header #menu svg {
+    color: #fff !important;
+    stroke: #fff !important;
+  }
+
+  html body > header #menuToggle:hover,
+  html body > header #menuToggle:focus-visible,
+  html body > header #menu:hover,
+  html body > header #menu:focus-visible {
+    background: rgba(255, 255, 255, .28) !important;
+    border-color: rgba(255, 255, 255, .55) !important;
+    box-shadow: 0 8px 24px rgba(18, 41, 31, .18) !important;
+  }
+
+  html body > header #menuToggle:focus-visible,
+  html body > header #menu:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, .85) !important;
+    outline-offset: 2px !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   body > header,
   body > header *,
