@@ -2340,7 +2340,7 @@ html[data-theme="dark"] .about-hero-visual::before {
   inset:0!important;
   width:100%!important;
   height:100%!important;
-  background:#f6f4ec!important;
+  background-color:#f6f4ec!important;
   opacity:0!important;
   visibility:hidden!important;
   transition:opacity .6s ease!important;
@@ -2448,8 +2448,21 @@ html[data-theme="dark"] .about-hero-visual::before {
         <p>We combine professional expertise with a personal touch to ensure every customer feels valued, understood, and cared for.</p>
       </div>
 
-      <div class="about-photo reveal" aria-label="Inside Kalidad Pharmacy">
-        <img src="kalidad_pharmacy_scene.webp" alt="Inside Kalidad Pharmacy, showing the pharmacy environment and healthcare setting" loading="lazy">
+      <div class="about-photo about-who-slider reveal" aria-label="Kalidad Pharmacy locations">
+        <img class="about-who-slide is-active" src="Kalidad Neon 1.webp" alt="Kalidad Pharmacy neon sign">
+        <img class="about-who-slide" src="Kisenyi day exterior.webp" alt="Kisenyi pharmacy exterior during the day" loading="lazy">
+        <img class="about-who-slide" src="kisenyi night interior.webp" alt="Kisenyi pharmacy interior at night" loading="lazy">
+        <img class="about-who-slide" src="Kb exterior.webp" alt="KB pharmacy exterior" loading="lazy">
+        <img class="about-who-slide" src="kb night interior.webp" alt="KB pharmacy interior at night" loading="lazy">
+        <button class="team-slider-btn team-slider-prev about-who-slider-prev" type="button" aria-label="Previous pharmacy image">‹</button>
+        <button class="team-slider-btn team-slider-next about-who-slider-next" type="button" aria-label="Next pharmacy image">›</button>
+        <div class="team-slider-dots about-who-slider-dots" role="tablist" aria-label="Pharmacy images">
+          <button class="is-active" type="button" role="tab" aria-label="Show pharmacy image 1" aria-selected="true"></button>
+          <button type="button" role="tab" aria-label="Show pharmacy image 2" aria-selected="false"></button>
+          <button type="button" role="tab" aria-label="Show pharmacy image 3" aria-selected="false"></button>
+          <button type="button" role="tab" aria-label="Show pharmacy image 4" aria-selected="false"></button>
+          <button type="button" role="tab" aria-label="Show pharmacy image 5" aria-selected="false"></button>
+        </div>
       </div>
     </div>
 
@@ -2471,8 +2484,8 @@ html[data-theme="dark"] .about-hero-visual::before {
       </div>
 
       <div class="team-image-wrap team-image-slider reveal" aria-label="Kalidad Pharmacy team images">
-        <div class="team-slide is-active" aria-label="Team image slide 1" style="background-image:url('Kalidad%20Team%201.webp');background-position:center;background-size:cover;"></div>
-        <div class="team-slide" aria-label="Team image slide 2" style="background-image:url('Kalidad%20Team%202.webp');background-position:center;background-size:cover;"></div>
+        <div class="team-slide is-active" aria-label="Team image slide 1" style="background-image:url('Kalidad Team 1.webp');background-position:center;background-size:cover;"></div>
+        <div class="team-slide" aria-label="Team image slide 2" style="background-image:url('Kalidad Team 2.webp');background-position:center;background-size:cover;"></div>
 
         <button class="team-slider-btn team-slider-prev" type="button" aria-label="Previous team image">‹</button>
         <button class="team-slider-btn team-slider-next" type="button" aria-label="Next team image">›</button>
@@ -3534,7 +3547,7 @@ header.is-compact nav.main-nav a.nav-link{
   min-height:100%!important;
   margin:0!important;
   padding:0!important;
-  background:#f6f4ec!important;
+  background-color:#f6f4ec!important;
   opacity:0!important;
   visibility:hidden!important;
   z-index:1!important;
@@ -3550,6 +3563,134 @@ header.is-compact nav.main-nav a.nav-link{
   .team-section .team-grid{grid-template-columns:1fr!important;gap:34px!important;}
   .team-section .team-image-slider{height:320px!important;min-height:320px!important;order:2!important;}
   .team-section .team-copy{order:1!important;}
+}
+ </style>
+
+<style id="about-services-image-sections">
+.about-intro {
+  padding: 0 !important;
+  background: #eef2eb !important;
+}
+.about-intro > .reference-about-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 75vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.about-intro .about-photo {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  min-height: 75vh !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.about-intro .about-photo img {
+  height: 100% !important;
+  min-height: 75vh !important;
+  object-fit: cover !important;
+}
+.about-intro .about-who-slide {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity .6s ease !important;
+}
+.about-intro .about-who-slide.is-active {
+  z-index: 2 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.about-intro .about-who-slider .team-slider-btn,
+.about-intro .about-who-slider .team-slider-dots {
+  z-index: 4 !important;
+}
+.about-intro .about-copy {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  align-self: center !important;
+  max-width: 720px !important;
+  padding: clamp(48px, 7vw, 110px) !important;
+}
+.team-section {
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #fff !important;
+}
+.team-section .team-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 75vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.team-section .team-copy {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  align-self: center !important;
+  padding: clamp(48px, 7vw, 110px) !important;
+}
+.team-section .team-image-slider {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  width: 100% !important;
+  height: 75vh !important;
+  min-height: 560px !important;
+  aspect-ratio: auto !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+@media (max-width: 900px) {
+  .about-intro > .reference-about-grid,
+  .team-section .team-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+  .about-intro .about-photo,
+  .team-section .team-image-slider {
+    order: 1 !important;
+    width: 100% !important;
+    height: 48vh !important;
+    min-height: 320px !important;
+    max-height: 520px !important;
+  }
+  .about-intro .about-photo img {
+    height: 100% !important;
+    min-height: 100% !important;
+  }
+  .about-intro .about-who-slide {
+    height: 100% !important;
+    min-height: 100% !important;
+  }
+  .about-intro .about-copy,
+  .team-section .team-copy {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 54px 28px 70px !important;
+  }
+  .about-intro .about-grid.reference-about-grid .about-photo {
+    order: 1 !important;
+  }
+  .about-intro .about-grid.reference-about-grid .about-copy {
+    order: 2 !important;
+  }
 }
 </style>
 </body>

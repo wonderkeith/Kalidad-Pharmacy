@@ -6,24 +6,18 @@
 (function () {
   'use strict';
 
-  function init() {
-    var section = document.querySelector('#meet-team.team-section, .team-section#meet-team');
-    if (!section) return;
-
-    var slider = section.querySelector('.team-image-slider');
-    if (!slider) return;
+  function initSlider(slider, slideSelector, dotSelector, readyKey) {
+    if (!slider || slider.dataset[readyKey] === 'true') return;
 
     /* Prevent duplicate execution if this script is included more than once. */
-    if (slider.dataset.teamSliderReady === 'true') return;
-    slider.dataset.teamSliderReady = 'true';
+    slider.dataset[readyKey] = 'true';
 
-    var slides = Array.prototype.slice.call(slider.querySelectorAll('.team-slide'));
-    var dots = Array.prototype.slice.call(slider.querySelectorAll('.team-slider-dots button'));
+    var slides = Array.prototype.slice.call(slider.querySelectorAll(slideSelector));
+    var dots = Array.prototype.slice.call(slider.querySelectorAll(dotSelector));
     var prev = slider.querySelector('.team-slider-prev');
     var next = slider.querySelector('.team-slider-next');
 
-    if (slides.length !== 2) return;
-
+    if (!slides.length) return;
     var current = 0;
     var timer = null;
     var duration = 5000;
@@ -67,6 +61,22 @@
 
     show(0, false);
     restart();
+  }
+
+  function init() {
+    var teamSection = document.querySelector('#meet-team.team-section, .team-section#meet-team');
+    initSlider(
+      teamSection && teamSection.querySelector('.team-image-slider'),
+      '.team-slide',
+      '.team-slider-dots button',
+      'teamSliderReady'
+    );
+    initSlider(
+      document.querySelector('.about-who-slider'),
+      '.about-who-slide',
+      '.about-who-slider-dots button',
+      'whoSliderReady'
+    );
   }
 
   if (document.readyState === 'loading') {
