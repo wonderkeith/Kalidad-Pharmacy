@@ -1,9 +1,7 @@
 name: Fix Contact Hero Height
 
 on:
-  push:
-    paths:
-      - '.github/contact-hero-height-trigger.txt'
+  workflow_dispatch:
 
 permissions:
   contents: write

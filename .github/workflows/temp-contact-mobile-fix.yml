@@ -1,8 +1,6 @@
 name: Temporary Contact Mobile Hero Fix
 on:
-  push:
-    paths:
-      - '.github/workflows/temp-contact-mobile-fix.yml'
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
