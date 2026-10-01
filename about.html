@@ -2440,37 +2440,36 @@ html[data-theme="dark"] .about-hero-visual::before {
   </section>
 
   <section class="section about-intro" id="about-pharmacy">
-    <div class="container about-grid reference-about-grid">
-      <div class="about-copy reveal">
-        <span class="kicker">Who We Are</span>
-        <h2>Your Trusted<br>Neighbourhood Pharmacy</h2>
-        <p>Kalidad Pharmacy is a fully licensed pharmacy located in Fort Portal, Uganda. For over five years, we have been dedicated to improving lives by making quality healthcare accessible, affordable, and convenient for everyone.</p>
-        <p>We combine professional expertise with a personal touch to ensure every customer feels valued, understood, and cared for.</p>
-      </div>
-
-      <div class="about-photo about-who-slider reveal" aria-label="Kalidad Pharmacy locations">
-        <img class="about-who-slide is-active" src="Kalidad Neon 1.webp" alt="Kalidad Pharmacy neon sign">
-        <img class="about-who-slide" src="Kisenyi day exterior.webp" alt="Kisenyi pharmacy exterior during the day" loading="lazy">
-        <img class="about-who-slide" src="kisenyi night interior.webp" alt="Kisenyi pharmacy interior at night" loading="lazy">
-        <img class="about-who-slide" src="Kb exterior.webp" alt="KB pharmacy exterior" loading="lazy">
-        <img class="about-who-slide" src="kb night interior.webp" alt="KB pharmacy interior at night" loading="lazy">
-        <button class="team-slider-btn team-slider-prev about-who-slider-prev" type="button" aria-label="Previous pharmacy image">‹</button>
-        <button class="team-slider-btn team-slider-next about-who-slider-next" type="button" aria-label="Next pharmacy image">›</button>
-        <div class="team-slider-dots about-who-slider-dots" role="tablist" aria-label="Pharmacy images">
-          <button class="is-active" type="button" role="tab" aria-label="Show pharmacy image 1" aria-selected="true"></button>
-          <button type="button" role="tab" aria-label="Show pharmacy image 2" aria-selected="false"></button>
-          <button type="button" role="tab" aria-label="Show pharmacy image 3" aria-selected="false"></button>
-          <button type="button" role="tab" aria-label="Show pharmacy image 4" aria-selected="false"></button>
-          <button type="button" role="tab" aria-label="Show pharmacy image 5" aria-selected="false"></button>
-        </div>
+    <div class="about-photo about-who-slider reveal" aria-label="Kalidad Pharmacy locations">
+      <img class="about-who-slide is-active" src="Kalidad Neon 1.webp" alt="Kalidad Pharmacy neon sign">
+      <img class="about-who-slide" src="Kisenyi day exterior.webp" alt="Kisenyi pharmacy exterior during the day" loading="lazy">
+      <img class="about-who-slide" src="kisenyi night interior.webp" alt="Kisenyi pharmacy interior at night" loading="lazy">
+      <img class="about-who-slide" src="Kb exterior.webp" alt="KB pharmacy exterior" loading="lazy">
+      <img class="about-who-slide" src="kb night interior.webp" alt="KB pharmacy interior at night" loading="lazy">
+      <button class="team-slider-btn team-slider-prev about-who-slider-prev" type="button" aria-label="Previous pharmacy image">‹</button>
+      <button class="team-slider-btn team-slider-next about-who-slider-next" type="button" aria-label="Next pharmacy image">›</button>
+      <div class="team-slider-dots about-who-slider-dots" role="tablist" aria-label="Pharmacy images">
+        <button class="is-active" type="button" role="tab" aria-label="Show pharmacy image 1" aria-selected="true"></button>
+        <button type="button" role="tab" aria-label="Show pharmacy image 2" aria-selected="false"></button>
+        <button type="button" role="tab" aria-label="Show pharmacy image 3" aria-selected="false"></button>
+        <button type="button" role="tab" aria-label="Show pharmacy image 4" aria-selected="false"></button>
+        <button type="button" role="tab" aria-label="Show pharmacy image 5" aria-selected="false"></button>
       </div>
     </div>
 
-    <div class="container trust-grid">
-      <div class="trust-item reveal"><span class="trust-icon">✓</span><h3>Licensed &amp; Trusted</h3><p>Fully licensed pharmacy committed to safety and quality.</p></div>
-      <div class="trust-item reveal"><span class="trust-icon">◎</span><h3>Experienced Team</h3><p>Qualified pharmacists and staff always ready to help.</p></div>
-      <div class="trust-item reveal"><span class="trust-icon">♡</span><h3>Patient First</h3><p>Your health and well-being are at the heart of all we do.</p></div>
-      <div class="trust-item reveal"><span class="trust-icon">◷</span><h3>Always Here</h3><p>Open 24/7 to serve you whenever you need us most.</p></div>
+    <div class="container about-intro-copy-wrap">
+      <div class="about-copy reveal">
+        <span class="kicker">Who We Are</span>
+        <h2>Your Trusted Neighbourhood Pharmacy</h2>
+        <p>Kalidad Pharmacy is a fully licensed pharmacy located in Fort Portal, Uganda. For over five years, we have been dedicated to improving lives by making quality healthcare accessible, affordable, and convenient for everyone.</p>
+        <p>We combine professional expertise with a personal touch to ensure every customer feels valued, understood, and cared for.</p>
+        <div class="container trust-grid">
+          <div class="trust-item reveal"><span class="trust-icon">✓</span><h3>Licensed &amp; Trusted</h3><p>Fully licensed pharmacy committed to safety and quality.</p></div>
+          <div class="trust-item reveal"><span class="trust-icon">◎</span><h3>Experienced Team</h3><p>Qualified pharmacists and staff always ready to help.</p></div>
+          <div class="trust-item reveal"><span class="trust-icon">♡</span><h3>Patient First</h3><p>Your health and well-being are at the heart of all we do.</p></div>
+          <div class="trust-item reveal"><span class="trust-icon">◷</span><h3>Always Here</h3><p>Open 24/7 to serve you whenever you need us most.</p></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -3561,37 +3560,36 @@ header.is-compact nav.main-nav a.nav-link{
 .team-section .team-slider-dots{z-index:10!important;}
 @media(max-width:880px){
   .team-section .team-grid{grid-template-columns:1fr!important;gap:34px!important;}
-  .team-section .team-image-slider{height:320px!important;min-height:320px!important;order:2!important;}
   .team-section .team-copy{order:1!important;}
+  .team-section .team-image-slider{height:320px!important;min-height:320px!important;order:2!important;}
 }
  </style>
 
 <style id="about-services-image-sections">
 .about-intro {
-  padding: 0 !important;
-  background: #eef2eb !important;
-}
-.about-intro > .reference-about-grid {
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-  align-items: stretch !important;
-  gap: 0 !important;
-  width: 100% !important;
-  max-width: none !important;
-  min-height: 75vh !important;
-  margin: 0 !important;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr) !important;
+  align-items: center !important;
   padding: 0 !important;
+  background: var(--cream) !important;
 }
 .about-intro .about-photo {
-  grid-column: 1 !important;
-  grid-row: 1 !important;
-  min-height: 75vh !important;
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 620px !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+  overflow: hidden !important;
+  background: #dfe8d9 !important;
+  grid-column: 1 !important;
 }
 .about-intro .about-photo img {
+  display: block !important;
+  width: 100% !important;
   height: 100% !important;
-  min-height: 75vh !important;
+  min-height: 100% !important;
   object-fit: cover !important;
 }
 .about-intro .about-who-slide {
@@ -3615,12 +3613,51 @@ header.is-compact nav.main-nav a.nav-link{
 .about-intro .about-who-slider .team-slider-dots {
   z-index: 4 !important;
 }
-.about-intro .about-copy {
+.about-intro .about-intro-copy-wrap {
   grid-column: 2 !important;
-  grid-row: 1 !important;
-  align-self: center !important;
-  max-width: 720px !important;
-  padding: clamp(48px, 7vw, 110px) !important;
+  padding: 0 24px 0 44px !important;
+}
+.about-intro .about-copy {
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: clamp(48px, 7vw, 110px) 0 clamp(18px, 3vw, 30px) !important;
+  text-align: left !important;
+}
+.about-intro .about-copy .kicker {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 8px 16px !important;
+  border-radius: 999px !important;
+  background: rgba(18, 41, 31, 0.06) !important;
+  color: var(--forest-mid) !important;
+  font-size: .72rem !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+}
+.about-intro .about-copy .kicker::before {
+  content: "" !important;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: var(--lime-deep) !important;
+}
+.about-intro .about-copy h2 {
+  margin-top: 18px !important;
+  font-size: clamp(2.7rem, 4vw, 4.4rem) !important;
+  line-height: .98 !important;
+  letter-spacing: -.04em !important;
+  color: var(--forest-deep) !important;
+}
+.about-intro .about-copy p {
+  max-width: 620px !important;
+  margin: 20px 0 0 !important;
+  color: #4f5e56 !important;
+  font-size: 1rem !important;
+  line-height: 1.75 !important;
+  text-align: left !important;
 }
 .team-section {
   padding: 0 !important;
@@ -3656,40 +3693,42 @@ header.is-compact nav.main-nav a.nav-link{
   box-shadow: none !important;
 }
 @media (max-width: 900px) {
-  .about-intro > .reference-about-grid,
-  .team-section .team-grid {
+  .about-intro {
     display: flex !important;
     flex-direction: column !important;
-    min-height: 0 !important;
   }
-  .about-intro .about-photo,
-  .team-section .team-image-slider {
+  .about-intro .about-intro-copy-wrap {
     order: 1 !important;
+    width: 100% !important;
+    padding: 0 24px !important;
+  }
+  .about-intro .about-photo {
+    order: 2 !important;
+    width: 100% !important;
+    height: 48vh !important;
+    min-height: 320px !important;
+    max-height: 520px !important;
+    grid-column: auto !important;
+  }
+  .about-intro .about-copy {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 54px 0 28px !important;
+    text-align: left !important;
+  }
+  .about-intro .about-copy h2 {
+    font-size: clamp(2.3rem, 11vw, 3.8rem) !important;
+  }
+  .team-section .team-image-slider {
     width: 100% !important;
     height: 48vh !important;
     min-height: 320px !important;
     max-height: 520px !important;
   }
-  .about-intro .about-photo img {
-    height: 100% !important;
-    min-height: 100% !important;
-  }
-  .about-intro .about-who-slide {
-    height: 100% !important;
-    min-height: 100% !important;
-  }
-  .about-intro .about-copy,
   .team-section .team-copy {
-    order: 2 !important;
     width: 100% !important;
     max-width: none !important;
     padding: 54px 28px 70px !important;
-  }
-  .about-intro .about-grid.reference-about-grid .about-photo {
-    order: 1 !important;
-  }
-  .about-intro .about-grid.reference-about-grid .about-copy {
-    order: 2 !important;
   }
 }
 </style>
