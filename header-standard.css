@@ -279,6 +279,15 @@ header:not(.top).logo-hidden .logo {
     width: 100% !important;
     justify-content: center !important;
   }
+
+  body > header.is-compact nav.main-nav,
+  header:not(.top).is-compact nav.main-nav {
+    width: max-content !important;
+    max-width: 100% !important;
+    flex: 0 1 auto !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+  }
 }
 
 @media (min-width: 901px) and (max-width: 1100px) {
