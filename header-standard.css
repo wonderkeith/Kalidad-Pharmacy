@@ -125,6 +125,191 @@ header:not(.top).logo-hidden .logo {
   pointer-events: none !important;
 }
 
+@media (min-width: 901px) {
+  body > header:not(.top),
+  header:not(.top) {
+    top: 18px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    transform: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+
+  body > header:not(.top).is-scrolled,
+  header:not(.top).is-scrolled,
+  body > header:not(.top).is-compact,
+  header:not(.top).is-compact,
+  body > header:not(.top).logo-hidden,
+  header:not(.top).logo-hidden {
+    border: 0 !important;
+    border-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  body > header .header-inner,
+  header:not(.top) .header-inner {
+    width: min(1520px, calc(100% - 96px)) !important;
+    max-width: none !important;
+    height: 88px !important;
+    min-height: 88px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    justify-content: space-between !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  body > header nav.main-nav,
+  header:not(.top) nav.main-nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: clamp(8px, 1.2vw, 20px) !important;
+  }
+
+  body > header nav.main-nav a.nav-link,
+  header:not(.top) nav.main-nav a.nav-link {
+    padding: 12px clamp(12px, 1.4vw, 24px) !important;
+    border: 1px solid rgba(255, 255, 255, .78) !important;
+    border-radius: 999px !important;
+    background: rgba(18, 41, 31, .10) !important;
+    color: #fff !important;
+    font-size: clamp(.78rem, .95vw, 1rem) !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  body > header nav.main-nav a.nav-link:hover,
+  body > header nav.main-nav a.nav-link:focus-visible,
+  body > header nav.main-nav a.nav-link.active,
+  header:not(.top) nav.main-nav a.nav-link:hover,
+  header:not(.top) nav.main-nav a.nav-link:focus-visible,
+  header:not(.top) nav.main-nav a.nav-link.active {
+    border-color: rgba(230, 243, 217, .95) !important;
+    background: rgba(230, 243, 217, .96) !important;
+    color: #1e4f3b !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  body > header .open-badge,
+  header:not(.top) .open-badge {
+    flex: 0 0 auto !important;
+    margin-left: 0 !important;
+    padding: 14px 20px !important;
+    border-radius: 999px !important;
+    background: rgba(230, 243, 217, .96) !important;
+    color: #1e4f3b !important;
+    font-size: clamp(.72rem, .82vw, .88rem) !important;
+    white-space: nowrap !important;
+  }
+
+  body.careers-page > header nav > a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 14px 20px !important;
+    border: 1px solid rgba(255, 255, 255, .78) !important;
+    border-radius: 999px !important;
+    background: rgba(18, 41, 31, .10) !important;
+    color: #fff !important;
+    font-size: clamp(.78rem, .95vw, 1rem) !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  body.careers-page > header nav > a:hover,
+  body.careers-page > header nav > a:focus-visible,
+  body.careers-page > header nav > a.active {
+    border-color: rgba(230, 243, 217, .95) !important;
+    background: rgba(230, 243, 217, .96) !important;
+    color: #1e4f3b !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  body.careers-page > header.is-compact,
+  body.careers-page > header.logo-hidden {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: min(900px, calc(100% - 48px)) !important;
+  }
+
+  body.careers-page > header.is-compact .header-inner,
+  body.careers-page > header.logo-hidden .header-inner {
+    justify-content: center !important;
+  }
+
+  body.careers-page > header.is-compact nav,
+  body.careers-page > header.logo-hidden nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    margin: 0 !important;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  body > header .header-inner,
+  header:not(.top) .header-inner {
+    width: calc(100% - 48px) !important;
+  }
+
+  body > header .logo,
+  header:not(.top) .logo,
+  body > header .logo-image,
+  header:not(.top) .logo-image {
+    width: 150px !important;
+    max-width: 150px !important;
+  }
+
+  body > header nav.main-nav,
+  header:not(.top) nav.main-nav {
+    gap: 4px !important;
+  }
+
+  body > header nav.main-nav a.nav-link,
+  header:not(.top) nav.main-nav a.nav-link {
+    padding: 8px !important;
+    font-size: .72rem !important;
+  }
+
+  body > header .open-badge,
+  header:not(.top) .open-badge {
+    padding: 9px 11px !important;
+    font-size: .68rem !important;
+  }
+
+  body > header .nav-cta,
+  header:not(.top) .nav-cta {
+    padding: 9px 11px !important;
+    font-size: .72rem !important;
+  }
+
+  body.careers-page > header nav > a {
+    padding: 9px 11px !important;
+    font-size: .72rem !important;
+  }
+}
+
 @media (max-width: 900px) {
   body > header,
   header:not(.top) {
