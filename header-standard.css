@@ -181,11 +181,11 @@ header:not(.top).logo-hidden .logo {
 
   body > header nav.main-nav a.nav-link,
   header:not(.top) nav.main-nav a.nav-link {
-    padding: 12px clamp(12px, 1.4vw, 24px) !important;
-    border: 1px solid rgba(255, 255, 255, .78) !important;
+    padding: 14px 20px !important;
+    border: 1px solid rgba(230, 243, 217, .96) !important;
     border-radius: 999px !important;
-    background: rgba(18, 41, 31, .10) !important;
-    color: #fff !important;
+    background: rgba(230, 243, 217, .96) !important;
+    color: #1e4f3b !important;
     font-size: clamp(.78rem, .95vw, 1rem) !important;
     line-height: 1.2 !important;
     white-space: nowrap !important;
@@ -223,10 +223,10 @@ header:not(.top).logo-hidden .logo {
     align-items: center !important;
     justify-content: center !important;
     padding: 14px 20px !important;
-    border: 1px solid rgba(255, 255, 255, .78) !important;
+    border: 1px solid rgba(230, 243, 217, .96) !important;
     border-radius: 999px !important;
-    background: rgba(18, 41, 31, .10) !important;
-    color: #fff !important;
+    background: rgba(230, 243, 217, .96) !important;
+    color: #1e4f3b !important;
     font-size: clamp(.78rem, .95vw, 1rem) !important;
     line-height: 1.2 !important;
     white-space: nowrap !important;
@@ -311,7 +311,7 @@ header:not(.top).logo-hidden .logo {
 
   body > header nav.main-nav a.nav-link,
   header:not(.top) nav.main-nav a.nav-link {
-    padding: 8px !important;
+    padding: 9px 11px !important;
     font-size: .72rem !important;
   }
 
