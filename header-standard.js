@@ -47,6 +47,8 @@
       : (hero ? hero.getBoundingClientRect().bottom <= 92 : window.scrollY > 120);
     header.classList.toggle('is-compact', compact);
     header.classList.toggle('logo-hidden', compact);
+    var pastHero = window.innerWidth > 900 && hero && hero.getBoundingClientRect().bottom <= 0;
+    header.classList.toggle('is-past-hero', Boolean(pastHero));
   }
 
   window.addEventListener('scroll', syncHeader, { passive: true });

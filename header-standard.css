@@ -24,7 +24,8 @@ header:not(.top) {
   -webkit-backdrop-filter: blur(18px) saturate(145%) !important;
   box-shadow: 0 12px 40px rgba(18, 41, 31, .1), inset 0 1px 0 rgba(255, 255, 255, .35) !important;
   transition: background .35s ease, box-shadow .35s ease, border-color .35s ease,
-    top .35s ease, width .35s ease, left .35s ease, right .35s ease !important;
+    top .35s ease, width .35s ease, left .35s ease, right .35s ease,
+    opacity .25s ease, visibility .25s ease !important;
 }
 
 body > header.is-scrolled,
@@ -126,6 +127,13 @@ header:not(.top).logo-hidden .logo {
 }
 
 @media (min-width: 901px) {
+  body > header.is-past-hero,
+  header:not(.top).is-past-hero {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
   body > header:not(.top),
   header:not(.top) {
     top: 18px !important;
