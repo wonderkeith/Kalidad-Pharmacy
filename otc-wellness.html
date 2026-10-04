@@ -996,6 +996,24 @@ header.logo-hidden {
 .wellness-parent-hero .service-detail-copy .btn-outline{border-color:#fff;color:#fff;background:rgba(18,41,31,.12);}
 .wellness-parent-hero .service-detail-copy .btn-outline:hover{background:rgba(255,255,255,.14);}
 .wellness-parent-hero .service-detail-copy .accent{color:var(--lime);}
+@media(min-width:851px){
+  .service-detail-hero.wellness-parent-hero{
+    height:100vh !important;
+    height:100svh !important;
+    min-height:100vh !important;
+    min-height:100svh !important;
+  }
+  .wellness-parent-hero .service-detail-copy{
+    min-height:100vh !important;
+    min-height:100svh !important;
+  }
+  .wellness-parent-hero .service-detail-image,
+  .wellness-parent-hero .service-detail-image picture{
+    height:100% !important;
+    min-height:100% !important;
+  }
+  .wellness-parent-hero .service-detail-image picture{display:block !important;width:100% !important;}
+}
 @media(max-width:850px){
   .catalog-card,.catalog-card:nth-child(even){grid-template-columns:1fr;min-height:0;}
   .catalog-card .catalog-image,.catalog-card:nth-child(even) .catalog-image{order:1;min-height:300px;height:42vh;}
