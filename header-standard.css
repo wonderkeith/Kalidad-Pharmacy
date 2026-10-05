@@ -190,14 +190,17 @@ header:not(.top).logo-hidden .logo {
   body > header nav.main-nav a.nav-link,
   header:not(.top) nav.main-nav a.nav-link {
     padding: 14px 20px !important;
-    border: 1px solid rgba(230, 243, 217, .96) !important;
+    border: 1px solid rgba(255, 255, 255, .68) !important;
     border-radius: 999px !important;
-    background: rgba(230, 243, 217, .96) !important;
+    background: rgba(246, 244, 236, .38) !important;
     color: #1e4f3b !important;
     font-size: clamp(.78rem, .95vw, 1rem) !important;
     line-height: 1.2 !important;
     white-space: nowrap !important;
-    box-shadow: none !important;
+    box-shadow: 0 6px 18px rgba(18, 41, 31, .10), inset 0 1px 0 rgba(255, 255, 255, .55) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(140%) !important;
+    backdrop-filter: blur(10px) saturate(140%) !important;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, color .25s ease !important;
     transform: none !important;
   }
 
@@ -208,9 +211,9 @@ header:not(.top).logo-hidden .logo {
   header:not(.top) nav.main-nav a.nav-link:focus-visible,
   header:not(.top) nav.main-nav a.nav-link.active {
     border-color: rgba(230, 243, 217, .95) !important;
-    background: rgba(230, 243, 217, .96) !important;
+    background: rgba(230, 243, 217, .92) !important;
     color: #1e4f3b !important;
-    box-shadow: none !important;
+    box-shadow: 0 6px 18px rgba(18, 41, 31, .10), inset 0 1px 0 rgba(255, 255, 255, .62) !important;
     transform: none !important;
   }
 
@@ -231,14 +234,17 @@ header:not(.top).logo-hidden .logo {
     align-items: center !important;
     justify-content: center !important;
     padding: 14px 20px !important;
-    border: 1px solid rgba(230, 243, 217, .96) !important;
+    border: 1px solid rgba(255, 255, 255, .68) !important;
     border-radius: 999px !important;
-    background: rgba(230, 243, 217, .96) !important;
+    background: rgba(246, 244, 236, .38) !important;
     color: #1e4f3b !important;
     font-size: clamp(.78rem, .95vw, 1rem) !important;
     line-height: 1.2 !important;
     white-space: nowrap !important;
-    box-shadow: none !important;
+    box-shadow: 0 6px 18px rgba(18, 41, 31, .10), inset 0 1px 0 rgba(255, 255, 255, .55) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(140%) !important;
+    backdrop-filter: blur(10px) saturate(140%) !important;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, color .25s ease !important;
     transform: none !important;
   }
 
@@ -246,9 +252,9 @@ header:not(.top).logo-hidden .logo {
   body.careers-page > header nav > a:focus-visible,
   body.careers-page > header nav > a.active {
     border-color: rgba(230, 243, 217, .95) !important;
-    background: rgba(230, 243, 217, .96) !important;
+    background: rgba(230, 243, 217, .92) !important;
     color: #1e4f3b !important;
-    box-shadow: none !important;
+    box-shadow: 0 6px 18px rgba(18, 41, 31, .10), inset 0 1px 0 rgba(255, 255, 255, .62) !important;
     transform: none !important;
   }
 
