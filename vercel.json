@@ -1,6 +1,17 @@
 {
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.kalidadpharmacy.com"
+        }
+      ],
+      "destination": "https://kalidadpharmacy.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {
