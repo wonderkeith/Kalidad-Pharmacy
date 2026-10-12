@@ -1,0 +1,12 @@
+package com.kalidad.pharmacy;
+import android.app.*;import android.content.*;import android.os.Build;import org.json.*;import java.util.*;
+public final class Reminders {
+ static final String PREFS="daily_reminders",CHANNEL="kalidad_reminders";
+ static void channel(Context c){NotificationChannel channel=new NotificationChannel(CHANNEL,"Daily medicine reminders",NotificationManager.IMPORTANCE_DEFAULT);channel.setDescription("Private reminders you create on this device");channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);((NotificationManager)c.getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);}
+ static PendingIntent pending(Context c,int id){return PendingIntent.getBroadcast(c,id,new Intent(c,ReminderReceiver.class).putExtra("id",id),PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);}
+ static void schedule(Context c,int id,String time){Calendar next=Calendar.getInstance();String[] parts=time.split(":");next.set(Calendar.HOUR_OF_DAY,Integer.parseInt(parts[0]));next.set(Calendar.MINUTE,Integer.parseInt(parts[1]));next.set(Calendar.SECOND,0);next.set(Calendar.MILLISECOND,0);if(next.getTimeInMillis()<=System.currentTimeMillis())next.add(Calendar.DAY_OF_YEAR,1);((AlarmManager)c.getSystemService(Context.ALARM_SERVICE)).setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,next.getTimeInMillis(),pending(c,id));}
+ static void save(Context c,int id,String name,String time)throws JSONException{schedule(c,id,time);JSONObject o=new JSONObject();o.put("name",name);o.put("time",time);c.getSharedPreferences(PREFS,Context.MODE_PRIVATE).edit().putString(String.valueOf(id),o.toString()).commit();}
+ static void cancel(Context c,int id){((AlarmManager)c.getSystemService(Context.ALARM_SERVICE)).cancel(pending(c,id));c.getSharedPreferences(PREFS,Context.MODE_PRIVATE).edit().remove(String.valueOf(id)).commit();((NotificationManager)c.getSystemService(Context.NOTIFICATION_SERVICE)).cancel(id);}
+ static void restore(Context c){for(Map.Entry<String,?> e:c.getSharedPreferences(PREFS,Context.MODE_PRIVATE).getAll().entrySet()){try{JSONObject o=new JSONObject((String)e.getValue());schedule(c,Integer.parseInt(e.getKey()),o.getString("time"));}catch(Exception ignored){}}}
+ static void clear(Context c){for(String key:new ArrayList<>(c.getSharedPreferences(PREFS,Context.MODE_PRIVATE).getAll().keySet())){try{cancel(c,Integer.parseInt(key));}catch(Exception ignored){}}c.getSharedPreferences(PREFS,Context.MODE_PRIVATE).edit().clear().commit();}
+}

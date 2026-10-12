@@ -1,0 +1,11 @@
+.gradle/
+build/
+app/build/
+build-assets/
+local.properties
+*.keystore
+*.jks
+*-password.txt
+
+# Images are reproducible from the root website assets.
+web/assets/
