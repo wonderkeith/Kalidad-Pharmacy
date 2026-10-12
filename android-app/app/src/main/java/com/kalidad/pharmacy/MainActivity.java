@@ -10,7 +10,7 @@ public class MainActivity extends Activity {
   web.setWebViewClient(new WebViewClient(){
    @Override public boolean shouldOverrideUrlLoading(WebView v,WebResourceRequest r){Uri u=r.getUrl();if(local(u))return false;if(r.isForMainFrame())open(u.toString());return true;}
    @Override public WebResourceResponse shouldInterceptRequest(WebView v,WebResourceRequest r){Uri u=r.getUrl();if(!local(u))return blocked();try{String path=u.getPath().substring(1);if(path.isEmpty())path="index.html";if(path.contains("..")||path.contains("\\"))return blocked();String ext=path.substring(path.lastIndexOf('.')+1);String mime=switch(ext){case "html"->"text/html";case "css"->"text/css";case "js"->"text/javascript";case "json"->"application/json";case "webp"->"image/webp";case "png"->"image/png";default->"application/octet-stream";};return new WebResourceResponse(mime,"UTF-8",getAssets().open("www/"+path));}catch(Exception e){return blocked();}}
-   @Override public void onPageFinished(WebView v,String url){if(getIntent().getBooleanExtra("reminders",false)&&local(Uri.parse(url))){getIntent().removeExtra("reminders");v.evaluateJavascript("open('reminders')",null);}}
+   @Override public void onPageFinished(WebView v,String url){if(getIntent().getBooleanExtra("reminders",false)&&local(Uri.parse(url))){getIntent().removeExtra("reminders");v.evaluateJavascript("openModal('reminders')",null);}}
    @Override public void onReceivedSslError(WebView v,android.webkit.SslErrorHandler h,android.net.http.SslError e){h.cancel();}
   });web.loadUrl("https://"+HOST+"/index.html");Reminders.channel(this);
  }

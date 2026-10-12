@@ -6,6 +6,7 @@ Passed:
 - Five model tests: basket normalization, enquiry content, escaping, next reminder calculation, content/asset completeness.
 - Chromium checks on all five screens at 320, 390 and 700px with no horizontal overflow.
 - Product search, basket quantity controls and persistence, favourites, reminder save/reload/delete, all seven article readers.
+- WhatsApp enquiry draft recipient/content, draft persistence and local data deletion checked with external opening intercepted; no message sent.
 - No JavaScript runtime errors during tested navigation and interactions.
 - Visual inspection of Home, Explore and Journal using the repository’s brand images.
 - Release manifest: non-debuggable, backups disabled, HTTPS-only external links, notifications and boot only beyond internet permission.

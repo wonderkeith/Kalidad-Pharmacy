@@ -188,7 +188,7 @@ function navigate(t) {
   render();
   window.scrollTo(0, 0);
 }
-function open(type, id) {
+function openModal(type, id) {
   modal = { type, id };
   drawModal();
   document.body.classList.add("modal-open");
@@ -333,11 +333,11 @@ document.addEventListener("click", (e) => {
       "confirm-clear",
     ].includes(a)
   ) {
-    open(a);
+    openModal(a);
     return;
   }
   if (["product", "article", "service"].includes(a)) {
-    open(a, id);
+    openModal(a, id);
     return;
   }
   if (a === "add") {
@@ -380,8 +380,8 @@ document.addEventListener("click", (e) => {
   if (a === "external") external(url);
   if (a === "website") external("https://kalidadpharmacy.com/");
   if (a === "source") external("https://kalidadpharmacy.com/" + page);
-  if (a === "request-prescription") open("request", 1);
-  if (a === "request-service") open("request", n);
+  if (a === "request-prescription") openModal("request", 1);
+  if (a === "request-service") openModal("request", n);
   if (a === "permission") {
     window.KalidadNative.enableNotifications();
     toast("Enable notifications in Android, then return here.");
