@@ -1,0 +1,11 @@
+plugins { id 'com.android.application' }
+android {
+ namespace 'com.kalidad.pharmacy'
+ compileSdk 35
+ defaultConfig { applicationId 'com.kalidad.pharmacy'; minSdk 26; targetSdk 35; versionCode 1; versionName '1.0.0' }
+ sourceSets { main { assets.srcDirs = ['../build-assets'] } }
+ compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+ buildTypes { release { minifyEnabled false } }
+}
+tasks.register('copyWebAssets', Copy) { from '../web'; into '../build-assets/www' }
+tasks.named('preBuild').configure { dependsOn 'copyWebAssets' }
