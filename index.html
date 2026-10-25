@@ -4004,6 +4004,26 @@ header.logo-hidden {
             </div>
         </section>
 
+
+        <!-- Product enquiry -->
+        <section class="kp-product-section" id="product-enquiry" aria-labelledby="kp-product-title">
+            <div class="container">
+                <h2 id="kp-product-title">Need a product?</h2>
+                <div class="kp-order-steps">
+                    <div class="kp-order-step"><span class="kp-step-number">1</span><div><h3>Message us</h3><p>Send the product name and quantity.</p></div></div>
+                    <div class="kp-order-step"><span class="kp-step-number">2</span><div><h3>Confirm</h3><p>Confirm stock, price, payment and delivery fee.</p></div></div>
+                    <div class="kp-order-step"><span class="kp-step-number">3</span><div><h3>Collect or receive</h3><p>Choose a branch or arrange delivery.</p></div></div>
+                </div>
+                <form class="kp-product-form" id="kp-product-form">
+                    <p>Check stock and price with our team.</p>
+                    <label for="kp-product-name">Product name</label>
+                    <input id="kp-product-name" name="product" placeholder="Product or medicine name" maxlength="180" required>
+                    <button type="submit">Check on WhatsApp <span aria-hidden="true">↗</span></button>
+                    <small>Stock and price confirmed on WhatsApp.</small>
+                </form>
+            </div>
+        </section>
+
         <!-- STATS -->
         <section class="stats-band">
             <div class="container stats-grid">
@@ -4831,5 +4851,30 @@ header.logo-hidden {
   }
 }
 </style>
+
+<style id="kalidad-product-and-review-updates">
+.kp-product-section{background:#fff;color:#12291f;padding:70px 0}
+.kp-product-section h2{font-family:inherit;font-size:clamp(2rem,4vw,3rem);line-height:1.2;margin:0 0 30px;color:#12291f}
+.kp-order-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin-bottom:32px}
+.kp-order-step{display:flex;align-items:flex-start;gap:14px}
+.kp-step-number{display:grid;place-items:center;flex:0 0 36px;height:36px;border-radius:50%;background:#8fb824;color:#12291f;font-weight:700}
+.kp-order-step h3{font-size:1.2rem;line-height:1.4;margin:2px 0 7px;color:#12291f}
+.kp-order-step p{margin:0;color:#657066;font-size:.95rem;line-height:1.6}
+.kp-product-form{padding-top:28px;border-top:1px solid #dce3d5;max-width:680px}
+.kp-product-form>p{margin:0 0 20px;color:#657066;line-height:1.6}
+.kp-product-form label{display:block;margin-bottom:10px;font-weight:600;color:#12291f}
+.kp-product-form input{display:block;width:100%;box-sizing:border-box;padding:15px 17px;border:1px solid #b9c4ae;border-radius:12px;background:#fff;color:#12291f;font:inherit;margin-bottom:14px}
+.kp-product-form button{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:48px;border:0;border-radius:999px;padding:13px 25px;background:#8fb824;color:#12291f;font:inherit;font-weight:600;cursor:pointer}
+.kp-product-form small{display:block;color:#657066;margin-top:12px;font-size:.8rem;line-height:1.5}
+.kp-product-form input:focus-visible,.kp-product-form button:focus-visible{outline:3px solid #8fb824;outline-offset:3px}
+#customerVoicesTitle em{color:#8fb824!important}
+.customer-voices .customer-voice-card{background:#8fb824;color:#fff}
+.customer-voices .customer-voice-card blockquote,.customer-voices .customer-voice-card cite,.customer-voices .customer-voice-card .voice-source,.customer-voices .customer-voice-card .review-stars{color:#fff}
+.customer-voices .customer-voices-review,.customer-voices .customer-voices-review span{color:#fff}
+@media(max-width:900px){.kp-product-section{padding:36px 0}.kp-product-section h2{font-size:1.9rem;margin-bottom:25px}.kp-order-steps{grid-template-columns:1fr;gap:20px;margin-bottom:26px}.kp-step-number{flex-basis:32px;height:32px}.kp-order-step h3{font-size:1.1rem;margin-top:1px}.kp-order-step p{font-size:.95rem}.kp-product-form{padding-top:24px}.kp-product-form button{width:100%}}
+</style>
+<script id="kalidad-product-enquiry-controller">
+(function(){var form=document.getElementById('kp-product-form');if(!form)return;form.addEventListener('submit',function(event){event.preventDefault();var product=document.getElementById('kp-product-name').value.trim();if(product)window.open('https://wa.me/256759845260?text='+encodeURIComponent('Hello Kalidad, please confirm availability and price for: '+product),'_blank','noopener');});})();
+</script>
 </body>
 </html>
