@@ -4024,6 +4024,41 @@ header.logo-hidden {
             </div>
         </section>
 
+
+        <!-- Branch information -->
+        <section class="kp-branches-section" id="branches" aria-labelledby="kp-branches-title">
+            <div class="container">
+                <h2 id="kp-branches-title">Our branches</h2>
+                <p class="kp-branches-intro">Visit us in Fort Portal. Both branches are open 24/7.</p>
+                <div class="kp-branches-grid">
+                    <article class="kp-branch-card">
+                        <img src="_MG_7257.webp" alt="Inside Kalidad Pharmacy Kisenyi branch" loading="lazy" decoding="async">
+                        <div class="kp-branch-copy">
+                            <span class="kp-branch-label">Main branch · Open 24/7</span>
+                            <h3>Kisenyi</h3>
+                            <p>Next to Rosefoam Mattress Depot, at the MT–Bwamba road junction.</p>
+                            <div class="kp-branch-actions">
+                                <a class="kp-branch-button" href="https://maps.app.goo.gl/Eaxz7fNvanTzsc7B7" target="_blank" rel="noopener noreferrer">Directions <span aria-hidden="true">↗</span></a>
+                                <a class="kp-branch-call" href="tel:+256759845260">Call our team</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="kp-branch-card">
+                        <img src="kb night interior.webp" alt="Inside Kalidad Pharmacy Kahungabunyonyi branch" loading="lazy" decoding="async">
+                        <div class="kp-branch-copy">
+                            <span class="kp-branch-label">Second branch · Open 24/7</span>
+                            <h3>Kahungabunyonyi</h3>
+                            <p>City Inn building, ground floor, along Kahungabunyonyi Road.</p>
+                            <div class="kp-branch-actions">
+                                <a class="kp-branch-button" href="https://www.google.com/maps/search/?api=1&amp;query=Kalidad+Pharmacy+Kahungabunyonyi+Fort+Portal" target="_blank" rel="noopener noreferrer">Find on Google Maps <span aria-hidden="true">↗</span></a>
+                                <a class="kp-branch-call" href="tel:+256759845260">Call our team</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <!-- STATS -->
         <section class="stats-band">
             <div class="container stats-grid">
@@ -4876,5 +4911,23 @@ header.logo-hidden {
 <script id="kalidad-product-enquiry-controller">
 (function(){var form=document.getElementById('kp-product-form');if(!form)return;form.addEventListener('submit',function(event){event.preventDefault();var product=document.getElementById('kp-product-name').value.trim();if(product)window.open('https://wa.me/256759845260?text='+encodeURIComponent('Hello Kalidad, please confirm availability and price for: '+product),'_blank','noopener');});})();
 </script>
+
+<style id="kalidad-homepage-branches">
+.kp-branches-section{background:#fff;color:#12291f;padding:30px 0 70px}
+.kp-branches-section h2{font-family:inherit;font-size:clamp(2rem,4vw,3rem);line-height:1.2;margin:0 0 16px;color:#12291f}
+.kp-branches-intro{color:#657066;margin:0 0 28px;line-height:1.6}
+.kp-branches-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.kp-branch-card{border:1px solid #dce3d5;border-radius:24px;overflow:hidden;background:#fff;display:flex;flex-direction:column;min-width:0}
+.kp-branch-card>img{display:block;width:100%;height:240px;object-fit:cover}
+.kp-branch-copy{padding:28px;display:flex;flex-direction:column;flex:1}
+.kp-branch-label{font-size:.75rem;letter-spacing:.06em;color:#657066;margin-bottom:12px}
+.kp-branch-copy h3{font-size:1.7rem;line-height:1.25;color:#12291f;margin:0 0 12px;overflow-wrap:anywhere}
+.kp-branch-copy p{color:#657066;line-height:1.7;margin:0 0 24px;font-size:1rem}
+.kp-branch-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:auto}
+.kp-branch-button{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:#8fb824;color:#12291f;border-radius:999px;padding:12px 20px;min-height:48px;text-decoration:none;font-weight:600;font-size:.95rem}
+.kp-branch-call{color:#12291f;text-decoration:underline;text-underline-offset:4px;font-size:.95rem}
+.kp-branch-actions a:focus-visible{outline:3px solid #8fb824;outline-offset:4px}
+@media(max-width:900px){.kp-branches-section{padding:10px 0 40px}.kp-branches-section h2{font-size:1.9rem}.kp-branches-intro{font-size:.95rem;margin-bottom:22px}.kp-branches-grid{grid-template-columns:1fr;gap:18px}.kp-branch-card{border-radius:18px}.kp-branch-card>img{height:190px}.kp-branch-copy{padding:22px}.kp-branch-copy h3{font-size:1.5rem}.kp-branch-copy p{font-size:.95rem;margin-bottom:20px}.kp-branch-button,.kp-branch-call{font-size:.9rem}}
+</style>
 </body>
 </html>
