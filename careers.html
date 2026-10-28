@@ -20,7 +20,14 @@ body{margin:0;background:var(--cream);color:var(--ink);font-family: 'Lora', seri
 .container{width:min(1120px,calc(100% - 40px));margin:auto}
 header{position:sticky;top:0;z-index:20;background:rgba(246,244,236,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .header-inner{height:84px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.logo img{width:172px;height:70px;object-fit:contain;display:block}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:70px;height:70px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .3s ease}
+.logo:hover .logo-mark{transform:rotate(-4deg) scale(1.06)}
+.logo-mark img{width:100%;height:100%;object-fit:contain;display:block}
+.logo-text{display:flex;flex-direction:column;line-height:1.02}
+.logo-text .kalidad{font-family:'Lora',serif;font-weight:800;font-size:1.32rem;letter-spacing:.01em;color:#006837;text-transform:uppercase}
+.logo-text .pharmacy{font-family:'Lora',serif;font-weight:800;font-size:1.18rem;color:#8CC63F;margin-top:-3px}
+.logo-text .tag{font-family:'Lora',serif;font-style:italic;font-weight:600;font-size:.62rem;color:#006837;margin-top:3px;opacity:.9}
 nav{display:flex;align-items:center;gap:4px}
 nav a{padding:10px 15px;border-radius:999px;color:var(--forest);font-weight:600;font-size:.9rem}
 nav a:hover,nav a.active{background:var(--lime-soft);color:var(--green)}
@@ -143,7 +150,7 @@ footer {
 }
 .notice{display:none;margin-top:18px;padding:12px 14px;border-radius:12px;background:var(--lime-soft);color:var(--green);font-size:.82rem}
 @media(max-width:850px){.hero-inner,.career-grid{grid-template-columns:1fr}.hero-inner{gap:35px}.hero-card{max-width:600px}nav{display:none}.menu{display:flex}.footer-inner{grid-template-columns:1fr}}
-@media(max-width:560px){.container{width:min(100% - 28px,1120px)}.header-inner{height:74px}.logo img{width:145px;height:62px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card{padding:24px}.hero{padding-top:60px}}
+@media(max-width:560px){.container{width:min(100% - 28px,1120px)}.header-inner{height:74px}.logo-mark{width:60px;height:60px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card{padding:24px}.hero{padding-top:60px}}
 
 .careers-email-contact {
     margin: 24px auto 0;
@@ -1339,8 +1346,8 @@ header.logo-hidden .logo {
 
 /* Logo disappears after the hero, then navigation occupies the center */
 .careers-page header .logo {
-    max-width: 172px;
-    width: 172px;
+    max-width: 240px;
+    width: auto;
     opacity: 1;
     transform: translateY(0) scale(1);
     transform-origin: left center;
@@ -1431,8 +1438,8 @@ header.logo-hidden .logo {
     }
 
     .careers-page header .logo {
-        max-width: 145px;
-        width: 145px;
+        max-width: 240px;
+        width: auto;
     }
 
     .careers-page header.logo-hidden .logo {
@@ -1896,7 +1903,7 @@ html[data-theme="dark"] .careers-page .menu{
 <body class="careers-page">
 <header>
  <div class="container header-inner">
-  <a class="logo" href="index.html" aria-label="Kalidad Pharmacy home"><img src="kalidad-logo.png" alt="Kalidad Pharmacy — Your health, your wealth"></a>
+  <a class="logo" href="index.html" aria-label="Kalidad Pharmacy home"><span class="logo-mark"><img src="kalidad-icon.png" alt="" width="70" height="70"></span><span class="logo-text"><span class="kalidad">Kalidad</span><span class="pharmacy">Pharmacy</span><span class="tag">Your health, your wealth</span></span></a>
   <nav aria-label="Main navigation">
    <a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact Us</a><a href="careers.html" class="active">Careers</a><a href="news.html" class="nav-link">News</a><a href="about.html">About Us</a>
   </nav>
