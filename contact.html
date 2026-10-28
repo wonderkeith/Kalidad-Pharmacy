@@ -3136,14 +3136,8 @@
   <link rel="stylesheet" href="header-standard.css?v=7">
   <script src="header-standard.js?v=1" defer></script>
   <style id="contact-hero-responsive-images">
-    .page-banner {
+    .page-banner .contact-hero-photo {
       background-image: url("Shallom%20contact%20us%20PC%20hero.webp") !important;
-    }
-
-    @media (max-width: 900px) {
-      .page-banner {
-        background-image: url("Shallom%20Contact%20us%20Mobile%20hero.webp") !important;
-      }
     }
   </style>
   <style id="contact-hero-slider-styles">
@@ -3211,7 +3205,6 @@
   <main>
     <section class="page-banner" aria-label="Get in touch">
       <div class="contact-hero-photo is-active" aria-hidden="true"></div>
-      <div class="contact-hero-photo" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-copy">
           <h1><span class="line-dark">Here for you</span><span class="line-lime">24 hours <span
@@ -3646,55 +3639,6 @@
   </script>
   <script src="chatbot.js" defer></script>
   <script src="theme.js?v=2" defer></script>
-  <script id="contact-hero-image-slider">
-    (function() {
-      var hero = document.querySelector('.page-banner');
-      if (!hero) return;
-      var layers = Array.prototype.slice.call(hero.querySelectorAll('.contact-hero-photo'));
-      if (layers.length < 2) return;
-      var desktopImages = [
-        'Shallom%20contact%20us%20PC%20hero.webp',
-        'Kisenyi%20night.webp',
-        '1000111640.png'
-      ];
-      var mobileImages = [
-        'Shallom%20Contact%20us%20Mobile%20hero.webp',
-        'Kisenyi%20night%20mobile.webp',
-        '1000111640.png'
-      ];
-      var current = 0;
-      var activeLayer = 0;
-      var mobileQuery = window.matchMedia('(max-width: 900px)');
-      var imageSets = desktopImages.concat(mobileImages);
-      imageSets.forEach(function(src) {
-        var preload = new Image();
-        preload.src = src;
-      });
-
-      function imageFor(index) {
-        return (mobileQuery.matches ? mobileImages : desktopImages)[index];
-      }
-
-      function show(index) {
-        var nextLayer = activeLayer === 0 ? 1 : 0;
-        layers[nextLayer].style.backgroundImage = 'url("' + imageFor(index) + '")';
-        layers[nextLayer].classList.add('is-active');
-        layers[activeLayer].classList.remove('is-active');
-        activeLayer = nextLayer;
-        current = index;
-      }
-      layers[activeLayer].style.backgroundImage = 'url("' + imageFor(current) + '")';
-      hero.style.setProperty('background-image', 'none', 'important');
-      window.setInterval(function() {
-        show((current + 1) % desktopImages.length);
-      }, 5000);
-      window.addEventListener('resize', function() {
-        layers[activeLayer].style.backgroundImage = 'url("' + imageFor(current) + '")';
-      }, {
-        passive: true
-      });
-    }());
-  </script>
 </body>
 
 </html>

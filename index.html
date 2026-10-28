@@ -935,6 +935,37 @@
             font-size: .95rem;
         }
 
+        .service-detail-link {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 18px;
+            padding: 11px 18px;
+            border-radius: 999px;
+            background: var(--forest);
+            color: #fff;
+            font-size: .88rem;
+            font-weight: 800;
+            transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+        }
+
+        .service-detail-link:hover {
+            background: var(--forest-mid);
+            box-shadow: var(--shadow-soft);
+            transform: translateY(-2px);
+        }
+
+        .service-detail-link:focus-visible {
+            outline: 3px solid var(--lime-deep);
+            outline-offset: 3px;
+        }
+
+        .service-detail-link svg {
+            width: 17px;
+            height: 17px;
+        }
+
         .service-nav-wrap {
             margin-top: 26px;
             padding-top: 20px;
@@ -3967,21 +3998,26 @@ header.logo-hidden {
                             </div>
                         </div>
 
+                        <a class="service-detail-link" href="prescription-filling.html">
+                            <span>Explore Prescription Filling</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </a>
+
                         <div class="service-nav-wrap">
                             <nav class="service-nav" aria-label="Service navigation">
                                 <button class="service-nav-item is-active" type="button" data-service-nav="0" aria-label="Go to Prescription Filling" aria-current="true">
                                     <span class="service-nav-label">Prescription Filling</span>
                                 </button>
-                                <button class="service-nav-item" type="button" data-service-nav="1" aria-label="Go to Health Supplements">
+                                <button class="service-nav-item" type="button" data-service-nav="1" aria-label="Go to Pharmacist Consultation">
                                     <span class="service-nav-label">Pharmacist consultation</span>
                                 </button>
                                 <button class="service-nav-item" type="button" data-service-nav="2" aria-label="Go to Health Checks">
                                     <span class="service-nav-label">Free Health Checks</span>
                                 </button>
-                                <button class="service-nav-item" type="button" data-service-nav="3" aria-label="Go to Cosmetics">
+                                <button class="service-nav-item" type="button" data-service-nav="3" aria-label="Go to Wellness">
                                     <span class="service-nav-label">Wellness</span>
                                 </button>
-                                <button class="service-nav-item" type="button" data-service-nav="4" aria-label="Go to Baby Products">
+                                <button class="service-nav-item" type="button" data-service-nav="4" aria-label="Go to Baby Care">
                                     <span class="service-nav-label">Baby care</span>
                                 </button>
                                 <button class="service-nav-item" type="button" data-service-nav="5" aria-label="Go to Delivery">
@@ -4318,6 +4354,15 @@ header.logo-hidden {
                 var servicePrev = document.getElementById('servicePrev');
                 var serviceNext = document.getElementById('serviceNext');
                 var serviceProgressBar = document.getElementById('serviceProgressBar');
+                var serviceDetailLink = serviceShowcase.querySelector('.service-detail-link');
+                var serviceDestinations = [
+                    { href: 'prescription-filling.html', label: 'Prescription Filling' },
+                    { href: 'pharmacist-consultation.html', label: 'Pharmacist Consultation' },
+                    { href: 'health-checks.html', label: 'Free Health Checks' },
+                    { href: 'otc-wellness.html', label: 'Discover Wellness' },
+                    { href: 'baby-care.html', label: 'Baby Care' },
+                    { href: 'same-day-delivery.html', label: 'Delivery' }
+                ];
                 var serviceCurrent = 0;
                 var serviceTimer;
                 var serviceAnimating = false;
@@ -4339,6 +4384,11 @@ header.logo-hidden {
                         if (active) item.setAttribute('aria-current', 'true');
                         else item.removeAttribute('aria-current');
                     });
+                    if (serviceDetailLink) {
+                        var destination = serviceDestinations[index];
+                        serviceDetailLink.href = destination.href;
+                        serviceDetailLink.querySelector('span').textContent = 'Explore ' + destination.label;
+                    }
                     if (serviceProgressBar) {
                         serviceProgressBar.style.width = (((index + 1) / serviceSlides.length) * 100) + '%';
                     }
