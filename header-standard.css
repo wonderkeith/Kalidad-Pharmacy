@@ -9,6 +9,83 @@
 
 html { scroll-behavior: smooth; }
 
+header .logo.site-header-brand {
+  display: flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
+  gap: 12px !important;
+  width: auto !important;
+  max-width: 240px !important;
+  height: 70px !important;
+  text-decoration: none !important;
+}
+
+header .site-header-brand-mark {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 70px !important;
+  width: 70px !important;
+  height: 70px !important;
+}
+
+header .site-header-brand-mark img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+header .site-header-brand-text {
+  display: flex !important;
+  flex-direction: column !important;
+  line-height: 1.02 !important;
+}
+
+header .site-header-brand-text .brand-name {
+  color: #006837 !important;
+  font-family: 'Lora', serif !important;
+  font-size: 1.32rem !important;
+  font-weight: 800 !important;
+  letter-spacing: .01em !important;
+  text-transform: uppercase !important;
+}
+
+header .site-header-brand-text .brand-pharmacy {
+  margin-top: -3px !important;
+  color: #8CC63F !important;
+  font-family: 'Lora', serif !important;
+  font-size: 1.18rem !important;
+  font-weight: 800 !important;
+}
+
+header .site-header-brand-text .brand-tagline {
+  margin-top: 3px !important;
+  color: #006837 !important;
+  font-family: 'Lora', serif !important;
+  font-size: .62rem !important;
+  font-style: italic !important;
+  font-weight: 600 !important;
+}
+
+@media (max-width: 900px) {
+  header .logo.site-header-brand {
+    width: 175px !important;
+    max-width: 175px !important;
+    height: 56px !important;
+  }
+
+  header .site-header-brand-text {
+    min-width: 0 !important;
+  }
+
+  header .site-header-brand-mark {
+    flex-basis: 60px !important;
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+
 body > header,
 header:not(.top) {
   position: fixed !important;
