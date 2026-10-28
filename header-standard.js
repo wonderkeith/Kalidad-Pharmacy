@@ -42,8 +42,12 @@
   function syncHeader() {
     var scrolled = window.scrollY > 24;
     header.classList.toggle('is-scrolled', scrolled);
-    var compact = window.innerWidth <= 900
-      ? window.scrollY > 0
+    var mobileViewport = window.innerWidth <= 900;
+    var careersPage = document.body.classList.contains('careers-page');
+    var compact = mobileViewport
+      ? (careersPage
+        ? (hero ? hero.getBoundingClientRect().bottom <= 92 : window.scrollY > 0)
+        : window.scrollY > 0)
       : (hero ? hero.getBoundingClientRect().bottom <= 92 : window.scrollY > 120);
     header.classList.toggle('is-compact', compact);
     header.classList.toggle('logo-hidden', compact);
