@@ -1,0 +1,5 @@
+package com.kalidad.pharmacy;
+import android.app.*;import android.content.*;import org.json.*;
+public class ReminderReceiver extends BroadcastReceiver {
+ @Override public void onReceive(Context c,Intent i){int id=i.getIntExtra("id",-1);String raw=c.getSharedPreferences(Reminders.PREFS,Context.MODE_PRIVATE).getString(String.valueOf(id),null);if(raw==null)return;try{JSONObject o=new JSONObject(raw);Reminders.schedule(c,id,o.getString("time"));Reminders.channel(c);PendingIntent open=PendingIntent.getActivity(c,id,new Intent(c,MainActivity.class).putExtra("reminders",true),PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);Notification n=new Notification.Builder(c,Reminders.CHANNEL).setSmallIcon(R.drawable.ic_notification).setContentTitle("Your Kalidad reminder").setContentText("It’s time for your saved reminder. Open the app to review it.").setVisibility(Notification.VISIBILITY_PRIVATE).setContentIntent(open).setAutoCancel(true).build();((NotificationManager)c.getSystemService(Context.NOTIFICATION_SERVICE)).notify(id,n);}catch(Exception ignored){}}
+}

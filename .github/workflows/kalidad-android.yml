@@ -1,0 +1,35 @@
+name: Kalidad Android build
+on:
+  workflow_dispatch:
+  push:
+    branches: ['feat/kalidad-android-app']
+    paths: ['android-app/**', '.github/workflows/kalidad-android.yml']
+  pull_request:
+    paths: ['android-app/**', '.github/workflows/kalidad-android.yml']
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+      - run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - run: python -m pip install beautifulsoup4 pillow
+      - run: python android-app/scripts/prepare_assets.py
+      - run: node --test android-app/tests/model.test.cjs
+      - run: bash android-app/scripts/build-apk.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Kalidad-Pharmacy-unsigned
+          path: android-app/build/Kalidad-Pharmacy.apk
